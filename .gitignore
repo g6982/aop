@@ -1,0 +1,10 @@
+# Python:
+*.py[cod]
+*.pyc
+*.so
+*.egg
+*.egg-info
+dist
+build
+rowno_in_tree
+document_sidebar

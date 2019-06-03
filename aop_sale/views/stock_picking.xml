@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="vpicktree_inherit_aop_sale" model="ir.ui.view">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="product_id"/>
+                <field name="vin"/>
+                <field name="location_id"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='scheduled_date']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+
+             <xpath expr="//field[@name='backorder_id']" position="attributes">
+                 <attribute name="invisible">1</attribute>
+            </xpath>
+
+
+        </field>
+    </record>
+
+    <record id="view_picking_form_inherit_aop_purchase" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.aop.purchase</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/header/button[last()]" position="after">
+
+                <!--<button name="create_purchase_order"-->
+                        <!--string="Create Purchase Order"-->
+                        <!--type="object"-->
+                        <!--class="oe_highlight"-->
+                        <!--attrs="{'invisible': [('picking_purchase_id', '!=', False)]}"-->
+                        <!--/>-->
+
+            </xpath>
+
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <field name="move_id_without_package" string="" />
+
+            </xpath>
+
+
+
+            <xpath expr="//field[@name='origin']" position="after">
+
+                <field name="src_partner_id" string="源地址"/>
+                <field name="des_partner_id" string="目的地址"/>
+
+                <field name="picking_purchase_id"
+                       string="供方任务订单"
+                       attrs="{'invisible': [('picking_purchase_id', '=', False)]}"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_see_packages']" position="attributes">
+                    <attribute name="string">车厢</attribute>
+            </xpath>
+
+            <xpath expr="//notebook/page[2]/field[@name='move_ids_without_package']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+            </xpath>
+
+<!--             <xpath expr="//notebook/page[2]/button[@name='404']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+
+             <xpath expr="//page[2]/button[@name='put_in_pack']" position="attributes">
+                    <attribute name="string">放入车厢</attribute>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='extra']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//notebook/page[@name='note']/field[@name='note']" position="attributes">
+                    <attribute name="placeholder"></attribute>
+            </xpath>
+
+
+
+        </field>
+    </record>
+</odoo>

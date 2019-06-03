@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="mass_loss_order_form" model="ir.ui.view">
+            <field name="name">mass.loss.order.form</field>
+            <field name="model">mass.loss.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" string="状态" readonly="1" widget="statusbar"/>
+                        <button name="action_return_to_factory" id="action_return_to_factory" string="返厂" class="btn-primary" type="object" />
+                    </header>
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="name" string="质损单号"/>
+                                <field name="case_number" string="报案号"/>
+                            </group>
+                            <group>
+                                <field name="date" string="发生日期"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="vin_code" string="车架号"/>
+                            </group>
+                            <group>
+                                <field name="box_no" string="厢号"/>
+                                <field name="brand_id" string="品牌"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="originator" string="发站"/>
+                                <field name="found_department" string="发现部门"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="responsible_department" string="责任部门"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                                <field name="responsible_party" string="责任方"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="filing_fee" string="申报费用"/>
+                            </group>
+                            <group>
+                                <field name="approval_fee" string="审批费用"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="mass_loss_part" string="质损部位"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="mass_loss_type" string="质损类别"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="task_no" string="任务编号"/>
+                                <field name="order_no" string="订单号"/>
+                            </group>
+                            <group>
+                                <field name="task_content" string="作业内容"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="create_user" string="创建人"/>
+                                <field name="create_date" string="创建时间"/>
+                            </group>
+                            <group>
+                                <field name="approval_user" string="审批人"/>
+                                <field name="confirm_user" string="确认人"/>
+                                <field name="confirm_time" string="确认时间"/>
+                            </group>
+                            <group>
+                                <field name="close_user" string="关闭人"/>
+                                <field name="close_time" string="关闭时间"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="payment_amount" string="赔付金额"/>
+                                <field name="balance" string="差额"/>
+                                <field name="buyout_deductions_diff" string="买断扣款差额"/>
+                            </group>
+                            <group>
+                                <field name="debit_balance" string="扣款差额"/>
+                                <field name="guide_price" string="指导价"/>
+                                <field name="buyout_price" string="买断价"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="approval_opinion" string="审核意见"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_tree" model="ir.ui.view">
+            <field name="name">mass.loss.order.tree</field>
+            <field name="model">mass.loss.order</field>
+            <field name="arch" type="xml">
+                <tree string="质损单">
+                    <field name="name" string="质损单号"/>
+                    <field name="vin_code" string="车架号"/>
+                    <field name="box_no" string="厢号"/>
+                    <field name="brand_id" string="品牌"/>
+                    <field name="found_department" string="发现部门"/>
+                    <field name="originator" string="发站"/>
+                    <field name="responsible_department" string="责任部门"/>
+                    <field name="responsible_party" string="责任方"/>
+                    <field name="filing_fee" string="申报费用"/>
+                    <field name="approval_fee" string="审批费用"/>
+                    <field name="mass_loss_part" string="质损部位"/>
+                    <field name="mass_loss_type" string="质损类别"/>
+                    <field name="state" string="状态"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_search" model="ir.ui.view">
+            <field name="name">mass.loss.order.search</field>
+            <field name="model">mass.loss.order</field>
+            <field name="arch" type="xml">
+                <search string="质损单">
+                    <field name="name" string="质损单号"/>
+                    <field name="date" string="发生日期"/>
+                    <field name="state" string="状态"/>
+                    <field name="found_department" string="发现部门"/>
+                    <field name="vin_code" string="VIN"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_type_form" model="ir.ui.view">
+            <field name="name">mass.loss.type.form</field>
+            <field name="model">mass.loss.type</field>
+            <field name="arch" type="xml">
+                <form string="质损类型">
+                    <sheet>
+                        <group>
+                            <field name="name" string="质损类型"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_type_tree" model="ir.ui.view">
+            <field name="name">mass.loss.type.tree</field>
+            <field name="model">mass.loss.type</field>
+            <field name="arch" type="xml">
+                <tree string="质损类型">
+                    <field name="name" string="质损类型"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_part_form" model="ir.ui.view">
+            <field name="name">mass.loss.part.form</field>
+            <field name="model">mass.loss.part</field>
+            <field name="arch" type="xml">
+                <form string="质损类型">
+                    <sheet>
+                        <group>
+                            <field name="name" string="质损部位"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_part_tree" model="ir.ui.view">
+            <field name="name">mass.loss.part.tree</field>
+            <field name="model">mass.loss.part</field>
+            <field name="arch" type="xml">
+                <tree string="质损部位">
+                    <field name="name" string="质损部位"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_mass_loss_order" model="ir.actions.act_window">
+            <field name="name">质损单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mass.loss.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+        </record>
+
+        <record id="action_mass_loss_type" model="ir.actions.act_window">
+            <field name="name">质损类型</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mass.loss.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_mass_loss_part" model="ir.actions.act_window">
+            <field name="name">质损部位</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mass.loss.part</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--
+
+        <menuitem id="mass_loss_order_root"
+                  name="质损单"
+                  web_icon="aop_sale,static/description/mass_loss_icon.png"
+        />
+        <menuitem id="mass_loss_order_menu" parent="mass_loss_order_root" name="质损单"/>
+
+        <menuitem id="mass_loss_order_child_menu_order" parent="mass_loss_order_menu" name="质损单"
+                  action="action_mass_loss_order"/>
+        <menuitem id="mass_loss_order_child_menu_type" parent="mass_loss_order_menu" name="质损类型"
+                  action="action_mass_loss_type"/>
+        <menuitem id="mass_loss_order_child_menu_part" parent="mass_loss_order_menu" name="质损部位"
+                  action="action_mass_loss_part"/>
+       -->
+
+    </data>
+</odoo>

@@ -1,0 +1,1487 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* aop_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0-20190311\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-04-01 08:36+0000\n"
+"PO-Revision-Date: 2019-04-01 08:36+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:837
+#, python-format
+msgid "A journal must be specified of the acquirer %s."
+msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:830
+#, python-format
+msgid "A payment acquirer is required to create a transaction."
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_product_product__type
+#: model:ir.model.fields,help:aop_sale.field_product_template__type
+msgid "A storable product is a product for which you manage stock. The Inventory app has to be installed.\n"
+"A consumable product is a product for which stock is not managed.\n"
+"A service is a non-material product you provide."
+msgstr "可库存商品是指在库存中受存量管控的产品。 要使用此项目你必须安装库存模块。\n"
+"可消耗商品是指不受库存量管控的产品。\n"
+"服务是指你提供的非产品类服务业务。"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:801
+#, python-format
+msgid "A transaction can't be linked to sales orders having different currencies."
+msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:806
+#, python-format
+msgid "A transaction can't be linked to sales orders having different partners."
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__aop_route_ids
+msgid "AOP route"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order_line__qty_delivered_method
+msgid "According to product configuration, the delivered quantity can be automatically computed by mechanism :\n"
+"  - Manual: the quantity is set manually on the line\n"
+"  - Analytic From expenses: the quantity is the quantity sum from posted expenses\n"
+"  - Timesheet: the quantity is the sum of hours recorded on tasks linked to this sale line\n"
+"  - Stock Moves: the quantity comes from confirmed pickings\n"
+""
+msgstr "根据产品配置，交货数量可以通过机制自动计算：\n"
+" - 手动：在线手动输入数量\n"
+" - 费用分析：数量是来自过帐费用的数量总和\n"
+" - 时间表：数量是与此销售线相关联的任务记录的时数\n"
+" - 库存变动：数量来自已确认的选择\n"
+""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_needaction
+msgid "Action Needed"
+msgstr "前置操作"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Add a note"
+msgstr "增加备注"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Add a product"
+msgstr "添加产品"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Add a section"
+msgstr "添加部分"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_res_partner__type
+#: model:ir.model.fields,field_description:aop_sale.field_res_users__type
+msgid "Address Type"
+msgstr "地址类型"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__amount_undiscounted
+msgid "Amount Before Discount"
+msgstr "折扣前金额"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__analytic_account_id
+msgid "Analytic Account"
+msgstr "分析账户"
+
+#. module: aop_sale
+#: selection:subsidy.debit.order.line,qty_delivered_method:0
+msgid "Analytic From Expenses"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__analytic_tag_ids
+msgid "Analytic Tags"
+msgstr "分析标签"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__analytic_line_ids
+msgid "Analytic lines"
+msgstr "分析明细行"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__aop_route_id
+msgid "Aop Route ID"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Are you sure you want to void the authorized transaction? This action can't be undone."
+msgstr "请问您是否确定要取消授权交易吗？此操作经确定后无法撤消。"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_attachment_count
+msgid "Attachment Count"
+msgstr "附件数量"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__authorized_transaction_ids
+msgid "Authorized Transactions"
+msgstr "已授权的交易"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_stock_picking_batch
+msgid "Batch Picking"
+msgstr "批量调度"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__product_updatable
+msgid "Can Edit Product"
+msgstr "允许编辑"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Cancel"
+msgstr "取消"
+
+#. module: aop_sale
+#: selection:sale.order,state:0
+#: selection:subsidy.debit.order,state:0
+msgid "Cancelled"
+msgstr "已取消"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Capture Transaction"
+msgstr "捕捉交易"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__commitment_date
+msgid "Commitment Date"
+msgstr "承诺日期"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__company_id
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__company_id
+msgid "Company"
+msgstr "公司"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Configure a product"
+msgstr "配置产品"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Confirm"
+msgstr "确认"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__confirmation_date
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_action_view_order_tree
+msgid "Confirmation Date"
+msgstr "确认日期"
+
+#. module: aop_sale
+#: selection:product.template,type:0
+msgid "Consumable"
+msgstr "可消耗"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_res_partner
+#: selection:res.partner,type:0
+msgid "Contact"
+msgstr "联系人"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
+msgid "Copy a product"
+msgstr "复制产品"
+
+#. module: aop_sale
+#: model_terms:ir.actions.act_window,help:aop_sale.product_template_action_product
+#: model_terms:ir.actions.act_window,help:aop_sale.product_template_action_service_product
+msgid "Create a new product"
+msgstr "创建新产品"
+
+#. module: aop_sale
+#: model_terms:ir.actions.act_window,help:aop_sale.action_subsidy_debit_order
+msgid "Create a new quotation, the first step of a new sale!"
+msgstr "创建一个报价是新销售的第一步!"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__create_date
+msgid "Creation Date"
+msgstr "创建日期"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__currency_id
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__currency_id
+msgid "Currency"
+msgstr "币种"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__currency_rate
+msgid "Currency Rate"
+msgstr "汇率"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__partner_id
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__order_partner_id
+msgid "Customer"
+msgstr "客户"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__client_order_ref
+msgid "Customer Reference"
+msgstr "客户参考"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__create_date
+msgid "Date on which sales order is created."
+msgstr "销售订单创建日期"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__confirmation_date
+msgid "Date on which the sales order is confirmed."
+msgstr "销售订单确认日期。"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__qty_delivered_manual
+msgid "Delivered Manually"
+msgstr "手动发货"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:1078
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__qty_delivered
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+#, python-format
+msgid "Delivered Quantity"
+msgstr "已交货数量"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__partner_shipping_id
+msgid "Delivery Address"
+msgstr "送货地址"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
+msgid "Delivery Car Address"
+msgstr "送车地址"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__customer_lead
+msgid "Delivery Lead Time"
+msgstr "交货提前时间"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_delivery_carrier
+msgid "Delivery Methods"
+msgstr "合同"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__partner_shipping_id
+msgid "Delivery address for current sales order."
+msgstr "当前销售订单的发运地址"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__expected_date
+msgid "Delivery date you can promise to the customer, computed from product lead times and from the shipping policy of the order."
+msgstr "您可以向客户承诺的交货日期，根据产品交货时间和订单的运输政策计算。"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking__des_partner_id
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking_type__des_partner_id
+msgid "Des partner"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__name
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Description"
+msgstr "说明"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__des_partner_id
+msgid "Destination"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__discount
+msgid "Discount (%)"
+msgstr "折扣(%)"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__display_type
+msgid "Display Type"
+msgstr "显示类型"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order_line__is_downpayment
+msgid "Down payments are made when creating invoices from a sales order. They are not copied when duplicating a sales order."
+msgstr "从销售订单创建发票时，将进行预付款。 复制销售订单时不会复制它们。"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__expected_date
+msgid "Expected Date"
+msgstr "预计日期"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:1052
+#, python-format
+msgid "Extra line with %s "
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__service_product_id
+msgid "Fee Type"
+msgstr "费目"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__fiscal_position_id
+msgid "Fiscal Position"
+msgstr "税科目调整"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_follower_ids
+msgid "Followers"
+msgstr "关注者"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "关注者(渠道)"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "关注者(业务伙伴)"
+
+#. module: aop_sale
+#: sql_constraint:subsidy.debit.order.line:0
+msgid "Forbidden values on non-accountable sale order line"
+msgstr ""
+
+#. module: aop_sale
+#: selection:subsidy.debit.order,invoice_status:0
+#: selection:subsidy.debit.order.line,invoice_status:0
+msgid "Fully Invoiced"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__id
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__id
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__id
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__message_unread
+msgid "If checked new messages require your attention."
+msgstr "查看是否有需要留意的新消息。"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "确认后, 出现提示消息."
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "如果勾选此项， 某些消息将会产生传递错误。"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "If the sale is locked, you can not modify it anymore. However, you will still be able to invoice or deliver."
+msgstr "如果一个销售订单已冻结（完成状态），你就不能手动修改它。但你仍然可以开具发票或交付。"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order_line__product_image
+msgid "Image of the product variant (Big-sized image of product template if false). It is automatically resized as a 1024x1024px image, with aspect ratio preserved."
+msgstr "产品变体的图像(如果为False,采用大尺寸图像模板). 它保持图像的宽高比,并自动调整图像大小为1024 x 1024px."
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:820
+#, python-format
+msgid "Invalid token found! Token acquirer %s != %s"
+msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:823
+#, python-format
+msgid "Invalid token found! Token partner %s != %s"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_stock_location_route
+msgid "Inventory Routes"
+msgstr "库存路线"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__partner_invoice_id
+msgid "Invoice Address"
+msgstr "发票地址"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__invoice_count
+msgid "Invoice Count"
+msgstr "发票数"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__invoice_lines
+msgid "Invoice Lines"
+msgstr "发票行"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__invoice_status
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__invoice_status
+msgid "Invoice Status"
+msgstr "发票状态"
+
+#. module: aop_sale
+#: selection:res.partner,type:0
+msgid "Invoice address"
+msgstr "发票地址"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__partner_invoice_id
+msgid "Invoice address for current sales order."
+msgstr "当前销售订单的发票地址。"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:1079
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__qty_invoiced
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+#, python-format
+msgid "Invoiced Quantity"
+msgstr "已开发票数量"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__invoice_ids
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Invoices"
+msgstr "发票"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Invoicing"
+msgstr "开票"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_is_follower
+msgid "Is Follower"
+msgstr "关注者"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__is_downpayment
+msgid "Is a down payment"
+msgstr "是首付款吗？"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__is_expense
+msgid "Is expense"
+msgstr "可报销"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__is_expired
+msgid "Is expired"
+msgstr "过期了"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order_line__is_expense
+msgid "Is true if the sales order line comes from an expense or a vendor bills"
+msgstr "此销售订单来源于报销单或供应商帐单"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:1104
+#, python-format
+msgid "It is forbidden to modify the following fields in a locked order:\n"
+"%s"
+msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:692
+#, python-format
+msgid "It is not allowed to confirm an order in the following states: %s"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__route_id
+msgid "Location route"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Lock"
+msgstr "锁"
+
+#. module: aop_sale
+#: selection:sale.order,state:0
+#: selection:subsidy.debit.order,state:0
+msgid "Locked"
+msgstr "已锁定"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "附件"
+
+#. module: aop_sale
+#: selection:subsidy.debit.order.line,qty_delivered_method:0
+msgid "Manual"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_has_error
+msgid "Message Delivery error"
+msgstr "消息递送错误"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_ids
+msgid "Messages"
+msgstr "消息"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__qty_delivered_method
+msgid "Method to update delivered qty"
+msgstr "更新数量的方法"
+
+#. module: aop_sale
+#: sql_constraint:subsidy.debit.order.line:0
+msgid "Missing required fields on accountable sale order line."
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__name
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__name
+msgid "Name"
+msgstr "名称"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__signed_by
+msgid "Name of the person that signed the SO."
+msgstr "签收人"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:143
+#: code:addons/aop_sale/models/subsidy_debit_order.py:379
+#: code:addons/aop_sale/models/subsidy_debit_order.py:381
+#: code:addons/aop_sale/models/subsidy_debit_order.py:383
+#, python-format
+msgid "New"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+#: selection:subsidy.debit.order.line,display_type:0
+msgid "Note"
+msgstr "备注"
+
+#. module: aop_sale
+#: selection:subsidy.debit.order,invoice_status:0
+#: selection:subsidy.debit.order.line,invoice_status:0
+msgid "Nothing to Invoice"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_needaction_counter
+msgid "Number of Actions"
+msgstr "操作次数"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order_line__customer_lead
+msgid "Number of days between the order confirmation and the shipping of the products to the customer"
+msgstr "订单被确认和产品交付给客户之间的天数"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_has_error_counter
+msgid "Number of error"
+msgstr "错误个数"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "需要操作消息数量"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "递送错误消息数量"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__message_unread_counter
+msgid "Number of unread messages"
+msgstr "未读消息数量"
+
+#. module: aop_sale
+#: model_terms:ir.actions.act_window,help:aop_sale.action_subsidy_debit_order
+msgid "Once the quotation is confirmed, it becomes a sales order.<br> You will be able to create an invoice and collect the payment."
+msgstr "一旦报价确认，临时订单即变为销售订单。<br>你可以创建一张收据来进行收款。"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__require_payment
+msgid "Online Payment"
+msgstr "在线支付"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__require_signature
+msgid "Online Signature"
+msgstr "在线签名"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__date_order
+msgid "Order Date"
+msgstr "单据日期"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__order_line
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Order Lines"
+msgstr "订单行"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_action_view_order_tree
+msgid "Order Number"
+msgstr "订单号码"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__name
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__order_id
+msgid "Order Reference"
+msgstr "订单关联"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__state
+msgid "Order Status"
+msgstr "订单状态"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:1075
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__product_uom_qty
+#, python-format
+msgid "Ordered Quantity"
+msgstr "订购数量"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Other Information"
+msgstr "其他信息"
+
+#. module: aop_sale
+#: selection:res.partner,type:0
+msgid "Other address"
+msgstr "其他地址"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__product_packaging
+msgid "Package"
+msgstr "包裹"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__partner_id
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__partner_id
+msgid "Partner"
+msgstr "业务伙伴"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__reference
+msgid "Payment Ref."
+msgstr "付款参考:"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__payment_term_id
+msgid "Payment Terms"
+msgstr "付款条款"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_stock_picking_type
+msgid "Picking Type"
+msgstr "拣货类型"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__picking_type_id
+msgid "Picking type"
+msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:466
+#, python-format
+msgid "Please define an accounting sales journal for this company."
+msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:1391
+#, python-format
+msgid "Please define income account for this product: \"%s\" (id:%d) - or for its category: \"%s\"."
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Preview"
+msgstr "预览"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__price_reduce
+msgid "Price Reduce"
+msgstr "降价"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__price_reduce_taxexcl
+msgid "Price Reduce Tax excl"
+msgstr "不含税价"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__price_reduce_taxinc
+msgid "Price Reduce Tax inc"
+msgstr "减税后价格"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__pricelist_id
+msgid "Pricelist"
+msgstr "价格表"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__pricelist_id
+msgid "Pricelist for current sales order."
+msgstr "当前销售订单的价格表。"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Print"
+msgstr "打印"
+
+#. module: aop_sale
+#: selection:res.partner,type:0
+msgid "Private Address"
+msgstr "家庭住址"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__service_product_id
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__service_product_id
+#: model:ir.model.fields,field_description:aop_sale.field_stock_location_route__service_product_id
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking_type__product_id
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__product_id
+msgid "Product"
+msgstr "产品"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__product_image
+msgid "Product Image"
+msgstr "产品图片"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_product_product__type
+#: model:ir.model.fields,field_description:aop_sale.field_product_template__type
+msgid "Product Type"
+msgstr "产品类型"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__product_no_variant_attribute_value_ids
+msgid "Product attribute values that do not create variants"
+msgstr "没有创建变量的产品属性值"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking__picking_purchase_id
+msgid "Purchase"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_purchase_order
+msgid "Purchase Order"
+msgstr "供方任务"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "采购订单行"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__product_qty
+msgid "Quantity"
+msgstr "数量"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Quantity:"
+msgstr "数量："
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:274
+#: selection:sale.order,state:0
+#: selection:subsidy.debit.order,state:0
+#, python-format
+msgid "Quotation"
+msgstr "临时订单"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
+#: selection:sale.order,state:0
+msgid "Quotation Confirm"
+msgstr "临时订单确认"
+
+#. module: aop_sale
+#: selection:sale.order,state:0
+#: selection:subsidy.debit.order,state:0
+msgid "Quotation Sent"
+msgstr "临时订单送出"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__origin
+msgid "Reference of the document that generated this sales order request."
+msgstr "生成此销售订单相关的单据"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__remaining_validity_days
+msgid "Remaining Validity Days"
+msgstr "剩余确认天数"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Reporting"
+msgstr "报告"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__require_signature
+msgid "Request a online signature to the customer in order to confirm orders automatically."
+msgstr "向客户申请在线签名，以便自动确认订单。 "
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__require_payment
+msgid "Request an online payment to the customer in order to confirm orders automatically."
+msgstr "向客户申请在线支付，以便自动确认订单。 "
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:371
+#, python-format
+msgid "Requested date is too soon."
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__aop_route_id
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__route_id
+msgid "Route"
+msgstr "路由"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__route_line_ids
+msgid "Route Line"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_sale_order
+msgid "Sale Order"
+msgstr "销售订单"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Sales Information"
+msgstr "销售信息"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:274
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+#: selection:sale.order,state:0
+#: selection:subsidy.debit.order,state:0
+#, python-format
+msgid "Sales Order"
+msgstr "销售订单"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "销售订单行"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Sales Order Lines"
+msgstr "销售订单明细"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_action_view_order_tree
+msgid "Sales Orders"
+msgstr "销售订单"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__team_id
+msgid "Sales Team"
+msgstr "销售团队"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__user_id
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__salesman_id
+msgid "Salesperson"
+msgstr "销售员"
+
+#. module: aop_sale
+#: selection:subsidy.debit.order.line,display_type:0
+msgid "Section"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Section Name (eg. Products, Services)"
+msgstr "章节名称(如：产品，服务)"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Send PRO-FORMA Invoice"
+msgstr "发送形式发票"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Send by Email"
+msgstr "通过EMail发送"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__sequence
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__sequence
+msgid "Sequence"
+msgstr "序号"
+
+#. module: aop_sale
+#: selection:product.template,type:0
+msgid "Service"
+msgstr "服务"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Set to Quotation"
+msgstr "设为临时订单"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Shipping Information"
+msgstr "送货信息"
+
+#. module: aop_sale
+#: selection:res.partner,type:0
+msgid "Shipping address"
+msgstr "送货地址"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__signature
+msgid "Signature"
+msgstr "签名"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__signature
+msgid "Signature received through the portal."
+msgstr "签名已通过门户网站收到。"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__signed_by
+msgid "Signed by"
+msgstr "已签核"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__origin
+msgid "Source Document"
+msgstr "源单据"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__partner_id
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking__src_partner_id
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking_type__src_partner_id
+msgid "Src partner"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order__state
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__state
+msgid "Status"
+msgstr "状态"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_stock_move
+msgid "Stock Move"
+msgstr "库存移动"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__move_ids
+msgid "Stock Moves"
+msgstr "库存移动"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order__stock_picking_id
+msgid "Stock Picking"
+msgstr "库存拣货"
+
+#. module: aop_sale
+#: selection:product.template,type:0
+msgid "Storable Product"
+msgstr "可库存产品"
+
+#. module: aop_sale
+#: selection:product.template,type:0
+msgid "Storable Service"
+msgstr "可库存服务"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__price_subtotal
+msgid "Subtotal"
+msgstr "小计"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order__partner_take_care_id
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
+#: selection:res.partner,type:0
+msgid "Take Car Address"
+msgstr "收车地址"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_sale_order__partner_take_care_id
+msgid "Take car address for current sales order."
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__amount_by_group
+msgid "Tax amount by group"
+msgstr "按组分配税额"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__amount_tax
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__tax_id
+msgid "Taxes"
+msgstr "税"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order_line__display_type
+msgid "Technical field for UX purpose."
+msgstr "UX用途的技術領域。"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__note
+msgid "Terms and conditions"
+msgstr "条款和条件"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Terms and conditions... (note: you can setup default ones in the Configuration menu)"
+msgstr "条款和条件......（注意：您可以在“配置”菜单中设置默认值）"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__analytic_account_id
+msgid "The analytic account related to a sales order."
+msgstr "销售订单相关的分析会计账户。"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:372
+#, python-format
+msgid "The commitment date is sooner than the expected date.You may be unable to honor the commitment date."
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__reference
+msgid "The payment communication of this sale order."
+msgstr "此销售订单的付款通信。"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__currency_rate
+msgid "The rate of the currency to the currency of rate 1 applicable at the date of the order"
+msgstr "在订单当天适用的货币跟本位币兑换比率为 1"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:565
+#: code:addons/aop_sale/models/subsidy_debit_order.py:570
+#, python-format
+msgid "There is no invoiceable line. If a product has a Delivered quantities invoicing policy, please make sure that a quantity has been delivered."
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__commitment_date
+msgid "This is the delivery date promised to the customer. If set, the delivery order will be scheduled based on this date rather than product lead times."
+msgstr "这是承诺给客户的交货日期。一经设定后，订单将根据此日期而非产品提前期安排交货。"
+
+#. module: aop_sale
+#: selection:subsidy.debit.order,invoice_status:0
+#: selection:subsidy.debit.order.line,invoice_status:0
+msgid "To Invoice"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__qty_to_invoice
+msgid "To Invoice Quantity"
+msgstr "发票数量"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__amount_total
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__price_total
+msgid "Total"
+msgstr "总计"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__price_tax
+msgid "Total Tax"
+msgstr "税额总计"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_action_view_order_tree
+msgid "Total Tax Included"
+msgstr "含税总金额"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__transaction_ids
+msgid "Transactions"
+msgstr "交易"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_stock_picking
+msgid "Transfer"
+msgstr "调拨"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__type_name
+msgid "Type Name"
+msgstr "类型名称"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:760
+#, python-format
+msgid "Uncategorized"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__price_unit
+msgid "Unit Price"
+msgstr "单价"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Unit Price:"
+msgstr "单价:"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__product_uom
+msgid "Unit of Measure"
+msgstr "单位"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Unlock"
+msgstr "解锁"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_unread
+msgid "Unread Messages"
+msgstr "未读消息"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "未读消息计数器"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__amount_untaxed
+msgid "Untaxed Amount"
+msgstr "未税金额"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__untaxed_amount_to_invoice
+msgid "Untaxed Amount To Invoice"
+msgstr "不含税待开票金额"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__untaxed_amount_invoiced
+msgid "Untaxed Invoiced Amount"
+msgstr "未含税的发票金额"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:416
+#, python-format
+msgid "Upsell <a href='#' data-oe-model='%s' data-oe-id='%d'>%s</a> for customer <a href='#' data-oe-model='%s' data-oe-id='%s'>%s</a>"
+msgstr ""
+
+#. module: aop_sale
+#: selection:subsidy.debit.order,invoice_status:0
+#: selection:subsidy.debit.order.line,invoice_status:0
+msgid "Upselling Opportunity"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_res_partner__type
+#: model:ir.model.fields,help:aop_sale.field_res_users__type
+msgid "Used by Sales and Purchase Apps to select the relevant address depending on the context."
+msgstr "由销售和购买应用程序使用，根据上下文选择相关地址。"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__product_custom_attribute_value_ids
+msgid "User entered custom product attribute values"
+msgstr "用户输入自定义产品属性值"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_product_product__vin
+#: model:ir.model.fields,field_description:aop_sale.field_product_template__vin
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__vin
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__vin
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__vin
+msgid "VIN"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
+msgid "VIN码调拨单"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__validity_date
+msgid "Validity"
+msgstr "验证"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__validity_date
+msgid "Validity date of the quotation, after this date, the customer won't be able to validate the quotation online."
+msgstr "报价的有效日期，在此日期之后，客户将无法在线验证报价。"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "Void Transaction"
+msgstr "无效交易"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__warehouse_id
+msgid "Warehouse"
+msgstr "仓库"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/purchase.py:51
+#: code:addons/aop_sale/models/purchase.py:81
+#: code:addons/aop_sale/models/sale_order_line.py:208
+#: code:addons/aop_sale/models/subsidy_debit_order.py:1525
+#, python-format
+msgid "Warning for %s"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order__website_message_ids
+msgid "Website Messages"
+msgstr "网站消息"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__website_message_ids
+msgid "Website communication history"
+msgstr "网站沟通记录"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__partner_id
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order_line__order_partner_id
+msgid "You can find a customer by its Name, TIN, Email or Internal Reference."
+msgstr "你可以通过它的名字，TIN，EMail或内部参考找到一个客户。 "
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:280
+#, python-format
+msgid "You can not delete a sent quotation or a confirmed sales order. You must first cancel it."
+msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:1578
+#, python-format
+msgid "You can not remove an order line once the sales order is confirmed.\n"
+"You should rather set the quantity to 0."
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_product_template
+msgid "add VIN code and product type"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_aop_route
+msgid "aop.route"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_aop_route_line
+msgid "aop.route.line"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "days"
+msgstr "天"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/subsidy_debit_order.py:118
+#, python-format
+msgid "sale order"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_subsidy_debit_order_line
+msgid "subsidy.debit.order.line"
+msgstr ""
+
+#. module: aop_sale
+#: model:res.groups,comment:aop_sale.group_aop_sale_customers
+#: model:res.groups,comment:aop_sale.group_aop_sale_scheduling
+msgid "the comment of the group."
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_subsidy_debit_order__amount_by_group
+msgid "type: [(name, amount, base, formated amount, formated base)]"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "不含税金额"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__aop_id
+msgid "交货方式"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_delivery_carrier_form_inherit
+msgid "合作伙伴"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__carrier_id
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__carrier_id
+msgid "合同"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__carrier_price
+#: model:ir.model.fields,field_description:aop_sale.field_subsidy_debit_order_line__carrier_price
+msgid "合同费用"
+msgstr ""
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_aop_sale_customers
+msgid "客服: 合同价格不可见"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "总计"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_picking_form_inherit_aop_purchase
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_picking_type_form_inherit_aop_purchase
+msgid "源地址"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_picking_form_inherit_aop_purchase
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_picking_type_form_inherit_aop_purchase
+msgid "目的地址"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_subsidy_debit_order
+#: model:ir.model,name:aop_sale.model_subsidy_debit_order
+#: model:ir.ui.menu,name:aop_sale.subsidy_debit_order
+msgid "补贴单和扣款单"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.subsidy_debit_order_form
+msgid "订购数量"
+msgstr ""
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_aop_sale_scheduling
+msgid "调度: 合同价格可编辑确认"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.purchase_order_form_inherit
+msgid "调拨单"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.product_template_action_product
+#: model:ir.ui.menu,name:aop_sale.menu_product_variant_config_stock
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
+msgid "货物"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.product_template_action_service_product
+#: model:ir.ui.menu,name:aop_sale.menu_service_product_variant_config_stock
+msgid "费目"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_delivery_carrier_form_inherit
+msgid "路由"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_delivery_carrier_form_inherit
+msgid "路由说明"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__car_no
+msgid "车次号"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_picking_form_inherit_aop_purchase
+msgid "采购订单"
+msgstr ""
+

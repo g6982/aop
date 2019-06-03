@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_picking_type_form_inherit_aop_purchase" model="ir.ui.view">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+
+            <field name="sequence_id" position="after">
+                <field name="product_id" domain="[('type','=','service')]" string="服务产品" />
+            </field>
+
+            <field name="code" position="after">
+                <label for="aging" />
+                <div>
+                    <field name="aging" class="oe_inline" style="vertical-align:baseline"/>天
+                </div>
+            </field>
+
+            <xpath expr="//group" position="after">
+                <group>
+                    <group>
+                        <field name="src_partner_id" string="源地址"/>
+                    </group>
+                    <group>
+                        <field name="des_partner_id" string="目的地址"/>
+                    </group>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+        <record id="view_quant_package_form_inherit_aop_sale" model="ir.ui.view">
+            <field name="name">view.quant.package.form.inherit.aop.sale</field>
+            <field name="model">stock.quant.package</field>
+            <field name="inherit_id" ref="stock.view_quant_package_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//label[@for='name']" position="attributes">
+                    <attribute name="string">车厢号</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='packaging_id']" position="attributes">
+                    <attribute name="string">车厢类型</attribute>
+                </xpath>
+
+            </field>
+        </record>
+</odoo>

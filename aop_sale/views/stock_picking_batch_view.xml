@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+
+    <record id="stock_picking_batch_form_inherit_aop_sale" model="ir.ui.view">
+        <field name="name">stock.picking.batch.form</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
+        <field name="arch" type="xml">
+
+                 <xpath expr="/form/header/button[last()]" position="after">
+
+                    <button name="create_purchase_order"
+                            string="创建供方任务"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('picking_purchase_id', '!=', False)]}"
+                            />
+
+                </xpath>
+
+                <field name="user_id" position="after">
+                    <field name="car_no"/>
+
+                    <field name="partner_id" string="供应商" widget="res_partner_many2one" domain="[('supplier','=',True)]" />
+
+                    <field name="picking_purchase_id"
+                           string="供方任务订单"
+                           attrs="{'invisible': [('picking_purchase_id', '=', False)]}"
+                       />
+
+                </field>
+
+
+
+                <xpath expr="//separator" position="attributes">
+                    <attribute name="string">调度</attribute>
+                </xpath>
+
+                 <xpath expr="//field[@name='picking_ids']/tree/field[@name='name']" position="after">
+
+                    <field name="product_id"/>
+                     <field name="location_id"/>
+                     <field name="location_dest_id"/>
+                     <field name="product_uom_qty"/>
+                     <field name="quantity_done"/>
+
+                </xpath>
+        </field>
+    </record>
+
+</odoo>

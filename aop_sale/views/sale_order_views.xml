@@ -1,0 +1,346 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_order_form_inherit_aop_sale" model="ir.ui.view">
+            <field name="name">sale.order.form.aop.sale</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <field name="name" position="before">
+                    <field name="id" invisible="1" />
+                </field>
+
+                 <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="context">{'order_id': id}</attribute>
+
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <attribute name="editable">bottom</attribute>
+
+                </xpath>
+
+
+
+                 <xpath expr="//field[@name='order_line']/tree/field[@name='sequence']" position="after">
+                      <field name="number" string="序"/>
+                 </xpath>
+
+                <xpath expr="//field[@name='delivery_count']" position="attributes">
+                    <attribute name="string">任务</attribute>
+                </xpath>
+
+                <!-- 添加1个合同价格确认的state -->
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="statusbar_visible">draft,sent,carrier,sale</attribute>
+                </xpath>
+
+                <!--
+                <xpath expr="//button[@name='action_quotation_send'][1]" position="before">
+                    <button name="%(aop_sale.action_view_sale_advance_payment_tax_inv)d" string="创建发票" type="action" class="btn-primary" />
+
+                </xpath>
+                -->
+
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][1]" position="attributes">
+                    <attribute name="string">创建结算清单</attribute>
+                    <attribute name="name">%(aop_sale.action_view_sale_advance_payment_inv)d</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
+                    <attribute name="string">创建台账</attribute>
+                    <attribute name="name">%(aop_sale.action_view_sale_advance_payment_inv)d</attribute>
+                </xpath>
+
+
+
+                 <xpath expr="//button[@name='action_quotation_send'][3]" position="attributes">
+                     <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_quotation_send'][4]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <field name="invoice_count" position="attributes">
+                    <attribute name="string">结算清单</attribute>
+                </field>
+
+                <xpath expr="//button[@name='print_quotation']" position="after">
+                    <button name="action_quotation_confirm" id="action_quotation_confirm" string="临时订单确认"
+                            type="object" groups="aop_sale.group_aop_sale_scheduling" attrs="{'invisible': [('state', 'not in', ['draft', 'sent'])]}"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                    <attribute name="attrs">{'invisible': [('state', 'not in', ['carrier'])]}</attribute>
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="attrs">{'invisible': 1}</attribute>
+                </xpath>
+
+                <!--
+                    preview,print和Send By Email按钮也需要调整，这里能看到价格
+                -->
+                <xpath expr="//button[@name='preview_sale_order']" position="attributes">
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='print_quotation'][1]" position="attributes">
+                    <attribute name="states">draft,sent,carrier,sale</attribute>
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='print_quotation'][2]" position="attributes">
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_quotation_send'][1]" position="attributes">
+                    <attribute name="states">draft,sent,carrier,sale</attribute>
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_quotation_send'][2]" position="attributes">
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_cancel']" position="attributes">
+
+                    <attribute name="states">draft,sent,carrier,sale</attribute>
+
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_view_delivery']" position="after">
+                    <button name="open_vin_picking"
+							string="任务匹配"
+							type="object"
+							class="oe_stat_button"
+							icon="fa-list"/>
+                </xpath>
+
+                <xpath expr="//field[@name='warehouse_id']" position="replace">
+
+                </xpath>
+
+
+
+                <xpath expr="//field[@name='partner_shipping_id']" position="before">
+
+                    <!--
+                    <field name="warehouse_id"
+                           string="Take Car Address"
+                           options="{'no_create': True}"
+                           groups="stock.group_stock_multi_locations"
+                           attrs="{'invisible': 1}"/>
+                    -->
+
+                    <field name="partner_take_care_id"
+                           string="Take Car Address"
+                           options="{'no_create': True, 'no_open': True}}"
+                           domain="[('parent_id','=', partner_id), ('type','=', 'take')]"
+                           />
+
+                </xpath>
+
+
+
+
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                    <attribute name="string">经销商送车地址</attribute>
+                    <attribute name="domain">[('parent_id','=', partner_id), ('type','=', 'delivery')]</attribute>
+                    <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+
+                </xpath>
+
+                <xpath expr="//field[@name='pricelist_id']" position="after">
+
+                    <field name="write_uid" string="修改人" attrs="{'readonly': 1}" groups="sales_team.group_sale_manager" />
+                    <field name="write_date" string="修改时间" attrs="{'readonly': 1}" groups="sales_team.group_sale_manager" />
+
+                </xpath>
+
+                <xpath expr="//field[@name='pricelist_id']" position="attributes">
+
+                   <attribute name="invisible">1</attribute>
+
+                </xpath>
+
+                <!--# 隐藏付款条款-->
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='validity_date']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='sale_order_template_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//label[@for='carrier_id']" position="replace">
+
+                </xpath>
+
+                <div name="carrier_selection" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </div>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="replace">
+
+                                <field
+                                        name="product_id"
+                                        domain="[('type','=','product')]"
+                                        force_save="1"
+                                        context="{
+                                            'partner_id': parent.partner_id,
+                                            'quantity': product_uom_qty,
+                                            'pricelist': parent.pricelist_id,
+                                            'uom':product_uom,
+                                            'company_id': parent.company_id,
+                                            'default_lst_price': price_unit,
+                                            'default_description_sale': name
+                                        }"
+                                        string="货物"
+                                    />
+
+                </xpath>
+
+                <!--# 隐藏价格, 仅对调度可见-->
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+
+                    <!--
+                    <attribute name="attrs">{'invisible': [('state', 'in', ['draft'])], 'readonly': [('qty_invoiced', '&gt;', 0)]}</attribute>
+                    -->
+                </xpath>
+
+                <!--# 隐藏税率-->
+                <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="attributes">
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+                <!--# 隐藏小计-->
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+                <!--# 隐藏未税金额-->
+                <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+                <!--# 隐藏税率金额-->
+                <xpath expr="//field[@name='amount_tax']" position="attributes">
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+                <!--# 隐藏总计金额-->
+                <xpath expr="//label[@for='amount_total']" position="attributes">
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amount_total']" position="attributes">
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='order_line']/tree/control//create[1]" position="after">
+                    <create string="Copy a product" context="{'copy_a_product': True}"/>
+                </xpath>
+
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                    <field name="service_product_id" string="服务产品" domain="[('type','=','service')]" attrs="{'required': 0}" />
+
+                    <field name="spare_part_ids" widget="many2many_tags" />
+                    <field name="contract_id" invisible="1" domain="[('partner_id','=', parent.partner_id)]" groups="aop_sale.group_aop_sale_customers" />
+                    <field name="carrier_price" invisible="1" attrs="{'readonly':0}" groups="aop_sale.group_aop_sale_customers" />
+
+                    <!--
+                    <field name="aging" string="时效(天)" attrs="{'readonly':1}" />
+                    -->
+                    <field name="vin"/>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="before">
+                    <field name="receipt_no" groups="sales_team.group_sale_manager"/>
+                    <field name="plan_date" groups="sales_team.group_sale_manager"/>
+                    <!--
+                    <field name="instruction_type" groups="sales_team.group_sale_manager"/>
+                    -->
+                     <field name="oems_warehouse" groups="sales_team.group_sale_manager"/>
+                     <field name="oems_order_no" groups="sales_team.group_sale_manager"/>
+                     <field name="income_settle_partner_id" groups="sales_team.group_sale_manager"/>
+                    <field name="manufacturer_short_name" groups="sales_team.group_sale_manager"/>
+                    <field name="vehicle_model_type" groups="sales_team.group_sale_manager"/>
+                    <field name="manufacturer_common_name" groups="sales_team.group_sale_manager"/>
+                    <field name="dealer_partner_id" groups="sales_team.group_sale_manager"/>
+                    <field name="station_start_end" groups="aop_sale.group_aop_sale_scheduling"/>
+
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="attributes">
+                    <attribute name="context">{"sale_filter_route_id_by_partner": parent.partner_id}</attribute>
+                    <attribute name="string">路由</attribute>
+
+                    <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+                    <!--
+                    <attribute name="domain">[('partner_id','=', parent.partner_id)]</attribute>
+                    -->
+                </xpath>
+
+
+                <xpath expr="//field[@name='order_line']/form/group/group/div/field[@name='product_uom_qty']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='product_id']"
+                       position="replace">
+
+                    <label string="货物" for="product_id"/>
+                    <field name="product_id"
+                                                context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+                                                nolabel="1"
+                                                force_save="1"
+                                                domain="[('type','=','product')]"
+                                               />
+
+                </xpath>
+
+
+                <xpath expr="//field[@name='order_line']/form/group/group/field[@name='product_id']" position="after">
+
+                    <!--<field name="service_product_id" domain="[('type','=','service')]" attrs="{'required': 0}" />-->
+
+                    <label for="contract_id" invisible="1"/>
+                    <div name='carrier_selection' invisible="1">
+                        <div>
+                            <field name="contract_id" domain="[('partner_id','=', parent.partner_id)]" class="oe_inline"
+                                   options="{'no_create': True, 'no_open': True}"
+                                   attrs="{'readonly':[('state','not in',('draft','sent'))]}" groups="aop_sale.group_aop_sale_customers"/>
+
+                        </div>
+
+                    </div>
+                    <!--<field name="carrier_price" />-->
+                    <field name="vin"/>
+                </xpath>
+
+                <xpath expr="//group[@name='sale_total']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
