@@ -26,7 +26,7 @@
          	background-color: $o-view-background-color;
             border: 1px solid gray('400');
             box-shadow: 0 5px 20px -15px black;
-            max-width: calc(100% - #{$o-horizontal-padding*2});
+            //max-width: calc(100% - #{$o-horizontal-padding*2});
         }
        	.oe_button_box {
         	.btn.oe_stat_button > .o_button_icon {
@@ -132,24 +132,24 @@
 	}
 }
 
-.mk_chatter_position_sided {
-	@include media-breakpoint-up(xxl, $o-extra-grid-breakpoints) {
-        .o_form_view:not(.o_form_nosheet) {
-            display: flex;
-            flex-flow: row nowrap;
-            height: 100%;
-            .o_form_sheet_bg {
-			    min-width: $mk-form-min-width;
-                flex: 1 1 auto;
-                overflow: auto;
-            }
-            > .o_chatter {
-				flex: 1 1 auto;
-				overflow: auto;
-				min-width: $mk-chatter-min-width;
-				max-width: $mk-chatter-max-width;
-				border-left: 1px solid gray('400');
-            }
-        }
-    }
-}
+//.mk_chatter_position_sided {
+//	@include media-breakpoint-up(xxl, $o-extra-grid-breakpoints) {
+//        .o_form_view:not(.o_form_nosheet) {
+//            display: flex;
+//            flex-flow: row nowrap;
+//            height: 100%;
+//            .o_form_sheet_bg {
+//			    min-width: $mk-form-min-width;
+//                flex: 1 1 auto;
+//                overflow: auto;
+//            }
+//            > .o_chatter {
+//				flex: 1 1 auto;
+//				overflow: auto;
+//				min-width: $mk-chatter-min-width;
+//				max-width: $mk-chatter-max-width;
+//				border-left: 1px solid gray('400');
+//            }
+//        }
+//    }
+//}
