@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190305\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 02:08+0000\n"
-"PO-Revision-Date: 2019-06-12 02:08+0000\n"
+"POT-Creation-Date: 2019-06-12 02:50+0000\n"
+"PO-Revision-Date: 2019-06-12 02:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,364 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_aop_contract
+msgid "AOP contract"
+msgstr "AOP 合同管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__aop_route_ids
+msgid "AOP route"
+msgstr "路由"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.fee_type_manager_menu
+msgid "Accounts"
+msgstr "费目管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__effective_date
+msgid "Active date"
+msgstr "合同生效日"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.address_manager_menu
+msgid "Address"
+msgstr "地址管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__aging
+msgid "Aging(day)"
+msgstr "时效(天)"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__aop_route_id
+msgid "Aop Route ID"
+msgstr "路由"
+
+#. module: aop_sale
+#: selection:aop.contract,type:0
+msgid "Buyer"
+msgstr "需方合同"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_form
+msgid "Carrier"
+msgstr "承运商"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_aop_contract_view
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__is_formal
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_tree
+msgid "Contract"
+msgstr "合同"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__serial_no
+msgid "Contract no"
+msgstr "合同号"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__serial_number
+msgid "Contract number"
+msgstr "合同编号"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__delivery_carrier_ids
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_form
+msgid "Contract terms"
+msgstr "合同条款"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__type
+msgid "Contract type"
+msgstr "合同类型"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.cost_parameter_manager_menu
+msgid "Cost"
+msgstr "成本结算清单"
+
+#. module: aop_sale
+#: model_terms:ir.actions.act_window,help:aop_sale.product_template_action_product
+#: model_terms:ir.actions.act_window,help:aop_sale.product_template_action_service_product
+msgid "Create a new product"
+msgstr "创建新产品"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_contract_project__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_contract_version__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_uid
+msgid "Created by"
+msgstr "创建人"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_contract_project__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_contract_version__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.customer_contract_manager_menu
+msgid "Custom contract manage"
+msgstr "客户合同管理"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.customer_info_manager_menu
+msgid "Custom information manage"
+msgstr "客户信息管理"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.customer_rate_manager_menu
+msgid "Custom rate manage"
+msgstr "客户费率管理"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.customer_service_product_manager_menu
+msgid "Custom service product manage"
+msgstr "客户服务产品管理"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.customer_manager_menu
+msgid "Customer"
+msgstr "客户管理"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_delivery_carrier
+msgid "Delivery Methods"
+msgstr "交货方式"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__aop_id
+msgid "Delivery carrier"
+msgstr "交货方式"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__des_partner_id
+msgid "Destination"
+msgstr "目的地"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_contract_project__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_contract_version__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__end_position
+msgid "End"
+msgstr "终点"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__date_end
+msgid "End date"
+msgstr "合同结束时间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__excluding_deductible
+msgid "Excluding deductible"
+msgstr "不计免赔"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__expiry_date
+msgid "Expire_date"
+msgstr "合同失效日"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.financial_manager_menu
+msgid "Financial"
+msgstr "财务管理"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.goods_manager_menu
+msgid "Goods manage"
+msgstr "货物管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__id
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__id
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__id
+#: model:ir.model.fields,field_description:aop_sale.field_contract_project__id
+#: model:ir.model.fields,field_description:aop_sale.field_contract_version__id
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__id
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__id
+msgid "ID"
+msgstr "ID"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.income_parameter_manager_menu
+msgid "Income"
+msgstr "收入结算清单"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.insurance_manager_menu
+#: model:ir.ui.menu,name:aop_sale.insurance_manager_sub_menu
+msgid "Insurance"
+msgstr "保险管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_data
+msgid "Insurance Data"
+msgstr "保险数据"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_partner_id
+msgid "Insurance Partner"
+msgstr "保险公司"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.insurance_manager_sub_menu_type
+msgid "Insurance Type"
+msgstr "保险类型"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_cover
+msgid "Insurance cover"
+msgstr "保险范围"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_contract_project____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_contract_version____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type____last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_contract_project__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_contract_version__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_contract_project__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_contract_version__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.location_manager_menu
+msgid "Location"
+msgstr "位置管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__route_id
+msgid "Location route"
+msgstr "路由"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.main_data_menu_root
+msgid "Main Data"
+msgstr "主数据"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__name
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__name
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__name
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__name
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_form
+msgid "Name"
+msgstr "名称"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__start_position
+msgid "Outset"
+msgstr "起点"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__partner_id
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__partner_id
+msgid "Partner"
+msgstr "业务伙伴"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.permission_manager_menu
+msgid "Permission manage"
+msgstr "权限管理"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.picking_manager_menu
+msgid "Picking manage"
+msgstr "作业管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__picking_type_id
+msgid "Picking type"
+msgstr "作业类型"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__service_product_id
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_delivery_carrier_form_inherit
 msgid "Product"
 msgstr "产品"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.product_manager_menu
+msgid "Product manage"
+msgstr "产品管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__product_id
+msgid "Products"
+msgstr "产品"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__project_id
+#: model:ir.model.fields,field_description:aop_sale.field_contract_project__name
+msgid "Project"
+msgstr "项目"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__purchase_id
+msgid "Purchase"
+msgstr "购买方"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.role_manager_menu
+msgid "Role manage"
+msgstr "角色管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__aop_route_id
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__route_id
+msgid "Route"
+msgstr "路线"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__route_line_ids
+msgid "Route Line"
+msgstr "路线明细"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.route_manager_menu
+msgid "Route manage"
+msgstr "路由管理"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_sale_order_line
@@ -26,11 +381,48 @@ msgid "Sales Order Line"
 msgstr "销售订单行"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__sequence
+msgid "Sequence"
+msgstr "序号"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__service_product_id
+#: model:ir.ui.menu,name:aop_sale.menu_service_product_variant_config_stock
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_picking_form_inherit
 msgid "Service Product"
 msgstr "服务产品"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route__product_id
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__service_product_id
+msgid "Service product"
+msgstr "服务产品"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.service_product_manager_menu
+msgid "Service product manage"
+msgstr "服务产品管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__source
+msgid "Source"
+msgstr "来源"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__partner_id
+msgid "Src partner"
+msgstr "源位置"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__date_start
+msgid "Start date"
+msgstr "合同开始时间"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.steps_manager_menu
+msgid "Steps manage"
+msgstr "步骤管理"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_stock_move
@@ -43,7 +435,151 @@ msgid "Stock Rule"
 msgstr "库存规则"
 
 #. module: aop_sale
+#: selection:aop.contract,type:0
+#: model:ir.ui.menu,name:aop_sale.supplier_manager_menu
+#: model:ir.ui.menu,name:aop_sale.supplier_manager_sub_menu
+msgid "Supplier"
+msgstr "供应商管理"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.supplier_contract_manager_menu
+msgid "Supplier contract manage"
+msgstr "供应商合同管理"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.supplier_rate_manager_menu
+msgid "Supplier rate manage"
+msgstr "供应商费率管理"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.supplier_service_product_manager_menu
+msgid "Supplier service product manage"
+msgstr "供应商服务产品管理"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.system_manager_menu
+msgid "System manage"
+msgstr "系统管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_type_id
+msgid "Type"
+msgstr "类型"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.user_manager_menu
+msgid "User manage"
+msgstr "用户管理"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__vin
 msgid "VIN"
-msgstr "VIN"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__version_id
+#: model:ir.model.fields,field_description:aop_sale.field_contract_version__name
+msgid "Version"
+msgstr "版本"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__warehouse_id
+#: model:ir.ui.menu,name:aop_sale.warehouse_info_location_manager_menu
+#: model:ir.ui.menu,name:aop_sale.warehouse_info_manager_menu
+msgid "Warehouse"
+msgstr "仓库"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_aop_route
+msgid "aop.route"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_aop_route_line
+msgid "aop.route.line"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__contract_id
+msgid "contract"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_contract_project
+msgid "contract.project"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_contract_version
+msgid "contract.version"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_insurance_management_type
+msgid "insurance.management.type"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__name
+msgid "name"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
+msgid "不计免赔"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_tree
+msgid "保险公司"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
+msgid "保险数据"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_insurance_management
+#: model:ir.model,name:aop_sale.model_insurance_management
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_tree
+msgid "保险管理"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_insurance_management_type
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_type_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_type_tree
+msgid "保险类型"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
+msgid "保险范围"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_tree
+msgid "保险说明"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.product_template_action_service_product
+msgid "服务产品"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.product_template_action_product
+msgid "货物"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_tree
+msgid "购买方"
+msgstr ""
 

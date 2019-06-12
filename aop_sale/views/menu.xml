@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!-- 顶级菜单 -->
+        <menuitem id="main_data_menu_root"
+                  name="Main Data"
+                  web_icon="base,static/description/settings.png"
+                  sequence="-100"
+        />
+
+        <!-- 一级菜单 -->
+        <menuitem id="system_manager_menu"
+                  parent="main_data_menu_root"
+                  name="System manage"
+                  sequence="10"
+
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="user_manager_menu"
+                  parent="system_manager_menu"
+                  name="User manage"
+                  action="base.action_res_users"
+                  sequence="10"
+        />
+
+
+        <!-- 二级菜单 -->
+        <menuitem id="role_manager_menu"
+                  parent="system_manager_menu"
+                  name="Role manage"
+                  action="base.action_res_groups"
+                  sequence="20"
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="permission_manager_menu"
+                  parent="system_manager_menu"
+                  name="Permission manage"
+                  action="base.action_res_groups"
+                  sequence="30"
+        />
+
+        <!-- 一级菜单 -->
+        <menuitem id="product_manager_menu"
+                  parent="main_data_menu_root"
+                  name="Product manage"
+                  sequence="20"
+
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="goods_manager_menu"
+                  parent="product_manager_menu"
+                  name="Goods manage"
+                  action="stock.product_template_action_product"
+                  sequence="10"
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="service_product_manager_menu"
+                  parent="product_manager_menu"
+                  name="Service product manage"
+                  action="product_template_action_service_product"
+                  sequence="20"
+        />
+
+        <!-- 一级菜单 -->
+        <menuitem id="customer_contract_manager_menu"
+                  parent="main_data_menu_root"
+                  name="Custom contract manage"
+                  sequence="30"
+
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="customer_rate_manager_menu"
+                  parent="customer_contract_manager_menu"
+                  name="Custom rate manage"
+                  action="action_aop_contract_view"
+                  sequence="10"
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="customer_service_product_manager_menu"
+                  parent="customer_contract_manager_menu"
+                  name="Custom service product manage"
+                  action="product_template_action_service_product"
+                  sequence="20"
+        />
+
+        <!-- 一级菜单 -->
+        <menuitem id="supplier_contract_manager_menu"
+                  parent="main_data_menu_root"
+                  name="Supplier contract manage"
+                  sequence="40"
+
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="supplier_rate_manager_menu"
+                  parent="supplier_contract_manager_menu"
+                  name="Supplier rate manage"
+                  action="action_aop_contract_view"
+                  sequence="10"
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="supplier_service_product_manager_menu"
+                  parent="supplier_contract_manager_menu"
+                  name="Supplier service product manage"
+                  action="product_template_action_service_product"
+                  sequence="20"
+        />
+
+        <!-- 一级菜单 -->
+        <menuitem id="picking_manager_menu"
+                  parent="main_data_menu_root"
+                  name="Picking manage"
+                  sequence="50"
+
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="steps_manager_menu"
+                  parent="picking_manager_menu"
+                  name="Steps manage"
+                  action="stock.action_picking_type_list"
+                  sequence="10"
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="route_manager_menu"
+                  parent="picking_manager_menu"
+                  name="Route manage"
+                  action="stock.action_routes_form"
+                  sequence="20"
+        />
+
+        <!-- 一级菜单 -->
+        <menuitem id="customer_manager_menu"
+                  parent="main_data_menu_root"
+                  name="Customer"
+                  sequence="60"
+
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="customer_info_manager_menu"
+                  parent="customer_manager_menu"
+                  name="Custom information manage"
+                  action="base.action_partner_form"
+                  sequence="10"
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="address_manager_menu"
+                  parent="customer_manager_menu"
+                  name="Address"
+                  action="base.action_partner_form"
+                  sequence="20"
+        />
+
+        <!-- 一级菜单 -->
+        <menuitem id="supplier_manager_menu"
+                  parent="main_data_menu_root"
+                  name="Supplier"
+                  sequence="70"
+
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="supplier_manager_sub_menu"
+                  parent="supplier_manager_menu"
+                  name="Supplier"
+                  action="base.action_partner_supplier_form"
+                  sequence="10"
+        />
+
+        <!-- 一级菜单 -->
+        <menuitem id="warehouse_info_manager_menu"
+                  parent="main_data_menu_root"
+                  name="Warehouse"
+                  sequence="80"
+
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="warehouse_info_location_manager_menu"
+                  parent="warehouse_info_manager_menu"
+                  name="Warehouse"
+                  action="stock.action_warehouse_form"
+                  sequence="10"
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="location_manager_menu"
+                  parent="warehouse_info_manager_menu"
+                  name="Location"
+                  action="stock.action_location_form"
+                  sequence="20"
+        />
+
+        <!-- 一级菜单 -->
+        <menuitem id="financial_manager_menu"
+                  parent="main_data_menu_root"
+                  name="Financial"
+                  sequence="90"
+
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="fee_type_manager_menu"
+                  parent="financial_manager_menu"
+                  name="Accounts"
+                  action="account.action_account_form"
+                  sequence="10"
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="income_parameter_manager_menu"
+                  parent="financial_manager_menu"
+                  name="Income"
+                  action="account.action_invoice_tree"
+                  sequence="20"
+        />
+
+        <!-- 二级菜单 -->
+        <menuitem id="cost_parameter_manager_menu"
+                  parent="financial_manager_menu"
+                  name="Cost"
+                  action="account.action_vendor_bill_template"
+                  sequence="30"
+        />
+
+        <!-- 物流网络->保险管理, 一级菜单 -->
+        <menuitem id="insurance_manager_menu"
+                  parent="stock.menu_stock_root"
+                  name="Insurance"
+                  sequence="30"
+        />
+
+        <!-- 物流网络->保险管理->保险管理, 二级菜单 -->
+        <menuitem id="insurance_manager_sub_menu"
+                  parent="insurance_manager_menu"
+                  name="Insurance"
+                  action="action_insurance_management"
+                  sequence="10"
+        />
+
+        <!-- 物流网络->保险管理->保险管理, 二级菜单 -->
+        <menuitem id="insurance_manager_sub_menu_type"
+                  parent="insurance_manager_menu"
+                  name="Insurance Type"
+                  action="action_insurance_management_type"
+                  sequence="10"
+        />
+
+    </data>
+</odoo>

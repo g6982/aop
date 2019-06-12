@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="product_template_action_product" model="ir.actions.act_window">
+        <field name="name">货物</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_type">form</field>
+        <field name="search_view_id" ref="stock.product_template_search_form_view_stock"/>
+        <field name="context">{"search_default_consumable": 1, 'default_type': 'product'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new product
+            </p>
+        </field>
+    </record>
+
+    <record id="product_template_action_service_product" model="ir.actions.act_window">
+        <field name="name">服务产品</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_type">form</field>
+        <field name="search_view_id" ref="stock.product_template_search_form_view_stock"/>
+        <field name="context">{"search_default_services": 1, 'default_type': 'product'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new product
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_service_product_variant_config_stock" name="Service Product" action="product_template_action_service_product"
+        parent="stock.menu_stock_inventory_control" sequence="0"/>
+
+</odoo>

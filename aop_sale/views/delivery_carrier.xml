@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_delivery_carrier_form_inherit">
+            <field name="name">delivery.carrier_from</field>
+            <field name="model">delivery.carrier</field>
+            <field name="inherit_id" ref="delivery.view_delivery_carrier_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="placeholder"></attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="string">Product</attribute>
+                </xpath>
+
+                <xpath expr="//label[@for='margin']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='margin']/.." position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='free_over']/.." position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='product_id']" position="after">
+
+                    <field name="service_product_id"/>
+                    <field name="start_position"/>
+                    <field name="end_position"/>
+
+
+                </xpath>
+
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
