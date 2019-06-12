@@ -10,6 +10,7 @@
     'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management', 'purchase', 'delivery', 'stock_picking_batch',
                 'barcodes', 'delivery_hs_code'],
     'data': [
+        'security/access_group.xml',
         'security/ir.model.access.csv',
         'views/insurance_management.xml',
         'views/service_product.xml',
@@ -19,5 +20,9 @@
         'views/sale_order_view.xml',
         'views/stock_move.xml',
         'views/menu.xml',
+        'views/base.xml',
+        'views/dispatch_order.xml',
+        'wizard/account_tax_invoice_wizard.xml',
+        'wizard/change_stock_picking.xml'
     ],
 }

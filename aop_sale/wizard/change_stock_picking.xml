@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_change_stock_picking_form" model="ir.ui.view">
+        <field name="name">Change picking</field>
+        <field name="model">change.stock.picking.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="picking_id"
+                           widget="many2many_tags"
+                           options="{'no_quick_create': True, 'no_create_edit': True}"
+                           string="picking"/>
+                </group>
+                <field name="line_ids">
+                    <tree editable="bottom">
+                        <field name="from_location"/>
+                        <field name="to_location"/>
+                    </tree>
+                </field>
+
+                <footer>
+                    <button name="dispatch_stock_picking" string="Dispatch picking" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

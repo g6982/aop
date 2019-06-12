@@ -21,3 +21,19 @@ class SaleOrderLine(models.Model):
             'service_product_id': self.service_product_id.id
         })
         return res
+
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    order_type = fields.Selection([('dispatch', 'Dispatch'), ('customer', 'Customer')],
+                                  store=True,
+                                  compute='_get_order_type')
+
+    @api.depends('partner_id')
+    def _get_order_type(self):
+        for order in self:
+            if self._context.get('order_type_context', False):
+                order.order_type = 'dispatch'
+            else:
+                order.order_type = 'customer'

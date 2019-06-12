@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="change_stock_picking" name="change_stock_picking" inherit_id="web.assets_backend">
+		<xpath expr="." position="inside">
+			<script type="text/javascript" src="/aop_sale/static/src/js/change_task.js" />
+			<script type="text/javascript" src="/aop_sale/static/src/js/tax_invoice.js" />
+		</xpath>
+    </template>
+
+</odoo>

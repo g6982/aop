@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="sale.product_template_action" model="ir.actions.act_window">
+        <field name="context">{"search_default_services":1, "search_default_filter_to_sell":1, "sale_multi_pricelist_product_template": 1}</field>
+    </record>
+
+    <record id="view_quotation_tree_inherit_aop_sal" model="ir.ui.view">
+        <field name="name">sale.order.tree.aop.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="mode">extension</field>
+        <field name="arch" type="xml">
+
+            <field name="amount_total" position="attributes">
+                <attribute name="groups">aop_sale.group_aop_sale_customers</attribute>
+            </field>
+
+        </field>
+    </record>
+
+    <record id="action_dispatch_with_onboarding" model="ir.actions.act_window">
+        <field name="name">Dispatch order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="sale.view_quotation_tree_with_onboarding"/>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="search_view_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+        <field name="domain">[('order_type', '=', 'dispatch')]</field>
+        <field name="context">{'search_default_my_quotation': 1, 'order_type_context': 'dispatch'}</field>
+    </record>
+
+     <menuitem id="dispatch_order"
+            name="Dispatch order"
+            action="action_dispatch_with_onboarding"
+            parent="sale.sale_order_menu"
+            sequence="2" groups="aop_sale.group_dispatch_right"/>
+
+
+</odoo>

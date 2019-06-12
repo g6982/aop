@@ -7,3 +7,5 @@ from . import insurance_management
 from . import aop_contract
 from . import delivery_carrier
 from . import mass_loss
+from . import account_invoice
+from . import account_tax_invoice
