@@ -257,5 +257,29 @@
                   sequence="10"
         />
 
+        <!-- 物流网络->质损管理, 一级菜单 -->
+        <menuitem id="mass_loss_manager_menu"
+                  parent="stock.menu_stock_root"
+                  name="Quality Management"
+                  sequence="50"
+        />
+
+        <!-- 物流网络->质损管理->质损单, 二级菜单 -->
+        <menuitem id="mass_loss_order_child_menu_order" parent="mass_loss_manager_menu" name="Quality Order"
+                  action="action_mass_loss_order" sequence="10"/>
+
+        <!-- 物流网络->质损管理->质损类型, 二级菜单 -->
+        <menuitem id="mass_loss_order_child_menu_type" parent="mass_loss_manager_menu" name="Quality type"
+                  action="action_mass_loss_type" sequence="20"/>
+
+        <!-- 物流网络->质损管理->质损部位, 二级菜单 -->
+        <menuitem id="mass_loss_order_child_menu_part" parent="mass_loss_manager_menu" name="Quality part"
+                  action="action_mass_loss_part" sequence="30"/>
+
+        <!-- 物流网络->质损管理->质损附件信息, 二级菜单 -->
+        <menuitem id="mass_loss_order_child_menu_attachment" parent="mass_loss_manager_menu" name="Quality attachment"
+                  action="action_mass_loss_attachment" sequence="40"/>
+
+
     </data>
 </odoo>

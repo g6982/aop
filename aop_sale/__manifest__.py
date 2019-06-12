@@ -7,11 +7,13 @@
         中集AOP
     """,
     'author': "1di0t",
-    'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management', 'purchase', 'delivery', 'stock_picking_batch'],
+    'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management', 'purchase', 'delivery', 'stock_picking_batch',
+                'barcodes', 'delivery_hs_code'],
     'data': [
         'security/ir.model.access.csv',
         'views/insurance_management.xml',
         'views/service_product.xml',
+        'views/mass_loss.xml',
         'views/aop_contract.xml',
         'views/delivery_carrier.xml',
         'views/sale_order_view.xml',

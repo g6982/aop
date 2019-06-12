@@ -6,3 +6,4 @@ from . import stock_rule
 from . import insurance_management
 from . import aop_contract
 from . import delivery_carrier
+from . import mass_loss

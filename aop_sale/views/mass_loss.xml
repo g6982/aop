@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="mass_loss_order_form" model="ir.ui.view">
+            <field name="name">mass.loss.order.form</field>
+            <field name="model">mass.loss.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="state" readonly="1" widget="statusbar"/>
+                        <button name="action_return_to_factory" id="action_return_to_factory" string="Return factory"
+                                class="btn-primary" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="picking_id" readonly="1"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="mass_attachment_ids" widget="many2many_tags"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="case_number"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="vin_code"/>
+                            </group>
+                            <group>
+                                <field name="box_no"/>
+                                <field name="brand_id"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="originator"/>
+                                <field name="found_department"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="responsible_department"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                                <field name="responsible_party"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="filing_fee"/>
+                            </group>
+                            <group>
+                                <field name="approval_fee"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="mass_loss_part"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                            <group>
+                                <field name="mass_loss_type"
+                                       options="{'no_create_edit': True, 'no_quick_create': True}"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="task_no"/>
+                                <field name="order_no"/>
+                            </group>
+                            <group>
+                                <field name="task_content"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="create_user"/>
+                                <field name="create_date"/>
+                            </group>
+                            <group>
+                                <field name="approval_user"/>
+                                <field name="confirm_user"/>
+                                <field name="confirm_time"/>
+                            </group>
+                            <group>
+                                <field name="close_user"/>
+                                <field name="close_time"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="payment_amount"/>
+                                <field name="balance"/>
+                                <field name="buyout_deductions_diff"/>
+                            </group>
+                            <group>
+                                <field name="debit_balance"/>
+                                <field name="guide_price"/>
+                                <field name="buyout_price"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="approval_opinion"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_tree" model="ir.ui.view">
+            <field name="name">mass.loss.order.tree</field>
+            <field name="model">mass.loss.order</field>
+            <field name="arch" type="xml">
+                <tree string="Quality order">
+                    <field name="name"/>
+                    <field name="vin_code"/>
+                    <field name="box_no"/>
+                    <field name="brand_id"/>
+                    <field name="found_department"/>
+                    <field name="originator"/>
+                    <field name="responsible_department"/>
+                    <field name="responsible_party"/>
+                    <field name="filing_fee"/>
+                    <field name="approval_fee"/>
+                    <field name="mass_loss_part"/>
+                    <field name="mass_loss_type"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_search" model="ir.ui.view">
+            <field name="name">mass.loss.order.search</field>
+            <field name="model">mass.loss.order</field>
+            <field name="arch" type="xml">
+                <search string="Quality order">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                    <field name="found_department"/>
+                    <field name="vin_code"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_type_form" model="ir.ui.view">
+            <field name="name">mass.loss.type.form</field>
+            <field name="model">mass.loss.type</field>
+            <field name="arch" type="xml">
+                <form string="Quality Type">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_type_tree" model="ir.ui.view">
+            <field name="name">mass.loss.type.tree</field>
+            <field name="model">mass.loss.type</field>
+            <field name="arch" type="xml">
+                <tree string="Quality type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_part_form" model="ir.ui.view">
+            <field name="name">mass.loss.part.form</field>
+            <field name="model">mass.loss.part</field>
+            <field name="arch" type="xml">
+                <form string="Quality type">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_attachment_form" model="ir.ui.view">
+            <field name="name">mass.loss.attachment.form</field>
+            <field name="model">mass.loss.attachment.template</field>
+            <field name="arch" type="xml">
+                <form string="Quality attachment">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="files" widget="many2many_binary"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_attachment_tree" model="ir.ui.view">
+            <field name="name">mass.loss.attachment.tree</field>
+            <field name="model">mass.loss.attachment.template</field>
+            <field name="arch" type="xml">
+                <tree string="Quality attachment">
+                    <field name="name"/>
+                    <field name="files"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mass_loss_order_part_tree" model="ir.ui.view">
+            <field name="name">mass.loss.part.tree</field>
+            <field name="model">mass.loss.part</field>
+            <field name="arch" type="xml">
+                <tree string="Quality part">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_mass_loss_order" model="ir.actions.act_window">
+            <field name="name">Quality order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mass.loss.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+        </record>
+
+        <record id="action_mass_loss_type" model="ir.actions.act_window">
+            <field name="name">Quality type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mass.loss.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_mass_loss_part" model="ir.actions.act_window">
+            <field name="name">Quality part</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mass.loss.part</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_mass_loss_attachment" model="ir.actions.act_window">
+            <field name="name">Quality attachment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mass.loss.attachment.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

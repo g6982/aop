@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190305\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 02:50+0000\n"
-"PO-Revision-Date: 2019-06-12 02:50+0000\n"
+"POT-Creation-Date: 2019-06-12 03:41+0000\n"
+"PO-Revision-Date: 2019-06-12 03:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,6 +31,11 @@ msgid "Accounts"
 msgstr "费目管理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_needaction
+msgid "Action Needed"
+msgstr "前置操作"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__effective_date
 msgid "Active date"
 msgstr "合同生效日"
@@ -51,14 +56,94 @@ msgid "Aop Route ID"
 msgstr "路由"
 
 #. module: aop_sale
+#: selection:mass.loss.order,state:0
+msgid "Apply"
+msgstr "申请"
+
+#. module: aop_sale
+#: selection:mass.loss.order,state:0
+msgid "Approval"
+msgstr "审批"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__approval_opinion
+msgid "Approval Options"
+msgstr "审核意见"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__approval_fee
+msgid "Approval fee"
+msgstr "审批费用"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__approval_user
+msgid "Approval user"
+msgstr "审批人"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_attachment_count
+msgid "Attachment Count"
+msgstr "附件数量"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__balance
+msgid "Balance"
+msgstr "余额"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__box_no
+msgid "Box no"
+msgstr "厢号"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__brand_id
+msgid "Brand"
+msgstr "品牌"
+
+#. module: aop_sale
 #: selection:aop.contract,type:0
 msgid "Buyer"
 msgstr "需方合同"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__buyout_price
+msgid "Buyout Price"
+msgstr "买断价"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__buyout_deductions_diff
+msgid "Buyout deductions"
+msgstr "买断扣款差额"
+
+#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_form
 msgid "Carrier"
 msgstr "承运商"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__case_number
+msgid "Case Number"
+msgstr "报案号"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__close_time
+msgid "Close Time"
+msgstr "关闭时间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__close_user
+msgid "Closer"
+msgstr "关闭人"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__confirm_time
+msgid "Confirm Time"
+msgstr "确认时间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__confirm_user
+msgid "Confirm user"
+msgstr "确认人"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_aop_contract_view
@@ -107,6 +192,10 @@ msgstr "创建新产品"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__create_uid
 msgid "Created by"
 msgstr "创建人"
 
@@ -118,8 +207,17 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__create_date
 msgid "Created on"
 msgstr "创建时间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__create_user
+msgid "Creator"
+msgstr "建立者"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.customer_contract_manager_menu
@@ -147,6 +245,16 @@ msgid "Customer"
 msgstr "客户管理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__date
+msgid "Date"
+msgstr "日期"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__debit_balance
+msgid "Debit Balance"
+msgstr "扣款差额"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_delivery_carrier
 msgid "Delivery Methods"
 msgstr "交货方式"
@@ -169,8 +277,22 @@ msgstr "目的地"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__display_name
 msgid "Display Name"
 msgstr "显示名称"
+
+#. module: aop_sale
+#: selection:mass.loss.order,state:0
+msgid "Done"
+msgstr "完成"
+
+#. module: aop_sale
+#: selection:mass.loss.order,state:0
+msgid "Draft"
+msgstr "草稿"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__end_position
@@ -193,14 +315,44 @@ msgid "Expire_date"
 msgstr "合同失效日"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__files
+msgid "Files"
+msgstr "文件"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__filing_fee
+msgid "Filing fee"
+msgstr "申报费用"
+
+#. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.financial_manager_menu
 msgid "Financial"
 msgstr "财务管理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_follower_ids
+msgid "Followers"
+msgstr "关注者"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_channel_ids
+msgid "Followers (Channels)"
+msgstr "关注者(渠道)"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "关注者(业务伙伴)"
+
+#. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.goods_manager_menu
 msgid "Goods manage"
 msgstr "货物管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__guide_price
+msgid "Guide Price"
+msgstr "指导价"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__id
@@ -210,8 +362,27 @@ msgstr "货物管理"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__id
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__id
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__id
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__id
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_unread
+msgid "If checked new messages require your attention."
+msgstr "查看是否有需要留意的新消息。"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "确认后, 出现提示消息."
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "如果勾选此项， 某些消息将会产生传递错误。"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.income_parameter_manager_menu
@@ -230,12 +401,19 @@ msgid "Insurance Data"
 msgstr "保险数据"
 
 #. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_insurance_management
+msgid "Insurance Management"
+msgstr "保险管理"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_partner_id
 msgid "Insurance Partner"
 msgstr "保险公司"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.insurance_manager_sub_menu_type
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_type_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_type_tree
 msgid "Insurance Type"
 msgstr "保险类型"
 
@@ -245,6 +423,22 @@ msgid "Insurance cover"
 msgstr "保险范围"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_tree
+msgid "Insurance management"
+msgstr "保险管理"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_insurance_management_type
+msgid "Insurance type"
+msgstr "保险类型"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_is_follower
+msgid "Is Follower"
+msgstr "关注者"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line____last_update
@@ -252,6 +446,10 @@ msgstr "保险范围"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type____last_update
 msgid "Last Modified on"
 msgstr "最后修改日"
 
@@ -263,6 +461,10 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__write_uid
 msgid "Last Updated by"
 msgstr "最后更新者"
 
@@ -274,6 +476,10 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__write_date
 msgid "Last Updated on"
 msgstr "最后更新时间"
 
@@ -288,23 +494,110 @@ msgid "Location route"
 msgstr "路由"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_main_attachment_id
+msgid "Main Attachment"
+msgstr "附件"
+
+#. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.main_data_menu_root
 msgid "Main Data"
 msgstr "主数据"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__mass_attachment_ids
+msgid "Mass Attachment"
+msgstr "质损附件信息"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__name
+msgid "Mass Loss Name"
+msgstr "质损单号"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_mass_loss_order
+msgid "Mass Loss Order"
+msgstr "质损单"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__name
+msgid "Mass Loss Part"
+msgstr "质损部位"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__mass_loss_type
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__name
+msgid "Mass Loss Type"
+msgstr "质损类型"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__mass_loss_part
+msgid "Mass Loss part"
+msgstr "质损部位"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_has_error
+msgid "Message Delivery error"
+msgstr "消息递送错误"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_ids
+msgid "Messages"
+msgstr "消息"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__name
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__name
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__name
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_form
 msgid "Name"
 msgstr "名称"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__note
+msgid "Note"
+msgstr "备注"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_needaction_counter
+msgid "Number of Actions"
+msgstr "操作次数"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_has_error_counter
+msgid "Number of error"
+msgstr "错误个数"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "需要操作消息数量"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "递送错误消息数量"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_unread_counter
+msgid "Number of unread messages"
+msgstr "未读消息数量"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__order_no
+msgid "Order no"
+msgstr "订单号"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__start_position
 msgid "Outset"
 msgstr "起点"
+
+#. module: aop_sale
+#: sql_constraint:mass.loss.part:0
+msgid "Part name must unique"
+msgstr "质损部位必须唯一"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__partner_id
@@ -313,9 +606,19 @@ msgid "Partner"
 msgstr "业务伙伴"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__payment_amount
+msgid "Payment Amount"
+msgstr "付款金额"
+
+#. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.permission_manager_menu
 msgid "Permission manage"
 msgstr "权限管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__picking_id
+msgid "Picking"
+msgstr "分拣"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.picking_manager_menu
@@ -353,6 +656,56 @@ msgstr "项目"
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__purchase_id
 msgid "Purchase"
 msgstr "购买方"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.mass_loss_manager_menu
+msgid "Quality Management"
+msgstr "质损管理"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.mass_loss_order_child_menu_order
+msgid "Quality Order"
+msgstr "质损单"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_type_form
+msgid "Quality Type"
+msgstr "质损类型"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_mass_loss_attachment
+#: model:ir.ui.menu,name:aop_sale.mass_loss_order_child_menu_attachment
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_attachment_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_attachment_tree
+msgid "Quality attachment"
+msgstr "质损附件信息"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_mass_loss_order
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_search
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_tree
+msgid "Quality order"
+msgstr "质损单"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_mass_loss_part
+#: model:ir.ui.menu,name:aop_sale.mass_loss_order_child_menu_part
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_part_tree
+msgid "Quality part"
+msgstr "质损部位"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_mass_loss_type
+#: model:ir.ui.menu,name:aop_sale.mass_loss_order_child_menu_type
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_part_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_type_tree
+msgid "Quality type"
+msgstr "质损类型"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
+msgid "Return factory"
+msgstr "返厂"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.role_manager_menu
@@ -420,6 +773,11 @@ msgid "Start date"
 msgstr "合同开始时间"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__state
+msgid "State"
+msgstr "省/ 州"
+
+#. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.steps_manager_menu
 msgid "Steps manage"
 msgstr "步骤管理"
@@ -462,9 +820,34 @@ msgid "System manage"
 msgstr "系统管理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__task_content
+msgid "Task Content"
+msgstr "作业内容"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__task_no
+msgid "Task no"
+msgstr "任务编号"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_type_id
 msgid "Type"
 msgstr "类型"
+
+#. module: aop_sale
+#: sql_constraint:mass.loss.type:0
+msgid "Type name must unique"
+msgstr "质损类型必须唯一"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_unread
+msgid "Unread Messages"
+msgstr "未读消息"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "未读消息计数器"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.user_manager_menu
@@ -472,6 +855,7 @@ msgid "User manage"
 msgstr "用户管理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__vin_code
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__vin
 msgid "VIN"
 msgstr ""
@@ -490,6 +874,16 @@ msgid "Warehouse"
 msgstr "仓库"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__website_message_ids
+msgid "Website Messages"
+msgstr "网站信息"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_mass_loss_order__website_message_ids
+msgid "Website communication history"
+msgstr "网站沟通记录"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_aop_route
 msgid "aop.route"
 msgstr ""
@@ -502,7 +896,7 @@ msgstr ""
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__contract_id
 msgid "contract"
-msgstr ""
+msgstr "合同"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_contract_project
@@ -515,56 +909,53 @@ msgid "contract.version"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__found_department
+msgid "found department"
+msgstr "发现部门"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_insurance_management_type
 msgid "insurance.management.type"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_mass_loss_attachment_template
+msgid "mass.loss.attachment.template"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_mass_loss_part
+msgid "mass.loss.part"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_mass_loss_type
+msgid "mass.loss.type"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__name
 msgid "name"
-msgstr ""
+msgstr "合同名称"
 
 #. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
-msgid "不计免赔"
-msgstr ""
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__originator
+msgid "originator"
+msgstr "发站"
 
 #. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_tree
-msgid "保险公司"
-msgstr ""
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__responsible_department
+msgid "responsible department"
+msgstr "责任部门"
 
 #. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
-msgid "保险数据"
-msgstr ""
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__responsible_party
+msgid "responsible party"
+msgstr "责任方"
 
 #. module: aop_sale
-#: model:ir.actions.act_window,name:aop_sale.action_insurance_management
 #: model:ir.model,name:aop_sale.model_insurance_management
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_tree
 msgid "保险管理"
-msgstr ""
-
-#. module: aop_sale
-#: model:ir.actions.act_window,name:aop_sale.action_insurance_management_type
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_type_form
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_type_tree
-msgid "保险类型"
-msgstr ""
-
-#. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
-msgid "保险范围"
-msgstr ""
-
-#. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_tree
-msgid "保险说明"
 msgstr ""
 
 #. module: aop_sale
@@ -577,9 +968,16 @@ msgstr ""
 msgid "货物"
 msgstr ""
 
-#. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_tree
-msgid "购买方"
-msgstr ""
 
+#. module: stock
+#: model:ir.actions.act_window,name:stock.quantsact
+#: model:ir.actions.report,name:stock.action_report_inventory
+#: model:ir.model,name:stock.model_stock_inventory
+#: model:ir.model.fields,field_description:stock.field_stock_inventory_line__inventory_id
+#: model:ir.model.fields,field_description:stock.field_stock_move__inventory_id
+#: model:ir.model.fields,field_description:stock.field_stock_track_confirmation__inventory_id
+#: model:ir.ui.menu,name:stock.menu_stock_root
+#: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:stock.view_stock_quant_pivot
+msgid "Inventory"
+msgstr "物流网络"
