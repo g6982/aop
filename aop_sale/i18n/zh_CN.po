@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190305\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 04:47+0000\n"
-"PO-Revision-Date: 2019-06-12 04:47+0000\n"
+"POT-Creation-Date: 2019-06-12 05:07+0000\n"
+"PO-Revision-Date: 2019-06-12 05:07+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -166,6 +166,11 @@ msgid "Confirm user"
 msgstr "确认人"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__child_ids
+msgid "Contains"
+msgstr "包含"
+
+#. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_aop_contract_view
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__is_formal
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_tree
@@ -274,13 +279,9 @@ msgstr "客户服务产品管理"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.customer_manager_menu
-msgid "Customer"
-msgstr "客户管理"
-
-#. module: aop_sale
 #: selection:sale.order,order_type:0
 msgid "Customer"
-msgstr "客户订单"
+msgstr "客户管理"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__date
@@ -356,7 +357,7 @@ msgstr "草稿"
 #. module: aop_sale
 #: model:res.groups,name:aop_sale.group_aop_sale_scheduling
 msgid "Draft order"
-msgstr "临时订单"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__end_position
@@ -584,6 +585,11 @@ msgid "Last Updated on"
 msgstr "最后更新时间"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__parent_left
+msgid "Left Parent"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__line_ids
 msgid "Line"
 msgstr "行"
@@ -708,6 +714,11 @@ msgstr "订单号"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__start_position
 msgid "Outset"
 msgstr "起点"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__parent_id
+msgid "Parent warehouse"
+msgstr "上级仓库"
 
 #. module: aop_sale
 #: sql_constraint:mass.loss.part:0
@@ -842,6 +853,11 @@ msgstr "对账批次号"
 #: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
 msgid "Return factory"
 msgstr "返厂"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__parent_right
+msgid "Right Parent"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.role_manager_menu
@@ -1038,6 +1054,7 @@ msgid "Version"
 msgstr "版本"
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_stock_warehouse
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__warehouse_id
 #: model:ir.ui.menu,name:aop_sale.warehouse_info_location_manager_menu
 #: model:ir.ui.menu,name:aop_sale.warehouse_info_manager_menu
