@@ -656,6 +656,7 @@ msgid "Messages"
 msgstr "消息"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__name
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__name
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__name
@@ -1181,3 +1182,15 @@ msgstr ""
 msgid "货物"
 msgstr ""
 
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.account_tax_invoice_action
+#: model:ir.ui.menu,name:aop_sale.account_tax_invoice
+#: model:ir.ui.menu,name:aop_sale.account_tax_invoice_menu
+msgid "Tax invoice"
+msgstr "发票"
+
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.train_manage
+msgid "Trains"
+msgstr "火车"

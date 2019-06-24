@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="account_tax_invoice_action" model="ir.actions.act_window">
+            <field name="name">Tax invoice</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.tax.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

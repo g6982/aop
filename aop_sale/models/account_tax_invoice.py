@@ -9,3 +9,5 @@ _logger = logging.getLogger(__name__)
 
 class AccountTaxInvoice(models.Model):
     _name = 'account.tax.invoice'
+
+    name = fields.Char('Name')

@@ -281,5 +281,18 @@
                   action="action_mass_loss_attachment" sequence="40"/>
 
 
+        <!--火车-->
+        <menuitem id="train_manage"
+                  name="Trains"
+                  web_icon="aop_sale,static/description/train.png"
+                  sequence="90"
+        />
+        <menuitem action="fleet.fleet_vehicle_action" parent="train_manage" id="train_menu"/>
+
+        <!--税务发票-->
+        <menuitem id="account_tax_invoice" parent="account.menu_finance" name="Tax invoice"/>
+
+        <menuitem id="account_tax_invoice_menu" parent="account_tax_invoice" action="account_tax_invoice_action"
+                  name="Tax invoice"/>
     </data>
 </odoo>

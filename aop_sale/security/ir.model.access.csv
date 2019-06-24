@@ -10,3 +10,4 @@ access_mass_loss_order,access_mass_loss_order,model_mass_loss_order,base.group_u
 access_mass_loss_attachment_template,access_mass_loss_attachment_template,model_mass_loss_attachment_template,base.group_user,1,1,1,1
 access_mass_loss_type,access_mass_loss_type,model_mass_loss_type,base.group_user,1,1,1,1
 access_mass_loss_part,access_mass_loss_part,model_mass_loss_part,base.group_user,1,1,1,1
+access_tax_invoice,access_account_tax_invoice,model_account_tax_invoice,base.group_user,1,1,1,1

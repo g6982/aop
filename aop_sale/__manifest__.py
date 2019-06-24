@@ -19,6 +19,7 @@
         'views/delivery_carrier.xml',
         'views/sale_order_view.xml',
         'views/stock_move.xml',
+        'views/account_tax_invoice.xml',
         'views/stock_warehouse.xml',
         'views/menu.xml',
         'views/base.xml',
