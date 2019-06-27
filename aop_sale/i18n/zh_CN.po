@@ -656,7 +656,6 @@ msgid "Messages"
 msgstr "消息"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__name
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__name
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__name

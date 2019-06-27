@@ -13,5 +13,5 @@ class DeliveryCarrier(models.Model):
     contract_id = fields.Many2one('aop.contract', 'contract')
     route_id = fields.Many2one('stock.location.route', 'Route')
     service_product_id = fields.Many2one('product.product', string='Service product')
-    start_position = fields.Char('Outset')
-    end_position = fields.Char('End')
+    start_position = fields.Many2one('res.partner', 'Outset')
+    end_position = fields.Many2one('res.partner', 'End')
