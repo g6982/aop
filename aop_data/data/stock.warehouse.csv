@@ -1,0 +1,15 @@
+"id","name","code","lot_stock_id:id"
+stock_warehouse_1,"阿克苏线边库","AKSXB",stock_location_2
+stock_warehouse_2,"三枰站","SPZ",stock_location_29
+stock_warehouse_3,"三枰站线边库","SPZXB",stock_location_28
+stock_warehouse_4,"中铁缓存库","ZTHCK",stock_location_41
+stock_warehouse_5,"团结村站","TJCZ",stock_location_37
+stock_warehouse_6,"团结村线边库","TJCXB",stock_location_35
+stock_warehouse_7,"柳南中转库","LNZZK",stock_location_22
+stock_warehouse_8,"柳南站","LNZ",stock_location_23
+stock_warehouse_9,"柳南线边库","LNXBK",stock_location_19
+stock_warehouse_10,"河西（特货）","HETH",stock_location_17
+stock_warehouse_11,"阿克苏站","AKSZ",stock_location_4
+stock_warehouse_12,"黄岛站","HDZ",stock_location_13
+stock_warehouse_13,"黄岛线边库","HDXBK",stock_location_11
+stock_warehouse_14,"福特主机厂","FTZJC",stock_location_9

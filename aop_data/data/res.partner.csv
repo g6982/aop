@@ -1,0 +1,4 @@
+id,name,is_company,parent_id:id,type,customer,supplier,street,zip,city,state_id:id,country_id:id,property_stock_customer:id
+res_partner_1,重庆长安福特,1,,,1,0,104 Saint Mary Avenue,94059,重庆市,l10n_cn.state_CQ,base.cn,
+res_partner_2,重庆长安福特送车地址,0,res_partner_1,delivery,1,0,227 Jackson Road,94061,重庆市,l10n_cn.state_CQ,base.cn,stock_location_42
+res_partner_3,外部供应商,1,,,0,1,104 Saint Mary Avenue,94059,重庆市,l10n_cn.state_CQ,base.cn,

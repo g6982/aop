@@ -1,0 +1,13 @@
+id,name,product_categ_selectable,warehouse_selectable,product_selectable,sale_selectable,rule_ids/name,rule_ids/action,rule_ids/picking_type_id:id,rule_ids/location_src_id:id,rule_ids/location_id:id,rule_ids/procure_method
+stock_location_route_1,重庆长安福特VDC库 -> 新疆阿克苏秋林汽车公司,False,False,False,True,重庆长安福特VDC库->团结村线边库,拉,stock_picking_type_2,stock_location_43,stock_location_35,make_to_stock
+,,,,,,团结村线边库->团结村站,拉,stock_picking_type_13,stock_location_35,stock_location_39,make_to_order
+,,,,,,团结村站/加固起始位置->团结村站/加固结束位置,拉,stock_picking_type_10,stock_location_39,stock_location_38,make_to_order
+,,,,,,团结村站/加固结束位置->三坪站/解固起始位置,拉,stock_picking_type_17,stock_location_38,stock_location_33,make_to_order
+,,,,,,三坪站/解固起始位置->三坪站/解固结束位置,拉,stock_picking_type_14,stock_location_33,stock_location_32,make_to_order
+,,,,,,三坪站/解固结束位置->三坪站线边库,拉,stock_picking_type_26,stock_location_32,stock_location_28,make_to_order
+,,,,,,三坪站线边库->三坪站/加固起始位置,拉,stock_picking_type_41,stock_location_28,stock_location_28,make_to_order
+,,,,,,三坪站/加固起始位置->三坪站/加固结束位置,拉,stock_picking_type_18,stock_location_31,stock_location_30,make_to_order
+,,,,,,三坪站/加固结束位置->阿克苏站/解固起始位置,拉,stock_picking_type_28,stock_location_30,stock_location_6,make_to_order
+,,,,,,阿克苏站/解固起始位置->阿克苏站/解固结束位置,拉,stock_picking_type_29,stock_location_6,stock_location_5,make_to_order
+,,,,,,阿克苏站/解固结束位置->阿克苏线边库,拉,stock_picking_type_34,stock_location_5,stock_location_2,make_to_order
+,,,,,,阿克苏线边库->新疆阿克苏秋林汽车贸易有限公司,拉,stock_picking_type_38,stock_location_2,stock_location_42,make_to_order
