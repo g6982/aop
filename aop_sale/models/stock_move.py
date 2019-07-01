@@ -37,9 +37,11 @@ class StockMove(models.Model):
         res = super(StockMove, self)._assign_picking_post_process(new)
         stock_location_id = self._get_product_stock_location(self.product_id.id, self.vin_id)
         if stock_location_id == self.location_id.id:
-            self._action_confirm()
-            self._action_assign()
+            # self._action_confirm()
+            # self._action_assign()
             # self.state = 'assigned'
-            self.picking_id.state = 'assigned'
+            # 如果存在库存，从库存中获取，这样不依赖于其他的规则
+            self.procure_method = 'make_to_stock'
+            # self.picking_id.state = 'assigned'
             self.picking_id.action_assign()
         return res
