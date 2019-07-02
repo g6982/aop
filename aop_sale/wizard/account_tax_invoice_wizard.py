@@ -62,6 +62,7 @@ class AccountTaxInvoiceWizard(models.TransientModel):
             }))
         return line_data
 
+    # 全部
     def _compute_invoice_amount_all(self, line_id, tax_invoice_number, invoice_line_ids):
         left_amount = line_id.price_subtotal - line_id.tax_invoice_amount
         line_id.write({
@@ -69,6 +70,7 @@ class AccountTaxInvoiceWizard(models.TransientModel):
         })
         return round(float(left_amount) * 1000, -1) / 1000
 
+    # 部分-金额
     def _compute_invoice_amount_part_amount(self, line_id, tax_invoice_number, invoice_line_ids):
         left_amount = line_id.price_subtotal - line_id.tax_invoice_amount
         if left_amount > tax_invoice_number / len(invoice_line_ids):
@@ -83,6 +85,7 @@ class AccountTaxInvoiceWizard(models.TransientModel):
             })
             return left_amount
 
+    # 部分-比率
     def _compute_invoice_amount_part_percent(self, line_id, tax_invoice_number, invoice_line_ids):
         res = (line_id.price_subtotal - line_id.tax_invoice_amount) * (tax_invoice_number / 100)
         line_id.write({

@@ -25,6 +25,10 @@ class AccountTaxInvoice(models.Model):
 
     tax_invoice_no = fields.Char('Tax invoice no')
 
+    @api.onchange('invoice_line_ids')
+    def _onchange_invoice_line_ids(self):
+        pass
+
 
 class AccountTaxInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
