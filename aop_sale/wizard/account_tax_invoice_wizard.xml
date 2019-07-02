@@ -7,7 +7,12 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="tax_invoice_no"/>
+                        <group>
+                            <field name="tax_invoice_no"/>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                        </group>
                     </group>
                     <notebook>
                         <page string="Settlement list">

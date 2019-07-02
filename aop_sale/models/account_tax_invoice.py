@@ -18,8 +18,12 @@ class AccountTaxInvoice(models.Model):
     _name = 'account.tax.invoice'
     _description = 'account tax invoice'
 
+    _sql_constrain = [('unique_tax_no', 'unique(tax_invoice_no, company_id)', 'Tax invoice no must be unique!')]
+
     invoice_line_ids = fields.One2many('account.tax.invoice.line', 'invoice_id', string='Invoice Lines',
                                        readonly=True, states={'draft': [('readonly', False)]}, copy=True)
+
+    tax_invoice_no = fields.Char('Tax invoice no')
 
 
 class AccountTaxInvoiceLine(models.Model):
