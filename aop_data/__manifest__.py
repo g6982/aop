@@ -20,19 +20,20 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['stock', 'sale', 'sale_stock', 'account', 'purchase', 'hr_expense', 'aop_sale'],
+    'depends': ['base', 'stock', 'sale', 'sale_stock', 'account', 'purchase', 'hr_expense', 'product', 'aop_sale'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
         # 'views/views.xml',
         # 'views/templates.xml',
+        'security/res_config_settings.xml',
         'data/ir.sequence.csv',
         'data/stock.location.csv',
         'data/stock.warehouse.csv',
         'data/stock.picking.type.csv',
         'data/stock.location.route.csv',
-        'data/product.template.csv',
+        'data/product.product.csv',
         'data/res.partner.csv',
         'data/res.users.csv',
 
