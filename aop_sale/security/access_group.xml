@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+
     <record id="group_aop_sale_customers" model="res.groups">
         <field name="name">Order</field>
         <field name="category_id" ref="base.module_category_sales_management"/>
@@ -17,4 +18,5 @@
         <field name="category_id" ref="base.module_category_sales_management"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+
 </odoo>
