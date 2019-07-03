@@ -65,3 +65,17 @@ msgstr "成本结算清单"
 #: model_terms:ir.ui.view,arch_db:account.account_journal_dashboard_kanban_view
 msgid "Bills"
 msgstr "成本结算清单"
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_product_category__property_account_income_categ_id
+#: model:ir.model.fields,field_description:account.field_product_template__property_account_income_id
+#: model_terms:ir.ui.view,arch_db:account.view_account_chart_template_seacrh
+msgid "Income Account"
+msgstr "收入费目"
+
+#. module: account
+#: model:ir.model.fields,field_description:account.field_product_category__property_account_expense_categ_id
+#: model:ir.model.fields,field_description:account.field_product_template__property_account_expense_id
+#: model_terms:ir.ui.view,arch_db:account.view_account_chart_template_seacrh
+msgid "Expense Account"
+msgstr "成本费目"
