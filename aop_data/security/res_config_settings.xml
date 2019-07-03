@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+
+
+    <!--
+        默认开启配置
+        sale模块：
+            变体和选项;
+            计量单位;
+            客户地址;
+            订单特定路线;
+
+        stock模块:
+            交货包裹;
+            批次和序列号;
+            储存位置;
+            多仓库;
+            多步路由;
+
+        仅aop_data模块初始安装时有效
+    -->
+    <record id="base.group_user" model="res.groups">
+            <field name="implied_ids"
+                   eval="[  (4, ref('product.group_product_variant')),
+                            (4, ref('uom.group_uom')),
+                            (4, ref('sale.group_delivery_invoice_address')),
+                            (4, ref('sale_stock.group_route_so_lines')),
+                            (4, ref('stock.group_tracking_lot')),
+                            (4, ref('stock.group_production_lot')),
+                            (4, ref('stock.group_stock_multi_locations')),
+                            (4, ref('stock.group_stock_multi_warehouses')),
+                            (4, ref('stock.group_adv_location'))
+
+                   ]"/>
+        </record>
+
+
+
+</odoo>
