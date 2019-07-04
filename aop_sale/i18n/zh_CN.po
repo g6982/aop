@@ -1840,7 +1840,7 @@ msgstr "开票金额"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__tax_invoice_no
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_no
 msgid "Tax invoice no"
-msgstr "批次号"
+msgstr "对账批次号"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_number
