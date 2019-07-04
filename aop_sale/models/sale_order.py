@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 import logging
 from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
@@ -139,6 +139,6 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         for line in self.order_line:
             if not line.mapped('vin'):
-                raise UserError('You can not make order until the product have vin or stock.')
+                raise UserError(_('You can not make order until the product have vin or stock.'))
         return
         return super(SaleOrder, self).action_confirm()
