@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models
 import logging
-
+from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 
 
@@ -13,6 +13,7 @@ class SaleOrderLine(models.Model):
     service_product_id = fields.Many2one('product.product', string='Product', domain=[('sale_ok', '=', True)],
                                          ondelete='restrict')
     from_location_id = fields.Many2one('res.partner', 'From location')
+    to_location_id = fields.Many2one('res.partner', 'To location')
 
     # 新增 服务产品
     @api.multi
@@ -60,10 +61,14 @@ class SaleOrder(models.Model):
 
     # 路线的选择，使用开始位置和结束位置，多条，自己选择
     # 使用位置，每一个客户，对应一个默认的仓库的位置
-    def _find_route_id(self, res):
+    def _find_route_id(self, res, line_id):
         # 获取源地址和目的地址
-        from_location_id = res.from_location_id.property_stock_customer
-        to_location_id = res.partner_id.property_stock_customer
+        # from_location_id = res.from_location_id.property_stock_customer
+        # to_location_id = res.partner_id.property_stock_customer
+
+        # sale order line 的from 和 to
+        from_location_id = line_id.from_location_id
+        to_location_id = line_id.to_location_id
 
         if not from_location_id or not to_location_id:
             return False
@@ -93,15 +98,15 @@ class SaleOrder(models.Model):
             return res
 
         data = []
-        for x in res.order_line:
+        for line_id in res.order_line:
 
             # 获取数据
-            service_product_id = self._find_service_product(contract_id, x)
-            route_id = self._find_route_id(res)
+            service_product_id = self._find_service_product(contract_id, line_id)
+            route_id = self._find_route_id(res, line_id)
 
             if service_product_id:
                 data.append(
-                    (1, x.id, {
+                    (1, line_id.id, {
                         'service_product_id': service_product_id.id,
                         'route_id': route_id.id if route_id else False
                     })
@@ -111,3 +116,11 @@ class SaleOrder(models.Model):
                 'order_line': data
             })
         return res
+
+    @api.multi
+    def action_confirm(self):
+        for line in self.order_line:
+            if not line.mapped('vin'):
+                raise UserError('You can not make order until the product have vin or stock.')
+        return
+        return super(SaleOrder, self).action_confirm()
