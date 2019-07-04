@@ -22,6 +22,7 @@
         'views/account_tax_invoice.xml',
         'views/stock_warehouse.xml',
         'views/stock_rule_view.xml',
+        'views/stock_picking.xml',
         'views/stock_location_route.xml',
         'views/menu.xml',
         'views/base.xml',

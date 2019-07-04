@@ -21,6 +21,7 @@
                            options="{'no_quick_create': True, 'no_create_edit': True}"
                            domain="[('type','=','service')]" attrs="{'required': 0}"/>
                     <field name="from_location_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                    <field name="to_location_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                     <field name="vin" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                 </xpath>
 
