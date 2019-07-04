@@ -14,6 +14,7 @@ class SaleOrderLine(models.Model):
                                          ondelete='restrict')
     from_location_id = fields.Many2one('res.partner', 'From location')
     to_location_id = fields.Many2one('res.partner', 'To location')
+    delivery_count = fields.Integer('Count', related='order_id.delivery_count')
 
     # 新增 服务产品
     @api.multi
@@ -24,6 +25,23 @@ class SaleOrderLine(models.Model):
             'vin_id': self.vin.id
         })
         return res
+
+    @api.multi
+    def name_get(self):
+        result = []
+        for so_line in self.sudo():
+            name = '%s - %s' % (
+            so_line.order_id.name, so_line.name.split('\n')[0] if so_line.name else [] or so_line.product_id.name)
+            if so_line.order_partner_id.ref:
+                name = '%s (%s)' % (name, so_line.order_partner_id.ref)
+            result.append((so_line.id, name))
+        return result
+
+    def action_confirm_sale_order(self):
+        return self.order_id.action_confirm() if self.order_id else False
+
+    def action_view_delivery(self):
+        return self.order_id.action_view_delivery() if self.order_id else False
 
 
 class SaleOrder(models.Model):

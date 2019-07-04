@@ -183,7 +183,6 @@
                   parent="main_data_menu_root"
                   name="Warehouse"
                   sequence="80"
-
         />
 
         <!-- 二级菜单 -->
@@ -294,5 +293,11 @@
 
         <menuitem id="account_tax_invoice_menu" parent="account_tax_invoice" action="account_tax_invoice_action"
                   name="Tax invoice"/>
+
+        <menuitem id="sale_order_line_id"
+            name="Order liner"
+            action="action_sale_order_line_view"
+            parent="sale.sale_order_menu"/>
+
     </data>
 </odoo>
