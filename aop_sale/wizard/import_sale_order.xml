@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_import_sale_order_wizard_form" model="ir.ui.view">
+            <field name="name">import.sale.order.wizard</field>
+            <field name="model">import.sale.order.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="partner_id"
+                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                    </group>
+
+                    <group>
+                        <field name="file"/>
+                    </group>
+
+                    <footer>
+                        <button name="start_import_sale_order" string="Import orders" class="oe_highlight"
+                                type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

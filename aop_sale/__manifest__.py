@@ -29,6 +29,7 @@
         'views/base.xml',
         'views/dispatch_order.xml',
         'wizard/account_tax_invoice_wizard.xml',
-        'wizard/change_stock_picking.xml'
+        'wizard/change_stock_picking.xml',
+        'wizard/import_sale_order.xml',
     ],
 }

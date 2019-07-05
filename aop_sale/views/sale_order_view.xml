@@ -34,6 +34,38 @@
                     <attribute name="invisible">True</attribute>
                 </xpath>
 
+                <!--隐藏验证-->
+                <xpath expr="//field[@name='validity_date']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <!--隐藏发票地址-->
+                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <!--隐藏送货地址-->
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <!--隐藏报价单模板-->
+                <xpath expr="//field[@name='sale_order_template_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <!--隐藏付款条款-->
+                <xpath expr="//field[@name='payment_term_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <!--隐藏交货方法-->
+                <xpath expr="//div[@name='carrier_selection']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//label[@for='carrier_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='carrier_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
                     <attribute name="options">{'no_quick_create': True, 'no_create_edit': True}</attribute>
                 </xpath>

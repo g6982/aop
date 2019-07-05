@@ -77,7 +77,8 @@ class SaleOrder(models.Model):
         # TODO: 待定
         delivery_id = [line_id for line_id in contract_line_ids if
                        order_line.product_id.id in line_id.product_template_id.product_variant_ids.ids and
-                       order_line.from_location_id == line_id.start_position]
+                       order_line.from_location_id == line_id.start_position and
+                       order_line.to_location_id == line_id.end_position]
 
         return delivery_id[0].service_product_id if delivery_id else False
 

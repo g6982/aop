@@ -299,6 +299,20 @@
             action="action_sale_order_line_view"
             parent="sale.sale_order_menu"/>
 
+        <!--导入-->
+        <record id="action_import_sale_order_wizard" model="ir.actions.act_window">
+            <field name="name">Import</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">import.sale.order.wizard</field>
+            <field name="target">new</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+        <menuitem id="import_sale_order_wizard"
+            name="Import order"
+            action="action_import_sale_order_wizard"
+            parent="sale.sale_order_menu"/>
+
         <!--基地-->
         <menuitem id="base_warehouse_manage"
                   parent="stock.menu_stock_root"
