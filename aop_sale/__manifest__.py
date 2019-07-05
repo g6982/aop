@@ -8,7 +8,7 @@
     """,
     'author': "1di0t",
     'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management', 'purchase', 'delivery', 'stock_picking_batch',
-                'barcodes', 'delivery_hs_code'],
+                'barcodes', 'delivery_hs_code', 'delivery'],
     'data': [
         'security/access_group.xml',
         'security/ir.model.access.csv',
