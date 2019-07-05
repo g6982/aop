@@ -2,6 +2,7 @@
 from odoo import api, fields, models, _
 import logging
 from odoo.exceptions import UserError
+
 _logger = logging.getLogger(__name__)
 
 
@@ -31,7 +32,7 @@ class SaleOrderLine(models.Model):
         result = []
         for so_line in self.sudo():
             name = '%s - %s' % (
-            so_line.order_id.name, so_line.name.split('\n')[0] if so_line.name else [] or so_line.product_id.name)
+                so_line.order_id.name, so_line.name.split('\n')[0] if so_line.name else [] or so_line.product_id.name)
             if so_line.order_partner_id.ref:
                 name = '%s (%s)' % (name, so_line.order_partner_id.ref)
             result.append((so_line.id, name))
@@ -71,11 +72,14 @@ class SaleOrder(models.Model):
     def _find_service_product(self, contract_id, order_line):
         contract_line_ids = contract_id.mapped('delivery_carrier_ids')
 
-        contract_line_ids.filtered(lambda line_id:
-                                   line_id.product_id == order_line.product_id
-                                   and line_id.start_position == order_line.from_location_id)
+        # 使用 product.template
+        # product_template_id.product_variant_ids
+        # TODO: 待定
+        delivery_id = [line_id for line_id in contract_line_ids if
+                       order_line.product_id.id in line_id.product_template_id.product_variant_ids.ids and
+                       order_line.from_location_id == line_id.start_position]
 
-        return contract_line_ids.service_product_id if contract_line_ids else False
+        return delivery_id[0].service_product_id if delivery_id else False
 
     # 路线的选择，使用开始位置和结束位置，多条，自己选择
     # 使用位置，每一个客户，对应一个默认的仓库的位置
@@ -85,8 +89,9 @@ class SaleOrder(models.Model):
         # to_location_id = res.partner_id.property_stock_customer
 
         # sale order line 的from 和 to
-        from_location_id = line_id.from_location_id
-        to_location_id = line_id.to_location_id
+        # TODO: 需要确认，是否使用默认的地址
+        from_location_id = line_id.from_location_id.property_stock_customer
+        to_location_id = line_id.to_location_id.property_stock_customer
 
         if not from_location_id or not to_location_id:
             return False
