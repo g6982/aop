@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_base_warehouse_form" model="ir.ui.view">
+            <field name="name">base.warehouse.form</field>
+            <field name="model">base.warehouse</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="warehouse_ids" widget="many2many_tags"
+                                       options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_base_warehouse_tree" model="ir.ui.view">
+            <field name="name">base.warehouse.tree</field>
+            <field name="model">base.warehouse</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="warehouse_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_base_warehouse_view" model="ir.actions.act_window">
+            <field name="name">Base</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">base.warehouse</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

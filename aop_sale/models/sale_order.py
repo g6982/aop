@@ -140,5 +140,4 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             if not line.mapped('vin'):
                 raise UserError(_('You can not make order until the product have vin or stock.'))
-        return
         return super(SaleOrder, self).action_confirm()

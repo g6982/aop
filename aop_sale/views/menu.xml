@@ -295,9 +295,20 @@
                   name="Tax invoice"/>
 
         <menuitem id="sale_order_line_id"
-            name="Order liner"
+            name="Order line"
             action="action_sale_order_line_view"
             parent="sale.sale_order_menu"/>
+
+        <!--基地-->
+        <menuitem id="base_warehouse_manage"
+                  parent="stock.menu_stock_root"
+                  name="Base"
+                  sequence="30"
+        />
+        <menuitem id="base_warehouse_id"
+            name="Base"
+            action="action_base_warehouse_view"
+            parent="base_warehouse_manage"/>
 
     </data>
 </odoo>

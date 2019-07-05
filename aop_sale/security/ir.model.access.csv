@@ -12,3 +12,4 @@ access_mass_loss_type,access_mass_loss_type,model_mass_loss_type,base.group_user
 access_mass_loss_part,access_mass_loss_part,model_mass_loss_part,base.group_user,1,1,1,1
 access_tax_invoice,access_account_tax_invoice,model_account_tax_invoice,base.group_user,1,1,1,1
 access_tax_invoice_line,access_account_tax_invoice_line,model_account_tax_invoice_line,base.group_user,1,1,1,1
+account_base_warehouse,access_base_warehouse,model_base_warehouse,base.group_user,1,1,1,1
