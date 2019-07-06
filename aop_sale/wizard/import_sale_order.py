@@ -6,6 +6,7 @@ import xlrd
 from odoo.exceptions import UserError
 import binascii
 import traceback
+import re
 
 _logger = logging.getLogger(__name__)
 
@@ -31,10 +32,13 @@ class ImportSaleOrder(models.TransientModel):
         try:
             sale_order = self.env['sale.order']
             sheet_data = self._parse_import_file()
-            order_data= self._parse_order_data()
+            order_data = self._parse_order_data()
             line_data = self._parse_order_line_data(sheet_data)
             order_data.update({
                 'order_line': line_data
+            })
+            _logger.info({
+                'order_data': order_data
             })
             sale_order.create(order_data)
             return {
@@ -67,18 +71,28 @@ class ImportSaleOrder(models.TransientModel):
     def _parse_order_line_data(self, sheet_data):
         line_values = []
         for x in range(6, sheet_data.nrows - 1):
-            product_id = self._find_product_id(sheet_data.cell_value(x, 6), sheet_data.cell_value(x, 7))
-            from_location_id = self._find_from_to_location(sheet_data.cell_value(x, 2))
-            to_location_id = self._find_from_to_location(sheet_data.cell_value(x, 11))
+            if not sheet_data.cell_value(x, 1):
+                continue
 
-            if not product_id or not from_location_id or not to_location_id or len(product_id) > 1:
+            product_id = self._find_product_id(sheet_data.cell_value(x, 6), sheet_data.cell_value(x, 7))
+            from_location_id = self._find_from_to_location(sheet_data.cell_value(x, 2), sheet_data.cell_value(x, 1))
+            to_location_id = self._find_from_to_location(sheet_data.cell_value(x, 11), sheet_data.cell_value(x, 1))
+            # _logger.info({
+            #     'product_id': product_id,
+            #     'from_location_id': from_location_id,
+            #     'to_location_id': to_location_id,
+            #     'from': sheet_data.cell_value(x, 2),
+            #     'to': sheet_data.cell_value(x, 11)
+            # })
+            if not product_id:
                 continue
             vin_id = self._find_vin_id(sheet_data.cell_value(x, 4), product_id)
+
             line_data = (0, 0, {
                 'product_id': product_id.id,
                 'service_product_id': False,
-                'from_location_id': from_location_id.id,
-                'to_location_id': to_location_id.id,
+                'from_location_id': from_location_id.id if from_location_id else False,
+                'to_location_id': to_location_id.id if to_location_id else False,
                 'vin': vin_id.id if vin_id else False,
                 'name': product_id.name,
                 'product_uom_qty': 1,
@@ -86,7 +100,7 @@ class ImportSaleOrder(models.TransientModel):
                 'price_unit': 1
             })
             line_values.append(line_data)
-            print(line_values)
+            # print(line_values)
         return line_values
 
     def _find_product_id(self, product_type, product_color):
@@ -96,34 +110,52 @@ class ImportSaleOrder(models.TransientModel):
             ('value_ids.name', '=', product_color)
         ])
         # 车型
-        type_id = self.env['product.attribute'].search([
+        type_id = self.env['product.attribute'].sudo().search([
             ('name', '=', u'车型名称'),
-            ('value_ids.name', '=', product_type)
         ])
-        _logger.info({
-            'type_id': type_id,
-            'color_id': color_id
-        })
-        # color_attribute_ids = self.env['product.attribute.value'].search([
-        #     ('attribute_id', '=', color_id.id),
-        #     ('name', '=', product_color)
-        # ])
+
+        # TODO： 编码问题！！！！
+        product_type = product_type.replace('\u202d', '').replace('\u202c', '')
+
+        type_id = type_id.value_ids.filtered(
+            lambda x: x.name.replace('\u202d', '').replace('\u202c', '') == product_type)
+
+        color_attribute_ids = self.env['product.attribute.value'].search([
+            ('attribute_id', '=', color_id.id),
+            ('name', '=', product_color)
+        ])
         # type_attribute_ids = self.env['product.attribute.value'].search([
         #     ('attribute_id', '=', type_id.id),
         #     ('name', '=', product_type)
         # ])
 
+        # 同时满足的产品
         product_id = self.env['product.product'].search([
-            ('attribute_value_ids', '=', color_id.id),
-            ('attribute_value_ids', '=', type_id.id)
+            '&',
+            ('attribute_value_ids', '=', color_attribute_ids[0].id if color_attribute_ids else False),
+            ('attribute_value_ids', '=', type_id[0].id if type_id else False),
         ])
         return product_id if product_id else False
 
-    def _find_from_to_location(self, name):
+    # 查找接车地和目的地
+    def _find_from_to_location(self, name, parent_name):
+        parent_name = parent_name.split('-')[0]
+        # _logger.info({
+        #     'parent_name': parent_name
+        # })
         partner_id = self.env['res.partner'].search([
             ('name', '=', name),
-            ('parent_id', '=', False)
+            ('parent_id.name', '=', parent_name)
         ])
+        if not partner_id:
+            partner_id = self.env['res.partner'].search([
+                ('name', '=', name),
+            ])
+        if len(partner_id) > 1:
+            for x in partner_id:
+                print(name, parent_name, x.name, partner_id, '\n')
+
+        # TODO： 搜出来的客户，一定是唯一的
         return partner_id if partner_id else False
 
     def _find_vin_id(self, vin_code, product_id):

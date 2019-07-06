@@ -44,6 +44,15 @@ class SaleOrderLine(models.Model):
     def action_view_delivery(self):
         return self.order_id.action_view_delivery() if self.order_id else False
 
+    # 不做检查
+    @api.onchange('product_uom_qty', 'product_uom', 'route_id')
+    def _onchange_product_id_check_availability(self):
+        pass
+
+    @api.onchange('product_id', 'route_id', 'service_product_id')
+    def _onchange_domain_service_product_route(self):
+        pass
+
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -74,11 +83,12 @@ class SaleOrder(models.Model):
 
         # 使用 product.template
         # product_template_id.product_variant_ids
-        # TODO: 待定
+        # TODO: 待定， 是否需要递归查询呢？
+        # 暂定： 获取上级
         delivery_id = [line_id for line_id in contract_line_ids if
                        order_line.product_id.id in line_id.product_template_id.product_variant_ids.ids and
-                       order_line.from_location_id == line_id.start_position and
-                       order_line.to_location_id == line_id.end_position]
+                       order_line.from_location_id.parent_id == line_id.start_position and
+                       order_line.to_location_id.parent_id == line_id.end_position]
 
         return delivery_id[0].service_product_id if delivery_id else False
 
