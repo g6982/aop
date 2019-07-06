@@ -39,6 +39,10 @@
 
             </xpath>
 
+            <xpath expr="//separator" position="attributes">
+                <attribute name="string"></attribute>
+            </xpath>
+            
             <xpath expr="//field[@name='picking_ids']" position="replace">
                 <notebook>
                     <page string="Dispatch">
