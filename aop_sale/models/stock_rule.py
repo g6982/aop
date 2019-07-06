@@ -11,7 +11,7 @@ class StockRule(models.Model):
     service_product_id = fields.Many2one('product.product', string='Service product',
                                          related='picking_type_id.service_product_id')
     aging = fields.Float('Aging(day)', default=1)
-    package_product_id = fields.Many2one('product.product', 'Package products')
+    package_product_id = fields.Many2one('product.product', 'Package product')
 
     # 添加服务产品到stock.picking
     def _get_custom_move_fields(self):

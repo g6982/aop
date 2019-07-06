@@ -24,6 +24,8 @@
         'views/stock_warehouse.xml',
         'views/stock_rule_view.xml',
         'views/stock_picking.xml',
+        'views/stock_picking_type.xml',
+        'views/stock_picking_batch.xml',
         'views/base_warehouse.xml',
         'views/stock_location_route.xml',
         'views/menu.xml',
