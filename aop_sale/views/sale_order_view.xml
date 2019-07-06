@@ -21,9 +21,18 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
 
-                <!--                <xpath expr="//field[@name='partner_shipping_id']" position="after">-->
-                <!--                    <field name="from_location_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>-->
-                <!--                </xpath>-->
+                <!--隐藏配置产品-->
+                <xpath expr="//field[@name='order_line']/tree/control/create[2]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <!--隐藏配置部分-->
+                <xpath expr="//field[@name='order_line']/tree/control/create[3]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <!--隐藏添加备注-->
+                <xpath expr="//field[@name='order_line']/tree/control/create[4]" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
 
                 <xpath expr="//field[@name='order_line']/tree" position="attributes">
                     <attribute name="editable">bottom</attribute>

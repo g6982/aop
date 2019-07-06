@@ -8,8 +8,10 @@ _logger = logging.getLogger(__name__)
 class StockRule(models.Model):
     _inherit = 'stock.rule'
 
-    service_product_id = fields.Many2one('product.product', string='Service product')
+    service_product_id = fields.Many2one('product.product', string='Service product',
+                                         related='picking_type_id.service_product_id')
     aging = fields.Float('Aging(day)', default=1)
+    package_product_id = fields.Many2one('product.product', 'Package products')
 
     # 添加服务产品到stock.picking
     def _get_custom_move_fields(self):
