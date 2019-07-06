@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+
+
+        <!-- 收入台账form   -->
+        <record id="view_account_invoice_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+
+
+
+                <xpath expr="//field[@name='cash_rounding_id']" position="after">
+                       <field name="account_period_id"/>
+                   </xpath>
+
+            </field>
+        </record>
+
+        <!-- 收入台账tree   -->
+        <record id="invoice_tree_with_onboarding_inherit_aop_sale" model="ir.ui.view">
+            <field name="name">account.invoice.tree.with.onboarding.inherit.aop_sale</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree_with_onboarding"/>
+            <field name="mode">extension</field>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="account_period_id"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- 成本台账tree   -->
+        <record id="invoice_supplier_tree_inherit_aop_sale" model="ir.ui.view">
+            <field name="name">invoice.supplier.tree.inherit.aop_sale</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_tree"/>
+            <field name="mode">extension</field>
+            <field name="arch" type="xml">
+                <field name="vendor_display_name" position="before">
+                    <field name="account_period_id"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- 成本台账form   -->
+        <record id="account_invoice_supplier_form__inherit_aop_sale" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form..inherit.aop_sale</field>
+            <field name="model">account.invoice</field>
+
+            <field name="inherit_id" ref="purchase.view_invoice_supplier_purchase_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='vendor_bill_purchase_id']" position="after">
+                        <field name="account_period_id"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</odoo>
