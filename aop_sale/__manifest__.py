@@ -8,7 +8,7 @@
     """,
     'author': "1di0t",
     'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management', 'purchase', 'delivery', 'stock_picking_batch',
-                'barcodes', 'delivery_hs_code', 'delivery'],
+                'barcodes', 'delivery_hs_code', 'account_period'],
     'data': [
         'security/access_group.xml',
         'security/ir.model.access.csv',
@@ -19,6 +19,7 @@
         'views/delivery_carrier.xml',
         'views/sale_order_view.xml',
         'views/stock_move.xml',
+        'views/account_invoice.xml',
         'views/account_tax_invoice.xml',
         'views/stock_warehouse.xml',
         'views/stock_rule_view.xml',
