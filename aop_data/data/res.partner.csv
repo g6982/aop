@@ -1,4 +1,16 @@
-id,name,is_company,parent_id:id,type,customer,supplier,street,zip,city,state_id:id,country_id:id,property_stock_customer:id
-res_partner_1,重庆长安福特,1,,,1,0,104 Saint Mary Avenue,94059,重庆市,l10n_cn.state_CQ,base.cn,
-res_partner_2,重庆长安福特送车地址,0,res_partner_1,delivery,1,0,227 Jackson Road,94061,重庆市,l10n_cn.state_CQ,base.cn,stock_location_42
-res_partner_3,外部供应商,1,,,0,1,104 Saint Mary Avenue,94059,重庆市,l10n_cn.state_CQ,base.cn,
+id,name,parent_id:id,type,customer,supplier,ref,property_stock_customer
+res_partner_100,长安民生,,,1,0,,
+res_partner_213,蒙自,res_partner_100,,1,0,,Partner Locations/Customers/重庆长安福特VDC库
+res_partner_214,CQ1VDC2,res_partner_213,contact,1,0,,Partner Locations/Customers/重庆长安福特VDC库
+res_partner_215,CQ2VDC1,res_partner_213,contact,1,0,,Partner Locations/Customers/重庆长安福特VDC库
+res_partner_216,大理,res_partner_100,,1,0,,Partner Locations/Customers/新疆阿克苏秋林汽车贸易有限公司
+res_partner_217,红河万福汽车销售服务有限公司,res_partner_216,delivery,1,0,A08212,Partner Locations/Customers/新疆阿克苏秋林汽车贸易有限公司
+res_partner_218,西安,res_partner_100,,1,0,,Partner Locations/Customers/重庆长安福特VDC库
+res_partner_219,A08572,res_partner_218,contact,1,0,,Partner Locations/Customers/重庆长安福特VDC库
+res_partner_220,陕西福腾汽车贸易有限公司,res_partner_218,delivery,1,0,A08572,Partner Locations/Customers/新疆阿克苏秋林汽车贸易有限公司
+res_partner_221,保山,res_partner_100,,1,0,,Partner Locations/Customers/重庆长安福特VDC库
+res_partner_222,CQ2VDC1,res_partner_221,contact,1,0,,Partner Locations/Customers/重庆长安福特VDC库
+res_partner_223,大理万福汽车销售服务有限公司保山分公司,res_partner_216,delivery,1,0,A36902,Partner Locations/Customers/新疆阿克苏秋林汽车贸易有限公司
+res_partner_224,寿光,res_partner_100,,1,0,,Partner Locations/Customers/重庆长安福特VDC库
+res_partner_225,CQ2VDC1,res_partner_224,contact,1,0,,Partner Locations/Customers/重庆长安福特VDC库
+res_partner_226,寿光富赢汽车销售服务有限公司,res_partner_224,delivery,1,0,A36902,Partner Locations/Customers/新疆阿克苏秋林汽车贸易有限公司

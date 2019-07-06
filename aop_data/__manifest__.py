@@ -34,7 +34,7 @@
         #'data/stock.picking.type.csv',
         #'data/stock.location.route.csv',
         #'data/product.product.csv',
-        #'data/res.partner.csv',
+        'data/res.partner.csv',
         #'data/res.users.csv',
         'data/product.attribute.value.csv',
 
