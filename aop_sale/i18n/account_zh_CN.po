@@ -50,7 +50,7 @@ msgstr "结算清单"
 #: model_terms:ir.ui.view,arch_db:account.view_invoice_pivot
 #, python-format
 msgid "Invoices"
-msgstr "开票"
+msgstr "收入结算清单"
 
 #. module: account
 #: code:addons/account/models/chart_template.py:422
