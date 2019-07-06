@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+
+    <record id="stock_picking_batch_form_inherit_create_purchase" model="ir.ui.view">
+        <field name="name">stock.picking.batch.form</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
+        <field name="arch" type="xml">
+
+            <field name="user_id" position="after">
+
+                <field name="dispatch_type"/>
+
+                <field name="plan_number" attrs='{"invisible": [("dispatch_type", "!=", "train_type")]}'/>
+
+                <field name="vehicle_number" attrs='{"invisible": [("dispatch_type", "!=", "highway_type")]}'/>
+
+
+                <field name="partner_id"
+                       widget="res_partner_many2one"
+                       domain="[('supplier','=',True)]"/>
+
+                <field name="picking_purchase_id"
+                       string="采购订单"
+                       attrs="{'invisible': ['|', ('picking_purchase_id', '=', False), ('dispatch_type', 'not in', 'center_type')]}"
+                />
+
+            </field>
+
+            <xpath expr="/form/header/button[last()]" position="after">
+
+                <button name="create_purchase_order"
+                        string="Create purchase"
+                        type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible': ['|', ('picking_purchase_id', '!=', False), ('dispatch_type', 'not in', 'center_type')]}"
+                />
+
+            </xpath>
+
+            <xpath expr="//field[@name='picking_ids']" position="replace">
+                <notebook>
+                    <page string="Dispatch">
+                        <field name="picking_ids" widget="many2many" domain="[('state', 'not in', ('done', 'cancel'))]"
+                               options="{'not_delete': True}">
+                            <tree>
+                                <field name="name"/>
+                                <field name="backorder_id"/>
+                                <field name="origin"/>
+                                <field name="date"/>
+                                <field name="scheduled_date"/>
+                                <field name="state"/>
+                                <button name="action_assign" string="Confirm picking" type="object"
+                                        icon="fa-check text-success"
+                                        attrs="{'invisible': [('state', 'in', ('done', 'cancel', 'confirmed', 'assigned'))]}"/>
+                                <button name="action_cancel" string="Cancel picking" type="object"
+                                        icon="fa-times-circle text-danger"
+                                        attrs="{'invisible': [('state', 'in', ('done', 'cancel'))]}"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Mount plan">
+                        <field name="mount_car_plan_ids">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="layer_option"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

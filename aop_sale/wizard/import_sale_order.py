@@ -163,4 +163,14 @@ class ImportSaleOrder(models.TransientModel):
             ('name', '=', vin_code),
             ('product_id', '=', product_id.id)
         ])
+        # TODO： 没有就创建咯？
+        if not vin_id:
+            vin_id = self.env['stock.production.lot'].create({
+                'name': vin_code,
+                'product_id': product_id.id
+            })
         return vin_id if vin_id else False
+
+    # 解码
+    def decoding_string(self, str_word):
+        return str_word.replace('\u202d', '').replace('\u202c', '')
