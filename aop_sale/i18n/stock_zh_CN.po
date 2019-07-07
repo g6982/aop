@@ -56,3 +56,7 @@ msgstr "批量调度"
 msgid "Pickings"
 msgstr "调度"
 
+#. module: stock_picking_batch
+#: model:ir.model.fields,field_description:stock_picking_batch.field_stock_picking_batch__name
+msgid "Batch Picking Name"
+msgstr "批量调度名称"
