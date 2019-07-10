@@ -39,6 +39,23 @@
                 </xpath>
 
 
+                <xpath expr="//notebook" position="before">
+                    <group>
+                        <group>
+                            <field name="route_ids" widget="many2many_tags"
+                                   options="{'no_quick_create': True, 'no_create_edit': True}"
+                            />
+                        </group>
+                        <group>
+                            <field name="rule_ids" widget="many2many_tags"
+                                   options="{'no_quick_create': True, 'no_create_edit': True}"
+                            />
+                        </group>
+                    </group>
+
+
+                </xpath>
+
             </field>
         </record>
 

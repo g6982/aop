@@ -13,7 +13,7 @@ class StockPickingBatch(models.Model):
     # car_no_ids = fields.Many2many('stock.quant.package', string='Loading number')
 
     partner_id = fields.Many2one('res.partner', string='Vendor')
-    picking_purchase_id = fields.Many2one('purchase.order', 'Purchase')
+    picking_purchase_id = fields.Many2one('purchase.order', 'Purchase', copy=False)
     dispatch_type = fields.Selection([('center_type', 'Center'),
                                       ('train_type', 'train'),
                                       ('highway_type', 'highway')
@@ -26,8 +26,7 @@ class StockPickingBatch(models.Model):
 
     mount_car_plan_ids = fields.One2many('mount.car.plan', 'stock_picking_batch_id', string='Mount plan')
 
-
-
+    # 生成采购订单，采购：服务产品
     def create_purchase_order(self):
         try:
             data = self._get_purchase_data()
@@ -55,26 +54,27 @@ class StockPickingBatch(models.Model):
         })
         return res
 
+    # 服务产品
     def _get_purchase_line_data(self):
         res = []
 
         product_ids = []
 
         for picking in self.picking_ids:
-            for line_id in picking.move_ids_without_package:
+            for line_id in picking.move_lines:
                 data = {
-                    'product_id': line_id.product_id.id,
+                    'product_id': line_id.service_product_id.id,
                     # 'service_product_id': line_id.picking_type_id.product_id.id,
                     'product_qty': line_id.product_uom_qty,
-                    'name': line_id.product_id.name,
+                    'name': line_id.service_product_id.name,
                     'date_planned': fields.Datetime.now(),
-                    'price_unit': line_id.product_id.lst_price,
-                    'product_uom': line_id.product_id.uom_id.id
+                    'price_unit': line_id.service_product_id.lst_price,
+                    'product_uom': line_id.service_product_id.uom_id.id
                 }
-
-                if not data['product_id'] in product_ids:
-                    product_ids.append(data['product_id'])
-                    res.append((0, 0, data))
+                res.append((0, 0, data))
+                # if not data['product_id'] in product_ids:
+                #     product_ids.append(data['product_id'])
+                #     res.append((0, 0, data))
         return res
 
 
