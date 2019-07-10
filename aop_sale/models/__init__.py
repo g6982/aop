@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from . import sale_order
+from . import purchase_order
 from . import stock_picking_type
 from . import aop_route
 from . import stock_move

@@ -26,6 +26,7 @@
         'views/stock_picking.xml',
         'views/stock_picking_type.xml',
         'views/stock_picking_batch.xml',
+        'views/purchase_order.xml',
         'views/base_warehouse.xml',
         'views/stock_location_route.xml',
         'views/menu.xml',

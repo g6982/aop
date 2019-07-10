@@ -9,6 +9,8 @@ _logger = logging.getLogger(__name__)
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
+    origin_purchase_id = fields.Many2one('purchase.order', 'Origin purchase order', copy=False)
+
     def match_sale_order(self):
         return self._match_sale_order()
 
@@ -31,3 +33,27 @@ class StockPicking(models.Model):
 
             if not order_id:
                 raise UserError('There have not order exist.')
+
+    @api.multi
+    def button_validate(self):
+        res = super(StockPicking, self).button_validate()
+        self._validate_origin_order()
+        return res
+
+    # 回溯原单据
+    def _validate_origin_order(self):
+        if self.origin_purchase_id.mapped('stock_picking_batch_id') if self.origin_purchase_id else False:
+            for picking_id in self.origin_purchase_id.mapped('stock_picking_batch_id').picking_ids:
+                self._fill_serial_no(picking_id)
+                picking_id.action_assign()
+                picking_id.button_validate()
+            self.origin_purchase_id.mapped('stock_picking_batch_id').done()
+
+    # 填充批次号
+    def _fill_serial_no(self, picking_id):
+        for move_id in picking_id.move_lines:
+            for line in move_id.move_line_ids:
+                line.write({
+                    'lot_id': move_id.vin_id.id,
+                    'qty_done': line.product_uom_qty
+                })
