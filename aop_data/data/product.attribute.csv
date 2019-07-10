@@ -1,0 +1,3 @@
+id,name,type,create_variant
+product_attribute_1,车型名称,单选,总是
+product_attribute_2,颜色名称,单选,总是

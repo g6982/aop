@@ -27,16 +27,18 @@
         # 'security/ir.model.access.csv',
         # 'views/views.xml',
         # 'views/templates.xml',
-        #'security/res_config_settings.xml',
-        #'data/ir.sequence.csv',
+        'security/res_config_settings.xml',
+        'data/product.attribute.csv',
+        'data/product.attribute.value.csv',
+        'data/ir.sequence.csv',
         #'data/stock.location.csv',
         #'data/stock.warehouse.csv',
         #'data/stock.picking.type.csv',
         #'data/stock.location.route.csv',
         #'data/product.product.csv',
-        'data/res.partner.csv',
-        #'data/res.users.csv',
-        'data/product.attribute.value.csv',
+        #'data/res.partner.csv',
+        'data/res.users.csv',
+
 
 
 
