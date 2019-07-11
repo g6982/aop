@@ -30,7 +30,9 @@ class StockPickingBatch(models.Model):
     def create_purchase_order(self):
         try:
             data = self._get_purchase_data()
-            res = self.env['purchase.order'].create(data)
+
+            # 跨公司创建
+            res = self.env['purchase.order'].sudo().create(data)
 
             self.write({
                 'picking_purchase_id': res.id
@@ -39,6 +41,7 @@ class StockPickingBatch(models.Model):
             self._cr.rollback()
             raise UserError(e)
 
+    # 跨公司生成采购订单，对应的客户，即是对应公司的客户
     def _get_purchase_data(self):
         vendor = self.partner_id.id
         res = {
@@ -46,7 +49,8 @@ class StockPickingBatch(models.Model):
             'user_id': self.env.user.id,
             'invoice_status': 'no',
             'date_order': fields.Datetime.now(),
-            'stock_picking_batch_id': self.id
+            'stock_picking_batch_id': self.id,
+            'company_id': self._match_company_id(self.partner_id)
         }
         line_data = self._get_purchase_line_data()
         res.update({
@@ -55,6 +59,7 @@ class StockPickingBatch(models.Model):
         return res
 
     # 服务产品
+    # 产品不能添加公司属性值
     def _get_purchase_line_data(self):
         res = []
 
@@ -64,6 +69,7 @@ class StockPickingBatch(models.Model):
             for line_id in picking.move_lines:
                 data = {
                     'product_id': line_id.service_product_id.id,
+                    'transfer_product_id': line_id.product_id.id,
                     # 'service_product_id': line_id.picking_type_id.product_id.id,
                     'product_qty': line_id.product_uom_qty,
                     'name': line_id.service_product_id.name,
@@ -76,6 +82,10 @@ class StockPickingBatch(models.Model):
                 #     product_ids.append(data['product_id'])
                 #     res.append((0, 0, data))
         return res
+
+    def _match_company_id(self, partner_id):
+        res = self.env['res.company'].sudo().search([('code', '=', partner_id.ref)])
+        return res.id if res else False
 
 
 class MountCarPlan(models.Model):

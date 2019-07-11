@@ -16,6 +16,7 @@ from . import stock_location_route
 from . import stock_picking
 from . import base_warehouse
 from . import stock_picking_batch
-
+from . import res_company
+from . import res_partner
 
 
