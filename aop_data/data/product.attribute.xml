@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+
+         <record id="product_attribute_1" model="product.attribute">
+             <field name="name">车型名称</field>
+             <field name="type">radio</field>
+             <field name="create_variant">always</field>
+         </record>
+
+        <record id="product_attribute_2" model="product.attribute">
+             <field name="name">颜色名称</field>
+             <field name="type">radio</field>
+             <field name="create_variant">always</field>
+         </record>
+
+
+    </data>
+
+
+</odoo>
