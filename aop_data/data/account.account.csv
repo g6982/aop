@@ -1,0 +1,9 @@
+id,code,name,user_type_id
+account_account_1,900901,运输服务收入,Bank and Cash
+account_account_2,900902,铁路运输成本,Bank and Cash
+account_account_3,900903,前端转运成本,Bank and Cash
+account_account_4,900904,装车成本,Bank and Cash
+account_account_5,900905,加固成本,Bank and Cash
+account_account_6,900906,卸车成本,Bank and Cash
+account_account_7,900907,入库成本,Bank and Cash
+account_account_8,900908,公路配送成本,Bank and Cash
