@@ -29,6 +29,7 @@
         'views/purchase_order.xml',
         'views/base_warehouse.xml',
         'views/stock_location_route.xml',
+        'views/res_company.xml',
         'views/menu.xml',
         'views/base.xml',
         'views/dispatch_order.xml',

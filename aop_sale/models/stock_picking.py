@@ -37,16 +37,16 @@ class StockPicking(models.Model):
     @api.multi
     def button_validate(self):
         res = super(StockPicking, self).button_validate()
-        self._validate_origin_order()
+        self.sudo()._validate_origin_order()
         return res
 
     # 回溯原单据
     def _validate_origin_order(self):
         if self.origin_purchase_id.mapped('stock_picking_batch_id') if self.origin_purchase_id else False:
-            for picking_id in self.origin_purchase_id.mapped('stock_picking_batch_id').picking_ids:
-                self._fill_serial_no(picking_id)
-                picking_id.action_assign()
-                picking_id.button_validate()
+            for picking_id in self.origin_purchase_id.mapped('stock_picking_batch_id').sudo().picking_ids:
+                self.sudo()._fill_serial_no(picking_id)
+                picking_id.sudo().action_assign()
+                picking_id.sudo().button_validate()
             self.origin_purchase_id.mapped('stock_picking_batch_id').done()
 
     # 填充批次号
