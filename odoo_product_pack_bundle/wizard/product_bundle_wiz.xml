@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="bundle_product_wiz_view" model="ir.ui.view">
+            <field name="name">bundle.product.wiz.form</field>
+            <field name="model">bundle.product.wiz</field>
+            <field name="arch" type="xml">
+                <form string="BUndle Product" name="bundle_product_view">
+                    <!-- <label string="This wizard will add Pack / Bundle and it's products on the order line."/> -->
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="pricelist_id"/>
+                            <field name="bundle_id" domain="[('bundle_product','=',1)]"/>
+                        </group>
+                        <group>
+                                <field name="qty"  class="oe_inline"/>
+                                <field name="uom_id" class="oe_inline"/>
+                            <field name="sale_price"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="budleproducts" string="Products">
+                            <field name="bundle_product_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="add_order_line" type="object" string="Add Pack/Bundle" class="btn-primary" groups="sales_team.group_sale_salesman"/>
+                        or
+                        <button string="_Cancel" class="btn-default" special="cancel" />
+                    </footer>
+                </form>            
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_bundle_product">
+            <field name="name">Add Pack / Bundle</field>
+            <field name="res_model">bundle.product.wiz</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bundle_product_wiz_view"/>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+        
+    </data>
+</odoo>

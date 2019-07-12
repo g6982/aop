@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="bundle_order_view_form" model="ir.ui.view">
+            <field name="name">sale.order.bundle.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/notebook/page/field[@name='order_line']" position="before">
+                    <button name="%(odoo_product_pack_bundle.action_bundle_product)d" string="Add Pack / Bundle" type="action" states="draft,sent,sale"/>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</odoo>
