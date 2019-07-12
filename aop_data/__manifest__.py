@@ -38,8 +38,9 @@
         #'data/stock.warehouse.csv',
         'data/stock.picking.type.csv',
         #'data/stock.location.route.csv',
+        'data/product.product.csv',
+        'data/bundle.product.csv',
         'data/product.template.xml',
-        #'data/product.template.csv',
         #'data/res.partner.csv',
         'data/res.users.csv',
 

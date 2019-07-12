@@ -12,6 +12,32 @@
             <field name="type">product</field>
         </record>
 
+        <!--打包产品-->
+        <record id="product_template_2" model="product.template">
+            <field name="name">前端</field>
+            <field name="categ_id" ref="product.product_category_all"></field>
+            <field name="type">service</field>
+            <field name="bundle_product">1</field>
+            <field name="bundle_product_ids" eval="[(6,0,[ref('bundle_product_1'),
+                                                ref('bundle_product_2'),
+                                                ref('bundle_product_3'),
+
+                                                ])]"/>
+        </record>
+
+        <!--打包产品-->
+        <record id="product_template_3" model="product.template">
+            <field name="name">后端</field>
+            <field name="categ_id" ref="product.product_category_all"></field>
+            <field name="type">service</field>
+            <field name="bundle_product">1</field>
+            <field name="bundle_product_ids" eval="[(6,0,[ref('bundle_product_4'),
+                                                ref('bundle_product_5'),
+                                                ref('bundle_product_6'),
+
+                                                ])]"/>
+        </record>
+
         <record id="product_template_attribute_line_1" model="product.template.attribute.line">
             <field name="product_tmpl_id" ref="product_template_1"/>
 
