@@ -36,5 +36,6 @@
         'wizard/account_tax_invoice_wizard.xml',
         'wizard/change_stock_picking.xml',
         'wizard/import_sale_order.xml',
+        'wizard/sale_make_invoice_advance_view.xml',
     ],
 }

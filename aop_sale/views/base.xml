@@ -4,6 +4,7 @@
 		<xpath expr="." position="inside">
 			<script type="text/javascript" src="/aop_sale/static/src/js/change_task.js" />
 			<script type="text/javascript" src="/aop_sale/static/src/js/tax_invoice.js" />
+			<script type="text/javascript" src="/aop_sale/static/src/js/generate_invoice.js" />
 		</xpath>
     </template>
 

@@ -9,6 +9,6 @@ class ResPartner(models.Model):
     # 名字不重复的限制
     # 参考的限制
     _sql_constraints = [
-        ('unique_name', 'unique(name)', 'the name must be unique!'),
+        ('unique_name_parent_id', 'unique(name, parent_id)', 'the name and parent_id must be unique!'),
         ('unique_ref', 'unique(ref)', 'the ref must be unique!')
     ]

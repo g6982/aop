@@ -17,6 +17,8 @@ class SaleOrderLine(models.Model):
     to_location_id = fields.Many2one('res.partner', 'To location')
     delivery_count = fields.Integer('Count', related='order_id.delivery_count')
 
+    handover_number = fields.Char('Handover number')
+
     # 新增 服务产品
     @api.multi
     def _prepare_procurement_values(self, group_id=False):
@@ -101,7 +103,9 @@ class SaleOrder(models.Model):
 
         # sale order line 的from 和 to
         # TODO: 需要确认，是否使用默认的地址
-        from_location_id = line_id.from_location_id.property_stock_customer
+        # from 使用第二级
+        # to 使用默认
+        from_location_id = line_id.from_location_id.parent_id.property_stock_customer
         to_location_id = line_id.to_location_id.property_stock_customer
 
         if not from_location_id or not to_location_id:
@@ -137,14 +141,16 @@ class SaleOrder(models.Model):
             # 获取数据
             service_product_id = self._find_service_product(contract_id, line_id)
             route_id = self._find_route_id(res, line_id)
+            _logger.info({
+                'route_id': route_id
+            })
+            data.append(
+                (1, line_id.id, {
+                    'service_product_id': service_product_id.id if service_product_id else False,
+                    'route_id': route_id.id if route_id else False
+                })
+            )
 
-            if service_product_id:
-                data.append(
-                    (1, line_id.id, {
-                        'service_product_id': service_product_id.id,
-                        'route_id': route_id.id if route_id else False
-                    })
-                )
         if data:
             res.write({
                 'order_line': data

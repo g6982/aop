@@ -24,13 +24,16 @@ class StockMove(models.Model):
     def _get_product_stock_location(self, product_id, vin_id):
         if not vin_id:
             return False
-        stock_quant_id = self.env['stock.quant'].search([
+        stock_quant_id = self.env['stock.quant'].sudo().search([
             ('product_id', '=', product_id),
             ('lot_id', '=', vin_id.id),
             ('quantity', '>', 0),
             ('reserved_quantity', '=', 0),
             ('location_id.usage', '=', 'internal')
         ])
+        _logger.info({
+            'stock_quant_id': stock_quant_id
+        })
         return stock_quant_id.location_id.id if stock_quant_id else False
 
     def _assign_picking_post_process(self, new=False):

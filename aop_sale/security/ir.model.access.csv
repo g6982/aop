@@ -14,3 +14,4 @@ access_tax_invoice,access_account_tax_invoice,model_account_tax_invoice,base.gro
 access_tax_invoice_line,access_account_tax_invoice_line,model_account_tax_invoice_line,base.group_user,1,1,1,1
 account_base_warehouse,access_base_warehouse,model_base_warehouse,base.group_user,1,1,1,1
 access_mount_car_plan,access_mount_car_plan,model_mount_car_plan,base.group_user,1,1,1,1
+access_rule_service_product,access_rule_service_product,model_rule_service_product,base.group_user,1,1,1,1
