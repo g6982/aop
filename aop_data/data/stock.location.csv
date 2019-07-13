@@ -1,55 +1,64 @@
-"id","name","usage","location_id:id"
-stock_location_1,VDC,视图,stock.stock_location_locations
-stock_location_2,AKSXB,视图,stock.stock_location_locations
-stock_location_3,AKSZ,视图,stock.stock_location_locations
-stock_location_4,SPZ,视图,stock.stock_location_locations
-stock_location_5,SPZXB,视图,stock.stock_location_locations
-stock_location_6,TJCZ,视图,stock.stock_location_locations
-stock_location_7,TJCXB,视图,stock.stock_location_locations
-stock_location_8,TJT,视图,stock.stock_location_locations
-stock_location_9,LSXZ,视图,stock.stock_location_locations
-stock_location_10,LSXHC,视图,stock.stock_location_locations
-stock_location_11,QDXZ,视图,stock.stock_location_locations
-stock_location_12,QDXHC,视图,stock.stock_location_locations
-stock_location_13,WJYXZ,视图,stock.stock_location_locations
-stock_location_14,WJYHC,视图,stock.stock_location_locations
-stock_location_15,DJZZ,视图,stock.stock_location_locations
-stock_location_16,LEZKF,视图,stock.stock_location_locations
-stock_location_17,XZZ,视图,stock.stock_location_locations
-stock_location_18,XZTLK,视图,stock.stock_location_locations
-stock_location_19,FTZZK,视图,stock.stock_location_locations
-stock_location_20,FTDFQ,视图,stock.stock_location_locations
-stock_location_21,XZXBK,视图,stock.stock_location_locations
-stock_location_100,重庆长安福特VDC库,内部位置,stock_location_1
-stock_location_101,阿克苏线边库,内部位置,stock_location_2
-stock_location_102,阿克苏站,内部位置,stock_location_3
-stock_location_103,三枰站,内部位置,stock_location_4
-stock_location_104,三枰站线边库,内部位置,stock_location_5
-stock_location_105,团结村站,内部位置,stock_location_6
-stock_location_106,团结村线边库,内部位置,stock_location_7
-stock_location_107,唐家沱,内部位置,stock_location_8
-stock_location_108,拉萨西站,内部位置,stock_location_9
-stock_location_109,拉萨西货场,内部位置,stock_location_10
-stock_location_110,祁东西站,内部位置,stock_location_11
-stock_location_111,祁东西货场,内部位置,stock_location_12
-stock_location_112,王家营西站,内部位置,stock_location_13
-stock_location_113,王家营西货场,内部位置,stock_location_14
-stock_location_114,党家庄站,内部位置,stock_location_15
-stock_location_115,罗而庄库房(福特临时停放,内部位置,stock_location_16
-stock_location_116,新筑站,内部位置,stock_location_17
-stock_location_117,新筑铁路库,内部位置,stock_location_18
-stock_location_118,西安福特中转库,内部位置,stock_location_19
-stock_location_119,西安福特待发区,内部位置,stock_location_20
-stock_location_120,新筑线边库待装区,内部位置,stock_location_21
-stock_location_200,库1,内部位置,stock_location_100
-stock_location_201,库2,内部位置,stock_location_100
-stock_location_202,入库位置,内部位置,stock_location_106
-stock_location_203,加固位置,内部位置,stock_location_105
-stock_location_204,团结村二线库房,内部位置,stock_location_203
-stock_location_205,团结村三线库房,内部位置,stock_location_203
-stock_location_206,团结村五线库房,内部位置,stock_location_203
-stock_location_207,解固位置,内部位置,stock_location_103
-stock_location_208,入库位置,内部位置,stock_location_104
-stock_location_209,加固位置,内部位置,stock_location_103
-stock_location_210,解固位置,内部位置,stock_location_102
-stock_location_211,入库位置,内部位置,stock_location_101
+id,name,usage,location_id
+stock_location_1,VDC,视图,Physical Locations
+stock_location_2,AKSXB,视图,Physical Locations
+stock_location_3,AKSZ,视图,Physical Locations
+stock_location_4,SPZ,视图,Physical Locations
+stock_location_5,SPZXB,视图,Physical Locations
+stock_location_6,TJCZ,视图,Physical Locations
+stock_location_7,TJCXB,视图,Physical Locations
+stock_location_8,TJT,视图,Physical Locations
+stock_location_9,LSXZ,视图,Physical Locations
+stock_location_10,LSXHC,视图,Physical Locations
+stock_location_11,QDXZ,视图,Physical Locations
+stock_location_12,QDXHC,视图,Physical Locations
+stock_location_13,WJYXZ,视图,Physical Locations
+stock_location_14,WJYHC,视图,Physical Locations
+stock_location_15,DJZZ,视图,Physical Locations
+stock_location_16,LEZKF,视图,Physical Locations
+stock_location_17,XZZ,视图,Physical Locations
+stock_location_18,XZTLK,视图,Physical Locations
+stock_location_19,FTZZK,视图,Physical Locations
+stock_location_20,FTDFQ,视图,Physical Locations
+stock_location_21,XZXBK,视图,Physical Locations
+stock_location_22,CAFTK,视图,Physical Locations
+stock_location_100,重庆长安福特VDC库,内部位置,Physical Locations/VDC
+stock_location_101,阿克苏线边库,内部位置,Physical Locations/AKSXB
+stock_location_102,阿克苏站,内部位置,Physical Locations/AKSZ
+stock_location_103,三枰站,内部位置,Physical Locations/SPZ
+stock_location_104,三枰站线边库,内部位置,Physical Locations/SPZXB
+stock_location_105,团结村站,内部位置,Physical Locations/TJCZ
+stock_location_106,团结村线边库,内部位置,Physical Locations/TJCXB
+stock_location_107,唐家沱,内部位置,Physical Locations/TJT
+stock_location_108,拉萨西站,内部位置,Physical Locations/LSXZ
+stock_location_109,拉萨西货场,内部位置,Physical Locations/LSXHC
+stock_location_110,祁东西站,内部位置,Physical Locations/QDXZ
+stock_location_111,祁东西货场,内部位置,Physical Locations/QDXHC
+stock_location_112,王家营西站,内部位置,Physical Locations/WJYXZ
+stock_location_113,王家营西货场,内部位置,Physical Locations/WJYHC
+stock_location_114,党家庄站,内部位置,Physical Locations/DJZZ
+stock_location_115,罗而庄库房(福特临时停放,内部位置,Physical Locations/LEZKF
+stock_location_116,新筑站,内部位置,Physical Locations/XZZ
+stock_location_117,新筑铁路库,内部位置,Physical Locations/XZTLK
+stock_location_118,西安福特中转库,内部位置,Physical Locations/FTZZK
+stock_location_119,西安福特待发区,内部位置,Physical Locations/FTDFQ
+stock_location_120,新筑线边库待装区,内部位置,Physical Locations/XZXBK
+stock_location_121,长安福特库,内部位置,Physical Locations/CAFTK
+stock_location_200,库1,内部位置,Physical Locations/VDC/重庆长安福特VDC库
+stock_location_201,库2,内部位置,Physical Locations/VDC/重庆长安福特VDC库
+stock_location_202,入库位置,内部位置,Physical Locations/TJCXB/团结村线边库
+stock_location_203,加固位置,内部位置,Physical Locations/TJCZ/团结村站
+stock_location_204,团结村二线库房,内部位置,Physical Locations/TJCZ/团结村站/加固位置
+stock_location_205,团结村三线库房,内部位置,Physical Locations/TJCZ/团结村站/加固位置
+stock_location_206,团结村五线库房,内部位置,Physical Locations/TJCZ/团结村站/加固位置
+stock_location_207,解固位置,内部位置,Physical Locations/SPZ/三枰站
+stock_location_208,入库位置,内部位置,Physical Locations/SPZXB/三枰站线边库
+stock_location_209,加固位置,内部位置,Physical Locations/SPZ/三枰站
+stock_location_210,解固位置,内部位置,Physical Locations/AKSZ/阿克苏站
+stock_location_211,入库位置,内部位置,Physical Locations/AKSXB/阿克苏线边库
+stock_location_212,入库位置,内部位置,Physical Locations/TJT/唐家沱
+stock_location_213,加固位置,内部位置,Physical Locations/TJT/唐家沱
+stock_location_214,装车位置,内部位置,Physical Locations/TJT/唐家沱
+stock_location_215,解固位置,内部位置,Physical Locations/LSXZ/拉萨西站
+stock_location_216,入库位置,内部位置,Physical Locations/LSXHC/拉萨西货场
+stock_location_217,出库位置,内部位置,Physical Locations/CAFTK/长安福特库
+stock_location_218,解固位置,内部位置,Physical Locations/QDXZ/祁东西站
