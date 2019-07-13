@@ -41,7 +41,7 @@
         'data/product.product.csv',
         'data/bundle.product.csv',
         'data/product.template.xml',
-        #'data/res.partner.csv',
+        'data/res.partner.csv',
         'data/res.users.csv',
 
 
