@@ -79,3 +79,52 @@ stock_location_route_6,重庆长安福特VDC库 -> 经销商 (6),FALSE,FALSE,FAL
 ,,,,,,祁东西货场->长安福特库,拉,公路运输,Physical Locations/QDXHC/祁东西货场,Physical Locations/CAFTK/长安福特库,make_to_order
 ,,,,,,长安福特库->长安福特库/出库位置,拉,出库,Physical Locations/CAFTK/长安福特库,Physical Locations/CAFTK/长安福特库/出库位置,make_to_order
 ,,,,,,长安福特库/出库位置->经销商,拉,公路运输,Physical Locations/CAFTK/长安福特库/出库位置,Partner Locations/Customers,make_to_order
+stock_location_route_7,重庆长安福特VDC库 -> 经销商 (7),FALSE,FALSE,FALSE,TRUE,重庆长安福特VDC库->团结村线边库,拉,短驳接车,Physical Locations/VDC/重庆长安福特VDC库,Physical Locations/TJCXB/团结村线边库,make_to_stock
+,,,,,,团结村线边库->团结村线边库/入库位置,拉,入库,Physical Locations/TJCXB/团结村线边库,Physical Locations/TJCXB/团结村线边库/入库位置,make_to_order
+,,,,,,团结村线边库/入库位置->团结村线边库,拉,出库,Physical Locations/TJCXB/团结村线边库/入库位置,Physical Locations/TJCXB/团结村线边库,make_to_order
+,,,,,,团结村线边库->团结村站,拉,装车,Physical Locations/TJCXB/团结村线边库,Physical Locations/TJCZ/团结村站,make_to_order
+,,,,,,团结村站->团结村站/加固位置,拉,加固,Physical Locations/TJCZ/团结村站,Physical Locations/TJCZ/团结村站/加固位置,make_to_order
+,,,,,,团结村站/加固位置->王家营西站,拉,铁路运输,Physical Locations/TJCZ/团结村站/加固位置,Physical Locations/WJYXZ/王家营西站,make_to_order
+,,,,,,王家营西站->王家营西站/解固位置,拉,解固,Physical Locations/WJYXZ/王家营西站,Physical Locations/WJYXZ/王家营西站/解固位置,make_to_order
+,,,,,,王家营西站/解固位置->王家营西货场,拉,卸车,Physical Locations/WJYXZ/王家营西站/解固位置,Physical Locations/WJYHC/王家营西货场,make_to_order
+,,,,,,王家营西货场->王家营西货场/入库位置,拉,入库,Physical Locations/WJYHC/王家营西货场,Physical Locations/WJYHC/王家营西货场/入库位置,make_to_order
+,,,,,,王家营西货场/入库位置->王家营西货场,拉,出库,Physical Locations/WJYHC/王家营西货场/入库位置,Physical Locations/WJYHC/王家营西货场,make_to_order
+,,,,,,王家营西货场->经销商,拉,公路运输,Physical Locations/WJYHC/王家营西货场,Partner Locations/Customers,make_to_order
+stock_location_route_8,重庆长安福特VDC库 -> 经销商 (8),FALSE,FALSE,FALSE,TRUE,重庆长安福特VDC库->唐家沱,拉,短驳接车,Physical Locations/VDC/重庆长安福特VDC库,Physical Locations/TJT/唐家沱,make_to_stock
+,,,,,,唐家沱->唐家沱/入库位置,拉,入库,Physical Locations/TJT/唐家沱,Physical Locations/TJT/唐家沱/入库位置,make_to_order
+,,,,,,唐家沱/入库位置->唐家沱,拉,出库,Physical Locations/TJT/唐家沱/入库位置,Physical Locations/TJT/唐家沱,make_to_order
+,,,,,,唐家沱->唐家沱/装车位置,拉,装车,Physical Locations/TJT/唐家沱,Physical Locations/TJT/唐家沱/装车位置,make_to_order
+,,,,,,唐家沱/装车位置->唐家沱/加固位置,拉,加固,Physical Locations/TJT/唐家沱/装车位置,Physical Locations/TJT/唐家沱/加固位置,make_to_order
+,,,,,,唐家沱/加固位置->王家营西站,拉,铁路运输,Physical Locations/TJT/唐家沱/加固位置,Physical Locations/WJYXZ/王家营西站,make_to_order
+,,,,,,王家营西站->王家营西站/解固位置,拉,解固,Physical Locations/WJYXZ/王家营西站,Physical Locations/WJYXZ/王家营西站/解固位置,make_to_order
+,,,,,,王家营西站/解固位置->王家营西货场,拉,卸车,Physical Locations/WJYXZ/王家营西站/解固位置,Physical Locations/WJYHC/王家营西货场,make_to_order
+,,,,,,王家营西货场->王家营西货场/入库位置,拉,入库,Physical Locations/WJYHC/王家营西货场,Physical Locations/WJYHC/王家营西货场/入库位置,make_to_order
+,,,,,,王家营西货场/入库位置->王家营西货场,拉,出库,Physical Locations/WJYHC/王家营西货场/入库位置,Physical Locations/WJYHC/王家营西货场,make_to_order
+,,,,,,王家营西货场->经销商,拉,公路运输,Physical Locations/WJYHC/王家营西货场,Partner Locations/Customers,make_to_order
+stock_location_route_9,重庆长安福特VDC库 -> 经销商 (9),FALSE,FALSE,FALSE,TRUE,重庆长安福特VDC库->唐家沱,拉,短驳接车,Physical Locations/VDC/重庆长安福特VDC库,Physical Locations/TJT/唐家沱,make_to_stock
+,,,,,,唐家沱->唐家沱/入库位置,拉,入库,Physical Locations/TJT/唐家沱,Physical Locations/TJT/唐家沱/入库位置,make_to_order
+,,,,,,唐家沱/入库位置->唐家沱,拉,出库,Physical Locations/TJT/唐家沱/入库位置,Physical Locations/TJT/唐家沱,make_to_order
+,,,,,,唐家沱->唐家沱/装车位置,拉,装车,Physical Locations/TJT/唐家沱,Physical Locations/TJT/唐家沱/装车位置,make_to_order
+,,,,,,唐家沱/装车位置->唐家沱/加固位置,拉,加固,Physical Locations/TJT/唐家沱/装车位置,Physical Locations/TJT/唐家沱/加固位置,make_to_order
+,,,,,,唐家沱/加固位置->党家庄站,拉,铁路运输,Physical Locations/TJT/唐家沱/加固位置,Physical Locations/DJZZ/党家庄站,make_to_order
+,,,,,,党家庄站->党家庄站/解固位置,拉,解固,Physical Locations/DJZZ/党家庄站,Physical Locations/DJZZ/党家庄站/解固位置,make_to_order
+,,,,,,党家庄站/解固位置->罗而庄库房,拉,卸车,Physical Locations/DJZZ/党家庄站/解固位置,Physical Locations/LEZKF/罗而庄库房,make_to_order
+,,,,,,罗而庄库房->罗而庄库房/入库位置,拉,入库,Physical Locations/LEZKF/罗而庄库房,Physical Locations/LEZKF/罗而庄库房/入库位置,make_to_order
+,,,,,,罗而庄库房/入库位置->罗而庄库房,拉,出库,Physical Locations/LEZKF/罗而庄库房/入库位置,Physical Locations/LEZKF/罗而庄库房,make_to_order
+,,,,,,罗而庄库房->经销商,拉,公路运输,Physical Locations/LEZKF/罗而庄库房,Partner Locations/Customers,make_to_order
+stock_location_route_10,重庆长安福特VDC库 -> 经销商 (10),FALSE,FALSE,FALSE,TRUE,重庆长安福特VDC库->团结村线边库,拉,短驳接车,Physical Locations/VDC/重庆长安福特VDC库,Physical Locations/TJCXB/团结村线边库,make_to_stock
+,,,,,,团结村线边库->团结村线边库/入库位置,拉,入库,Physical Locations/TJCXB/团结村线边库,Physical Locations/TJCXB/团结村线边库/入库位置,make_to_order
+,,,,,,团结村线边库/入库位置->团结村线边库,拉,出库,Physical Locations/TJCXB/团结村线边库/入库位置,Physical Locations/TJCXB/团结村线边库,make_to_order
+,,,,,,团结村线边库->团结村站,拉,装车,Physical Locations/TJCXB/团结村线边库,Physical Locations/TJCZ/团结村站,make_to_order
+,,,,,,团结村站->团结村站/加固位置,拉,加固,Physical Locations/TJCZ/团结村站,Physical Locations/TJCZ/团结村站/加固位置,make_to_order
+,,,,,,团结村站/加固位置->新筑站,拉,铁路运输,Physical Locations/TJCZ/团结村站/加固位置,Physical Locations/XZZ/新筑站,make_to_order
+,,,,,,新筑站->新筑站/解固位置,拉,解固,Physical Locations/XZZ/新筑站,Physical Locations/XZZ/新筑站/解固位置,make_to_order
+,,,,,,新筑站/解固位置->新筑铁路库,拉,卸车,Physical Locations/XZZ/新筑站/解固位置,Physical Locations/XZTLK/新筑铁路库,make_to_order
+,,,,,,新筑铁路库->新筑铁路库/入库位置,拉,入库,Physical Locations/XZTLK/新筑铁路库,Physical Locations/XZTLK/新筑铁路库/入库位置,make_to_order
+,,,,,,新筑铁路库/入库位置->新筑铁路库,拉,出库,Physical Locations/XZTLK/新筑铁路库/入库位置,Physical Locations/XZTLK/新筑铁路库,make_to_order
+,,,,,,新筑铁路库->西安福特中转库,拉,公路运输,Physical Locations/XZTLK/新筑铁路库,Physical Locations/FTZZK/西安福特中转库,make_to_order
+,,,,,,西安福特中转库->西安福特中转库/入库位置,拉,入库,Physical Locations/FTZZK/西安福特中转库,Physical Locations/FTZZK/西安福特中转库/入库位置,make_to_order
+,,,,,,西安福特中转库/入库位置->西安福特待发区,拉,公路运输,Physical Locations/FTZZK/西安福特中转库/入库位置,Physical Locations/FTDFQ/西安福特待发区,make_to_order
+,,,,,,西安福特待发区->西安福特待发区/出库位置,拉,出库,Physical Locations/FTDFQ/西安福特待发区,Physical Locations/FTDFQ/西安福特待发区/出库位置,make_to_order
+,,,,,,西安福特待发区/出库位置->新筑线边库待发区,拉,公路运输,Physical Locations/FTDFQ/西安福特待发区/出库位置,Physical Locations/XZXBK/新筑线边库待装区,make_to_order
+,,,,,,新筑线边库待装区->经销商,拉,公路运输,Physical Locations/XZXBK/新筑线边库待装区,Partner Locations/Customers,make_to_order

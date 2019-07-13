@@ -36,7 +36,7 @@ stock_location_111,祁东西货场,内部位置,Physical Locations/QDXHC
 stock_location_112,王家营西站,内部位置,Physical Locations/WJYXZ
 stock_location_113,王家营西货场,内部位置,Physical Locations/WJYHC
 stock_location_114,党家庄站,内部位置,Physical Locations/DJZZ
-stock_location_115,罗而庄库房(福特临时停放,内部位置,Physical Locations/LEZKF
+stock_location_115,罗而庄库房,内部位置,Physical Locations/LEZKF
 stock_location_116,新筑站,内部位置,Physical Locations/XZZ
 stock_location_117,新筑铁路库,内部位置,Physical Locations/XZTLK
 stock_location_118,西安福特中转库,内部位置,Physical Locations/FTZZK
@@ -62,3 +62,12 @@ stock_location_215,解固位置,内部位置,Physical Locations/LSXZ/拉萨西�
 stock_location_216,入库位置,内部位置,Physical Locations/LSXHC/拉萨西货场
 stock_location_217,出库位置,内部位置,Physical Locations/CAFTK/长安福特库
 stock_location_218,解固位置,内部位置,Physical Locations/QDXZ/祁东西站
+stock_location_219,解固位置,内部位置,Physical Locations/WJYXZ/王家营西站
+stock_location_220,入库位置,内部位置,Physical Locations/WJYXZ/王家营西站
+stock_location_221,入库位置,内部位置,Physical Locations/WJYHC/王家营西货场
+stock_location_222,解固位置,内部位置,Physical Locations/DJZZ/党家庄站
+stock_location_223,入库位置,内部位置,Physical Locations/LEZKF/罗而庄库房
+stock_location_224,解固位置,内部位置,Physical Locations/XZZ/新筑站
+stock_location_225,入库位置,内部位置,Physical Locations/XZTLK/新筑铁路库
+stock_location_226,入库位置,内部位置,Physical Locations/FTZZK/西安福特中转库
+stock_location_227,出库位置,内部位置,Physical Locations/FTDFQ/西安福特待发区
