@@ -71,6 +71,12 @@ stock_location_224,解固位置,内部位置,Physical Locations/XZZ/新筑站
 stock_location_225,入库位置,内部位置,Physical Locations/XZTLK/新筑铁路库
 stock_location_226,入库位置,内部位置,Physical Locations/FTZZK/西安福特中转库
 stock_location_227,出库位置,内部位置,Physical Locations/FTDFQ/西安福特待发区
+stock_location_228,出库位置,内部位置,Physical Locations/TJCXB/团结村线边库
+stock_location_229,装车位置,内部位置,Physical Locations/TJCXB/团结村线边库
+stock_location_230,出库位置,内部位置,Physical Locations/SPZXB/三枰站线边库
+stock_location_231,装车位置,内部位置,Physical Locations/TJCZ/团结村站
+stock_location_232,装车位置,内部位置,Physical Locations/SPZ/三枰站
+stock_location_233,出库位置,内部位置,Physical Locations/AKSXB/阿克苏线边库
 stock_location_10000,红河万福汽车销售服务有限公司,客户位置,Partner Locations/Customers
 stock_location_10001,大理万福汽车销售服务有限公司保山分公司,客户位置,Partner Locations/Customers
 stock_location_10002,新疆福凌汽车销售服务有限公司,客户位置,Partner Locations/Customers
