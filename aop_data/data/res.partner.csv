@@ -1,5 +1,5 @@
 id,name,parent_id:id,type,customer,supplier,ref,property_stock_customer
-res_partner_1,长安民生,,,1,0,,
+res_partner_1,长安民生,,,1,1,,
 res_partner_1_1,重庆长安福特VDC库,res_partner_1,,1,0,,Physical Locations/VDC/重庆长安福特VDC库
 res_partner_1_2,长安民生经销商,res_partner_1,,1,0,,Partner Locations/Customers
 res_partner_2,CQ1VDC2,res_partner_1_1,contact,1,0,,Physical Locations/VDC/重庆长安福特VDC库/库2
