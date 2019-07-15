@@ -1,8 +1,10 @@
 id,name,parent_id:id,type,customer,supplier,ref,property_stock_customer
 res_partner_1,长安民生,,,1,0,,
-res_partner_2,CQ1VDC2,res_partner_1,contact,1,0,,Physical Locations/VDC/重庆长安福特VDC库/库2
-res_partner_3,CQ2VDC1,res_partner_1,contact,1,0,,Physical Locations/VDC/重庆长安福特VDC库/库1
-res_partner_4,红河万福汽车销售服务有限公司,res_partner_1,delivery,1,0,A08212,Partner Locations/Customers/红河万福汽车销售服务有限公司
-res_partner_5,陕西福腾汽车贸易有限公司,res_partner_1,delivery,1,0,A08572,Partner Locations/Customers/陕西福腾汽车贸易有限公司
-res_partner_6,大理万福汽车销售服务有限公司保山分公司,res_partner_1,delivery,1,0,A36902,Partner Locations/Customers/大理万福汽车销售服务有限公司保山分公司
-res_partner_7,寿光富赢汽车销售服务有限公司,res_partner_1,delivery,1,0,A22055,Partner Locations/Customers/寿光富赢汽车销售服务有限公司
+res_partner_1_1,重庆长安福特VDC库,res_partner_1,,1,0,,Physical Locations/VDC/重庆长安福特VDC库
+res_partner_1_2,长安民生经销商,res_partner_1,,1,0,,Partner Locations/Customers
+res_partner_2,CQ1VDC2,res_partner_1_1,contact,1,0,,Physical Locations/VDC/重庆长安福特VDC库/库2
+res_partner_3,CQ2VDC1,res_partner_1_1,contact,1,0,,Physical Locations/VDC/重庆长安福特VDC库/库1
+res_partner_4,红河万福汽车销售服务有限公司,res_partner_1_2,delivery,1,0,A08212,Partner Locations/Customers/红河万福汽车销售服务有限公司
+res_partner_5,陕西福腾汽车贸易有限公司,res_partner_1_2,delivery,1,0,A08572,Partner Locations/Customers/陕西福腾汽车贸易有限公司
+res_partner_6,大理万福汽车销售服务有限公司保山分公司,res_partner_1_2,delivery,1,0,A36902,Partner Locations/Customers/大理万福汽车销售服务有限公司保山分公司
+res_partner_7,寿光富赢汽车销售服务有限公司,res_partner_1_2,delivery,1,0,A22055,Partner Locations/Customers/寿光富赢汽车销售服务有限公司

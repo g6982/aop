@@ -37,7 +37,7 @@
         'data/stock.location.csv',
         'data/stock.warehouse.csv',
         'data/stock.picking.type.csv',
-        'data/stock.location.route.csv',
+        #'data/stock.location.route.csv',
         'data/product.product.csv',
         'data/bundle.product.csv',
         'data/product.template.xml',
