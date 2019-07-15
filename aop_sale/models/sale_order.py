@@ -103,7 +103,7 @@ class SaleOrderLine(models.Model):
                 procurement_uom = quant_uom
             try:
                 self.env['procurement.group'].run(line.product_id, product_qty, procurement_uom,
-                                                  line.from_location_id.parent_id.property_stock_customer,
+                                                  line.to_location_id.parent_id.property_stock_customer,
                                                   line.name,
                                                   line.order_id.name, values)
             except UserError as error:
