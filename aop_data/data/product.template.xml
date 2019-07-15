@@ -10,6 +10,7 @@
             <field name="name">长安福特</field>
             <field name="categ_id" ref="product.product_category_all"></field>
             <field name="type">product</field>
+            <field name="tracking">serial</field>
         </record>
 
         <!--打包产品-->
