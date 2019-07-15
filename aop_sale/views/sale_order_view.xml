@@ -42,6 +42,10 @@
                     <attribute name="editable">bottom</attribute>
                 </xpath>
 
+                <xpath expr="//field[@name='order_line']/tree/field[@name='route_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
                 <!-- 隐藏其他信息 -->
                 <xpath expr="//page[@name='other_information']" position="attributes">
                     <attribute name="invisible">True</attribute>
