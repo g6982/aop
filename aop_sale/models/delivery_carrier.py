@@ -41,6 +41,11 @@ class DeliveryCarrier(models.Model):
             }))
         self.rule_service_product_ids = data
 
+    @api.depends('product_id.list_price', 'product_id.product_tmpl_id.list_price')
+    def _compute_fixed_price(self):
+        for carrier in self:
+            carrier.fixed_price = carrier.service_product_id.list_price
+
 
 class RuleServiceProduct(models.Model):
     _name = 'rule.service.product'
