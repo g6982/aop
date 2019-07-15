@@ -178,11 +178,11 @@ class ImportSaleOrder(models.TransientModel):
             ('product_id', '=', product_id.id)
         ])
         # TODO： 没有就创建咯？
-        if not vin_id:
-            vin_id = self.env['stock.production.lot'].create({
-                'name': vin_code,
-                'product_id': product_id.id
-            })
+        #if not vin_id:
+        #    vin_id = self.env['stock.production.lot'].create({
+        #        'name': vin_code,
+        #        'product_id': product_id.id
+        #    })
         return vin_id if vin_id else False
 
     # 解码
