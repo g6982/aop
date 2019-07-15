@@ -18,5 +18,7 @@ from . import base_warehouse
 from . import stock_picking_batch
 from . import res_company
 from . import res_partner
+from . import dispatch_order
+
 
 

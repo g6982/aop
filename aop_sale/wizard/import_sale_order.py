@@ -40,9 +40,23 @@ class ImportSaleOrder(models.TransientModel):
             _logger.info({
                 'order_data': order_data
             })
-            sale_order.create(order_data)
+            res = sale_order.create(order_data)
+
+            view_id = self.env.ref('sale.view_quotation_tree_with_onboarding').id
+            # return {
+            #     "type": "ir.actions.do_nothing",
+            # }
+            # 跳转到导入成功后的tree界面
             return {
-                "type": "ir.actions.do_nothing",
+                'name': 'Order',
+                'view_type': 'form',
+                'view_id': False,
+                'views': [(view_id, 'tree')],
+                'res_model': 'sale.order',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', res.ids)],
+                'limit': 80,
+                'target': 'current',
             }
         except Exception as e:
             self._cr.rollback()

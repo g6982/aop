@@ -79,6 +79,19 @@
                                 </field>
 
                             </page>
+                            <page string="Rule lines">
+                                <field name="contract_rule_ids">
+                                    <tree create="false" delete="false" editable="bottom">
+                                        <field name="route_id"
+                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                                        <field name="rule_id"
+                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                                        <field name="service_product_id"
+                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
+<!--                                        <field name="fee"/>-->
+                                    </tree>
+                                </field>
+                            </page>
 
                         </notebook>
 

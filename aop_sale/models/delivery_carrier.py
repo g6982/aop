@@ -20,8 +20,9 @@ class DeliveryCarrier(models.Model):
                                           ondelete='restrict')
     contract_id = fields.Many2one('aop.contract', 'contract')
 
-    route_ids = fields.Many2many('stock.location.route', string='Routes')
-    rule_ids = fields.Many2many('stock.rule', string='Rules')
+    # route_ids = fields.Many2many('stock.location.route', string='Routes')
+    route_id = fields.Many2one('stock.location.route', string='Route')
+    # rule_ids = fields.Many2many('stock.rule', string='Rules')
 
     service_product_id = fields.Many2one('product.product', string='Service product')
     start_position = fields.Many2one('res.partner', 'Outset')
@@ -29,32 +30,15 @@ class DeliveryCarrier(models.Model):
 
     rule_service_product_ids = fields.One2many('rule.service.product', 'carrier_id', 'Rule & product')
 
-    @api.onchange('route_ids', 'rule_ids')
+    @api.onchange('route_id')
     def fill_rule_service_product(self):
-        if self.route_ids and self.rule_ids:
-            raise UserError('You can only choose route or rule')
-
         data = []
-        for route_id in self.route_ids if self.route_ids else []:
-            for rule_id in route_id.rule_ids:
-                data.append((0, 0, {
-                    'route_id': route_id.id,
-                    'rule_id': rule_id.id,
-                    'service_product_id': False
-                }))
-        for rule_line_id in self.rule_ids if self.rule_ids else []:
-            _logger.info({
-                '???' * 100: '100'
-            })
+        for rule_id in self.route_id.rule_ids:
             data.append((0, 0, {
-                'rule_id': rule_line_id.id
+                'route_id': self.route_id.id,
+                'rule_id': rule_id.id,
+                'service_product_id': False
             }))
-        _logger.info({
-            'data': data
-        })
-        # self.write({
-        #     'rule_service_product_ids': data
-        # })
         self.rule_service_product_ids = data
 
 
