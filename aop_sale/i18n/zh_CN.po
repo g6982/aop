@@ -751,7 +751,7 @@ msgstr "调度订单"
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.dispatch_order_stock_form
 msgid "Dispatch Order"
-msgstr ""
+msgstr "调度订单"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__dispatch_line_id
