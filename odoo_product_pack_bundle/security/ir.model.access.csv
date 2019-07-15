@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_bundle_sale_manager,access.product.bundle.sale.manager,model_bundle_product,sales_team.group_sale_manager,1,1,1,1
+access_product_bundle_inventory_manager,access.product.bundle.inventory.manager,model_bundle_product,stock.group_stock_manager,1,1,1,1
+access_product_bundle_publuc,access.product.bundle.public,model_bundle_product,,1,0,0,0

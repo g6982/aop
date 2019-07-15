@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'stock', 'sale', 'sale_stock', 'account', 'purchase', 'hr_expense', 'product', 'aop_sale'],
+    'depends': ['base', 'stock', 'sale', 'sale_stock', 'account', 'purchase', 'hr_expense', 'product'],
 
     # always loaded
     'data': [
@@ -34,13 +34,14 @@
         #'data/product.attribute.value.csv',
         'data/ir.sequence.csv',
         'data/account.account.csv',
-        #'data/stock.location.csv',
-        #'data/stock.warehouse.csv',
+        'data/stock.location.csv',
+        'data/stock.warehouse.csv',
         'data/stock.picking.type.csv',
         #'data/stock.location.route.csv',
+        'data/product.product.csv',
+        'data/bundle.product.csv',
         'data/product.template.xml',
-        #'data/product.template.csv',
-        #'data/res.partner.csv',
+        'data/res.partner.csv',
         'data/res.users.csv',
 
 

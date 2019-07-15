@@ -1,6 +1,4 @@
 id,name,categ_id,type,uom_id,tracking,attribute_line_ids/attribute_id,attribute_line_ids/value_ids,property_account_income_id,property_account_expense_id
-product_template_1,长安福特,All,可库存产品,Unit(s),serial,车型名称,"86BLD,87KKJ,87KHZ,874MK,874MJ,874MW",,
-,,,,,,颜色名称,"1,2,F,O",,
 product_template_service_1,铁路运输-铁路运输,All,服务,Unit(s),none,,,运输服务收入,铁路运输成本
 product_template_service_2,铁路运输-转运,All,服务,Unit(s),none,,,运输服务收入,前端转运成本
 product_template_service_3,铁路运输-装车,All,服务,Unit(s),none,,,运输服务收入,装车成本

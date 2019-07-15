@@ -104,9 +104,9 @@ class SaleOrder(models.Model):
         # sale order line 的from 和 to
         # TODO: 需要确认，是否使用默认的地址
         # from 使用第二级
-        # to 使用默认
+        # to 使用第二级
         from_location_id = line_id.from_location_id.parent_id.property_stock_customer
-        to_location_id = line_id.to_location_id.property_stock_customer
+        to_location_id = line_id.to_location_id.parent_id.property_stock_customer
 
         if not from_location_id or not to_location_id:
             return False
