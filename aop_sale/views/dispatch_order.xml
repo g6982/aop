@@ -7,7 +7,7 @@
             <field name="res_model">purchase.order</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('dispatch_order', '=', True), ('type', '=', 'out_invoice')]</field>
+            <field name="domain">[('dispatch_order', '=', True)]</field>
             <field name="context">{'dispatch_order': True}</field>
         </record>
 
