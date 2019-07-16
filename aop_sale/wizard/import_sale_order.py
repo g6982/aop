@@ -43,15 +43,14 @@ class ImportSaleOrder(models.TransientModel):
             res = sale_order.create(order_data)
 
             view_id = self.env.ref('sale.view_quotation_tree_with_onboarding').id
-            # return {
-            #     "type": "ir.actions.do_nothing",
-            # }
+            form_id = self.env.ref('sale.view_order_form').id
+
             # 跳转到导入成功后的tree界面
             return {
                 'name': 'Order',
                 'view_type': 'form',
                 'view_id': False,
-                'views': [(view_id, 'tree')],
+                'views': [(view_id, 'tree'), (form_id, 'form')],
                 'res_model': 'sale.order',
                 'type': 'ir.actions.act_window',
                 'domain': [('id', 'in', res.ids)],
