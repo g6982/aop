@@ -52,6 +52,7 @@ class SaleOrderLine(models.Model):
     def _onchange_product_id_check_availability(self):
         pass
 
+    # 检查限制
     @api.onchange('product_id', 'route_id', 'service_product_id')
     def _onchange_domain_service_product_route(self):
         pass
