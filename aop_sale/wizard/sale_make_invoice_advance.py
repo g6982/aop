@@ -176,7 +176,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
             view_id = self.env.ref('account.invoice_tree_with_onboarding').id
             form_id = self.env.ref('account.invoice_form').id
             return {
-                'name': 'Invoice',
+                'name': _('Invoice'),
                 'view_type': 'form',
                 'view_id': False,
                 'views': [(view_id, 'tree'), (form_id, 'form')],
