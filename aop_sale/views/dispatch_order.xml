@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="action_dispatch_order" model="ir.actions.act_window">
-            <field name="name">Dispatch order</field>
+            <field name="name">调度订单</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">purchase.order</field>
             <field name="view_type">form</field>
