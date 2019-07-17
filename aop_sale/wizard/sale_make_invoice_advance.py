@@ -277,7 +277,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                          service_product_id.categ_id.property_account_income_categ_id.id
         if not account_id:
             inc_acc = ir_property_obj.get('property_account_income_categ_id', 'product.category')
-            account_id = order.fiscal_position_id.map_account(inc_acc).id if inc_acc else False
+            account_id = order.fiscal_position_id.map_account(inc_acc).id if inc_acc and order else False
         if not account_id:
             raise UserError(
                 _(
