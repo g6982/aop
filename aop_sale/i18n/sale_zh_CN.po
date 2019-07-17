@@ -95,3 +95,9 @@ msgstr "添加订单行"
 msgid "My Quotations"
 msgstr "我的临时订单"
 
+#. module: sale_stock
+#: model_terms:ir.ui.view,arch_db:sale_stock.view_order_form_inherit_sale_stock
+msgid "Delivery"
+msgstr "任务"
+
+

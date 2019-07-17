@@ -88,6 +88,33 @@ msgstr "路由"
 msgid "Route"
 msgstr "路由"
 
+#. module: stock
+#: model:ir.model.fields,field_description:stock.field_stock_inventory_line__prod_lot_id
+#: model:ir.model.fields,field_description:stock.field_stock_move_line__lot_id
+#: model:ir.model.fields,field_description:stock.field_stock_production_lot__name
+#: model:ir.model.fields,field_description:stock.field_stock_quant__lot_id
+#: model_terms:ir.ui.view,arch_db:stock.product_form_view_procurement_button
+#: model_terms:ir.ui.view,arch_db:stock.product_template_form_view_procurement_button
+#: model_terms:ir.ui.view,arch_db:stock.quant_search_view
+#: model_terms:ir.ui.view,arch_db:stock.report_delivery_document
+#: model_terms:ir.ui.view,arch_db:stock.report_package_barcode
+msgid "Lot/Serial Number"
+msgstr "VIN"
+
+#. module: stock
+#: model:ir.actions.act_window,name:stock.action_picking_tree
+#: model:ir.actions.act_window,name:stock.action_picking_tree_all
+#: model:ir.ui.menu,name:stock.all_picking
+msgid "Transfers"
+msgstr "任务"
+
+#. module: stock
+#: model:ir.model,name:stock.model_stock_picking
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_form
+msgid "Transfer"
+msgstr "任务"
+
+
 
 
 

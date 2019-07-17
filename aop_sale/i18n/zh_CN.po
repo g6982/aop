@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0-20190305\n"
+"Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-17 12:25+0000\n"
-"PO-Revision-Date: 2019-07-17 12:25+0000\n"
+"POT-Creation-Date: 2019-07-17 13:46+0000\n"
+"PO-Revision-Date: 2019-07-17 13:46+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -604,7 +604,7 @@ msgstr "已交货数量"
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
 msgid "Delivery"
-msgstr "交货"
+msgstr "任务"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__partner_shipping_id
@@ -663,6 +663,16 @@ msgstr "调度订单"
 #: model:ir.ui.menu,name:aop_sale.dispatch_order
 msgid "Dispatch order"
 msgstr "调度订单"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_dispatch_order_stock
+msgid "Dispatch order for stock"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_dispatch_order_stock_line
+msgid "Dispatch order line for stock"
+msgstr ""
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_change_stock_picking_form
@@ -1438,7 +1448,7 @@ msgstr "订购数量"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__sale_order_ids
 msgid "Orders"
-msgstr ""
+msgstr "订单"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking__origin_purchase_id
@@ -2110,7 +2120,7 @@ msgstr "比率/金额"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__invoice_line_tax_ids
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 msgid "Taxes"
-msgstr "税率设置"
+msgstr "税"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice_line__display_type
