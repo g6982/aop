@@ -1075,7 +1075,7 @@ msgstr "结算清单明细行"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__invoice_product_type
 msgid "Invoice product type"
-msgstr ""
+msgstr "结算产品类型"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
@@ -1803,12 +1803,12 @@ msgstr "舍入明细"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__route_id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__route_id
 msgid "Route"
-msgstr "路线"
+msgstr "路由"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__route_line_ids
 msgid "Route Line"
-msgstr "路线明细"
+msgstr "路由明细"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.route_manager_menu

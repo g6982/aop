@@ -60,3 +60,37 @@ msgstr "调度"
 #: model:ir.model.fields,field_description:stock_picking_batch.field_stock_picking_batch__name
 msgid "Batch Picking Name"
 msgstr "批量调度名称"
+
+#. module: stock
+#: model:ir.actions.act_window,name:stock.action_routes_form
+#: model:ir.model.fields,field_description:stock.field_product_category__route_ids
+#: model:ir.model.fields,field_description:stock.field_product_template__route_ids
+#: model:ir.model.fields,field_description:stock.field_stock_warehouse__route_ids
+#: model:ir.ui.menu,name:stock.menu_routes_config
+#: model_terms:ir.ui.view,arch_db:stock.product_form_view_procurement_button
+#: model_terms:ir.ui.view,arch_db:stock.product_template_form_view_procurement_button
+#: model_terms:ir.ui.view,arch_db:stock.stock_location_route_tree
+#: model_terms:ir.ui.view,arch_db:stock.view_warehouse
+msgid "Routes"
+msgstr "路由"
+
+#. module: stock
+#: model:ir.model.fields,field_description:stock.field_stock_location_route__name
+#: model:ir.model.fields,field_description:stock.field_stock_rule__route_id
+#: model_terms:ir.ui.view,arch_db:stock.stock_location_route_form_view
+#: model_terms:ir.ui.view,arch_db:stock.stock_location_route_view_search
+#: model_terms:ir.ui.view,arch_db:stock.view_stock_rule_filter
+msgid "Route"
+msgstr "路由"
+
+#. module: sale_stock
+#: model:ir.model.fields,field_description:sale_stock.field_sale_order_line__route_id
+msgid "Route"
+msgstr "路由"
+
+
+
+
+
+
+

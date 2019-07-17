@@ -89,3 +89,9 @@ msgstr "临时订单送出"
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
 msgid "Add a product"
 msgstr "添加订单行"
+
+#. module: sale
+#: model_terms:ir.ui.view,arch_db:sale.sale_order_view_search_inherit_quotation
+msgid "My Quotations"
+msgstr "我的临时订单"
+
