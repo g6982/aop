@@ -9,16 +9,27 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     service_product_id = fields.Many2one('product.product', string='Service Product')
+    delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier')
     vin_id = fields.Many2one('stock.production.lot', 'VIN', domain="[('product_id','=', product_id)]")
 
     def _prepare_procurement_values(self):
         res = super(StockMove, self)._prepare_procurement_values()
         res.update({
             # 'service_product_id': self.service_product_id.id,
-            'service_product_id': self.rule_id.service_product_id.id if self.rule_id else False,
-            'vin_id': self.vin_id.id
+            'service_product_id': self._get_service_product_id(self.delivery_carrier_id, self.rule_id),
+            'vin_id': self.vin_id.id,
+            'delivery_carrier_id': self.delivery_carrier_id.id
         })
         return res
+
+    # 使用条款对应的服务产品
+    def _get_service_product_id(self, delivery_carrier_id, rule_id):
+        rule_ids = delivery_carrier_id.mapped('rule_service_product_ids')
+
+        rule_id = rule_ids.filtered(lambda x: x.rule_id == rule_id)
+        if not rule_id:
+            return False
+        return rule_id.service_product_id.id if rule_id.service_product_id else False
 
     # 获取库存产品的位置
     def _get_product_stock_location(self, product_id, vin_id):

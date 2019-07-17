@@ -46,6 +46,10 @@ class DeliveryCarrier(models.Model):
         for carrier in self:
             carrier.fixed_price = carrier.service_product_id.list_price
 
+    def _set_product_fixed_price(self):
+        for carrier in self:
+            carrier.service_product_id.list_price = carrier.fixed_price
+
 
 class RuleServiceProduct(models.Model):
     _name = 'rule.service.product'

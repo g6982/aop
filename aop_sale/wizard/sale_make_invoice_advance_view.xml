@@ -6,7 +6,26 @@
         <field name="inherit_id" ref="sale.view_sale_advance_payment_inv"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='advance_payment_method']" position="before">
-                <field name="reconciliation_batch_no" require="1"/>
+                <field name="sale_order_ids" widget="many2many_tags"
+                       options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                <field name="invoice_product_type"/>
+                <field name="reconciliation_batch_no" required="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='advance_payment_method']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='create_invoices']" position="before">
+                <button name="create_account_invoice" string="Create invoice" type="object" class="oe_highlight"/>
+            </xpath>
+
+            <xpath expr="//button[@name='create_invoices']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//button[@name='create_invoices'][last()]" position="attributes">
+                <attribute name="invisible">1</attribute>
             </xpath>
         </field>
     </record>

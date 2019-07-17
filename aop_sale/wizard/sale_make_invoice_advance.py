@@ -6,19 +6,30 @@ import time
 from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import UserError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
     _inherit = "sale.advance.payment.inv"
 
     reconciliation_batch_no = fields.Char('Reconciliation batch no')
+    invoice_product_type = fields.Selection([
+        ('main_product', 'Main product'),
+        ('child_product', 'Child product')
+    ], required=True, string='Invoice product type')
+    sale_order_ids = fields.Many2many('sale.order', string='Orders')
 
     @api.model
     def default_get(self, fields_list):
         if self._context.get('active_model', False) == 'sale.order.line':
             return []
         else:
-            return super(SaleAdvancePaymentInv, self).default_get(fields_list)
+            res = super(SaleAdvancePaymentInv, self).default_get(fields_list)
+            ids = self._context.get('active_ids', [])
+            res['sale_order_ids'] = [(6, 0, ids)]
+            return res
 
     @api.multi
     def create_invoices(self):
@@ -147,3 +158,130 @@ class SaleAdvancePaymentInv(models.TransientModel):
                                        values={'self': invoice, 'origin': order},
                                        subtype_id=self.env.ref('mail.mt_note').id)
         return invoice
+
+    def create_account_invoice(self):
+        invoice_res = []
+        if self.invoice_product_type == 'main_product':
+            invoice_res = self._get_main_service_product_data()
+        elif self.invoice_product_type == 'child_product':
+            invoice_res = self._get_child_service_product_data()
+        return self._create_account_invoice(invoice_res)
+
+    def _create_account_invoice(self, invoice_res):
+        try:
+            inv_obj = self.env['account.invoice']
+            res = inv_obj.create(invoice_res)
+            if not res:
+                raise UserError('Error!')
+            view_id = self.env.ref('account.invoice_tree_with_onboarding').id
+            form_id = self.env.ref('account.invoice_form').id
+            return {
+                'name': 'Invoice',
+                'view_type': 'form',
+                'view_id': False,
+                'views': [(view_id, 'tree'), (form_id, 'form')],
+                'res_model': 'account.invoice',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', res.ids)],
+                'limit': 80,
+                'target': 'current',
+            }
+        except Exception as e:
+            import traceback
+            raise UserError(traceback.format_exc())
+
+    def _invoice_data(self, order):
+        return {
+            'name': order.client_order_ref or order.name + '/' + str(time.time()),
+            'origin': order.name,
+            'type': 'out_invoice',
+            'reference': False,
+            'account_id': order.partner_id.property_account_receivable_id.id,
+            'partner_id': order.partner_invoice_id.id,
+            'partner_shipping_id': order.partner_shipping_id.id,
+            'currency_id': order.pricelist_id.currency_id.id,
+            'payment_term_id': order.payment_term_id.id,
+            'fiscal_position_id': order.fiscal_position_id.id or order.partner_id.property_account_position_id.id,
+            # 'team_id': order.team_id.id,
+            'user_id': order.user_id.id,
+            # 'comment': order.note,
+            'date_invoice': fields.Date.today(),
+            'reconciliation_batch_no': self.reconciliation_batch_no
+        }
+
+    def _get_child_service_product(self, picking_ids):
+        move_ids = self.env['stock.move'].search([
+            ('picking_id', 'in', picking_ids.ids)
+        ])
+        product_ids = [move_id.service_product_id for move_id in move_ids]
+        return list(set(product_ids))
+
+    def _get_child_service_product_data(self):
+        invoice_res = []
+        for sale_id in self.sale_order_ids:
+            invoice_data = self._invoice_data(sale_id)
+
+            product_ids = self._get_child_service_product(sale_id.picking_ids)
+            for product_id in product_ids:
+                tmp = invoice_data
+                account_id = self._get_account_id(product_id)
+                tmp.update({
+                    'invoice_line_ids': [(0, 0, {
+                        'name': str(time.time()),
+                        'origin': sale_id.name,
+                        'account_id': account_id,
+                        'price_unit': product_id.list_price,
+                        'quantity': 1,
+                        'uom_id': product_id.uom_id.id,
+                        'sale_line_ids': [(6, 0, sale_id.ids)],
+                        'invoice_line_tax_ids': [(6, 0, product_id.taxes_id.ids)],
+                        'analytic_tag_ids': False,
+                        'account_analytic_id': False
+                    })],
+                })
+                invoice_res.append(tmp)
+        return invoice_res
+
+    def _get_main_service_product_data(self):
+        invoice_res = []
+        for sale_id in self.sale_order_ids:
+            invoice_data = self._invoice_data(sale_id)
+            line_data = []
+            for line in sale_id.order_line:
+                account_id = self._get_account_id(line.service_product_id, order=line)
+                line_data.append((0, 0, {
+                    'name': str(time.time()),
+                    'origin': sale_id.name,
+                    'account_id': account_id,
+                    'price_unit': line.service_product_id.list_price,
+                    'quantity': 1.0,
+                    'discount': 0.0,
+                    'uom_id': line.service_product_id.uom_id.id,
+                    'product_id': line.service_product_id.id,
+                    'sale_line_ids': [(6, 0, [line.id])],
+                    'invoice_line_tax_ids': [(6, 0, line.tax_id.ids)],
+                    'analytic_tag_ids': [(6, 0, line.analytic_tag_ids.ids)],
+                    'account_analytic_id': sale_id.analytic_account_id.id or False,
+                }))
+            invoice_data.update({
+                'invoice_line_ids': line_data
+            })
+            invoice_res.append(invoice_data)
+        return invoice_res
+
+    def _get_account_id(self, service_product_id, order=False):
+        ir_property_obj = self.env['ir.property']
+        account_id = False
+        if service_product_id.id:
+            account_id = service_product_id.property_account_income_id.id or \
+                         service_product_id.categ_id.property_account_income_categ_id.id
+        if not account_id:
+            inc_acc = ir_property_obj.get('property_account_income_categ_id', 'product.category')
+            account_id = order.fiscal_position_id.map_account(inc_acc).id if inc_acc else False
+        if not account_id:
+            raise UserError(
+                _(
+                    'There is no income account defined for this product: "%s". '
+                    'You may have to install a chart of account from Accounting app, settings menu.') %
+                (service_product_id.name,))
+        return account_id

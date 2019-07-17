@@ -38,15 +38,12 @@ class AopContract(models.Model):
         data = []
         for delivery_id in self.delivery_carrier_ids:
             # for route_id in delivery_id.route_ids:
-            for rule_id in delivery_id.route_id.rule_ids:
+            for rule_id in delivery_id.rule_service_product_ids:
                 data.append((0, 0, {
                     'route_id': delivery_id.route_id.id,
-                    'rule_id': rule_id.id,
-                    'service_product_id': False
+                    'rule_id': rule_id.rule_id.id,
+                    'service_product_id': rule_id.service_product_id.id
                 }))
-        # _logger.info({
-        #     'data': data
-        # })
         self.contract_rule_ids = data
 
 

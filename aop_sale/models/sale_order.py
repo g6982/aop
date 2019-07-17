@@ -20,13 +20,39 @@ class SaleOrderLine(models.Model):
 
     handover_number = fields.Char('Handover number')
 
+    contract_id = fields.Many2one('aop.contract', 'Contract')
+    delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier', compute='_get_delivery_carrier_id')
+
+    @api.onchange('route_id', 'from_location_id', 'to_location_id')
+    def _get_delivery_carrier_id(self):
+        if self.route_id and self.from_location_id and self.to_location_id:
+            delivery_id = self.env['delivery.carrier'].search([
+                ('contract_id', '=', self.contract_id.id),
+                ('route_id', '=', self.route_id.id),
+                ('start_position', '=', self.from_location_id.parent_id.id),
+                ('end_position', '=', self.to_location_id.parent_id.id)
+            ])
+            # TODO: 一定能搜到？
+            _logger.info({
+                'delivery_id': delivery_id,
+                'route_id': self.route_id,
+                'contract_id': self.contract_id
+            })
+            if delivery_id:
+                self.delivery_carrier_id = delivery_id.id
+                self.service_product_id = delivery_id.service_product_id.id
+                self.price_unit = delivery_id.service_product_id.list_price
+        else:
+            self.delivery_carrier_id = False
+
     # 新增 服务产品
     @api.multi
     def _prepare_procurement_values(self, group_id=False):
         res = super(SaleOrderLine, self)._prepare_procurement_values(group_id)
         res.update({
             'service_product_id': self.service_product_id.id,
-            'vin_id': self.vin.id
+            'vin_id': self.vin.id,
+            'delivery_carrier_id': self.delivery_carrier_id.id
         })
         return res
 
@@ -137,23 +163,31 @@ class SaleOrder(models.Model):
         res = self.env['aop.contract'].search([
             ('partner_id', '=', res.partner_id.id)
         ])
-        return res if res else False
+        _logger.info({
+            'res': res
+        })
+        return res[0] if res else False
 
-    # 针对导入，根据货物，选择出对应的服务产品和路由，如果路由存在多个，默认选择第一条
-    def _find_service_product(self, contract_id, order_line):
+    # 查找 条款
+    def _find_contract_line(self, contract_id, order_line):
         contract_line_ids = contract_id.mapped('delivery_carrier_ids')
 
         # 使用 product.template
         # product_template_id.product_variant_ids
         # TODO: 待定， 是否需要递归查询呢？
         # 暂定： 获取上级
-        delivery_id = [line_id for line_id in contract_line_ids if
-                       order_line.product_id.id in line_id.product_template_id.product_variant_ids.ids and
-                       order_line.from_location_id.parent_id == line_id.start_position and
-                       order_line.to_location_id.parent_id == line_id.end_position]
+        delivery_ids = [line_id for line_id in contract_line_ids if
+                        order_line.product_id.id in line_id.product_template_id.product_variant_ids.ids and
+                        order_line.from_location_id.parent_id == line_id.start_position and
+                        order_line.to_location_id.parent_id == line_id.end_position]
 
-        return delivery_id[0].service_product_id if delivery_id else False
+        return delivery_ids
 
+    # 针对导入，根据货物，选择出对应的服务产品和路由，如果路由存在多个，默认选择第一条
+    def _find_service_product(self, contract_line):
+        return contract_line[0].service_product_id if contract_line else False
+
+    # TODO: 废弃
     # 路线的选择，使用开始位置和结束位置，多条，自己选择
     # 使用位置，每一个客户，对应一个默认的仓库的位置
     def _find_route_id(self, res, line_id):
@@ -187,6 +221,10 @@ class SaleOrder(models.Model):
 
         return route_id[0] if route_id else False
 
+    # 根据合同条款，查找路由
+    def _find_contract_route_id(self, contract_line):
+        return contract_line[0].route_id if contract_line else False
+
     @api.model
     def create(self, vals):
         res = super(SaleOrder, self).create(vals)
@@ -195,16 +233,25 @@ class SaleOrder(models.Model):
         contract_id = self._fetch_customer_contract(res)
         if not contract_id:
             return res
-
+        _logger.info({
+            'contract_id': contract_id
+        })
         data = []
         for line_id in res.order_line:
             # 获取数据
-            service_product_id = self._find_service_product(contract_id, line_id)
-            route_id = self._find_route_id(res, line_id)
+            # 如果 delivery_carrier_id 存在多条条款，需要用户进行选择
+            # 默认使用第一条
+            delivery_carrier_id = self._find_contract_line(contract_id, line_id)
+            service_product_id = self._find_service_product(delivery_carrier_id)
+            route_id = self._find_contract_route_id(delivery_carrier_id)
+
             data.append(
                 (1, line_id.id, {
                     'service_product_id': service_product_id.id if service_product_id else False,
-                    'route_id': route_id.id if route_id else False
+                    'route_id': route_id.id if route_id else False,
+                    'price_unit': service_product_id.list_price if service_product_id else 1,
+                    'delivery_carrier_id': delivery_carrier_id[0].id if delivery_carrier_id else False,
+                    'contract_id': contract_id.id
                 })
             )
 

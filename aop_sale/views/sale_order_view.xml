@@ -109,11 +109,14 @@
                     <field name="vin" options="{'no_quick_create': True, 'no_create_edit': True}"
                            domain="[('product_id', '=', product_id), ('product_qty', '>', 0)]"/>
                     <field name="route_id" options="{'no_quick_create': True, 'no_create_edit': True}"
+                           context="{'sale_filter_route_id_by_partner': parent.partner_id}"
                            class="order_line_route_id" id="order_line_route_id"/>
                     <field name="service_product_id"
                            string="Service Product"
                            options="{'no_quick_create': True, 'no_create_edit': True}"
                            domain="[('type','=','service')]" attrs="{'required': 0}"/>
+                    <field name="delivery_carrier_id"/>
+                    <field name="contract_id"/>
                 </xpath>
 
             </field>
