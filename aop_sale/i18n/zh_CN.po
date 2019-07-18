@@ -1528,7 +1528,7 @@ msgstr "部分-比率"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__partner_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Partner"
-msgstr "业务伙伴"
+msgstr "结算单位"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__payment_amount

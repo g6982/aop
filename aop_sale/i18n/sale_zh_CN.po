@@ -100,4 +100,8 @@ msgstr "我的临时订单"
 msgid "Delivery"
 msgstr "任务"
 
+#. module: sale
+#: model:ir.model.fields,field_description:sale.field_sale_order__partner_id
+msgid "Customer"
+msgstr "结算单位"
 
