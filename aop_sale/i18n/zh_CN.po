@@ -551,7 +551,7 @@ msgstr "客户信息管理"
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.customer_rate_manager_menu
 msgid "Custom rate manage"
-msgstr "客户费率管理"
+msgstr "客户合同管理"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.customer_service_product_manager_menu
@@ -2037,7 +2037,7 @@ msgstr "供应商合同管理"
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.supplier_rate_manager_menu
 msgid "Supplier rate manage"
-msgstr "供应商费率管理"
+msgstr "供应商合同管理"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.supplier_service_product_manager_menu
