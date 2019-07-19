@@ -14,7 +14,7 @@
                 </xpath>
 
 
-
+                <!--
                 <xpath expr="//field[@name='product_selectable']/.." position="after">
                     <field name="service_product_id"
                            string="服务产品"
@@ -23,6 +23,7 @@
 
                            />
                 </xpath>
+                -->
 
                <xpath expr="//field[@name='rule_ids']/tree/field[@name='action']" position="after">
                      <field name="picking_type_id" />
