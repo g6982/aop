@@ -58,3 +58,5 @@ class RuleServiceProduct(models.Model):
     route_id = fields.Many2one('stock.location.route', string='Route')
     rule_id = fields.Many2one('stock.rule', string='Rule')
     service_product_id = fields.Many2one('product.product', string='Service product', domain="[('type','=','service')]")
+    price_total = fields.Float('Price')
+

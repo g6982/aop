@@ -73,7 +73,7 @@
                                         <field name="service_product_id"/>
                                         <field name="start_position"/>
                                         <field name="end_position"/>
-
+                                        <field name="fixed_price" string="Contract price"/>
                                     </tree>
 
                                 </field>

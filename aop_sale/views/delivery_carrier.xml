@@ -60,6 +60,7 @@
                             <field name="rule_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                             <field name="service_product_id"
                                    options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                            <field name="price_total"/>
                         </tree>
                     </field>
                 </xpath>

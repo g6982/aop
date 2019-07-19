@@ -83,6 +83,14 @@
         />
 
         <!-- 二级菜单 -->
+        <menuitem id="customer_rate_manager_menu"
+                  parent="delivery.menu_delivery"
+                  name="Custom rate manage"
+                  action="action_aop_contract_view"
+                  sequence="10"
+        />
+
+        <!-- 二级菜单 -->
         <menuitem id="customer_service_product_manager_menu"
                   parent="customer_contract_manager_menu"
                   name="Custom service product manage"

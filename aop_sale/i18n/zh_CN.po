@@ -614,7 +614,7 @@ msgstr "送货地址"
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_delivery_carrier
 msgid "Delivery Methods"
-msgstr "合同"
+msgstr "合同条款行"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__partner_shipping_id
