@@ -266,4 +266,20 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             if not line.mapped('vin'):
                 raise UserError(_('You can not make order until the product have vin or stock.'))
-        return super(SaleOrder, self).action_confirm()
+        res = super(SaleOrder, self).action_confirm()
+
+        # FIXME: 补丁
+        self.picking_ids.filtered(
+            lambda picking: picking.state == 'confirmed').action_assign() if self.picking_ids.filtered(
+            lambda picking: picking.state == 'confirmed') and not self.picking_ids.filtered(
+            lambda picking: picking.state == 'assigned') else False
+
+        return res
+
+    # # 取消的同时。删除
+    # @api.multi
+    # def action_cancel(self):
+    #     res = super(SaleOrder, self).action_cancel()
+    #
+    #     self.mapped('picking_ids').unlink()
+    #     return res

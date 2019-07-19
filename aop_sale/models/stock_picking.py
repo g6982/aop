@@ -27,7 +27,7 @@ class StockPicking(models.Model):
             order_id = order_line_id.search(match_domain).mapped('order_id') if order_line_id.search(
                 match_domain) else False
 
-            # TODO: FIX Later, order_id 应该是一个才对
+            # FIXME: order_id 应该是一个才对
             for order in order_id:
                 order.action_confirm()
 
