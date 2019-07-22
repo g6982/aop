@@ -93,6 +93,26 @@
                     <attribute name="invisible">True</attribute>
                 </xpath>
 
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="context">{'state': state}</attribute>
+                </xpath>
+
+                <!-- 根据状态显示-->
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="invisible">[('state', '!=', 'sale')]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="attributes">
+                    <attribute name="invisible">[('state', '!=', 'sale')]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
+                    <attribute name="invisible">[('state', '!=', 'sale')]</attribute>
+                </xpath>
+                <xpath expr="//group[@name='sale_total']" position="attributes">
+                    <attribute name="invisible">[('state', '!=', 'sale')]</attribute>
+                </xpath>
+
+
+
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
                     <attribute name="options">{'no_quick_create': True, 'no_create_edit': True}</attribute>
                 </xpath>

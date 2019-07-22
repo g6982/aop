@@ -27,7 +27,7 @@ class DeliveryCarrier(models.Model):
 
     rule_service_product_ids = fields.One2many('rule.service.product', 'carrier_id', 'Rule & product')
 
-    fixed_price = fields.Float(compute='_compute_fixed_price', inverse='_set_product_fixed_price', store=True,
+    fixed_price = fields.Float(compute='_compute_fixed_price', inverse=False, store=True,
                                string='Fixed Price')
 
     @api.onchange('route_id')
@@ -41,18 +41,16 @@ class DeliveryCarrier(models.Model):
             }))
         self.rule_service_product_ids = data
 
-    @api.depends('service_product_id.list_price', 'service_product_id.product_tmpl_id.list_price')
+    @api.depends('rule_service_product_ids.price_total', 'rule_service_product_ids',
+                 'rule_service_product_ids.price_unit', 'rule_service_product_ids.kilo_meter')
     def _compute_fixed_price(self):
         for carrier in self:
-            carrier.fixed_price = carrier.service_product_id.list_price
+            carrier.fixed_price = sum(line.price_total for line in carrier.rule_service_product_ids)
 
     def _set_product_fixed_price(self):
         pass
         # for carrier in self:
-        #     _logger.info({
-        #         'carrier': carrier
-        #     })
-        #     carrier.service_product_id.list_price = carrier.fixed_price
+        #     carrier.fixed_price = sum(line.price_total for line in carrier.rule_service_product_ids)
 
 
 class RuleServiceProduct(models.Model):
@@ -62,4 +60,32 @@ class RuleServiceProduct(models.Model):
     route_id = fields.Many2one('stock.location.route', string='Route')
     rule_id = fields.Many2one('stock.rule', string='Rule')
     service_product_id = fields.Many2one('product.product', string='Service product', domain="[('type','=','service')]")
-    price_total = fields.Float('Price')
+    price_total = fields.Float('Price', compute='_compute_price_total', store=True)
+
+    kilo_meter = fields.Float('Kilometer')
+    price_unit = fields.Float('Price Unit')
+
+    child_partner_lines = fields.One2many('rule.child.partner.price', 'rule_partner_product_price',
+                                          string='Child price')
+
+    @api.depends('kilo_meter', 'price_unit')
+    def _compute_price_total(self):
+        for line in self:
+            line.price_total = line.price_unit * line.kilo_meter
+
+
+class ChildPartnerPrice(models.Model):
+    _name = 'rule.child.partner.price'
+    _description = 'child partner price'
+
+    location_id = fields.Many2one('stock.location', 'Location')
+    kilo_meter = fields.Float('Kilometer')
+    price_unit = fields.Float('Price Unit')
+    price_total = fields.Float('Price', compute='_compute_price_total', store=True)
+
+    rule_partner_product_price = fields.Many2one('rule.service.product')
+
+    @api.depends('kilo_meter', 'price_unit')
+    def _compute_price_total(self):
+        for line in self:
+            line.price_total = line.price_unit * line.kilo_meter
