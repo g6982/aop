@@ -27,9 +27,9 @@ class MailFollower(models.Model):
         new_dict_list = []
         for dict_remove in dict_list:
             t_dict = {
-                'res_model': dict_remove['res_model'],
-                'res_id': dict_remove['res_id'],
-                'partner_id': dict_remove['partner_id']
+                'res_model': dict_remove.get('res_model', False),
+                'res_id': dict_remove.get('res_id', False),
+                'partner_id': dict_remove.get('partner_id', False)
             }
             t_tup = tuple(t_dict.items())
             if t_tup not in seen:
