@@ -16,4 +16,4 @@ account_base_warehouse,access_base_warehouse,model_base_warehouse,base.group_use
 access_mount_car_plan,access_mount_car_plan,model_mount_car_plan,base.group_user,1,1,1,1
 access_rule_service_product,access_rule_service_product,model_rule_service_product,base.group_user,1,1,1,1
 access_contract_stock_rule_line,access_contract_stock_rule_line,model_contract_stock_rule_line,base.group_user,1,1,1,1
-access_rule_child_partner_price,access_rule_child_partner_price,model_rule_child_partner_price,base.group_user,1,1,1,1
+access_rule_child_location_price,access_rule_child_location_price,model_rule_child_location_price,base.group_user,1,1,1,1
