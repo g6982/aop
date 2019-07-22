@@ -25,25 +25,26 @@ class SaleOrderLine(models.Model):
 
     @api.onchange('route_id', 'from_location_id', 'to_location_id')
     def _get_delivery_carrier_id(self):
-        if self.route_id and self.from_location_id and self.to_location_id:
-            delivery_id = self.env['delivery.carrier'].search([
-                ('contract_id', '=', self.contract_id.id),
-                ('route_id', '=', self.route_id.id),
-                ('start_position', '=', self.from_location_id.parent_id.id),
-                ('end_position', '=', self.to_location_id.parent_id.id)
-            ])
-            # TODO: 一定能搜到？
-            _logger.info({
-                'delivery_id': delivery_id,
-                'route_id': self.route_id,
-                'contract_id': self.contract_id
-            })
-            if delivery_id:
-                self.delivery_carrier_id = delivery_id.id
-                self.service_product_id = delivery_id.service_product_id.id
-                self.price_unit = delivery_id.service_product_id.list_price
-        else:
-            self.delivery_carrier_id = False
+        for order_line in self:
+            if order_line.route_id and order_line.from_location_id and order_line.to_location_id:
+                delivery_id = self.env['delivery.carrier'].search([
+                    ('contract_id', '=', order_line.contract_id.id),
+                    ('route_id', '=', order_line.route_id.id),
+                    ('start_position', '=', order_line.from_location_id.parent_id.id),
+                    ('end_position', '=', order_line.to_location_id.parent_id.id)
+                ])
+                # TODO: 一定能搜到？
+                _logger.info({
+                    'delivery_id': delivery_id,
+                    'route_id': order_line.route_id,
+                    'contract_id': order_line.contract_id
+                })
+                if delivery_id:
+                    order_line.delivery_carrier_id = delivery_id.id
+                    order_line.service_product_id = delivery_id.service_product_id.id
+                    order_line.price_unit = delivery_id.service_product_id.list_price
+            else:
+                order_line.delivery_carrier_id = False
 
     # 新增 服务产品
     @api.multi
