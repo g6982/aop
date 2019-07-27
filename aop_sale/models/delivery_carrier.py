@@ -33,7 +33,11 @@ class DeliveryCarrier(models.Model):
     fixed_price = fields.Float(compute='_compute_fixed_price', inverse=False, store=True,
                                string='Fixed Price')
 
+    product_standard_price = fields.Float('Standard price')
     picking_type_id = fields.Many2one('stock.picking.type', 'Picking type')
+
+    from_location_id = fields.Many2one('stock.location', 'From location')
+    to_location_id = fields.Many2one('stock.location', 'To location')
 
     @api.onchange('route_id')
     def fill_rule_service_product(self):
@@ -45,6 +49,19 @@ class DeliveryCarrier(models.Model):
                 'service_product_id': False
             }))
         self.rule_service_product_ids = data
+
+    @api.onchange('picking_type_id')
+    def fill_default_location_id(self):
+        for line in self:
+            if line.picking_type_id:
+                line.from_location_id = line.picking_type_id.default_location_src_id.id if line.picking_type_id.default_location_src_id else False
+                line.to_location_id = line.picking_type_id.default_location_dest_id.id if line.picking_type_id.default_location_dest_id else False
+
+    @api.onchange('service_product_id')
+    def fill_service_product_price(self):
+        for line in self:
+            if line.service_product_id:
+                line.product_standard_price = line.service_product_id.standard_price
 
     @api.depends('rule_service_product_ids.price_total', 'rule_service_product_ids',
                  'rule_service_product_ids.price_unit', 'rule_service_product_ids.kilo_meter')

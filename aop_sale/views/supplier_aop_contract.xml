@@ -48,11 +48,11 @@
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
                                         <field name="service_product_id"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                                        <field name="start_position"
+                                        <field name="from_location_id"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                                        <field name="end_position"
+                                        <field name="to_location_id"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                                        <field name="fixed_price" string="Contract price"/>
+                                        <field name="product_standard_price" string="Contract price"/>
                                     </tree>
                                 </field>
                             </page>
