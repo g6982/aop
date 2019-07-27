@@ -31,8 +31,9 @@
         </field>
     </record>
 
-
+    <!--
     <menuitem id="menu_service_product_variant_config_stock" name="Service Product" action="product_template_action_service_product"
         parent="stock.menu_stock_inventory_control" sequence="0"/>
+        -->
 
 </odoo>
