@@ -67,13 +67,4 @@ class ContractStockRule(models.Model):
     rule_id = fields.Many2one('stock.rule', 'Rule')
     service_product_id = fields.Many2one('product.product', string='Product', domain=[('type', '=', 'service')])
     rule_contract_id = fields.Many2one('aop.contract', 'Contract')
-    # fee = fields.Boolean('Fee?', compute='is_fee_rule', store=True)
-    #
-    # @api.multi
-    # @api.depends('service_product_id')
-    # def is_fee_rule(self):
-    #     for line_id in self:
-    #         if line_id.service_product_id:
-    #             line_id.fee = True
-    #         else:
-    #             line_id.fee = False
+

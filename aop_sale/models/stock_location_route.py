@@ -16,7 +16,7 @@ class StockLocationRoute(models.Model):
     def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
         partner_id = self._context.get('sale_filter_route_id_by_partner')
         if partner_id:
-            contract = self.env['aop.contract'].search([
+            contract = self.env['customer.aop.contract'].search([
                 ('partner_id', '=', partner_id)
             ])
             _route_ids = []
