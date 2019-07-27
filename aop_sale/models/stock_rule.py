@@ -10,8 +10,16 @@ class StockRule(models.Model):
 
     service_product_id = fields.Many2one('product.product', string='Service product',
                                          related='picking_type_id.service_product_id')
-    # aging = fields.Float('Aging(day)', default=1)
-    # package_product_id = fields.Many2one('product.product', 'Package product')
+    action = fields.Selection(
+        selection=[('pull', 'Pull From'), ('push', 'Push To'), ('pull_push', 'Pull & Push')], string='Action',
+        required=True, default='pull')
+
+    procure_method = fields.Selection([
+        ('make_to_stock', 'Take From Stock'),
+        ('make_to_order', 'Trigger Another Rule')], string='Move Supply Method',
+        default='make_to_order', required=True,
+        help="""Create Procurement: A procurement will be created in the source location and the system will try to find a rule to resolve it. The available stock will be ignored.
+                 Take from Stock: The products will be taken from the available stock.""")
 
     # 添加服务产品到stock.picking
     def _get_custom_move_fields(self):
