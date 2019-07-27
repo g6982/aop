@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-27 07:49+0000\n"
-"PO-Revision-Date: 2019-07-27 07:49+0000\n"
+"POT-Creation-Date: 2019-07-27 08:37+0000\n"
+"PO-Revision-Date: 2019-07-27 08:37+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -187,6 +187,11 @@ msgstr "分析账户"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__analytic_tag_ids
 msgid "Analytic Tags"
 msgstr "分析标签"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_location_route__product_selectable
+msgid "Applicable on Product"
+msgstr "可应用于产品"
 
 #. module: aop_sale
 #: selection:mass.loss.order,state:0
@@ -1848,7 +1853,7 @@ msgstr "车型类别"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__product_id
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__product_template_id
 msgid "Products"
-msgstr "货物"
+msgstr "产品"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__project_id
@@ -2131,6 +2136,11 @@ msgstr "章节名称(如：产品，服务)"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__access_token
 msgid "Security Token"
 msgstr "安全令牌"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_location_route__sale_selectable
+msgid "Selectable on Sales Order Line"
+msgstr "在销售订单行上可选"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
@@ -2702,6 +2712,7 @@ msgstr "体积"
 #: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__warehouse_ids
 #: model:ir.ui.menu,name:aop_sale.warehouse_info_location_manager_menu
 #: model:ir.ui.menu,name:aop_sale.warehouse_info_manager_menu
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_partner_form_inherit
 msgid "Warehouse"
 msgstr "仓库"
 
@@ -2728,6 +2739,11 @@ msgstr "重量"
 #: selection:delivery.price.rule,variable_factor:0
 msgid "Weight * Volume"
 msgstr "重量* 体积"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_stock_location_route__product_selectable
+msgid "When checked, the route will be selectable in the Inventory tab of the Product form.  It will take priority over the Warehouse route. "
+msgstr "一旦勾选了，此路径在产品表格中的库存页面将会显示为可选的。这将会比仓库路径的优先级更高。"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__partner_id
