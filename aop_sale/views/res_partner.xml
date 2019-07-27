@@ -9,7 +9,6 @@
                 <xpath expr="//field[@name='vat']" position="after">
 
                     <field name="kilometer_number"/>
-
                 </xpath>
 
                 <xpath expr="//group[@name='container_row_stock']" position="replace">
