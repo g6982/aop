@@ -1,34 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <data>
-        <record id="action_aop_contract_view" model="ir.actions.act_window">
-            <field name="name">Customer contract</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">aop.contract</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-
-        <record id="view_aop_contract_tree" model="ir.ui.view">
-            <field name="name">aop.contract.tree</field>
-            <field name="model">aop.contract</field>
-            <field name="arch" type="xml">
-                <tree string="Contract">
-
-                    <field name="name"/>
-                    <field name="serial_number"/>
-                    <field name="version_id"/>
-                    <field name="date_start"/>
-                    <field name="date_end"/>
-
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_aop_contract_form" model="ir.ui.view">
-            <field name="name">aop.contract.form</field>
-            <field name="model">aop.contract</field>
+        <record id="view_supplier_aop_contract_form" model="ir.ui.view">
+            <field name="name">supplier.aop.contract.form</field>
+            <field name="model">supplier.aop.contract</field>
             <field name="arch" type="xml">
                 <form string="Carrier">
                     <sheet>
@@ -65,31 +40,22 @@
                         <notebook>
                             <page string="Contract terms">
                                 <field name="delivery_carrier_ids">
-                                    <tree>
+                                    <tree editable="bottom">
                                         <field name="name"/>
-                                        <field name="product_template_id"/>
-                                        <field name="service_product_id"/>
-                                        <field name="start_position"/>
-                                        <field name="end_position"/>
+                                        <field name="picking_type_id"
+                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                                        <field name="product_template_id"
+                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                                        <field name="service_product_id"
+                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                                        <field name="start_position"
+                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                                        <field name="end_position"
+                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
                                         <field name="fixed_price" string="Contract price"/>
                                     </tree>
                                 </field>
                             </page>
-
-                            <page string="Rule lines">
-                                <field name="contract_rule_ids">
-                                    <tree create="false" delete="false" editable="bottom">
-                                        <field name="route_id"
-                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                                        <field name="rule_id"
-                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                                        <field name="service_product_id"
-                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                                        <!--                                        <field name="fee"/>-->
-                                    </tree>
-                                </field>
-                            </page>
-
                         </notebook>
 
                     </sheet>
@@ -97,6 +63,28 @@
             </field>
         </record>
 
-    </data>
+        <record id="view_supplier_aop_contract_tree" model="ir.ui.view">
+            <field name="name">supplier.aop.contract.tree</field>
+            <field name="model">supplier.aop.contract</field>
+            <field name="arch" type="xml">
+                <tree string="Contract">
 
+                    <field name="name"/>
+                    <field name="serial_number"/>
+                    <field name="version_id"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_aop_supplier_contract_view" model="ir.actions.act_window">
+            <field name="name">Supplier contract</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">supplier.aop.contract</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
 </odoo>

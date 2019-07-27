@@ -21,6 +21,7 @@ from . import res_partner
 from . import dispatch_order
 from . import product_template
 from . import mail_followers
+from . import supplier_aop_contract
 
 
 

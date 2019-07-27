@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 import logging
 
@@ -16,3 +16,11 @@ class Warehouse(models.Model):
         'stock.warehouse', 'Parent warehouse', index=True, ondelete='cascade')
     child_ids = fields.One2many('stock.warehouse', 'parent_id', 'Contains')
     parent_path = fields.Char(index=True)
+
+    def _get_locations_values(self, vals):
+        res = super(Warehouse, self)._get_locations_values(vals)
+        res.get('lot_stock_id').update({
+            'name': vals.get('name') if vals.get('name', False) else _('Stock')
+        })
+        return res
+
