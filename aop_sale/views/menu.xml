@@ -59,14 +59,14 @@
         />
 
         <!-- 二级菜单 -->
-        <!--
+
         <menuitem id="service_product_manager_menu"
                   parent="product_manager_menu"
                   name="Service product manage"
                   action="product_template_action_service_product"
                   sequence="20"
         />
-        -->
+
 
         <menuitem id="menu_products"
                   name="Product Variant"

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-22 08:09+0000\n"
-"PO-Revision-Date: 2019-07-22 08:09+0000\n"
+"POT-Creation-Date: 2019-07-27 07:33+0000\n"
+"PO-Revision-Date: 2019-07-27 07:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -79,6 +79,8 @@ msgstr "前置操作"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__effective_date
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__effective_date
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__effective_date
 msgid "Active date"
 msgstr "合同生效日"
 
@@ -130,6 +132,8 @@ msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__aging
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__aging
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__aging
 msgid "Aging(day)"
 msgstr "时效(天)"
 
@@ -253,7 +257,6 @@ msgid "Base"
 msgstr "基地办事处"
 
 #. module: aop_sale
-#: selection:rule.child.location.price,delivery_type:0
 #: selection:rule.service.product,delivery_type:0
 msgid "Base on rule"
 msgstr "基于规则"
@@ -275,11 +278,19 @@ msgstr "厢号"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__brand_id
+#: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__brand
 msgid "Brand"
 msgstr "品牌"
 
 #. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.sub_menu_product_bundle
+msgid "Bundle Products"
+msgstr "捆绑产品"
+
+#. module: aop_sale
 #: selection:aop.contract,type:0
+#: selection:customer.aop.contract,type:0
+#: selection:supplier.aop.contract,type:0
 msgid "Buyer"
 msgstr "需方合同"
 
@@ -310,7 +321,8 @@ msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__carrier_id
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 msgid "Carrier"
 msgstr "承运商"
 
@@ -335,7 +347,6 @@ msgid "Change Wizard"
 msgstr "更改任务向导"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_delivery_price_rule__rule_child_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__child_location_lines
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_rule_service_product
 msgid "Child price"
@@ -414,42 +425,59 @@ msgid "Contains"
 msgstr "包含"
 
 #. module: aop_sale
-#: model:ir.actions.act_window,name:aop_sale.action_aop_contract_view
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__is_formal
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__rule_contract_id
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__is_formal
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__rule_contract_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__contract_id
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_tree
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__customer_contract_id
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__is_formal
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__rule_contract_id
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_tree
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_tree
 msgid "Contract"
 msgstr "合同"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__serial_no
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__serial_no
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__serial_no
 msgid "Contract no"
 msgstr "合同号"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__serial_number
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__serial_number
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__serial_number
 msgid "Contract number"
 msgstr "合同编号"
 
 #. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 msgid "Contract price"
 msgstr "合同价格"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__contract_rule_ids
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__contract_rule_ids
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__contract_rule_ids
 msgid "Contract rule line"
 msgstr "合同规则行"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__delivery_carrier_ids
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_form
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__delivery_carrier_ids
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__delivery_carrier_ids
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 msgid "Contract terms"
 msgstr "合同条款"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__type
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__type
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__type
 msgid "Contract type"
 msgstr "合同类型"
 
@@ -508,6 +536,8 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_project__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_uid
@@ -516,8 +546,11 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__create_uid
 msgid "Created by"
 msgstr "创建人"
 
@@ -534,6 +567,8 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_project__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_date
@@ -542,8 +577,11 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__create_date
 msgid "Created on"
 msgstr "创建时间"
 
@@ -569,16 +607,6 @@ msgid "Custom information manage"
 msgstr "客户信息管理"
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.customer_rate_manager_menu
-msgid "Custom rate manage"
-msgstr "客户合同管理"
-
-#. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.customer_service_product_manager_menu
-msgid "Custom service product manage"
-msgstr "客户服务产品管理"
-
-#. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.customer_manager_menu
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
@@ -600,6 +628,13 @@ msgstr ""
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__access_url
 msgid "Customer Portal URL"
 msgstr "客户门户网址"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_customer_aop_contract_view
+#: model:ir.ui.menu,name:aop_sale.customer_contract_manager_menu_id
+#: model:ir.ui.menu,name:aop_sale.customer_rate_manager_menu
+msgid "Customer contract"
+msgstr "客户合同管理"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__date
@@ -642,7 +677,6 @@ msgid "Delivery Price Rules"
 msgstr "运输价格规则"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__delivery_type
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__delivery_type
 msgid "Delivery Type"
 msgstr "交货类型"
@@ -729,6 +763,8 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_project__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__display_name
@@ -737,8 +773,11 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
@@ -804,6 +843,8 @@ msgstr "终点"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__date_end
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__date_end
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__date_end
 msgid "End date"
 msgstr "合同结束时间"
 
@@ -814,6 +855,8 @@ msgstr "不计免赔"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__expiry_date
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__expiry_date
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__expiry_date
 msgid "Expire_date"
 msgstr "合同失效日"
 
@@ -843,7 +886,6 @@ msgid "Fiscal Position"
 msgstr "税科目调整"
 
 #. module: aop_sale
-#: selection:rule.child.location.price,delivery_type:0
 #: selection:rule.service.product,delivery_type:0
 msgid "Fixed"
 msgstr "固定价格"
@@ -930,6 +972,8 @@ msgstr "有未清项"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_project__id
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__id
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__id
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__id
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__id
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__id
@@ -938,8 +982,11 @@ msgstr "有未清项"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__id
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__id
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__id
+#: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__id
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__id
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__id
 msgid "ID"
 msgstr ""
 
@@ -1188,6 +1235,8 @@ msgstr "留空用发票日期."
 #. module: aop_sale
 #: selection:delivery.price.rule,variable:0
 #: selection:delivery.price.rule,variable_factor:0
+#: model:ir.model.fields,field_description:aop_sale.field_res_partner__kilometer_number
+#: model:ir.model.fields,field_description:aop_sale.field_res_users__kilometer_number
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__kilo_meter
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__kilo_meter
 msgid "Kilometer"
@@ -1206,6 +1255,8 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_project____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type____last_update
@@ -1214,8 +1265,11 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line____last_update
 msgid "Last Modified on"
 msgstr "最后修改日"
 
@@ -1232,6 +1286,8 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_project__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_uid
@@ -1240,8 +1296,11 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__write_uid
 msgid "Last Updated by"
 msgstr "最后更新者"
 
@@ -1258,6 +1317,8 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_project__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_date
@@ -1266,8 +1327,11 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_part__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__write_date
 msgid "Last Updated on"
 msgstr "最后更新时间"
 
@@ -1297,7 +1361,6 @@ msgid "Load the vendor bill based on selected purchase order. Several PO can be 
 msgstr "编码帮助。被选择的时候，相关的采购订单行会被添加供应商账单。可以选择几张采购订单。"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__location_id
 #: model:ir.ui.menu,name:aop_sale.location_manager_menu
 msgid "Location"
 msgstr "位置"
@@ -1377,6 +1440,11 @@ msgid "Messages"
 msgstr "消息"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__model_name
+msgid "Model"
+msgstr "模型"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__mount_car_plan_ids
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_picking_batch_form_inherit_create_purchase
 msgid "Mount plan"
@@ -1397,10 +1465,14 @@ msgstr "我的发票"
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__name
 #: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__name
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__name
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__name
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__name
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_form
+#: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__name
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__name
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 msgid "Name"
 msgstr "名称"
 
@@ -1580,16 +1652,15 @@ msgstr "部分-比率"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__partner_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__partner_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__partner_id
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__partner_id
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__partner_id
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__partner_id
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__partner_id
+#: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__partner_id
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__partner_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Partner"
 msgstr "业务伙伴"
-
-#. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__partner_id
-msgid "Partner"
-msgstr "收入结算单位"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__payment_amount
@@ -1651,6 +1722,7 @@ msgstr "作业管理"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__picking_type_id
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__picking_type_id
 msgid "Picking type"
 msgstr "步骤"
 
@@ -1684,7 +1756,6 @@ msgid "Price"
 msgstr "价格"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__price_rule_ids
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__price_rule_ids
 msgid "Price Rule"
 msgstr ""
@@ -1701,7 +1772,6 @@ msgid "Price total"
 msgstr ""
 
 #. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_rule_child_location_price_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_rule_service_product
 msgid "Pricing"
 msgstr "定价"
@@ -1709,7 +1779,9 @@ msgstr "定价"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__product_id
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__service_product_id
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__service_product_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__service_product_id
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__service_product_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_delivery_carrier_form_inherit
 msgid "Product"
 msgstr "产品"
@@ -1725,9 +1797,26 @@ msgid "Product Template"
 msgstr "产品模板"
 
 #. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.menu_products
+msgid "Product Variant"
+msgstr "货物变体"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.product_vehicle_type_action_form
+#: model:ir.ui.menu,name:aop_sale.menu_product_vehicle_type_stock
+#: model_terms:ir.ui.view,arch_db:aop_sale.product_vehicle_type_list_view
+msgid "Product Vehicle Type"
+msgstr "车型类别"
+
+#. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.product_manager_menu
 msgid "Product manage"
 msgstr "产品管理"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_product_vehicle_type
+msgid "Product vehicle type"
+msgstr "车型类别"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__product_id
@@ -1738,6 +1827,8 @@ msgstr "产品"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__project_id
 #: model:ir.model.fields,field_description:aop_sale.field_contract_project__name
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__project_id
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__project_id
 msgid "Project"
 msgstr "项目"
 
@@ -1885,6 +1976,12 @@ msgid "Responsible User"
 msgstr "责任用户"
 
 #. module: aop_sale
+#: model:res.groups,comment:aop_sale.group_hide_menus
+#: model:res.groups,name:aop_sale.group_hide_menus
+msgid "Restricted Menus Group"
+msgstr ""
+
+#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
 msgid "Return factory"
 msgstr "返厂"
@@ -1902,8 +1999,10 @@ msgstr "舍入明细"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__aop_route_id
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__route_id
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__route_id
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__route_id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__route_id
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__route_id
 msgid "Route"
 msgstr "路由"
 
@@ -1919,7 +2018,9 @@ msgstr "路由管理"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__rule_id
+#: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__rule_id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__rule_id
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__rule_id
 msgid "Rule"
 msgstr "规则"
 
@@ -1934,7 +2035,7 @@ msgid "Rule Partner Product Price"
 msgstr ""
 
 #. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_aop_contract_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
 msgid "Rule lines"
 msgstr "规则明细"
 
@@ -2008,7 +2109,6 @@ msgstr "序号"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__service_product_id
-#: model:ir.ui.menu,name:aop_sale.menu_service_product_variant_config_stock
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_picking_form_inherit
 msgid "Service Product"
@@ -2030,11 +2130,6 @@ msgid "Service product line"
 msgstr ""
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.service_product_manager_menu
-msgid "Service product manage"
-msgstr "服务产品管理"
-
-#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_wizard
 msgid "Settlement list"
 msgstr "结算清单"
@@ -2051,6 +2146,8 @@ msgstr "显示当前所有的下一次活动记录"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__source
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__source
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__source
 msgid "Source"
 msgstr "来源"
 
@@ -2072,6 +2169,8 @@ msgstr "源位置"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__date_start
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__date_start
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__date_start
 msgid "Start date"
 msgstr "合同开始时间"
 
@@ -2103,6 +2202,12 @@ msgid "Steps manage"
 msgstr "步骤管理"
 
 #. module: aop_sale
+#: code:addons/aop_sale/models/stock_warehouse.py:23
+#, python-format
+msgid "Stock"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_stock_move
 msgid "Stock Move"
 msgstr "库存移动"
@@ -2124,10 +2229,17 @@ msgstr "小计"
 
 #. module: aop_sale
 #: selection:aop.contract,type:0
+#: selection:customer.aop.contract,type:0
 #: model:ir.ui.menu,name:aop_sale.supplier_manager_menu
 #: model:ir.ui.menu,name:aop_sale.supplier_manager_sub_menu
+#: selection:supplier.aop.contract,type:0
 msgid "Supplier"
 msgstr "供应商管理"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_aop_supplier_contract_view
+msgid "Supplier contract"
+msgstr "供应商合同"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.supplier_contract_manager_menu
@@ -2135,14 +2247,14 @@ msgid "Supplier contract manage"
 msgstr "供应商合同管理"
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.supplier_rate_manager_menu
-msgid "Supplier rate manage"
+#: model:ir.ui.menu,name:aop_sale.aop_supplier_contract_manager_menu
+msgid "Supplier contract manager"
 msgstr "供应商合同管理"
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.supplier_service_product_manager_menu
-msgid "Supplier service product manage"
-msgstr "供应商服务产品管理"
+#: model:ir.ui.menu,name:aop_sale.supplier_rate_manager_menu
+msgid "Supplier rate manage"
+msgstr "供应商合同管理"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.system_manager_menu
@@ -2291,6 +2403,8 @@ msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_contract_stock_rule_line__name
+#: model:ir.model.fields,help:aop_sale.field_customer_contract_stock_rule_line__name
+#: model:ir.model.fields,help:aop_sale.field_supplier_contract_stock_rule_line__name
 msgid "This field will fill the packing origin and the name of its moves"
 msgstr "此字段将填写分拣源和其移动的名称"
 
@@ -2381,6 +2495,7 @@ msgstr "运输货物"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__type
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__invoice_type
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_type_id
+#: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__type
 msgid "Type"
 msgstr "类型"
 
@@ -2470,6 +2585,12 @@ msgid "Vehicle number"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_product_product__vehicle_type_id
+#: model:ir.model.fields,field_description:aop_sale.field_product_template__vehicle_type_id
+msgid "Vehicle type"
+msgstr "车型类别"
+
+#. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.train_menu
 msgid "Vehicles"
 msgstr "车辆"
@@ -2498,6 +2619,8 @@ msgstr "供应商名称"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__version_id
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__name
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__version_id
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__version_id
 msgid "Version"
 msgstr "版本"
 
@@ -2547,7 +2670,7 @@ msgid "You can find a contact by its Name, TIN, Email or Internal Reference."
 msgstr "可以通过姓名、TIN、邮箱或者内部关联找到一个联系人."
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:269
+#: code:addons/aop_sale/models/sale_order.py:271
 #, python-format
 msgid "You can not make order until the product have vin or stock."
 msgstr "你要等到产品有vin或库存才可以确认订单."
@@ -2599,6 +2722,8 @@ msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__contract_id
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__customer_contract_id
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__supplier_contract_id
 msgid "contract"
 msgstr "合同"
 
@@ -2615,6 +2740,16 @@ msgstr ""
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_contract_version
 msgid "contract.version"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_customer_aop_contract
+msgid "customer aop contract"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_customer_contract_stock_rule_line
+msgid "customer.contract.stock.rule.line"
 msgstr ""
 
 #. module: aop_sale
@@ -2669,6 +2804,8 @@ msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__name
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__name
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__name
 msgid "name"
 msgstr "合同名称"
 
@@ -2700,6 +2837,16 @@ msgstr "责任方"
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_rule_service_product
 msgid "rule.service.product"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_supplier_aop_contract
+msgid "supplier aop contract"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_supplier_contract_stock_rule_line
+msgid "supplier.contract.stock.rule.line"
 msgstr ""
 
 #. module: aop_sale
