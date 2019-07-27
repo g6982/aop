@@ -11,6 +11,11 @@ class StockLocationRoute(models.Model):
     _inherit = 'stock.location.route'
 
     service_product_id = fields.Many2one('product.product', string='Service product')
+    product_selectable = fields.Boolean(
+        'Applicable on Product', default=False,
+        help="When checked, the route will be selectable in the Inventory tab of the Product form.  "
+             "It will take priority over the Warehouse route. ")
+    sale_selectable = fields.Boolean("Selectable on Sales Order Line", default=True)
 
     @api.model
     def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
