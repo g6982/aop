@@ -6,4 +6,37 @@
         <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
     </record>
 
+    <!-- 对所有用户隐藏“销售->产品”菜单 -->
+    <record id="sale.product_menu_catalog" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“销售->产品->产品”菜单 -->
+    <record id="sale.menu_product_template_action" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“销售->产品->产品变体”菜单 -->
+    <record id="sale.menu_products" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“销售->产品->捆绑产品”菜单 -->
+    <record id="odoo_product_pack_bundle.sub_menu_product_bundle" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+
+    <!-- 对所有用户隐藏“物流网络->主数据->产品”菜单 -->
+    <record id="stock.menu_product_variant_config_stock" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“物流网络->主数据->产品变体”菜单 -->
+    <record id="stock.product_product_menu" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+
+
 </odoo>
