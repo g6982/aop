@@ -164,3 +164,8 @@ msgstr "货物类别"
 msgid "Products"
 msgstr "货物"
 
+#. module: stock
+#: model:ir.actions.act_window,name:stock.product_template_action_product
+#, python-format
+msgid "Products"
+msgstr "货物"
