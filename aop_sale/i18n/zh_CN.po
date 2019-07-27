@@ -1848,7 +1848,7 @@ msgstr "车型类别"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__product_id
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__product_template_id
 msgid "Products"
-msgstr "产品"
+msgstr "货物"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__project_id
