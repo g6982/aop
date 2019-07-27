@@ -14,7 +14,7 @@ class ProductTemplate(models.Model):
 
     cost_currency_id = fields.Many2one('res.currency', 'Cost Currency', compute='_compute_cost_currency_id')
 
-    vehicle_type_id = fields.Many2one('product.vehicle.type', 'Vehicle type')
+    #vehicle_type_id = fields.Many2one('product.vehicle.type', 'Vehicle type')
 
     def _compute_cost_currency_id(self):
         for template in self:

@@ -23,7 +23,7 @@ from . import product_template
 from . import mail_followers
 from . import supplier_aop_contract
 from . import customer_aop_contract
-
+from . import product_product
 
 
 
