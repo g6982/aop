@@ -19,6 +19,9 @@ class DeliveryCarrier(models.Model):
                                           ondelete='restrict')
     contract_id = fields.Many2one('aop.contract', 'contract')
 
+    customer_contract_id = fields.Many2one('customer.aop.contract', 'contract')
+    supplier_contract_id = fields.Many2one('supplier.aop.contract', 'contract')
+
     route_id = fields.Many2one('stock.location.route', string='Route')
 
     service_product_id = fields.Many2one('product.product', string='Service product')

@@ -16,7 +16,7 @@
         'views/insurance_management.xml',
         'views/service_product.xml',
         'views/mass_loss.xml',
-        'views/aop_contract.xml',
+        'views/customer_aop_contract.xml',
         'views/supplier_aop_contract.xml',
         'views/delivery_carrier.xml',
         'views/sale_order_view.xml',

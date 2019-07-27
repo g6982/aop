@@ -21,6 +21,8 @@ class SaleOrderLine(models.Model):
     handover_number = fields.Char('Handover number')
 
     contract_id = fields.Many2one('aop.contract', 'Contract')
+    customer_contract_id = fields.Many2one('customer.aop.contract', 'Contract')
+
     delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier', compute='_get_delivery_carrier_id')
 
     @api.onchange('route_id', 'from_location_id', 'to_location_id')
@@ -28,7 +30,7 @@ class SaleOrderLine(models.Model):
         for order_line in self:
             if order_line.route_id and order_line.from_location_id and order_line.to_location_id:
                 delivery_id = self.env['delivery.carrier'].search([
-                    ('contract_id', '=', order_line.contract_id.id),
+                    ('customer_contract_id', '=', order_line.customer_contract_id.id),
                     ('route_id', '=', order_line.route_id.id),
                     ('start_position', '=', order_line.from_location_id.parent_id.id),
                     ('end_position', '=', order_line.to_location_id.parent_id.id)
@@ -37,7 +39,7 @@ class SaleOrderLine(models.Model):
                 _logger.info({
                     'delivery_id': delivery_id,
                     'route_id': order_line.route_id,
-                    'contract_id': order_line.contract_id
+                    'contract_id': order_line.customer_contract_id
                 })
                 if delivery_id:
                     order_line.delivery_carrier_id = delivery_id.id
@@ -161,7 +163,7 @@ class SaleOrder(models.Model):
     # 获取合同
     # TODO： fix me 需要加上时间的维度
     def _fetch_customer_contract(self, res):
-        res = self.env['aop.contract'].search([
+        res = self.env['customer.aop.contract'].search([
             ('partner_id', '=', res.partner_id.id)
         ])
         _logger.info({
@@ -252,7 +254,7 @@ class SaleOrder(models.Model):
                     'route_id': route_id.id if route_id else False,
                     'price_unit': service_product_id.list_price if service_product_id else 1,
                     'delivery_carrier_id': delivery_carrier_id[0].id if delivery_carrier_id else False,
-                    'contract_id': contract_id.id
+                    'customer_contract_id': contract_id.id
                 })
             )
 
