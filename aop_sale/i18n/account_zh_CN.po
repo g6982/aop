@@ -79,3 +79,10 @@ msgstr "收入费目"
 #: model_terms:ir.ui.view,arch_db:account.view_account_chart_template_seacrh
 msgid "Expense Account"
 msgstr "成本费目"
+
+#. module: account
+#: model:ir.actions.act_window,name:account.action_account_form
+#, python-format
+msgid "Chart of Accounts"
+msgstr "费目管理"
+
