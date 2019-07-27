@@ -1262,6 +1262,8 @@ msgstr "留空用发票日期."
 #. module: aop_sale
 #: selection:delivery.price.rule,variable:0
 #: selection:delivery.price.rule,variable_factor:0
+#: model:ir.model.fields,field_description:aop_sale.field_res_partner__kilometer_number
+#: model:ir.model.fields,field_description:aop_sale.field_res_users__kilometer_number
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__kilo_meter
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__kilo_meter
 msgid "Kilometer"
