@@ -2,17 +2,17 @@
 <odoo>
 
     <data>
-        <record id="action_aop_contract_view" model="ir.actions.act_window">
+        <record id="action_customer_aop_contract_view" model="ir.actions.act_window">
             <field name="name">Customer contract</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">aop.contract</field>
+            <field name="res_model">customer.aop.contract</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <record id="view_aop_contract_tree" model="ir.ui.view">
-            <field name="name">aop.contract.tree</field>
-            <field name="model">aop.contract</field>
+        <record id="view_customer_aop_contract_tree" model="ir.ui.view">
+            <field name="name">customer.aop.contract.tree</field>
+            <field name="model">customer.aop.contract</field>
             <field name="arch" type="xml">
                 <tree string="Contract">
 
@@ -26,9 +26,9 @@
             </field>
         </record>
 
-        <record id="view_aop_contract_form" model="ir.ui.view">
-            <field name="name">aop.contract.form</field>
-            <field name="model">aop.contract</field>
+        <record id="view_customer_aop_contract_form" model="ir.ui.view">
+            <field name="name">customer.aop.contract.form</field>
+            <field name="model">customer.aop.contract</field>
             <field name="arch" type="xml">
                 <form string="Carrier">
                     <sheet>
