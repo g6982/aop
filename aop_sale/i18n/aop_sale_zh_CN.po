@@ -54,3 +54,13 @@ msgstr "成本结算单位"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__product_template_id
 msgid "Products"
 msgstr "货物"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__from_location_id
+msgid "From location"
+msgstr "源位置"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__to_location_id
+msgid "To location"
+msgstr "目的位置"
