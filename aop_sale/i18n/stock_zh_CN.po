@@ -114,10 +114,53 @@ msgstr "任务"
 msgid "Transfer"
 msgstr "任务"
 
+#. module: stock
+#: code:addons/stock/models/stock_rule.py:97
+#: model:ir.model.fields,field_description:stock.field_stock_move__picking_type_id
+#: model:ir.model.fields,field_description:stock.field_stock_picking__picking_type_id
+#: model:ir.model.fields,field_description:stock.field_stock_picking_type__name
+#: model:ir.model.fields,field_description:stock.field_stock_rule__picking_type_id
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_internal_search
+#: model_terms:ir.ui.view,arch_db:stock.view_pickingtype_filter
+#, python-format
+msgid "Operation Type"
+msgstr "步骤"
+
+#. module: stock
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_type_form
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_type_list
+#: model_terms:ir.ui.view,arch_db:stock.view_picking_type_tree
+#: model_terms:ir.ui.view,arch_db:stock.view_warehouse
+msgid "Operation Types"
+msgstr "步骤"
+
+#. module: stock
+#: model:ir.actions.act_window,name:stock.action_picking_type_list
+#: model:ir.ui.menu,name:stock.menu_pickingtype
+msgid "Operations Types"
+msgstr "步骤"
+
+#. module: sale_stock
+#: model_terms:ir.ui.view,arch_db:sale_stock.stock_location_route_view_form_inherit_sale_stock
+msgid "Sales Order Lines"
+msgstr "订单明细"
 
 
 
+#. module: stock
+#: code:addons/stock/models/stock_location.py:187
+#: model:ir.model.fields,field_description:stock.field_stock_location_route__categ_ids
+#: model:ir.ui.menu,name:stock.menu_product_category_config_stock
+#: model_terms:ir.ui.view,arch_db:stock.stock_location_route_form_view
+#, python-format
+msgid "Product Categories"
+msgstr "货物类别"
 
 
 
+#. module: stock
+#: model_terms:ir.ui.view,arch_db:stock.stock_location_route_form_view
+#, python-format
+msgid "Products"
+msgstr "货物"
 

@@ -19,3 +19,18 @@ msgstr ""
 #: selection:res.partner,type:0
 msgid "Shipping address"
 msgstr "送车地址"
+
+#. module: base
+#: model_terms:ir.ui.view,arch_db:base.view_partner_form
+msgid "Sales & Purchases"
+msgstr "收入与成本"
+
+#. module: base
+#: model_terms:ir.ui.view,arch_db:base.view_partner_form
+msgid "Purchase"
+msgstr "成本"
+
+#. module: base
+#: model_terms:ir.ui.view,arch_db:base.view_partner_form
+msgid "Sales"
+msgstr "收入"
