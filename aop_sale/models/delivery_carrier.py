@@ -30,6 +30,8 @@ class DeliveryCarrier(models.Model):
     fixed_price = fields.Float(compute='_compute_fixed_price', inverse=False, store=True,
                                string='Fixed Price')
 
+    picking_type_id = fields.Many2one('stock.picking.type', 'Picking type')
+
     @api.onchange('route_id')
     def fill_rule_service_product(self):
         data = []
@@ -84,15 +86,15 @@ class ChildLocationPrice(models.Model):
     _name = 'rule.child.location.price'
     _description = 'child location price'
 
-    location_id = fields.Many2one('stock.location', 'Location')
-    kilo_meter = fields.Float('Kilometer')
+    partner_id = fields.Many2one('res.partner', 'Partner')
+    kilo_meter = fields.Float('Kilometer', related='partner_id.kilometer_number', readonly=True)
     price_unit = fields.Float('Price Unit')
     price_total = fields.Float('Price', compute='_compute_price_total', inverse='_set_fixed_price', store=True)
 
     rule_partner_product_price = fields.Many2one('rule.service.product')
 
-    delivery_type = fields.Selection([('fixed', 'Fixed'), ('base_on_rule', 'Base on rule')], default='fixed')
-    price_rule_ids = fields.One2many('delivery.price.rule', 'rule_child_location_id')
+    # delivery_type = fields.Selection([('fixed', 'Fixed'), ('base_on_rule', 'Base on rule')], default='fixed')
+    # price_rule_ids = fields.One2many('delivery.price.rule', 'rule_child_location_id')
 
     @api.depends('kilo_meter', 'price_unit')
     def _compute_price_total(self):
@@ -108,8 +110,8 @@ class DeliveryPriceRule(models.Model):
 
     rule_service_product_id = fields.Many2one('rule.service.product', 'Service product line', required=True,
                                               ondelete='cascade')
-    rule_child_location_id = fields.Many2one('rule.child.partner.price', 'Child price', required=True,
-                                             ondelete='cascade')
+    # rule_child_location_id = fields.Many2one('rule.child.partner.price', 'Child price', required=True,
+    #                                          ondelete='cascade')
 
     variable = fields.Selection([
         ('kilometer', 'Kilometer'),
