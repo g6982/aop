@@ -19,4 +19,10 @@
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
+    <!--创建隐藏菜单的用户组 -->
+    <record id="group_hide_menus" model="res.groups">
+        <field name="name">Restricted Menus Group</field>
+        <field name="comment">Restricted Menus Group</field>
+    </record>
+
 </odoo>
