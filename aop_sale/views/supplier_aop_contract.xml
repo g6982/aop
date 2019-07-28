@@ -47,14 +47,17 @@
                                                domain="[('id', 'in', rule_ids)]"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
                                         <field name="picking_type_id"
+                                               invisible="1"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
                                         <field name="product_template_id"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
                                         <field name="service_product_id"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
                                         <field name="from_location_id"
+                                               invisible="1"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
                                         <field name="to_location_id"
+                                               invisible="1"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
                                         <field name="product_standard_price" string="Contract price"/>
                                     </tree>
