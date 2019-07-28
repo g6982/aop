@@ -14,6 +14,16 @@
 <!--                    <field name="package_product_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>-->
 <!--                    <field name="aging"/>-->
                 </field>
+
+
+                <xpath expr="//group[@name='propagation_group']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                 <xpath expr="//field[@name='delay']/.." position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
             </field>
         </record>
 
