@@ -47,3 +47,4 @@ class StockRule(models.Model):
             return True
         res = super(StockRule, self)._run_pull(product_id, product_qty, product_uom, location_id, name, origin, values)
         return res
+

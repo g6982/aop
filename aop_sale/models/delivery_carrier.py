@@ -19,8 +19,8 @@ class DeliveryCarrier(models.Model):
                                           ondelete='restrict')
     contract_id = fields.Many2one('aop.contract', 'contract')
 
-    customer_contract_id = fields.Many2one('customer.aop.contract', 'contract')
-    supplier_contract_id = fields.Many2one('supplier.aop.contract', 'contract')
+    customer_contract_id = fields.Many2one('customer.aop.contract', 'Customer contract')
+    supplier_contract_id = fields.Many2one('supplier.aop.contract', 'Supplier contract')
 
     route_id = fields.Many2one('stock.location.route', string='Route')
 
@@ -38,6 +38,9 @@ class DeliveryCarrier(models.Model):
 
     from_location_id = fields.Many2one('stock.location', 'From location')
     to_location_id = fields.Many2one('stock.location', 'To location')
+
+    rule_ids = fields.Many2many('stock.rule', string='Rules', related='supplier_contract_id.rule_ids', readonly=True)
+    rule_id = fields.Many2one('stock.rule', string='Rule')
 
     @api.onchange('route_id')
     def fill_rule_service_product(self):

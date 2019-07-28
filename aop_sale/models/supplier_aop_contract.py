@@ -14,6 +14,17 @@ class SupplierAopContract(models.Model):
     delivery_carrier_ids = fields.One2many('delivery.carrier', 'supplier_contract_id', string="Contract terms")
     contract_rule_ids = fields.One2many('supplier.contract.stock.rule.line', 'rule_contract_id', 'Contract rule line')
 
+    rule_ids = fields.Many2many('stock.rule', 'Rules')
+
+    @api.onchange('partner_id')
+    def onchange_domain_rule_ids(self):
+        for line in self:
+            _logger.info(line.partner_id.allow_warehouse_ids)
+            if line.partner_id:
+                allow_warehouse_ids = line.partner_id.allow_warehouse_ids.ids
+                rules = self.env['stock.rule'].search([('warehouse_id', 'in', allow_warehouse_ids)])
+                line.rule_ids = [(6, 0, rules.ids)]
+
 
 class SupplierStockRuleLine(models.Model):
     _inherit = 'contract.stock.rule.line'
