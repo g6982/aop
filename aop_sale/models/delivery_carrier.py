@@ -107,8 +107,7 @@ class ChildLocationPrice(models.Model):
     _description = 'child location price'
 
     partner_id = fields.Many2one('res.partner', 'Partner')
-    # kilo_meter = fields.Float('Kilometer', related='partner_id.kilometer_number', readonly=True)
-    kilo_meter = fields.Float('Kilometer', readonly=True)
+    kilo_meter = fields.Float('Kilometer', related='partner_id.kilometer_number', readonly=True)
     price_unit = fields.Float('Price Unit')
     price_total = fields.Float('Price', compute='_compute_price_total', inverse='_set_fixed_price', store=True)
 

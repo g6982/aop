@@ -34,7 +34,7 @@
         'views/base_warehouse.xml',
         'views/stock_location_route.xml',
         'views/res_company.xml',
-        # 'views/res_partner.xml',
+        'views/res_partner.xml',
         'views/menu.xml',
         'views/restricted_menu.xml',
         'views/base.xml',
