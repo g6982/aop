@@ -64,3 +64,4 @@ msgstr "源位置"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__to_location_id
 msgid "To location"
 msgstr "目的位置"
+

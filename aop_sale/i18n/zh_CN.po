@@ -713,7 +713,7 @@ msgstr "当前发票的交货地址"
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__delivery_carrier_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_delivery_carrier_pivot
 msgid "Delivery carrier"
-msgstr "交货方式"
+msgstr "合同条款"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__name

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
+    <record id="stock.stock_location_locations" model="stock.location">
+            <field name="name">物理位置</field>
+            <field name="usage">view</field>
+            <field name="company_id"></field>
+        </record>
+
     <record id="stock.stock_location_locations_partner" model="stock.location">
         <field name="name">合作伙伴位置</field>
         <field name="usage">view</field>
