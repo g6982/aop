@@ -7,6 +7,8 @@ from . import stock_move
 from . import stock_rule
 from . import insurance_management
 from . import aop_contract
+from . import supplier_aop_contract
+from . import customer_aop_contract
 from . import delivery_carrier
 from . import mass_loss
 from . import account_invoice
@@ -21,8 +23,6 @@ from . import res_partner
 from . import dispatch_order
 from . import product_template
 from . import mail_followers
-from . import supplier_aop_contract
-from . import customer_aop_contract
 from . import product_product
 
 

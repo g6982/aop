@@ -14,7 +14,7 @@ class SupplierAopContract(models.Model):
     delivery_carrier_ids = fields.One2many('delivery.carrier', 'supplier_contract_id', string="Contract terms")
     contract_rule_ids = fields.One2many('supplier.contract.stock.rule.line', 'rule_contract_id', 'Contract rule line')
 
-    rule_ids = fields.Many2many('stock.rule', 'Rules')
+    rule_ids = fields.Many2many('stock.rule', string='Rules')
 
     @api.onchange('partner_id')
     def onchange_domain_rule_ids(self):
