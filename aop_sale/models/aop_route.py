@@ -96,9 +96,9 @@ class AopRoute(models.Model):
                 raise UserError(u'请先定义线路明细行')
 
             warehouse_id = self._parse_warehouse_id()
-            _logger.info({
-                'warehouse_id': warehouse_id
-            })
+            # _logger.info({
+            #     'warehouse_id': warehouse_id
+            # })
             route_data = self._parse_aop_route_line(self.route_line_ids)
             route_body = self._get_location_route_data(warehouse_id, route_data)
 

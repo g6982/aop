@@ -19,7 +19,6 @@ class SupplierAopContract(models.Model):
     @api.onchange('partner_id')
     def onchange_domain_rule_ids(self):
         for line in self:
-            _logger.info(line.partner_id.allow_warehouse_ids)
             if line.partner_id:
                 allow_warehouse_ids = line.partner_id.allow_warehouse_ids.ids
                 rules = self.env['stock.rule'].search([('warehouse_id', 'in', allow_warehouse_ids)])

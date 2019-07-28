@@ -42,9 +42,9 @@ class StockMove(models.Model):
             ('reserved_quantity', '=', 0),
             ('location_id.usage', '=', 'internal')
         ])
-        _logger.info({
-            'stock_quant_id': stock_quant_id
-        })
+        # _logger.info({
+        #     'stock_quant_id': stock_quant_id
+        # })
         return stock_quant_id.location_id.id if stock_quant_id else False
 
     def _assign_picking_post_process(self, new=False):

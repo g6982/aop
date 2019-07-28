@@ -36,11 +36,11 @@ class SaleOrderLine(models.Model):
                     ('end_position', '=', order_line.to_location_id.parent_id.id)
                 ])
                 # TODO: 一定能搜到？
-                _logger.info({
-                    'delivery_id': delivery_id,
-                    'route_id': order_line.route_id,
-                    'contract_id': order_line.customer_contract_id
-                })
+                # _logger.info({
+                #     'delivery_id': delivery_id,
+                #     'route_id': order_line.route_id,
+                #     'contract_id': order_line.customer_contract_id
+                # })
                 if delivery_id:
                     order_line.delivery_carrier_id = delivery_id.id
                     order_line.service_product_id = delivery_id.service_product_id.id
@@ -166,9 +166,9 @@ class SaleOrder(models.Model):
         res = self.env['customer.aop.contract'].search([
             ('partner_id', '=', res.partner_id.id)
         ])
-        _logger.info({
-            'res': res
-        })
+        # _logger.info({
+        #     'res': res
+        # })
         return res[0] if res else False
 
     # 查找 条款
@@ -236,9 +236,9 @@ class SaleOrder(models.Model):
         contract_id = self._fetch_customer_contract(res)
         if not contract_id:
             return res
-        _logger.info({
-            'contract_id': contract_id
-        })
+        # _logger.info({
+        #     'contract_id': contract_id
+        # })
         data = []
         for line_id in res.order_line:
             # 获取数据

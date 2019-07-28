@@ -11,7 +11,12 @@ class StockRule(models.Model):
     service_product_id = fields.Many2one('product.product', string='Service product',
                                          related='picking_type_id.service_product_id')
     action = fields.Selection(
-        selection=[('pull', 'Pull From'), ('push', 'Push To'), ('pull_push', 'Pull & Push')], string='Action',
+        selection=[
+            ('pull', 'Pull From'),
+            ('push', 'Push To'),
+            ('pull_push', 'Pull & Push'),
+            ('buy', 'Buy')],
+        string='Action',
         required=True, default='pull')
 
     procure_method = fields.Selection([
@@ -36,9 +41,9 @@ class StockRule(models.Model):
             ('reserved_quantity', '=', 0),
             ('location_id.usage', '=', 'internal')
         ]) if vin_id else False
-        _logger.info({
-            'stock_quant_id': stock_quant_id
-        })
+        # _logger.info({
+        #     'stock_quant_id': stock_quant_id
+        # })
         return stock_quant_id.location_id.id if stock_quant_id else False
 
     def _run_pull(self, product_id, product_qty, product_uom, location_id, name, origin, values):
