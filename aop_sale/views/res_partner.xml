@@ -10,6 +10,13 @@
                     <field name="kilometer_number"/>
                 </xpath>
 
+                <xpath expr="//field[@name='property_supplier_payment_term_id']" position="before">
+                    <field name="allow_warehouse_ids"
+                           widget="many2many_tags"
+                           options="{'no_quick_create': True, 'no_create_edit': True}"
+                           attrs="{'invisible': [('supplier', '=', False)]}"/>
+                </xpath>
+
                 <xpath expr="//group[@name='container_row_stock']" position="replace">
                     <group name="container_row_stock" priority="6">
                         <group string="Warehouse" name="warehouse">

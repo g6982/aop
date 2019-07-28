@@ -14,3 +14,4 @@ class ResPartner(models.Model):
     ]
 
     kilometer_number = fields.Float('Kilometer')
+    allow_warehouse_ids = fields.Many2many('stock.warehouse', string='Allowed warehouse')
