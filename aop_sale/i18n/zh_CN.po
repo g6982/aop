@@ -951,7 +951,7 @@ msgstr "源位置"
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order__from_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__from_location_id
 msgid "From location"
-msgstr "源位置"
+msgstr "接车点"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
@@ -2500,7 +2500,7 @@ msgstr "目的位置"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__to_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__to_location_id
 msgid "To location"
-msgstr "目的位置"
+msgstr "送车点"
 
 #. module: aop_sale
 #: selection:account.tax.invoice,activity_state:0
