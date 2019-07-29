@@ -105,3 +105,12 @@ msgstr "任务"
 msgid "Customer"
 msgstr "结算单位"
 
+#. module: sale
+#: code:addons/sale/models/sale.py:262
+#: model:ir.model.fields,field_description:sale.field_res_partner__sale_order_ids
+#: model_terms:ir.ui.view,arch_db:sale.view_order_form
+#: model_terms:ir.ui.view,arch_db:sale.view_sales_order_filter
+#: selection:sale.order,state:0 selection:sale.report,state:0
+#, python-format
+msgid "Sales Order"
+msgstr "正式订单"

@@ -213,27 +213,32 @@
         />
 
         <!-- 一级菜单 -->
+        <!--
         <menuitem id="warehouse_info_manager_menu"
                   parent="main_data_menu_root"
                   name="Warehouse"
                   sequence="80"
         />
-
+        -->
         <!-- 二级菜单 -->
+        <!--
         <menuitem id="warehouse_info_location_manager_menu"
                   parent="warehouse_info_manager_menu"
                   name="Warehouse"
                   action="stock.action_warehouse_form"
                   sequence="10"
         />
+        -->
 
         <!-- 二级菜单 -->
+        <!--
         <menuitem id="location_manager_menu"
                   parent="warehouse_info_manager_menu"
                   name="Location"
                   action="stock.action_location_form"
                   sequence="20"
         />
+        -->
 
         <!-- 一级菜单 -->
         <menuitem id="financial_manager_menu"
