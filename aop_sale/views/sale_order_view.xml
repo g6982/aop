@@ -98,18 +98,84 @@
                 </xpath>
 
                 <!-- 根据状态显示-->
+
+
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
-                    <attribute name="invisible">[('state', '!=', 'sale')]</attribute>
+
+
+                            <attribute name="attrs">{
+                                            'readonly': [('qty_invoiced', '&gt;', 0)],
+                                            'invisible': [('state', '!=', 'sale')]
+                                            }
+                            </attribute>
+
                 </xpath>
+
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+
+
+                    <attribute name="attrs">{
+                        'readonly': [('qty_invoiced', '&gt;', 0)],
+                        'invisible': [('state', '!=', 'sale')]
+                        }
+                    </attribute>
+
+                </xpath>
+
                 <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="attributes">
-                    <attribute name="invisible">[('state', '!=', 'sale')]</attribute>
+                    <attribute name="attrs">{
+                        'readonly': [('qty_invoiced', '&gt;', 0)],
+                        'invisible': [('state', '!=', 'sale')]
+                        }
+                    </attribute>
+
                 </xpath>
+
+
+
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
-                    <attribute name="invisible">[('state', '!=', 'sale')]</attribute>
+                    <attribute name="attrs">{
+                        'invisible': [('state', '!=', 'sale')]
+                        }
+                    </attribute>
                 </xpath>
+
+                <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+                    <attribute name="attrs">{
+                        'invisible': [('state', '!=', 'sale')]
+                        }
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='amount_tax']" position="attributes">
+                    <attribute name="attrs">{
+                        'invisible': [('state', '!=', 'sale')]
+                        }
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//label[@for='amount_total']" position="attributes">
+                    <attribute name="attrs">{
+                        'invisible': [('state', '!=', 'sale')]
+                        }
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='amount_total']" position="attributes">
+                    <attribute name="attrs">{
+                        'invisible': [('state', '!=', 'sale')]
+                        }
+                    </attribute>
+
+                </xpath>
+
+                <!--
                 <xpath expr="//group[@name='sale_total']" position="attributes">
                     <attribute name="invisible">[('state', '!=', 'sale')]</attribute>
                 </xpath>
+                -->
+
+
 
 
 
