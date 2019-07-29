@@ -30,9 +30,8 @@ class DeliveryCarrier(models.Model):
 
     rule_service_product_ids = fields.One2many('rule.service.product', 'carrier_id', 'Rule & product')
 
-    fixed_price = fields.Float(compute='_compute_fixed_price', inverse=False, store=True,
+    fixed_price = fields.Float(compute='_compute_fixed_price', inverse='_set_product_fixed_price', store=True,
                                string='Fixed Price')
-
     product_standard_price = fields.Float('Standard price')
     picking_type_id = fields.Many2one('stock.picking.type', 'Picking type')
 
@@ -49,7 +48,6 @@ class DeliveryCarrier(models.Model):
             data.append((0, 0, {
                 'route_id': self.route_id.id,
                 'rule_id': rule_id.id,
-                'service_product_id': False
             }))
         self.rule_service_product_ids = data
 
@@ -66,7 +64,7 @@ class DeliveryCarrier(models.Model):
             if line.service_product_id:
                 line.product_standard_price = line.service_product_id.standard_price
 
-    @api.depends('rule_service_product_ids.price_total', 'rule_service_product_ids',
+    @api.depends('rule_service_product_ids.price_total',
                  'rule_service_product_ids.price_unit', 'rule_service_product_ids.kilo_meter')
     def _compute_fixed_price(self):
         for carrier in self:
@@ -76,6 +74,22 @@ class DeliveryCarrier(models.Model):
         pass
         # for carrier in self:
         #     carrier.fixed_price = sum(line.price_total for line in carrier.rule_service_product_ids)
+
+    @api.model
+    def create(self, vals):
+        res = super(DeliveryCarrier, self).create(vals)
+
+        # FIXME: 补丁。。。
+        tmp = []
+        for index_i, x in enumerate(res.rule_service_product_ids):
+            tmp.append((1, x.id, {
+                'route_id': res.route_id.id,
+                'rule_id': res.route_id.rule_ids[index_i].id
+            }))
+        res.write({
+            'rule_service_product_ids': tmp
+        })
+        return res
 
 
 class RuleServiceProduct(models.Model):
@@ -93,7 +107,10 @@ class RuleServiceProduct(models.Model):
     child_location_lines = fields.One2many('rule.child.location.price', 'rule_partner_product_price',
                                            string='Child price')
 
-    delivery_type = fields.Selection([('fixed', 'Fixed'), ('base_on_rule', 'Base on rule')], default='fixed')
+    delivery_type = fields.Selection([
+        ('fixed', 'Fixed'),
+        ('base_on_rule', 'Base on rule')
+    ], default='fixed')
     price_rule_ids = fields.One2many('delivery.price.rule', 'rule_service_product_id')
 
     @api.depends('kilo_meter', 'price_unit')
@@ -115,9 +132,6 @@ class ChildLocationPrice(models.Model):
     price_total = fields.Float('Price', compute='_compute_price_total', inverse='_set_fixed_price', store=True)
 
     rule_partner_product_price = fields.Many2one('rule.service.product')
-
-    # delivery_type = fields.Selection([('fixed', 'Fixed'), ('base_on_rule', 'Base on rule')], default='fixed')
-    # price_rule_ids = fields.One2many('delivery.price.rule', 'rule_child_location_id')
 
     @api.depends('kilo_meter', 'price_unit')
     def _compute_price_total(self):

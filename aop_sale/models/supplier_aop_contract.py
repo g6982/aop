@@ -23,6 +23,8 @@ class SupplierAopContract(models.Model):
                 allow_warehouse_ids = line.partner_id.allow_warehouse_ids.ids
                 rules = self.find_all_rule_by_location(allow_warehouse_ids)
                 line.rule_ids = [(6, 0, rules.ids)]
+            else:
+                line.rule_ids = False
 
     # 通过位置查找规则
     def find_all_rule_by_location(self, allow_warehouse_ids):

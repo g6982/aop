@@ -46,6 +46,28 @@ class AopContract(models.Model):
                 }))
         self.contract_rule_ids = data
 
+    # @api.model
+    # def create(self, vals):
+    #     res = super(AopContract, self).create(vals)
+    #
+    #     # FIXME: 补丁。。。
+    #     data = []
+    #     for x in res.delivery_carrier_ids:
+    #         if len(x.rule_service_product_ids) == len(x.route_id.rule_ids):
+    #             tmp = []
+    #             for index_i, rule_line_id in enumerate(x.rule_service_product_ids):
+    #                 tmp.append((1, rule_line_id.id, {
+    #                     'rule_id': x.route_id.rule_ids[index_i].id,
+    #                     'route_id': x.route_id.id
+    #                 }))
+    #         data.append((1, x.id, {
+    #             'rule_service_product_ids': tmp
+    #         }))
+    #     res.write({
+    #         'delivery_carrier_ids': data
+    #     })
+    #     return res
+
 
 class ContractVersion(models.Model):
     _name = 'contract.version'
