@@ -17,7 +17,7 @@ class Warehouse(models.Model):
     child_ids = fields.One2many('stock.warehouse', 'parent_id', 'Contains')
     parent_path = fields.Char(index=True)
 
-    code = fields.Char('Short Name', required=True, size=8, help="Short name used to identify your warehouse")
+    code = fields.Char('Short Name', required=True, size=20, help="Short name used to identify your warehouse")
 
     def _get_locations_values(self, vals):
         res = super(Warehouse, self)._get_locations_values(vals)
