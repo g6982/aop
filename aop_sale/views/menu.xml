@@ -257,20 +257,24 @@
         />
 
         <!-- 二级菜单 -->
+        <!--
         <menuitem id="income_parameter_manager_menu"
                   parent="financial_manager_menu"
                   name="Income"
                   action="account.action_invoice_tree"
                   sequence="20"
         />
+        -->
 
         <!-- 二级菜单 -->
+        <!--
         <menuitem id="cost_parameter_manager_menu"
                   parent="financial_manager_menu"
                   name="Cost"
                   action="account.action_vendor_bill_template"
                   sequence="30"
         />
+        -->
 
         <!-- 物流网络->保险管理, 一级菜单 -->
         <menuitem id="insurance_manager_menu"
