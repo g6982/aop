@@ -24,6 +24,7 @@ from . import dispatch_order
 from . import product_template
 from . import mail_followers
 from . import product_product
+from . import account_account
 
 
 

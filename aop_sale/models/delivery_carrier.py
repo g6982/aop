@@ -41,6 +41,8 @@ class DeliveryCarrier(models.Model):
     rule_ids = fields.Many2many('stock.rule', string='Rules', related='supplier_contract_id.rule_ids', readonly=True)
     rule_id = fields.Many2one('stock.rule', string='Rule')
 
+    allow_location_ids = fields.Many2many('stock.location', string='Allowed locations')
+
     @api.onchange('route_id')
     def fill_rule_service_product(self):
         data = []
