@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-28 06:48+0000\n"
-"PO-Revision-Date: 2019-07-28 06:48+0000\n"
+"POT-Creation-Date: 2019-08-03 03:09+0000\n"
+"PO-Revision-Date: 2019-08-03 03:09+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -44,6 +44,7 @@ msgid "Access warning"
 msgstr "访问警告"
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_account_account
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__account_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__account_id
 msgid "Account"
@@ -146,6 +147,11 @@ msgstr "时效(天)"
 #: selection:account.tax.invoice.wizard,tax_invoice_method:0
 msgid "All"
 msgstr "所有"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__allow_location_ids
+msgid "Allowed locations"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_res_partner__allow_warehouse_ids
@@ -304,6 +310,11 @@ msgid "Bundle Products"
 msgstr "捆绑产品"
 
 #. module: aop_sale
+#: selection:stock.rule,action:0
+msgid "Buy"
+msgstr "购买"
+
+#. module: aop_sale
 #: selection:aop.contract,type:0
 #: selection:customer.aop.contract,type:0
 #: selection:supplier.aop.contract,type:0
@@ -436,6 +447,7 @@ msgid "Contact"
 msgstr "联系人"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_account__child_ids
 #: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__child_ids
 msgid "Contains"
 msgstr "包含"
@@ -496,11 +508,6 @@ msgstr "合同条款"
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__type
 msgid "Contract type"
 msgstr "合同类型"
-
-#. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.cost_parameter_manager_menu
-msgid "Cost"
-msgstr "成本结算清单"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_product_product__cost_currency_id
@@ -687,7 +694,7 @@ msgstr "已交货数量"
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
 msgid "Delivery"
-msgstr "交货"
+msgstr "任务"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__partner_shipping_id
@@ -951,7 +958,7 @@ msgstr "源位置"
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order__from_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__from_location_id
 msgid "From location"
-msgstr "接车点"
+msgstr "源位置"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
@@ -1072,11 +1079,6 @@ msgstr "导入临时订单"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "In Payment"
 msgstr "在付款"
-
-#. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.income_parameter_manager_menu
-msgid "Income"
-msgstr "收入结算清单"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__incoterm_id
@@ -1395,11 +1397,6 @@ msgid "Load the vendor bill based on selected purchase order. Several PO can be 
 msgstr "编码帮助。被选择的时候，相关的采购订单行会被添加供应商账单。可以选择几张采购订单。"
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.location_manager_menu
-msgid "Location"
-msgstr "位置"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__route_id
 msgid "Location route"
 msgstr "路由"
@@ -1663,6 +1660,12 @@ msgid "Paid/Reconciled"
 msgstr "已付／已核销"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_account__parent_id
+msgid "Parent Account"
+msgstr "上级费目"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_account__parent_path
 #: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__parent_path
 msgid "Parent Path"
 msgstr "父级路径"
@@ -2212,6 +2215,16 @@ msgid "Share"
 msgstr "共享"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__code
+msgid "Short Name"
+msgstr "缩写"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_stock_warehouse__code
+msgid "Short name used to identify your warehouse"
+msgstr "利用简称来标识你的仓库"
+
+#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Show all records which has next action date is before today"
 msgstr "显示在今天之前的下一个行动日期的所有记录"
@@ -2279,7 +2292,7 @@ msgid "Steps manage"
 msgstr "步骤管理"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_warehouse.py:23
+#: code:addons/aop_sale/models/stock_warehouse.py:25
 #, python-format
 msgid "Stock"
 msgstr ""
@@ -2500,7 +2513,7 @@ msgstr "目的位置"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__to_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__to_location_id
 msgid "To location"
-msgstr "送车点"
+msgstr "目的位置"
 
 #. module: aop_sale
 #: selection:account.tax.invoice,activity_state:0
@@ -2732,8 +2745,6 @@ msgstr "体积"
 #: model:ir.model,name:aop_sale.model_stock_warehouse
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__warehouse_id
 #: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__warehouse_ids
-#: model:ir.ui.menu,name:aop_sale.warehouse_info_location_manager_menu
-#: model:ir.ui.menu,name:aop_sale.warehouse_info_manager_menu
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_partner_form_inherit
 msgid "Warehouse"
 msgstr "仓库"
@@ -2772,6 +2783,12 @@ msgstr "一旦勾选了，此路径在产品表格中的库存页面将会显示
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice_line__partner_id
 msgid "You can find a contact by its Name, TIN, Email or Internal Reference."
 msgstr "可以通过姓名、TIN、邮箱或者内部关联找到一个联系人."
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/account_account.py:23
+#, python-format
+msgid "You can not create recursive analytic accounts."
+msgstr ""
 
 #. module: aop_sale
 #: code:addons/aop_sale/models/sale_order.py:271
