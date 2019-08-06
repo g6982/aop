@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-03 03:09+0000\n"
-"PO-Revision-Date: 2019-08-03 03:09+0000\n"
+"POT-Creation-Date: 2019-08-06 15:11+0000\n"
+"PO-Revision-Date: 2019-08-06 15:11+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -567,6 +567,7 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_uid
@@ -598,6 +599,7 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_date
@@ -800,6 +802,7 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__display_name
@@ -896,6 +899,7 @@ msgid "Expire_date"
 msgstr "合同失效日"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__file
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__file
 msgid "File"
 msgstr "文件"
@@ -961,6 +965,11 @@ msgid "From location"
 msgstr "源位置"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__from_location_ids
+msgid "From locations"
+msgstr "源位置"
+
+#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Future Activities"
 msgstr "未来活动"
@@ -1010,6 +1019,7 @@ msgstr "有未清项"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__id
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__id
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__id
+#: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__id
@@ -1063,6 +1073,16 @@ msgstr "产品变体的图像(如果为False,采用大尺寸图像模板). 它�
 #: model:ir.actions.act_window,name:aop_sale.action_import_sale_order_wizard
 msgid "Import"
 msgstr "导入"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.import_dispatch_order
+msgid "Import Dispatch Order"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_import_dispatch_order_wizard_form
+msgid "Import Dispatch Orders"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.import_sale_order_wizard
@@ -1293,6 +1313,7 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type____last_update
@@ -1324,6 +1345,7 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_uid
@@ -1355,6 +1377,7 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_date
@@ -2205,6 +2228,11 @@ msgid "Service product manage"
 msgstr "服务产品管理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__service_product_id
+msgid "Service products"
+msgstr ""
+
+#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_wizard
 msgid "Settlement list"
 msgstr "结算清单"
@@ -2513,6 +2541,11 @@ msgstr "目的位置"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__to_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__to_location_id
 msgid "To location"
+msgstr "目的位置"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__to_location_ids
+msgid "To locations"
 msgstr "目的位置"
 
 #. module: aop_sale
@@ -2892,6 +2925,11 @@ msgid "highway"
 msgstr "公路调度"
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_import_dispatch_order_wizard
+msgid "import.dispatch.order.wizard"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_import_sale_order_wizard
 msgid "import.sale.order.wizard"
 msgstr ""
@@ -2979,6 +3017,11 @@ msgid "the name and parent_id must be unique!"
 msgstr "名字和上级 必须唯一"
 
 #. module: aop_sale
+#: sql_constraint:stock.location.route:0
+msgid "the name must be unique!"
+msgstr ""
+
+#. module: aop_sale
 #: sql_constraint:res.partner:0
 msgid "the ref must be unique!"
 msgstr "参考必须唯一"
@@ -3001,6 +3044,11 @@ msgstr "类型: [(name, amount, base, formated amount, formated base)]"
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_insurance_management
 msgid "保险管理"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_import_dispatch_order
+msgid "导入调度订单"
 msgstr ""
 
 #. module: aop_sale
