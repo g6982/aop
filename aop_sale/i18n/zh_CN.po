@@ -2230,7 +2230,7 @@ msgstr "服务产品管理"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__service_product_id
 msgid "Service products"
-msgstr ""
+msgstr "服务产品"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_wizard
