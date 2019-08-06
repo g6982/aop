@@ -35,6 +35,8 @@
                                 <field name="type" widget="radio"/>
                                 -->
                                 <field name="rule_ids" widget="many2many_tags" invisible="1"/>
+                                <field name="service_product_id"
+                                       options="{'no_quick_create': True, 'no_create_edit': True}"/>
                             </group>
                         </group>
 
@@ -45,14 +47,19 @@
                                     <tree editable="bottom">
                                         <field name="name"/>
                                         <field name="rule_ids" widget="many2many_tags" invisible="1"/>
-                                        <field name="rule_id"
-                                               domain="[('id', 'in', rule_ids)]"
+                                        <!--                                        <field name="rule_id"-->
+                                        <!--                                               domain="[('id', 'in', rule_ids)]"-->
+                                        <!--                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>-->
+                                        <!--                                        <field name="allow_location_ids"-->
+                                        <!--                                               widget="many2many_tags"-->
+                                        <!--                                               options="{'no_quick_create': True, 'no_create_edit': True}"/>-->
+                                        <field name="from_location_ids"
+                                               widget="many2many_tags"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                                        <field name="allow_location_ids"
+                                        <field name="to_location_ids"
                                                widget="many2many_tags"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
                                         <field name="picking_type_id"
-                                               invisible="1"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
                                         <field name="product_template_id"
                                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
