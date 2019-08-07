@@ -69,6 +69,7 @@ class DeliveryCarrier(models.Model):
 
     @api.onchange('route_id')
     def fill_rule_service_product(self):
+        self.rule_service_product_ids = False
         data = []
         for rule_id in self.route_id.rule_ids:
             data.append((0, 0, {
@@ -107,8 +108,7 @@ class DeliveryCarrier(models.Model):
 
         # FIXME: 补丁。。。
         tmp = []
-        # for index_i, x in enumerate(res.rule_service_product_ids):
-        for index_i, x in enumerate(res.route_id.rule_ids):
+        for index_i, x in enumerate(res.rule_service_product_ids):
             tmp.append((1, x.id, {
                 'route_id': res.route_id.id,
                 'rule_id': res.route_id.rule_ids[index_i].id
