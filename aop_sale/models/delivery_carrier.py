@@ -107,7 +107,8 @@ class DeliveryCarrier(models.Model):
 
         # FIXME: 补丁。。。
         tmp = []
-        for index_i, x in enumerate(res.rule_service_product_ids):
+        # for index_i, x in enumerate(res.rule_service_product_ids):
+        for index_i, x in enumerate(res.route_id.rule_ids):
             tmp.append((1, x.id, {
                 'route_id': res.route_id.id,
                 'rule_id': res.route_id.rule_ids[index_i].id
