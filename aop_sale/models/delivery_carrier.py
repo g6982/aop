@@ -46,6 +46,27 @@ class DeliveryCarrier(models.Model):
 
     allow_location_ids = fields.Many2many('stock.location', string='Allowed locations')
 
+    @api.onchange('start_position', 'end_position')
+    def domain_route_ids(self):
+        if self.start_position and self.end_position:
+            rule_obj = self.env['stock.location.route'].search([])
+            rule_ids = []
+
+            for rule_id in rule_obj:
+                if not rule_id.rule_ids:
+                    continue
+                if not self.start_position.property_stock_customer or not self.end_position.property_stock_customer:
+                    continue
+
+                if rule_id.rule_ids[0].location_src_id.id == self.start_position.property_stock_customer.id and \
+                        rule_id.rule_ids[-1].location_id.id == self.end_position.property_stock_customer.id:
+                    rule_ids.append(rule_id.id)
+            return {
+                'domain': {
+                    'route_id': [('id', 'in', rule_ids)]
+                }
+            }
+
     @api.onchange('route_id')
     def fill_rule_service_product(self):
         data = []
