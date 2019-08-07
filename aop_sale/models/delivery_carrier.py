@@ -136,15 +136,6 @@ class DeliveryCarrier(models.Model):
 
         return res
 
-    # @api.multi
-    # def write(self, vals):
-    #     _logger.info({
-    #         'vals': vals,
-    #         'fixed_price': self.fixed_price
-    #     })
-    #
-    #     return super(DeliveryCarrier, self).write(vals)
-
 
 class RuleServiceProduct(models.Model):
     _name = 'rule.service.product'
