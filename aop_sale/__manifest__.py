@@ -31,6 +31,7 @@
         'views/stock_location_views.xml',
         'views/purchase_order.xml',
         'views/product_template.xml',
+        'views/product_product.xml',
         'views/base_warehouse.xml',
         'views/account_account_view.xml',
         'views/stock_location_route.xml',

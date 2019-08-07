@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="product.product_normal_action_sell" model="ir.actions.act_window">
+            <field name="domain">[('type', 'in', ['consu', 'product'])]</field>
+        </record>
+
+    </data>
+</odoo>c

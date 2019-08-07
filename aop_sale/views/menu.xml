@@ -351,6 +351,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
         </record>
+
         <menuitem id="import_sale_order_wizard"
                   name="Import order"
                   action="action_import_sale_order_wizard"
