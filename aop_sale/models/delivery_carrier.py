@@ -46,6 +46,8 @@ class DeliveryCarrier(models.Model):
 
     allow_location_ids = fields.Many2many('stock.location', string='Allowed locations')
 
+    product_fixed_price = fields.Float('Product fixed price')
+
     @api.onchange('start_position', 'end_position')
     def domain_route_ids(self):
         if self.start_position and self.end_position:
@@ -91,19 +93,26 @@ class DeliveryCarrier(models.Model):
             if line.service_product_id:
                 line.product_standard_price = line.service_product_id.standard_price
 
-    @api.depends('rule_service_product_ids.price_total',
-                 'rule_service_product_ids.price_unit', 'rule_service_product_ids.kilo_meter')
+    @api.depends('rule_service_product_ids.price_unit', 'rule_service_product_ids.kilo_meter')
     def _compute_fixed_price(self):
         for carrier in self:
-            carrier.fixed_price = sum(line.price_total for line in carrier.rule_service_product_ids)
+
+            sum_fixed_price = sum(line.price_total for line in carrier.rule_service_product_ids)
+            if sum_fixed_price > 0:
+                _logger.info({
+                    'carrier': carrier.product_fixed_price
+                })
+                carrier.fixed_price = sum_fixed_price
+            else:
+                carrier.fixed_price = carrier.product_fixed_price
 
     def _set_product_fixed_price(self):
-        pass
-        # for carrier in self:
-        #     carrier.fixed_price = sum(line.price_total for line in carrier.rule_service_product_ids)
+        for carrier in self:
+            carrier.product_fixed_price = carrier.fixed_price
 
     @api.model
     def create(self, vals):
+
         res = super(DeliveryCarrier, self).create(vals)
 
         # FIXME: 补丁。。。
@@ -113,10 +122,28 @@ class DeliveryCarrier(models.Model):
                 'route_id': res.route_id.id,
                 'rule_id': res.route_id.rule_ids[index_i].id
             }))
-        res.write({
-            'rule_service_product_ids': tmp
-        })
+
+        if not tmp:
+            for rule_id in res.route_id.rule_ids:
+                tmp.append((0, 0, {
+                    'route_id': res.route_id.id,
+                    'rule_id': rule_id.id,
+                }))
+        if tmp:
+            res.write({
+                'rule_service_product_ids': tmp
+            })
+
         return res
+
+    # @api.multi
+    # def write(self, vals):
+    #     _logger.info({
+    #         'vals': vals,
+    #         'fixed_price': self.fixed_price
+    #     })
+    #
+    #     return super(DeliveryCarrier, self).write(vals)
 
 
 class RuleServiceProduct(models.Model):
