@@ -24,7 +24,11 @@ class DeliveryCarrier(models.Model):
 
     route_id = fields.Many2one('stock.location.route', string='Route')
 
-    service_product_id = fields.Many2one('product.product', string='Service product')
+    service_product_id = fields.Many2one(
+        'product.product',
+        string='Service product', 
+        domain="[('type', 'in', ['service'])]"
+    )
     start_position = fields.Many2one('res.partner', 'Outset')
     end_position = fields.Many2one('res.partner', 'End')
 

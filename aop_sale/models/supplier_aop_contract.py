@@ -16,7 +16,11 @@ class SupplierAopContract(models.Model):
 
     rule_ids = fields.Many2many('stock.rule', string='Rules')
 
-    service_product_id = fields.Many2one('product.product', 'Service products')
+    service_product_id = fields.Many2one(
+        'product.product',
+        string='Service products',
+        domain="[('type', 'in', ['service'])]"
+    )
 
     @api.onchange('partner_id')
     def onchange_domain_rule_ids(self):
