@@ -39,16 +39,13 @@ class DeliveryCarrier(models.Model):
     product_standard_price = fields.Float('Standard price')
     picking_type_id = fields.Many2one('stock.picking.type', 'Picking type')
 
-    from_location_id = fields.Many2one('stock.location', 'From location')
-    to_location_id = fields.Many2one('stock.location', 'To location')
+    # from_location_id = fields.Many2one('stock.location', 'From location')
+    # to_location_id = fields.Many2one('stock.location', 'To location')
 
-    from_location_ids = fields.Many2many('stock.location', string='From locations')
-    to_location_ids = fields.Many2many('stock.location', string='To locations')
+    from_location_ids = fields.Many2many('stock.location', string='From locations', relation='delivery_carrier_from_location_ids')
+    to_location_ids = fields.Many2many('stock.location', string='To locations', relation='delivery_carrier_to_location_ids')
 
-    # rule_ids = fields.Many2many('stock.rule', string='Rules', related='supplier_contract_id.rule_ids', readonly=True)
     rule_id = fields.Many2one('stock.rule', string='Rule')
-
-    allow_location_ids = fields.Many2many('stock.location', string='Allowed locations')
 
     product_fixed_price = fields.Float('Product fixed price')
 
@@ -84,12 +81,12 @@ class DeliveryCarrier(models.Model):
             }))
         self.rule_service_product_ids = data
 
-    @api.onchange('picking_type_id')
-    def fill_default_location_id(self):
-        for line in self:
-            if line.picking_type_id:
-                line.from_location_id = line.picking_type_id.default_location_src_id.id if line.picking_type_id.default_location_src_id else False
-                line.to_location_id = line.picking_type_id.default_location_dest_id.id if line.picking_type_id.default_location_dest_id else False
+    # @api.onchange('picking_type_id')
+    # def fill_default_location_id(self):
+    #     for line in self:
+    #         if line.picking_type_id:
+    #             line.from_location_id = line.picking_type_id.default_location_src_id.id if line.picking_type_id.default_location_src_id else False
+    #             line.to_location_id = line.picking_type_id.default_location_dest_id.id if line.picking_type_id.default_location_dest_id else False
 
     @api.onchange('service_product_id')
     def fill_service_product_price(self):

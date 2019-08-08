@@ -14,8 +14,6 @@ class SupplierAopContract(models.Model):
     delivery_carrier_ids = fields.One2many('delivery.carrier', 'supplier_contract_id', string="Contract terms")
     contract_rule_ids = fields.One2many('supplier.contract.stock.rule.line', 'rule_contract_id', 'Contract rule line')
 
-    # rule_ids = fields.Many2many('stock.rule', string='Rules')
-
     service_product_id = fields.Many2one(
         'product.product',
         string='Service products',
