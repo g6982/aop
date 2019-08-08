@@ -39,11 +39,11 @@ class DeliveryCarrier(models.Model):
     product_standard_price = fields.Float('Standard price')
     picking_type_id = fields.Many2one('stock.picking.type', 'Picking type')
 
-    # from_location_id = fields.Many2one('stock.location', 'From location')
-    # to_location_id = fields.Many2one('stock.location', 'To location')
+    from_location_id = fields.Many2one('stock.location', 'From location')
+    to_location_id = fields.Many2one('stock.location', 'To location')
 
-    from_location_ids = fields.Many2many('stock.location', string='From locations', relation='delivery_carrier_from_location_ids')
-    to_location_ids = fields.Many2many('stock.location', string='To locations', relation='delivery_carrier_to_location_ids')
+    # from_location_ids = fields.Many2many('stock.location', string='From locations', relation='delivery_carrier_from_location_ids')
+    # to_location_ids = fields.Many2many('stock.location', string='To locations', relation='delivery_carrier_to_location_ids')
 
     rule_id = fields.Many2one('stock.rule', string='Rule')
 
