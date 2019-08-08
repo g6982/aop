@@ -26,7 +26,7 @@ class DeliveryCarrier(models.Model):
 
     service_product_id = fields.Many2one(
         'product.product',
-        string='Service product', 
+        string='Service product',
         domain="[('type', 'in', ['service'])]"
     )
     start_position = fields.Many2one('res.partner', 'Outset')

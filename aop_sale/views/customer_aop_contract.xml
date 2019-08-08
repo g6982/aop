@@ -72,8 +72,9 @@
                         <notebook>
                             <page string="Contract terms">
                                 <field name="delivery_carrier_ids">
-                                    <tree>
+                                    <tree limit="80">
                                         <field name="name"/>
+                                        <field name="route_id"/>
                                         <field name="product_template_id"/>
                                         <field name="service_product_id"/>
                                         <field name="start_position"/>
