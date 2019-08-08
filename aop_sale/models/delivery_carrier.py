@@ -45,7 +45,7 @@ class DeliveryCarrier(models.Model):
     from_location_ids = fields.Many2many('stock.location', string='From locations')
     to_location_ids = fields.Many2many('stock.location', string='To locations')
 
-    rule_ids = fields.Many2many('stock.rule', string='Rules', related='supplier_contract_id.rule_ids', readonly=True)
+    # rule_ids = fields.Many2many('stock.rule', string='Rules', related='supplier_contract_id.rule_ids', readonly=True)
     rule_id = fields.Many2one('stock.rule', string='Rule')
 
     allow_location_ids = fields.Many2many('stock.location', string='Allowed locations')
