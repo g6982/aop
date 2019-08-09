@@ -84,6 +84,7 @@ class AopContract(models.Model):
 
 class ContractVersion(models.Model):
     _name = 'contract.version'
+    _sql_constraints = [('unique_version_name', 'unique(name)', 'The name must be unique!')]
 
     name = fields.Char(string='Version')
 

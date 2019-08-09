@@ -18,6 +18,7 @@
         'views/mass_loss.xml',
         'views/customer_aop_contract.xml',
         'views/supplier_aop_contract.xml',
+        'views/contract_version.xml',
         'views/delivery_carrier.xml',
         'views/sale_order_view.xml',
         'views/stock_move.xml',
