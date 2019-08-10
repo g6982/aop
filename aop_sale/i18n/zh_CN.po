@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-06 15:11+0000\n"
-"PO-Revision-Date: 2019-08-06 15:11+0000\n"
+"POT-Creation-Date: 2019-08-10 12:59+0000\n"
+"PO-Revision-Date: 2019-08-10 12:59+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -79,7 +79,10 @@ msgstr "动作"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_needaction
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_needaction
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_needaction
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_needaction
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_needaction
 msgid "Action Needed"
 msgstr "前置操作"
 
@@ -147,11 +150,6 @@ msgstr "时效(天)"
 #: selection:account.tax.invoice.wizard,tax_invoice_method:0
 msgid "All"
 msgstr "所有"
-
-#. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__allow_location_ids
-msgid "Allowed locations"
-msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_res_partner__allow_warehouse_ids
@@ -237,7 +235,10 @@ msgstr "相关采购订单，当采购订单在供应商账单上被选择时候
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_attachment_count
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_attachment_count
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_attachment_count
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_attachment_count
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_attachment_count
 msgid "Attachment Count"
 msgstr "附件数量"
 
@@ -337,6 +338,11 @@ msgid "By Salespersons"
 msgstr "按 销售员"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
+msgid "Cancel"
+msgstr "取消"
+
+#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_picking_batch_form_inherit_create_purchase
 msgid "Cancel picking"
 msgstr "取消拣货"
@@ -352,6 +358,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 msgid "Carrier"
 msgstr "承运商"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_contract_version_form
+msgid "Carrier version"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__case_number
@@ -508,6 +519,13 @@ msgstr "合同条款"
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__type
 msgid "Contract type"
 msgstr "合同类型"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_contract_version_view
+#: model:ir.ui.menu,name:aop_sale.contract_version_menu_id
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_contract_version_tree
+msgid "Contract version"
+msgstr "合同版本号"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_product_product__cost_currency_id
@@ -706,7 +724,7 @@ msgstr "送货地址"
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_delivery_carrier
 msgid "Delivery Methods"
-msgstr "合同"
+msgstr "合同条款行"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_delivery_price_rule
@@ -830,7 +848,11 @@ msgid "Document Followers"
 msgstr "单据关注者"
 
 #. module: aop_sale
+#: selection:aop.contract,state:0
+#: selection:customer.aop.contract,state:0
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
 #: selection:mass.loss.order,state:0
+#: selection:supplier.aop.contract,state:0
 msgid "Done"
 msgstr "完成"
 
@@ -848,8 +870,11 @@ msgstr ""
 
 #. module: aop_sale
 #: selection:account.tax.invoice,state:0
+#: selection:aop.contract,state:0
+#: selection:customer.aop.contract,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 #: selection:mass.loss.order,state:0
+#: selection:supplier.aop.contract,state:0
 msgid "Draft"
 msgstr "草稿"
 
@@ -936,19 +961,28 @@ msgstr "固定价格"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_follower_ids
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_follower_ids
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_follower_ids
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_follower_ids
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_follower_ids
 msgid "Followers"
 msgstr "关注者"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_channel_ids
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_channel_ids
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_channel_ids
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_channel_ids
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_channel_ids
 msgid "Followers (Channels)"
 msgstr "关注者(渠道)"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_partner_ids
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_partner_ids
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_partner_ids
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_partner_ids
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_partner_ids
 msgid "Followers (Partners)"
 msgstr "关注者(业务伙伴)"
 
@@ -962,11 +996,6 @@ msgstr "源位置"
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order__from_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__from_location_id
 msgid "From location"
-msgstr "源位置"
-
-#. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__from_location_ids
-msgid "From locations"
 msgstr "源位置"
 
 #. module: aop_sale
@@ -1038,19 +1067,28 @@ msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_unread
+#: model:ir.model.fields,help:aop_sale.field_aop_contract__message_unread
+#: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_unread
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_unread
+#: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_unread
 msgid "If checked new messages require your attention."
 msgstr "查看是否有需要留意的新消息。"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_needaction
+#: model:ir.model.fields,help:aop_sale.field_aop_contract__message_needaction
+#: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_needaction
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_needaction
+#: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr "确认后, 出现提示消息."
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_has_error
+#: model:ir.model.fields,help:aop_sale.field_aop_contract__message_has_error
+#: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_has_error
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_has_error
+#: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_has_error
 msgid "If checked, some messages have a delivery error."
 msgstr "如果勾选此项， 某些消息将会产生传递错误。"
 
@@ -1244,7 +1282,10 @@ msgstr "已开发票数量"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_is_follower
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_is_follower
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_is_follower
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_is_follower
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_is_follower
 msgid "Is Follower"
 msgstr "关注者"
 
@@ -1420,9 +1461,19 @@ msgid "Load the vendor bill based on selected purchase order. Several PO can be 
 msgstr "编码帮助。被选择的时候，相关的采购订单行会被添加供应商账单。可以选择几张采购订单。"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_rule_filter_inherit
+msgid "Location"
+msgstr "位置"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__route_id
 msgid "Location route"
 msgstr "路由"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_rule_filter_inherit
+msgid "Location src"
+msgstr ""
 
 #. module: aop_sale
 #: selection:mount.car.plan,layer_option:0
@@ -1431,7 +1482,10 @@ msgstr "下层"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_main_attachment_id
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_main_attachment_id
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_main_attachment_id
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_main_attachment_id
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_main_attachment_id
 msgid "Main Attachment"
 msgstr "附件"
 
@@ -1483,13 +1537,19 @@ msgstr "匹配订单"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_has_error
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_has_error
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_has_error
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_has_error
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_has_error
 msgid "Message Delivery error"
 msgstr "消息递送错误"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_ids
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_ids
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_ids
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_ids
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_ids
 msgid "Messages"
 msgstr "消息"
 
@@ -1575,31 +1635,46 @@ msgstr "号码"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_needaction_counter
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_needaction_counter
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_needaction_counter
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_needaction_counter
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_needaction_counter
 msgid "Number of Actions"
 msgstr "操作次数"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_has_error_counter
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_has_error_counter
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_has_error_counter
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_has_error_counter
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_has_error_counter
 msgid "Number of error"
 msgstr "错误个数"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_needaction_counter
+#: model:ir.model.fields,help:aop_sale.field_aop_contract__message_needaction_counter
+#: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_needaction_counter
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_needaction_counter
+#: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_needaction_counter
 msgid "Number of messages which requires an action"
 msgstr "需要操作消息数量"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_has_error_counter
+#: model:ir.model.fields,help:aop_sale.field_aop_contract__message_has_error_counter
+#: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_has_error_counter
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_has_error_counter
+#: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr "递送错误消息数量"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_unread_counter
+#: model:ir.model.fields,help:aop_sale.field_aop_contract__message_unread_counter
+#: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_unread_counter
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_unread_counter
+#: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_unread_counter
 msgid "Number of unread messages"
 msgstr "未读消息数量"
 
@@ -1875,6 +1950,11 @@ msgid "Product Vehicle Type"
 msgstr "车型类别"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__product_fixed_price
+msgid "Product fixed price"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.product_manager_menu
 msgid "Product manage"
 msgstr "产品管理"
@@ -2122,12 +2202,6 @@ msgid "Rule lines"
 msgstr "规则明细"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__rule_ids
-#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__rule_ids
-msgid "Rules"
-msgstr "规则"
-
-#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_sale_order
 msgid "Sale Order"
 msgstr "销售订单"
@@ -2293,7 +2367,10 @@ msgid "Start date"
 msgstr "合同开始时间"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__state
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__state
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__state
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__state
 msgid "State"
 msgstr "省/ 州"
 
@@ -2486,6 +2563,11 @@ msgid "The income or expense account related to the selected product."
 msgstr "被选定产品的相关收入科目或者费用科目."
 
 #. module: aop_sale
+#: sql_constraint:contract.version:0
+msgid "The name must be unique!"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__name
 msgid "The name that will be used on account move lines"
 msgstr "会计凭证行的名称"
@@ -2541,11 +2623,6 @@ msgstr "目的位置"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__to_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__to_location_id
 msgid "To location"
-msgstr "目的位置"
-
-#. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__to_location_ids
-msgid "To locations"
 msgstr "目的位置"
 
 #. module: aop_sale
@@ -2662,13 +2739,19 @@ msgstr "单位"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_unread
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_unread
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_unread
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_unread
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_unread
 msgid "Unread Messages"
 msgstr "未读消息"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_unread_counter
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_unread_counter
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_unread_counter
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_unread_counter
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_unread_counter
 msgid "Unread Messages Counter"
 msgstr "未读消息计数器"
 
@@ -2784,13 +2867,19 @@ msgstr "仓库"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__website_message_ids
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__website_message_ids
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__website_message_ids
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__website_message_ids
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__website_message_ids
 msgid "Website Messages"
 msgstr "网站消息"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__website_message_ids
+#: model:ir.model.fields,help:aop_sale.field_aop_contract__website_message_ids
+#: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__website_message_ids
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__website_message_ids
+#: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__website_message_ids
 msgid "Website communication history"
 msgstr "网站沟通记录"
 
@@ -2957,6 +3046,11 @@ msgstr ""
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_mount_car_plan
 msgid "mount.car.plan"
+msgstr ""
+
+#. module: aop_sale
+#: sql_constraint:base.warehouse:0
+msgid "must unique!"
 msgstr ""
 
 #. module: aop_sale
