@@ -8,6 +8,7 @@ _logger = logging.getLogger(__name__)
 
 class AopContract(models.Model):
     _name = 'aop.contract'
+    _inherit = ['mail.thread']
     _description = 'AOP contract'
 
     name = fields.Char('name', required=True)
@@ -33,6 +34,11 @@ class AopContract(models.Model):
     aging = fields.Float('Aging(day)', default=1)
     contract_rule_ids = fields.One2many('contract.stock.rule.line', 'rule_contract_id', 'Contract rule line')
 
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('done', 'Done')
+    ], default='draft', track_visibility='always')
+
     @api.onchange('delivery_carrier_ids')
     def onchange_rule_line(self):
         data = []
@@ -45,6 +51,13 @@ class AopContract(models.Model):
                     'service_product_id': rule_id.service_product_id.id
                 }))
         self.contract_rule_ids = data
+
+    def set_contract_state(self):
+        self.state = 'done'
+
+    def cancel_contract(self):
+        if self.state == 'done':
+            self.state = 'draft'
 
     # @api.model
     # def create(self, vals):
@@ -71,6 +84,7 @@ class AopContract(models.Model):
 
 class ContractVersion(models.Model):
     _name = 'contract.version'
+    _sql_constraints = [('unique_version_name', 'unique(name)', 'The name must be unique!')]
 
     name = fields.Char(string='Version')
 

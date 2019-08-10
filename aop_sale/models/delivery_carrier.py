@@ -24,7 +24,11 @@ class DeliveryCarrier(models.Model):
 
     route_id = fields.Many2one('stock.location.route', string='Route')
 
-    service_product_id = fields.Many2one('product.product', string='Service product')
+    service_product_id = fields.Many2one(
+        'product.product',
+        string='Service product',
+        domain="[('type', 'in', ['service'])]"
+    )
     start_position = fields.Many2one('res.partner', 'Outset')
     end_position = fields.Many2one('res.partner', 'End')
 
@@ -38,16 +42,37 @@ class DeliveryCarrier(models.Model):
     from_location_id = fields.Many2one('stock.location', 'From location')
     to_location_id = fields.Many2one('stock.location', 'To location')
 
-    from_location_ids = fields.Many2one('stock.location', 'From locations')
-    to_location_ids = fields.Many2one('stock.location', 'To locations')
+    # from_location_ids = fields.Many2many('stock.location', string='From locations', relation='delivery_carrier_from_location_ids')
+    # to_location_ids = fields.Many2many('stock.location', string='To locations', relation='delivery_carrier_to_location_ids')
 
-    rule_ids = fields.Many2many('stock.rule', string='Rules', related='supplier_contract_id.rule_ids', readonly=True)
     rule_id = fields.Many2one('stock.rule', string='Rule')
 
-    allow_location_ids = fields.Many2many('stock.location', string='Allowed locations')
+    product_fixed_price = fields.Float('Product fixed price')
+
+    @api.onchange('start_position', 'end_position')
+    def domain_route_ids(self):
+        if self.start_position and self.end_position:
+            rule_obj = self.env['stock.location.route'].search([])
+            rule_ids = []
+
+            for rule_id in rule_obj:
+                if not rule_id.rule_ids:
+                    continue
+                if not self.start_position.property_stock_customer or not self.end_position.property_stock_customer:
+                    continue
+
+                if rule_id.rule_ids[0].location_src_id.id == self.start_position.property_stock_customer.id and \
+                        rule_id.rule_ids[-1].location_id.id == self.end_position.property_stock_customer.id:
+                    rule_ids.append(rule_id.id)
+            return {
+                'domain': {
+                    'route_id': [('id', 'in', rule_ids)]
+                }
+            }
 
     @api.onchange('route_id')
     def fill_rule_service_product(self):
+        self.rule_service_product_ids = False
         data = []
         for rule_id in self.route_id.rule_ids:
             data.append((0, 0, {
@@ -56,12 +81,12 @@ class DeliveryCarrier(models.Model):
             }))
         self.rule_service_product_ids = data
 
-    @api.onchange('picking_type_id')
-    def fill_default_location_id(self):
-        for line in self:
-            if line.picking_type_id:
-                line.from_location_id = line.picking_type_id.default_location_src_id.id if line.picking_type_id.default_location_src_id else False
-                line.to_location_id = line.picking_type_id.default_location_dest_id.id if line.picking_type_id.default_location_dest_id else False
+    # @api.onchange('picking_type_id')
+    # def fill_default_location_id(self):
+    #     for line in self:
+    #         if line.picking_type_id:
+    #             line.from_location_id = line.picking_type_id.default_location_src_id.id if line.picking_type_id.default_location_src_id else False
+    #             line.to_location_id = line.picking_type_id.default_location_dest_id.id if line.picking_type_id.default_location_dest_id else False
 
     @api.onchange('service_product_id')
     def fill_service_product_price(self):
@@ -69,19 +94,26 @@ class DeliveryCarrier(models.Model):
             if line.service_product_id:
                 line.product_standard_price = line.service_product_id.standard_price
 
-    @api.depends('rule_service_product_ids.price_total',
-                 'rule_service_product_ids.price_unit', 'rule_service_product_ids.kilo_meter')
+    @api.depends('rule_service_product_ids.price_unit', 'rule_service_product_ids.kilo_meter')
     def _compute_fixed_price(self):
         for carrier in self:
-            carrier.fixed_price = sum(line.price_total for line in carrier.rule_service_product_ids)
+
+            sum_fixed_price = sum(line.price_total for line in carrier.rule_service_product_ids)
+            if sum_fixed_price > 0:
+                _logger.info({
+                    'carrier': carrier.product_fixed_price
+                })
+                carrier.fixed_price = sum_fixed_price
+            else:
+                carrier.fixed_price = carrier.product_fixed_price
 
     def _set_product_fixed_price(self):
-        pass
-        # for carrier in self:
-        #     carrier.fixed_price = sum(line.price_total for line in carrier.rule_service_product_ids)
+        for carrier in self:
+            carrier.product_fixed_price = carrier.fixed_price
 
     @api.model
     def create(self, vals):
+
         res = super(DeliveryCarrier, self).create(vals)
 
         # FIXME: 补丁。。。
@@ -91,9 +123,18 @@ class DeliveryCarrier(models.Model):
                 'route_id': res.route_id.id,
                 'rule_id': res.route_id.rule_ids[index_i].id
             }))
-        res.write({
-            'rule_service_product_ids': tmp
-        })
+
+        if not tmp:
+            for rule_id in res.route_id.rule_ids:
+                tmp.append((0, 0, {
+                    'route_id': res.route_id.id,
+                    'rule_id': rule_id.id,
+                }))
+        if tmp:
+            res.write({
+                'rule_service_product_ids': tmp
+            })
+
         return res
 
 

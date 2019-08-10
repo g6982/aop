@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_contract_version_form" model="ir.ui.view">
+            <field name="name">contract.version.form</field>
+            <field name="model">contract.version</field>
+            <field name="arch" type="xml">
+                <form string="Carrier version">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_contract_version_tree" model="ir.ui.view">
+            <field name="name">contract.version.tree</field>
+            <field name="model">contract.version</field>
+            <field name="arch" type="xml">
+                <tree string="Contract version">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_contract_version_view" model="ir.actions.act_window">
+            <field name="name">Contract version</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">contract.version</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="contract_version_menu_id"
+                  parent="delivery.menu_delivery"
+                  name="Contract version"
+                  action="action_contract_version_view"
+                  sequence="20"
+        />
+
+    </data>
+</odoo>

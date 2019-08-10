@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 class BaseWarehouse(models.Model):
     _name = 'base.warehouse'
     _description = 'Base warehouse'
-    _sql_constrains = [('unique_name', 'unique(name)', 'must unique!')]
+    _sql_constraints = [('unique_name', 'unique(name)', 'must unique!')]
 
     name = fields.Char('Name')
     warehouse_ids = fields.Many2many('stock.warehouse')

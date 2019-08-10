@@ -104,7 +104,7 @@
                   sequence="10"
         />
 
-        <!--供应商账单-->
+        <!--供应商合同-->
         <menuitem id="aop_supplier_contract_manager_menu"
                   parent="delivery.menu_delivery"
                   name="Supplier contract manager"
@@ -351,6 +351,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
         </record>
+
         <menuitem id="import_sale_order_wizard"
                   name="Import order"
                   action="action_import_sale_order_wizard"
