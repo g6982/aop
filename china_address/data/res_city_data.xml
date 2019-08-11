@@ -2,11 +2,11 @@
 <odoo>
    <data>
       <record id="state_bjs_city_sxq" model="res.country.city">
-         <field name="name">市辖区</field>
+         <field name="name">北京市</field>
          <field name="state_id" ref="state_BJ"/>
       </record>
       <record id="state_tjs_city_sxq" model="res.country.city">
-         <field name="name">市辖区</field>
+         <field name="name">天津市</field>
          <field name="state_id" ref="state_TJ"/>
       </record>
       <record id="state_hbs_city_sjzs" model="res.country.city">
@@ -298,7 +298,7 @@
          <field name="state_id" ref="state_HL"/>
       </record>
       <record id="state_shs_city_sxq" model="res.country.city">
-         <field name="name">市辖区</field>
+         <field name="name">上海市</field>
          <field name="state_id" ref="state_SH"/>
       </record>
       <record id="state_jss_city_njs" model="res.country.city">
@@ -1022,7 +1022,7 @@
          <field name="state_id" ref="state_HI"/>
       </record>
       <record id="state_cqs_city_sxq" model="res.country.city">
-         <field name="name">市辖区</field>
+         <field name="name">重庆市</field>
          <field name="state_id" ref="state_CQ"/>
       </record>
       <record id="state_cqs_city_x" model="res.country.city">
