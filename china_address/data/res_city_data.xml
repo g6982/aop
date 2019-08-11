@@ -1177,6 +1177,10 @@
          <field name="name">普洱市</field>
          <field name="state_id" ref="state_YN"/>
       </record>
+      <record id="state_yns_city_sms" model="res.country.city">
+         <field name="name">思茅市</field>
+         <field name="state_id" ref="state_YN"/>
+      </record>
       <record id="state_yns_city_lcs" model="res.country.city">
          <field name="name">临沧市</field>
          <field name="state_id" ref="state_YN"/>
@@ -1202,7 +1206,7 @@
          <field name="state_id" ref="state_YN"/>
       </record>
       <record id="state_yns_city_dhdzjpzzzz" model="res.country.city">
-         <field name="name">德宏傣族景颇族自治州</field>
+         <field name="name">芒市</field>
          <field name="state_id" ref="state_YN"/>
       </record>
       <record id="state_yns_city_njlszzzz" model="res.country.city">
