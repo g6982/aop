@@ -55,7 +55,8 @@ class SaleOrderLine(models.Model):
         res.update({
             'service_product_id': self.service_product_id.id,
             'vin_id': self.vin.id,
-            'delivery_carrier_id': self.delivery_carrier_id.id
+            'delivery_carrier_id': self.delivery_carrier_id.id,
+            'delivery_to_partner_id': self.to_location_id.id
         })
         return res
 

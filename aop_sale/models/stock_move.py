@@ -12,13 +12,16 @@ class StockMove(models.Model):
     delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier')
     vin_id = fields.Many2one('stock.production.lot', 'VIN', domain="[('product_id','=', product_id)]")
 
+    delivery_to_partner_id = fields.Many2one('res.partner', 'Delivery to partner', readonly=True)
+
     def _prepare_procurement_values(self):
         res = super(StockMove, self)._prepare_procurement_values()
         res.update({
             # 'service_product_id': self.service_product_id.id,
             'service_product_id': self._get_service_product_id(self.delivery_carrier_id, self.rule_id),
             'vin_id': self.vin_id.id,
-            'delivery_carrier_id': self.delivery_carrier_id.id
+            'delivery_carrier_id': self.delivery_carrier_id.id,
+            'delivery_to_partner_id': self.delivery_to_partner_id.id
         })
         return res
 
@@ -58,4 +61,11 @@ class StockMove(models.Model):
             self.procure_method = 'make_to_stock'
             # self.picking_id.state = 'assigned'
             self.picking_id.action_assign()
+        return res
+
+    def _get_new_picking_values(self):
+        res = super(StockMove, self)._get_new_picking_values()
+        res.update({
+            'delivery_to_partner_id': self.delivery_to_partner_id.id
+        })
         return res
