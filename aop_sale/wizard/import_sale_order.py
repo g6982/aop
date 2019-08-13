@@ -134,24 +134,8 @@ class ImportSaleOrder(models.TransientModel):
         type_id = type_id.value_ids.filtered(
             lambda x: x.name.replace('\u202d', '').replace('\u202c', '') == product_type)
 
-        # color_attribute_ids = self.env['product.attribute.value'].search([
-        #     ('attribute_id', '=', color_id.id),
-        #     ('name', '=', product_color)
-        # ])
-        # type_attribute_ids = self.env['product.attribute.value'].search([
-        #     ('attribute_id', '=', type_id.id),
-        #     ('name', '=', product_type)
-        # ])
-
-        # 同时满足的产品
-        # product_id = self.env['product.product'].search([
-        #     '&',
-        #     ('attribute_value_ids', '=', color_attribute_ids[0].id if color_attribute_ids else False),
-        #     ('attribute_value_ids', '=', type_id[0].id if type_id else False),
-        # ])
-
         product_id = self.env['product.product'].search([
-            ('attribute_value_ids', '=', type_id[0].id if type_id else False),
+            ('default_code', '=', type_id[0].id if type_id else False),
         ])
         return product_id if product_id else False
 
