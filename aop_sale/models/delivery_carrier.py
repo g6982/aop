@@ -49,20 +49,21 @@ class DeliveryCarrier(models.Model):
 
     product_fixed_price = fields.Float('Product fixed price')
 
-    @api.onchange('start_position', 'end_position')
+    @api.onchange('from_location_id', 'to_location_id')
     def domain_route_ids(self):
-        if self.start_position and self.end_position:
+        _logger.info({
+            'self.from_location_id': self.from_location_id
+        })
+        if self.from_location_id and self.to_location_id:
             rule_obj = self.env['stock.location.route'].search([])
             rule_ids = []
 
             for rule_id in rule_obj:
                 if not rule_id.rule_ids:
                     continue
-                if not self.start_position.property_stock_customer or not self.end_position.property_stock_customer:
-                    continue
 
-                if rule_id.rule_ids[0].location_src_id.id == self.start_position.property_stock_customer.id and \
-                        rule_id.rule_ids[-1].location_id.id == self.end_position.property_stock_customer.id:
+                if rule_id.rule_ids[0].location_src_id.id == self.from_location_id.id and \
+                        rule_id.rule_ids[-1].location_id.id == self.to_location_id.id:
                     rule_ids.append(rule_id.id)
             return {
                 'domain': {
