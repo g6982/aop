@@ -1,4 +1,4 @@
-id,name,state_id
+id,name,state_id,area_code
 res_country_city_1,安庆市,安徽省
 res_country_city_2,蚌埠市,安徽省
 res_country_city_3,亳州市,安徽省
@@ -372,4 +372,3 @@ res_country_city_370,舟山群岛新区,浙江省
 res_country_city_371,舟山市,浙江省
 res_country_city_372,两江新区,重庆市
 res_country_city_373,重庆市,重庆市
-res_country_city_374,思茅市,云南省
