@@ -33,12 +33,14 @@ class ImportSaleOrder(models.TransientModel):
             sale_order = self.env['sale.order']
             sheet_data = self._parse_import_file()
             order_data = self._parse_order_data()
-            line_data = self._parse_order_line_data(sheet_data)
+            partner_data = self._parse_partner_id(sheet_data)
+            product_data = self._parse_product_data(sheet_data)
+            line_data = self._parse_order_line_data(sheet_data, product_data, partner_data)
             order_data.update({
-                'order_line': line_data
+                'order_line': line_data,
             })
             _logger.info({
-                'order_data': order_data
+                'partner_data': partner_data
             })
             res = sale_order.create(order_data)
 
@@ -81,15 +83,15 @@ class ImportSaleOrder(models.TransientModel):
     # price_unit
     # tax_id
     # 订单行的数据
-    def _parse_order_line_data(self, sheet_data):
+    def _parse_order_line_data(self, sheet_data, product_data, partner_data):
         line_values = []
         for x in range(6, sheet_data.nrows - 1):
             if not sheet_data.cell_value(x, 1):
                 continue
 
-            product_id = self._find_product_id(sheet_data.cell_value(x, 6), sheet_data.cell_value(x, 7))
-            from_location_id = self._find_from_to_location(sheet_data.cell_value(x, 2), sheet_data.cell_value(x, 1))
-            to_location_id = self._find_from_to_location(sheet_data.cell_value(x, 11), sheet_data.cell_value(x, 1))
+            product_id = self._find_product_id(sheet_data.cell_value(x, 6), product_data)
+            from_location_id = self._find_from_to_location(sheet_data.cell_value(x, 2), partner_data)
+            to_location_id = self._find_from_to_location(sheet_data.cell_value(x, 10), partner_data)
             # _logger.info({
             #     'product_id': product_id,
             #     'from_location_id': from_location_id,
@@ -113,51 +115,62 @@ class ImportSaleOrder(models.TransientModel):
                 'price_unit': 1
             })
             line_values.append(line_data)
+            _logger.info({
+                'line_data': line_data
+            })
             # print(line_values)
         return line_values
 
-    def _find_product_id(self, product_type, product_color):
-        # TODO： 去除
-        # 颜色
-        # color_id = self.env['product.attribute'].search([
-        #     ('name', '=', u'颜色名称'),
-        #     ('value_ids.name', '=', product_color)
-        # ])
-        # 车型
-        type_id = self.env['product.attribute'].sudo().search([
-            ('name', '=', u'车型名称'),
-        ])
+    def _parse_product_data(self, sheet_data):
+        product_dict = {}
+        # partner_name = sheet_data.row_values(4)
+        product_name = sheet_data.col_values(6)
 
-        # TODO： 编码问题！！！！
+        if not product_name:
+            return False
+
+        product_name = list(set(product_name[6:]))
+
+        product_obj = self.env['product.product']
+
+        for p_name in product_name:
+            p_name = p_name.replace('\u202d', '').replace('\u202c', '')
+            if not p_name:
+                continue
+            product_id = product_obj.sudo().search([('default_code', '=', p_name[:3])])
+            product_dict[p_name[:3]] = product_id
+        _logger.info({
+            'product_dict': product_dict
+        })
+        return product_dict
+
+    def _find_product_id(self, product_type, product_data):
         product_type = product_type.replace('\u202d', '').replace('\u202c', '')
-
-        type_id = type_id.value_ids.filtered(
-            lambda x: x.name.replace('\u202d', '').replace('\u202c', '') == product_type)
-
-        product_id = self.env['product.product'].search([
-            ('default_code', '=', type_id[0].id if type_id else False),
-        ])
+        product_id = product_data.get(product_type[:3], False)
         return product_id if product_id else False
 
-    # 查找接车地和目的地
-    def _find_from_to_location(self, name, parent_name):
-        parent_name = parent_name.split('-')[0]
-        # _logger.info({
-        #     'parent_name': parent_name
-        # })
-        partner_id = self.env['res.partner'].search([
-            ('name', '=', name),
-            ('parent_id.name', '=', parent_name)
-        ])
-        if not partner_id:
-            partner_id = self.env['res.partner'].search([
-                ('name', '=', name),
-            ])
-        if len(partner_id) > 1:
-            for x in partner_id:
-                print(name, parent_name, x.name, partner_id, '\n')
+    def _parse_partner_id(self, sheet_data):
+        partner_dict = {}
+        # partner_name = sheet_data.row_values(4)
+        from_partner_name = sheet_data.col_values(2)
+        to_partner_name = sheet_data.col_values(10)
 
-        # TODO： 搜出来的客户，一定是唯一的
+        if not from_partner_name and not to_partner_name:
+            return False
+
+        partner_name = list(set(from_partner_name[6:] + to_partner_name[6:]))
+
+        partner_obj = self.env['res.partner']
+
+        for p_name in partner_name:
+            partner_id = partner_obj.sudo().search([('ref', '=', p_name)])
+            partner_dict[p_name] = partner_id
+
+        return partner_dict
+
+    # 查找接车地和目的地
+    def _find_from_to_location(self, name, partner_data):
+        partner_id = partner_data.get(name, False)
         return partner_id if partner_id else False
 
     def _find_vin_id(self, vin_code, product_id):
