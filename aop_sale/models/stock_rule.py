@@ -29,7 +29,7 @@ class StockRule(models.Model):
     # 添加服务产品到stock.picking
     def _get_custom_move_fields(self):
         res = super(StockRule, self)._get_custom_move_fields()
-        res += ['service_product_id', 'vin_id', 'delivery_carrier_id']
+        res += ['service_product_id', 'vin_id', 'delivery_carrier_id', 'delivery_to_partner_id']
         return res
 
     # 获取库存产品的位置

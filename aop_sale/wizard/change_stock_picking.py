@@ -22,14 +22,91 @@ class ChangeStockPicking(models.TransientModel):
         ids = self._context.get('active_ids', [])
 
         if ids:
-            res['picking_id'] = [(6, 0, ids)]
+            self._judge_positive_route(ids)
+            res['picking_id'] = [(6, 0, sorted(ids))]
         return res
+
+    # 选择的任务，必须是连续的
+    # 选择的任务，起点和终点必须是相同的
+    def _judge_positive_route(self, ids):
+        if ids:
+            picking_ids = self.env['stock.picking'].browse(sorted(ids))
+        else:
+            picking_ids = self.picking_id
+
+        group_ids = picking_ids.mapped('group_id')
+
+        # 起始位置
+        from_location_ids = []
+        to_location_ids = []
+
+        group_picking_ids = []
+
+        for group_id in group_ids:
+            tmp_picking_ids = picking_ids.filtered(lambda x: x.group_id == group_id)
+
+            group_picking_ids.append(tmp_picking_ids)
+
+            # 没找到，虽然是不可能的，但还是判断一下
+            if not tmp_picking_ids:
+                continue
+
+            from_location_ids.append(tmp_picking_ids[0].location_id.id)
+            to_location_ids.append(tmp_picking_ids[-1].location_dest_id.id)
+
+            if len(tmp_picking_ids) <= 1:
+                continue
+            self._judge_continue(tmp_picking_ids)
+
+        # 判断起点和终点是否一致
+        self._judge_same_location(from_location_ids, to_location_ids)
+
+        # 判断选择的路线，是否是相同长度，以及经过的位置，是否一致
+        self._judge_through_location(group_picking_ids)
+
+    # 判断是否连续
+    def _judge_continue(self, tmp_picking_ids):
+        location_id = tmp_picking_ids.mapped('location_id')
+        location_dest_id = tmp_picking_ids.mapped('location_dest_id')
+
+        location_ids = location_id.ids + location_dest_id.ids
+        _logger.info({
+            'location_ids': location_ids,
+            'set': set(location_ids),
+            'len': len(tmp_picking_ids)
+        })
+        # 连续的线段m，长度等于 所有点 n - 1, m = n - 1
+        if len(tmp_picking_ids) != len(list(set(location_ids))) - 1:
+            raise UserError('You must select continue task.')
+
+    # 判断起点和终点是否一致
+    def _judge_same_location(self, from_location_ids, to_location_ids):
+        if len(set(from_location_ids)) != 1 or len(set(to_location_ids)) != 1:
+            raise UserError('You must select the same from location and to location')
+
+    # 判断选择的路线，是否是相同长度，以及经过的位置，是否一致
+    # 只能修改一致的
+    def _judge_through_location(self, group_picking_ids):
+        for i, j in enumerate(group_picking_ids):
+            if i + 1 == len(group_picking_ids):
+                break
+
+            if len(group_picking_ids[i]) != len(group_picking_ids[i + 1]):
+                raise UserError('You must select the same route.')
+            location_id = group_picking_ids[i].mapped('location_id')
+            location_dest_id = group_picking_ids[i].mapped('location_dest_id')
+
+            next_location_id = group_picking_ids[i + 1].mapped('location_id')
+            next_location_dest_id = group_picking_ids[i + 1].mapped('location_dest_id')
+
+            if set(location_id.ids + location_dest_id.ids) != set(next_location_id.ids + next_location_dest_id.ids):
+                raise UserError('The route must have the same location.')
 
     # move_orig_ids 上一跳, 如果不存在上一跳，则是第一条
     # move_dest_ids 下一跳， 如果不存在下一跳，则是最后一条
     #
     def _get_stock_move_values(self, picking, location_route, index):
-        move_id = picking.mapped('move_lines')[0]
+        move_id = picking[0].mapped('move_lines')[0]
         move_values = {
             'name': move_id.name,
             'company_id': move_id.company_id.id,
@@ -43,7 +120,7 @@ class ChangeStockPicking(models.TransientModel):
             'procure_method': move_id.procure_method if index else 'make_to_order',
             'origin': move_id.name,
             'picking_type_id': move_id.picking_type_id.id,
-            'group_id': picking.group_id.id,
+            'group_id': picking[0].group_id.id,
             'route_ids': [(4, route.id) for route in move_id.route_ids],
             'warehouse_id': move_id.warehouse_id.id,
             'date': move_id.date_expected,
@@ -54,6 +131,7 @@ class ChangeStockPicking(models.TransientModel):
         return move_values
 
     def _get_new_picking_values(self, picking, location_route):
+        picking = picking[0]
         return {
             'name': 'DISPATCH/' + picking.name + '/' + str(location_route[0].id) + '/' + str(
                 location_route[-1].id) + '/' + str(random.choice(range(int(time.time())))),
@@ -71,6 +149,7 @@ class ChangeStockPicking(models.TransientModel):
     # 最后一跳： 空
     # 最后一跳： 最后一跳记录
     def _link_move_records(self, move_ids, picking_id):
+        picking_id = picking_id[-1]
         sorted_move_ids = self._sort_move_records(move_ids)
         for move_id in sorted_move_ids:
             data = {
@@ -112,6 +191,16 @@ class ChangeStockPicking(models.TransientModel):
             ])
         return res
 
+    # 对picking_id 进行分组
+    def _group_picking_ids(self):
+        group_ids = self.picking_id.mapped('group_id')
+        group_picking_id = []
+        for group_id in group_ids:
+            tmp_picking_ids = self.picking_id.filtered(lambda x: x.group_id == group_id)
+            group_picking_id.append(tmp_picking_ids.sorted(lambda x: x.id))
+
+        return group_picking_id
+
     # 修改任务
     # 原本： A -> B(stock.move(1,))
     # 修改为: A -> C(stock.move(2,)), C -> D(stock.move(3,)), D -> E(stock.move(4,)), E -> B(stock.move(5,))
@@ -132,7 +221,8 @@ class ChangeStockPicking(models.TransientModel):
             stock_move = self.env['stock.move']
             stock_picking = self.env['stock.picking']
 
-            for picking_id in self.picking_id:
+            picking_ids = self._group_picking_ids()
+            for picking_id in picking_ids:
                 move_ids = []
                 index = True
 
@@ -153,6 +243,14 @@ class ChangeStockPicking(models.TransientModel):
 
                 # 将 stock.move 链接起来
                 self._link_move_records(move_ids, picking_id)
+
+                # 取消预留
+                picking_id[0].move_lines._action_cancel()
+
+                _logger.info({
+                    'state': picking_id[0].move_lines.state
+                })
+
                 move_ids[0]._action_confirm()
                 move_ids[0].picking_id.action_assign()
 
@@ -162,10 +260,10 @@ class ChangeStockPicking(models.TransientModel):
                 #         'move_orig_ids': False,
                 #         'move_dest_ids': False,
                 #     }))
-                picking_id.write({
-                    'state': 'cancel',
-                    # 'move_lines': tmp
-                })
+                for pick_id in picking_id:
+                    pick_id.write({
+                        'state': 'cancel',
+                    })
             return True
             # return {
             #     "type": "ir.actions.do_nothing",

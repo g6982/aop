@@ -14,6 +14,7 @@
                            readonly="1"
                            options="{'no_quick_create': True, 'no_create_edit': True}"
                            domain="[('type','=','service')]" attrs="{'required': 0}"/>
+                    <field name="delivery_to_partner_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                 </xpath>
 
                 <xpath expr="//button[@name='action_toggle_is_locked']" position="after">
@@ -28,6 +29,7 @@
                            attrs="{'invisible': [('origin_purchase_id', '=', False)]}"
                            options="{'no_quick_create': True, 'no_create_edit': True}"
                     />
+                    <field name="delivery_to_partner_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                 </xpath>
 
             </field>
