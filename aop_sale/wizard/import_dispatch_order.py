@@ -125,6 +125,7 @@ class ImportDispatchOrder(models.TransientModel):
 
             # 填充VIN
             picking_id.move_line_ids.lot_id = vin_id.id
+            picking_id.move_line_ids.lot_name = vin_id.name
 
             # self.mapped('picking_id').mapped('move_line_ids').write({
             #     'lot_id': vin_id.id
