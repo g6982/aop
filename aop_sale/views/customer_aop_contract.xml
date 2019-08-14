@@ -77,10 +77,11 @@
                                     <tree limit="80">
                                         <field name="name"/>
                                         <field name="route_id"/>
-                                        <field name="product_template_id"/>
+<!--                                        <field name="product_template_id"/>-->
+                                        <field name="product_id"/>
                                         <field name="service_product_id"/>
-                                        <field name="start_position"/>
-                                        <field name="end_position"/>
+                                        <field name="from_location_id"/>
+                                        <field name="to_location_id"/>
                                         <field name="fixed_price" string="Contract price"/>
                                     </tree>
                                 </field>

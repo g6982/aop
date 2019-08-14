@@ -39,13 +39,17 @@ class ImportSaleOrder(models.TransientModel):
             order_data.update({
                 'order_line': line_data,
             })
-            _logger.info({
-                'partner_data': partner_data
-            })
+            # _logger.info({
+            #     'partner_data': partner_data
+            # })
             res = sale_order.create(order_data)
 
             view_id = self.env.ref('sale.view_quotation_tree_with_onboarding').id
             form_id = self.env.ref('sale.view_order_form').id
+
+            # return {
+            #     "type": "ir.actions.do_nothing",
+            # }
 
             # 跳转到导入成功后的tree界面
             return {
@@ -105,19 +109,20 @@ class ImportSaleOrder(models.TransientModel):
 
             line_data = (0, 0, {
                 'product_id': product_id.id,
-                'service_product_id': False,
+                # 'service_product_id': False,
                 'from_location_id': from_location_id.id if from_location_id else False,
                 'to_location_id': to_location_id.id if to_location_id else False,
                 'vin': vin_id.id if vin_id else False,
+                'vin_code': sheet_data.cell_value(x, 4),
                 'name': product_id.name,
                 'product_uom_qty': 1,
                 'product_uom': product_id.uom_id.id,
                 'price_unit': 1
             })
             line_values.append(line_data)
-            _logger.info({
-                'line_data': line_data
-            })
+            # _logger.info({
+            #     'line_data': line_data
+            # })
             # print(line_values)
         return line_values
 
@@ -178,12 +183,6 @@ class ImportSaleOrder(models.TransientModel):
             ('name', '=', vin_code),
             ('product_id', '=', product_id.id)
         ])
-        # TODO： 没有就创建咯？
-        #if not vin_id:
-        #    vin_id = self.env['stock.production.lot'].create({
-        #        'name': vin_code,
-        #        'product_id': product_id.id
-        #    })
         return vin_id if vin_id else False
 
     # 解码

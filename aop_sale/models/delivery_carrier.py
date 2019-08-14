@@ -51,9 +51,6 @@ class DeliveryCarrier(models.Model):
 
     @api.onchange('from_location_id', 'to_location_id')
     def domain_route_ids(self):
-        _logger.info({
-            'self.from_location_id': self.from_location_id
-        })
         if self.from_location_id and self.to_location_id:
             rule_obj = self.env['stock.location.route'].search([])
             rule_ids = []

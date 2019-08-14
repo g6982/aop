@@ -23,7 +23,9 @@ class SaleOrderLine(models.Model):
     contract_id = fields.Many2one('aop.contract', 'Contract')
     customer_contract_id = fields.Many2one('customer.aop.contract', 'Contract')
 
-    delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier', compute='_get_delivery_carrier_id')
+    delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier', compute='_get_delivery_carrier_id', store=True)
+
+    vin_code = fields.Char('VIN Code')
 
     @api.onchange('route_id', 'from_location_id', 'to_location_id')
     def _get_delivery_carrier_id(self):
@@ -172,19 +174,47 @@ class SaleOrder(models.Model):
         # })
         return res[0] if res else False
 
+    def _transfer_district_to_location(self, partner_id):
+        location_obj = self.env['stock.location']
+        filter_domain = []
+        if partner_id.district_id:
+            filter_domain = [('name', '=', partner_id.district_id.name)]
+        elif partner_id.city_id:
+            filter_domain = [('name', '=', partner_id.city_id.name)]
+
+        if filter_domain:
+            location_id = location_obj.search(filter_domain)
+        else:
+            # 保留取上级的默认客户位置
+            location_id = partner_id.parent_id.property_stock_customer
+        _logger.info({
+            'location_id': location_id
+        })
+        return location_id
+
     # 查找 条款
     def _find_contract_line(self, contract_id, order_line):
         contract_line_ids = contract_id.mapped('delivery_carrier_ids')
 
+        order_from_location_id = self._transfer_district_to_location(order_line.from_location_id)
+        order_to_location_id = self._transfer_district_to_location(order_line.to_location_id)
         # 使用 product.template
         # product_template_id.product_variant_ids
         # TODO: 待定， 是否需要递归查询呢？
         # 暂定： 获取上级
         delivery_ids = [line_id for line_id in contract_line_ids if
-                        order_line.product_id.id in line_id.product_template_id.product_variant_ids.ids and
-                        order_line.from_location_id.parent_id == line_id.start_position and
-                        order_line.to_location_id.parent_id == line_id.end_position]
+                        order_from_location_id.id == line_id.from_location_id.id and
+                        order_to_location_id.id == line_id.to_location_id.id]
+        # delivery_ids = []
+        # for line_id in contract_line_ids:
+        #     if line_id.product_id.id == order_line.product_id.id and line_id.from_location_id.id == order_from_location_id.id and line_id.to_location_id.id == order_to_location_id.id:
+        #         delivery_ids.append(line_id)
 
+        _logger.info({
+            'delivery_ids': delivery_ids,
+            'order_line': order_line.product_id,
+            'contract_line_ids': contract_line_ids
+        })
         return delivery_ids
 
     # 针对导入，根据货物，选择出对应的服务产品和路由，如果路由存在多个，默认选择第一条
