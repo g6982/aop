@@ -76,7 +76,7 @@ class ImportDispatchOrder(models.TransientModel):
 
     def _parse_order_data(self, sheet_data, partner_data, product_data, picking_type_data):
         data = []
-        for x in range(1, sheet_data.nrows - 1):
+        for x in range(1, sheet_data.nrows):
             partner_id = partner_data.get(sheet_data.cell_value(x, 3), False)
             picking_type_id = picking_type_data.get(sheet_data.cell_value(x, 10), False)
             product_id = product_data.get(sheet_data.cell_value(x, 6), False)
@@ -123,6 +123,7 @@ class ImportDispatchOrder(models.TransientModel):
             move_id = move_id.filtered(lambda x: x.state not in ('done', 'cancel'))._action_confirm()
             move_id._action_assign()
 
+            # 填充VIN
             picking_id.move_line_ids.lot_id = vin_id.id
 
             # self.mapped('picking_id').mapped('move_line_ids').write({
