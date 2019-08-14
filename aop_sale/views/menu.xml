@@ -149,28 +149,34 @@
         -->
 
         <!-- 一级菜单 -->
+        <!--
         <menuitem id="picking_manager_menu"
                   parent="main_data_menu_root"
                   name="Picking manage"
                   sequence="50"
 
         />
+        -->
 
         <!-- 二级菜单 -->
+        <!--
         <menuitem id="steps_manager_menu"
                   parent="picking_manager_menu"
                   name="Steps manage"
                   action="stock.action_picking_type_list"
                   sequence="10"
         />
+        -->
 
         <!-- 二级菜单 -->
+        <!--
         <menuitem id="route_manager_menu"
                   parent="picking_manager_menu"
                   name="Route manage"
                   action="stock.action_routes_form"
                   sequence="20"
         />
+        -->
 
         <!-- 一级菜单 -->
         <menuitem id="customer_manager_menu"
