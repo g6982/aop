@@ -135,8 +135,9 @@ class SaleOrderLine(models.Model):
                 product_qty = line.product_uom._compute_quantity(product_qty, quant_uom, rounding_method='HALF-UP')
                 procurement_uom = quant_uom
             try:
+                to_location_id = self._transfer_district_to_location(line.to_location_id)
                 self.env['procurement.group'].run(line.product_id, product_qty, procurement_uom,
-                                                  line.to_location_id.parent_id.property_stock_customer,
+                                                  to_location_id,
                                                   line.name,
                                                   line.order_id.name, values)
             except UserError as error:
@@ -146,6 +147,24 @@ class SaleOrderLine(models.Model):
         if errors:
             raise UserError('\n'.join(errors))
         return True
+
+    def _transfer_district_to_location(self, partner_id):
+        location_obj = self.env['stock.location']
+        filter_domain = []
+        if partner_id.district_id:
+            filter_domain = [('name', '=', partner_id.district_id.name)]
+        elif partner_id.city_id:
+            filter_domain = [('name', '=', partner_id.city_id.name)]
+
+        if filter_domain:
+            location_id = location_obj.search(filter_domain)
+        else:
+            # 保留取上级的默认客户位置
+            location_id = partner_id.parent_id.property_stock_customer
+        _logger.info({
+            'location_id': location_id
+        })
+        return location_id
 
 
 class SaleOrder(models.Model):
