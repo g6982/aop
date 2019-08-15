@@ -19,7 +19,33 @@ class SaleAdvancePaymentInv(models.TransientModel):
         ('main_product', 'Main product'),
         ('child_product', 'Child product')
     ], required=True, string='Invoice product type')
+    invoice_type = fields.Selection([
+        ('suspense_invoice', 'Temporary estimate'),
+        ('adv_receipt', 'Advance receipt')
+    ])
     sale_order_ids = fields.Many2many('sale.order', string='Orders')
+
+    selected_order_lines = fields.One2many('make.invoice.sale.order.line', 'payment_inv_id', string='Order lines')
+
+    @api.onchange('invoice_type')
+    def parse_sale_order_line_ids(self):
+        if not self.invoice_type:
+            return False
+
+        if self.invoice_type == 'suspense_invoice':
+            line_ids = self.sale_order_ids.mapped('order_line').filtered(lambda x: x.handover_number is not False)
+        else:
+            line_ids = self.sale_order_ids.mapped('order_line').filtered(lambda x: x.handover_number is False)
+
+        data = []
+        for line_id in line_ids:
+            data.append((0, 0, {
+                    'sale_order_line_id': line_id.id
+                }))
+        _logger.info({
+            'data': data
+        })
+        self.selected_order_lines = data
 
     @api.model
     def default_get(self, fields_list):
@@ -285,3 +311,16 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     'You may have to install a chart of account from Accounting app, settings menu.') %
                 (service_product_id.name,))
         return account_id
+
+
+class InvoiceOrderLine(models.TransientModel):
+    _name = 'make.invoice.sale.order.line'
+
+    payment_inv_id = fields.Many2one('sale.advance.payment.inv')
+
+    sale_order_line_id = fields.Many2one('sale.order.line', string='Order Line', readonly=True)
+    currency_id = fields.Many2one(related='sale_order_line_id.currency_id')
+    price_subtotal = fields.Monetary(related='sale_order_line_id.price_subtotal',
+                                     string='Subtotal',
+                                     readonly=True)
+    receipt_amount = fields.Float('Amount')
