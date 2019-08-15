@@ -13,6 +13,7 @@ class StockMove(models.Model):
     vin_id = fields.Many2one('stock.production.lot', 'VIN', domain="[('product_id','=', product_id)]")
 
     delivery_to_partner_id = fields.Many2one('res.partner', 'Delivery to partner', readonly=True)
+    sale_order_line_id = fields.Many2one('sale.order.line', 'Order Line', readonly=True)
 
     def _prepare_procurement_values(self):
         res = super(StockMove, self)._prepare_procurement_values()
@@ -21,7 +22,8 @@ class StockMove(models.Model):
             'service_product_id': self._get_service_product_id(self.delivery_carrier_id, self.rule_id),
             'vin_id': self.vin_id.id,
             'delivery_carrier_id': self.delivery_carrier_id.id,
-            'delivery_to_partner_id': self.delivery_to_partner_id.id
+            'delivery_to_partner_id': self.delivery_to_partner_id.id,
+            'sale_order_line_id': self.sale_order_line_id.id
         })
         return res
 
@@ -61,11 +63,23 @@ class StockMove(models.Model):
             self.procure_method = 'make_to_stock'
             # self.picking_id.state = 'assigned'
             self.picking_id.action_assign()
+
+        update_ids = self.sale_order_line_id.stock_picking_ids.ids + [self.picking_id.id]
+        self.sale_order_line_id.write({
+            'stock_picking_ids': [(6, 0, list(set(update_ids)))]
+        })
+
+        if self.picking_id.id not in self.sale_order_line_id.order_id.picking_ids.ids:
+            self.sale_order_line_id.order_id.write({
+                'picking_ids': [(4, self.picking_id.id)]
+            })
+
         return res
 
     def _get_new_picking_values(self):
         res = super(StockMove, self)._get_new_picking_values()
         res.update({
-            'delivery_to_partner_id': self.delivery_to_partner_id.id
+            'delivery_to_partner_id': self.delivery_to_partner_id.id,
+            'sale_order_line_id': self.sale_order_line_id.id
         })
         return res

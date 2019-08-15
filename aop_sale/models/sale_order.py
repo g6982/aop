@@ -3,7 +3,7 @@ from odoo import api, fields, models, _
 import logging
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_compare
 from odoo.exceptions import UserError
-
+from odoo.addons.sale_stock.models.sale_order import SaleOrder as InheritSaleOrder
 _logger = logging.getLogger(__name__)
 
 
@@ -26,6 +26,25 @@ class SaleOrderLine(models.Model):
     delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier', compute='_get_delivery_carrier_id', store=True)
 
     vin_code = fields.Char('VIN Code')
+
+    # 部分完成的情况
+    state = fields.Selection(selection_add=[('part_done', 'Part done')])
+
+    # 针对单条订单行，也能创建stock,picking，而不影响整个的状态
+    stock_picking_state = fields.Boolean('Picking state', compute='_compute_stock_picking_state', copy=False)
+    stock_picking_ids = fields.Many2many('stock.picking', string='Pickings', copy=False)
+
+    @api.onchange('stock_picking_ids')
+    def _compute_stock_picking_state(self):
+        for line in self:
+            if not line.stock_picking_ids:
+                line.stock_picking_state = False
+            else:
+                picking_state = line.stock_picking_ids.filtered(lambda x: x.state is not 'cancel')
+                if picking_state:
+                    line.stock_picking_state = True
+                else:
+                    line.stock_picking_state = False
 
     @api.onchange('route_id', 'from_location_id', 'to_location_id')
     def _get_delivery_carrier_id(self):
@@ -58,7 +77,8 @@ class SaleOrderLine(models.Model):
             'service_product_id': self.service_product_id.id,
             'vin_id': self.vin.id,
             'delivery_carrier_id': self.delivery_carrier_id.id,
-            'delivery_to_partner_id': self.to_location_id.id
+            'delivery_to_partner_id': self.to_location_id.id,
+            'sale_order_line_id': self.id
         })
         return res
 
@@ -99,7 +119,11 @@ class SaleOrderLine(models.Model):
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
         errors = []
         for line in self:
-            if line.state != 'sale' or not line.product_id.type in ('consu', 'product'):
+            if line.stock_picking_state or not line.vin:
+                continue
+
+            # if line.state != 'sale' or not line.product_id.type in ('consu', 'product'):
+            if line.state not in ['sale', 'part_done'] or not line.product_id.type in ('consu', 'product'):
                 continue
             qty = line._get_qty_procurement()
             if float_compare(qty, line.product_uom_qty, precision_digits=precision) >= 0:
@@ -173,6 +197,9 @@ class SaleOrder(models.Model):
     order_type = fields.Selection([('dispatch', 'Dispatch'), ('customer', 'Customer')], store=True,
                                   compute='_get_order_type')
     from_location_id = fields.Many2one('res.partner', 'From location')
+
+    # 部分完成的情况
+    state = fields.Selection(selection_add=[('part_done', 'Part done')])
 
     @api.depends('partner_id')
     def _get_order_type(self):
@@ -316,9 +343,8 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        for line in self.order_line:
-            if not line.mapped('vin'):
-                raise UserError(_('You can not make order until the product have vin or stock.'))
+        if not any([True if line.mapped('vin') else False for line in self.order_line]):
+            raise UserError(_('You can not make order until the product have vin or stock.'))
         res = super(SaleOrder, self).action_confirm()
 
         # FIXME: 补丁
@@ -326,6 +352,13 @@ class SaleOrder(models.Model):
             lambda picking: picking.state == 'confirmed').action_assign() if self.picking_ids.filtered(
             lambda picking: picking.state == 'confirmed') and not self.picking_ids.filtered(
             lambda picking: picking.state == 'assigned') else False
+
+        for order in self:
+            if not all(order.mapped('order_line').mapped('stock_picking_state')):
+                order.write({
+                    'state': 'part_done',
+                    'confirmation_date': fields.Datetime.now()
+                })
 
         return res
 
@@ -336,3 +369,23 @@ class SaleOrder(models.Model):
     #
     #     self.mapped('picking_ids').unlink()
     #     return res
+
+    @api.multi
+    def action_done(self):
+        if all(self.mapped('order_line').mapped('stock_picking_state')):
+            return super(SaleOrder, self).action_done()
+        else:
+            return self.write({'state': 'part_done'})
+
+    @api.multi
+    def update_stock_picking(self):
+        for order in self:
+            order_line_ids = order.order_line.filtered(lambda x: x.stock_picking_state is False)
+            if order_line_ids:
+                order_line_ids._action_launch_stock_rule()
+
+            order_line_ids._compute_stock_picking_state()
+            if all(order.order_line.mapped('stock_picking_state')):
+                order.write({
+                    'state': 'sale'
+                })
