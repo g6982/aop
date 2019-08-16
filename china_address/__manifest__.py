@@ -15,10 +15,10 @@
     添加partner三级联动
 
     """,
-    'depends': ['base'],
+    'depends': ['base', 'l10n_cn'],
     'data': [
         'security/ir.model.access.csv',
-        'data/res_country_state_data.xml',
+        #'data/res_country_state_data.xml',
         'data/res.country.city.csv',
         'data/res.country.district.csv',
         #'data/res_city_data.xml',
