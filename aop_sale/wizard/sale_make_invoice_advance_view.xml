@@ -8,6 +8,14 @@
             <xpath expr="//field[@name='advance_payment_method']" position="before">
                 <field name="sale_order_ids" widget="many2many_tags"
                        options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                <field name="invoice_type"/>
+                <field name="selected_order_lines">
+                    <tree editable="bottom">
+                        <field name="sale_order_line_id"/>
+                        <field name="price_subtotal"/>
+                        <field name="receipt_amount"/>
+                    </tree>
+                </field>
                 <field name="invoice_product_type"/>
                 <field name="reconciliation_batch_no" required="1"/>
             </xpath>
