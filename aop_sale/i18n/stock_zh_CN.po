@@ -180,3 +180,11 @@ msgstr "移动作业"
 #: model_terms:ir.ui.view,arch_db:stock.view_location_search
 msgid "Internal"
 msgstr "内部"
+
+#. module: stock
+#: code:addons/stock/models/stock_warehouse.py:726
+#: model:stock.picking.type,name:stock.chi_picking_type_in
+#: model:stock.picking.type,name:stock.picking_type_in
+#, python-format
+msgid "Receipts"
+msgstr "接车"
