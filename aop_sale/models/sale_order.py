@@ -158,6 +158,7 @@ class SaleOrderLine(models.Model):
             if procurement_uom.id != quant_uom.id and get_param('stock.propagate_uom') != '1':
                 product_qty = line.product_uom._compute_quantity(product_qty, quant_uom, rounding_method='HALF-UP')
                 procurement_uom = quant_uom
+
             try:
                 to_location_id = self._transfer_district_to_location(line.to_location_id)
                 self.env['procurement.group'].run(line.product_id, product_qty, procurement_uom,
