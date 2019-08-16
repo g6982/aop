@@ -26,6 +26,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
     sale_order_ids = fields.Many2many('sale.order', string='Orders')
 
     selected_order_lines = fields.One2many('make.invoice.sale.order.line', 'payment_inv_id', string='Order lines')
+    selected_order_line_ids = fields.Many2many('sale.order.line')
 
     @api.onchange('invoice_type')
     def parse_sale_order_line_ids(self):
@@ -33,19 +34,23 @@ class SaleAdvancePaymentInv(models.TransientModel):
             return False
 
         if self.invoice_type == 'suspense_invoice':
-            line_ids = self.sale_order_ids.mapped('order_line').filtered(lambda x: x.handover_number is not False)
+            line_ids = self.sale_order_ids.mapped('order_line').filtered(
+                lambda x: x.handover_number is not False or x.state == 'sale')
         else:
-            line_ids = self.sale_order_ids.mapped('order_line').filtered(lambda x: x.handover_number is False)
+            line_ids = self.sale_order_ids.mapped('order_line').filtered(
+                lambda x: x.handover_number is False or x.state != 'sale')
 
         data = []
         for line_id in line_ids:
             data.append((0, 0, {
                     'sale_order_line_id': line_id.id
                 }))
-        _logger.info({
-            'data': data
-        })
         self.selected_order_lines = data
+        self.selected_order_line_ids = [(6, 0, line_ids.ids)]
+
+    # @api.depends('selected_order_lines', 'selected_order_lines.sale_order_line_id', 'selected_order_lines.receipt_amount')
+    # def update_selected_order_line_ids(self):
+    #     pass
 
     @api.model
     def default_get(self, fields_list):
@@ -185,7 +190,16 @@ class SaleAdvancePaymentInv(models.TransientModel):
                                        subtype_id=self.env.ref('mail.mt_note').id)
         return invoice
 
+    # 生成结算清单
+    # 根据订单行生成
     def create_account_invoice(self):
+        if self.env['account.invoice'].search([
+            ('reconciliation_batch_no', '=', self.reconciliation_batch_no)
+        ]):
+            raise UserError('Reconciliation batch no: [{reconciliation_batch_no}] can\'t repeat!'.format(
+                reconciliation_batch_no=self.reconciliation_batch_no
+            ))
+
         invoice_res = []
         if self.invoice_product_type == 'main_product':
             invoice_res = self._get_main_service_product_data()
@@ -239,15 +253,22 @@ class SaleAdvancePaymentInv(models.TransientModel):
         move_ids = self.env['stock.move'].search([
             ('picking_id', 'in', picking_ids.ids)
         ])
-        product_ids = [move_id.service_product_id for move_id in move_ids]
+        product_ids = [move_id.service_product_id for move_id in move_ids if move_id.service_product_id]
         return list(set(product_ids))
 
     def _get_child_service_product_data(self):
         invoice_res = []
-        for sale_id in self.sale_order_ids:
-            invoice_data = self._invoice_data(sale_id)
+        legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(
+            lambda x: x.invoice_lines is False)
+        product_ids = self._get_child_service_product(legal_order_line_ids.mapped('stock_picking_ids'))
 
-            product_ids = self._get_child_service_product(sale_id.picking_ids)
+        _logger.info({
+            'product_ids': product_ids
+        })
+        # for sale_id in self.sale_order_ids:
+        for sale_id in legal_order_line_ids:
+            invoice_data = self._invoice_data(sale_id.order_id)
+
             for product_id in product_ids:
                 tmp = invoice_data
                 account_id = self._get_account_id(product_id)
@@ -258,6 +279,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         'account_id': account_id,
                         'price_unit': product_id.list_price,
                         'quantity': 1,
+                        'product_id': product_id.id,
                         'uom_id': product_id.uom_id.id,
                         'sale_line_ids': [(6, 0, sale_id.ids)],
                         'invoice_line_tax_ids': [(6, 0, product_id.taxes_id.ids)],
@@ -270,11 +292,17 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     def _get_main_service_product_data(self):
         invoice_res = []
-        for sale_id in self.sale_order_ids:
+
+        legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(
+            lambda x: x.invoice_lines is False)
+
+        # for sale_id in self.sale_order_ids:
+        for sale_id in legal_order_line_ids.mapped('order_id'):
             invoice_data = self._invoice_data(sale_id)
             line_data = []
-            for line in sale_id.order_line:
-                account_id = self._get_account_id(line.service_product_id, order=line)
+            # for line in sale_id.order_line:
+            for line in legal_order_line_ids:
+                account_id = self._get_account_id(line.service_product_id, order=line.order_id)
                 line_data.append((0, 0, {
                     'name': str(time.time()),
                     'origin': sale_id.name,
@@ -318,7 +346,7 @@ class InvoiceOrderLine(models.TransientModel):
 
     payment_inv_id = fields.Many2one('sale.advance.payment.inv')
 
-    sale_order_line_id = fields.Many2one('sale.order.line', string='Order Line', readonly=True)
+    sale_order_line_id = fields.Many2one('sale.order.line', string='Order Line')
     currency_id = fields.Many2one(related='sale_order_line_id.currency_id')
     price_subtotal = fields.Monetary(related='sale_order_line_id.price_subtotal',
                                      string='Subtotal',
