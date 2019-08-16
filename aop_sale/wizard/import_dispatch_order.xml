@@ -20,7 +20,7 @@
         </record>
 
         <record id="action_import_dispatch_order" model="ir.actions.act_window">
-            <field name="name">导入调度订单</field>
+            <field name="name">Import Dispatch Order</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">import.dispatch.order.wizard</field>
             <field name="target">new</field>
