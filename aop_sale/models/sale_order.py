@@ -354,6 +354,7 @@ class SaleOrder(models.Model):
             lambda picking: picking.state == 'assigned') else False
 
         for order in self:
+            order.mapped('order_line')._compute_stock_picking_state()
             if not all(order.mapped('order_line').mapped('stock_picking_state')):
                 order.write({
                     'state': 'part_done',

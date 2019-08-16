@@ -258,13 +258,15 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     def _get_child_service_product_data(self):
         invoice_res = []
-        product_ids = self._get_child_service_product(self.selected_order_lines.mapped('sale_order_line_id').mapped('stock_picking_ids'))
+        legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(
+            lambda x: x.invoice_lines is False)
+        product_ids = self._get_child_service_product(legal_order_line_ids.mapped('stock_picking_ids'))
 
         _logger.info({
             'product_ids': product_ids
         })
         # for sale_id in self.sale_order_ids:
-        for sale_id in self.selected_order_lines.mapped('sale_order_line_id'):
+        for sale_id in legal_order_line_ids:
             invoice_data = self._invoice_data(sale_id.order_id)
 
             for product_id in product_ids:
@@ -291,12 +293,15 @@ class SaleAdvancePaymentInv(models.TransientModel):
     def _get_main_service_product_data(self):
         invoice_res = []
 
+        legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(
+            lambda x: x.invoice_lines is False)
+
         # for sale_id in self.sale_order_ids:
-        for sale_id in self.selected_order_lines.mapped('sale_order_line_id').mapped('order_id'):
+        for sale_id in legal_order_line_ids.mapped('order_id'):
             invoice_data = self._invoice_data(sale_id)
             line_data = []
             # for line in sale_id.order_line:
-            for line in self.selected_order_lines.mapped('sale_order_line_id'):
+            for line in legal_order_line_ids:
                 account_id = self._get_account_id(line.service_product_id, order=line.order_id)
                 line_data.append((0, 0, {
                     'name': str(time.time()),
