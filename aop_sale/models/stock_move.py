@@ -83,3 +83,7 @@ class StockMove(models.Model):
             'sale_order_line_id': self.sale_order_line_id.id
         })
         return res
+
+    def _search_picking_for_assignation(self):
+        res = super(StockMove, self)._search_picking_for_assignation()
+        return False

@@ -97,17 +97,20 @@ class DeliveryCarrier(models.Model):
         for carrier in self:
 
             sum_fixed_price = sum(line.price_total for line in carrier.rule_service_product_ids)
+
             if sum_fixed_price > 0:
-                _logger.info({
-                    'carrier': carrier.product_fixed_price
-                })
                 carrier.fixed_price = sum_fixed_price
             else:
-                carrier.fixed_price = carrier.product_fixed_price
+                if carrier.product_fixed_price > 0:
+                    carrier.fixed_price = carrier.product_fixed_price
 
     def _set_product_fixed_price(self):
         for carrier in self:
-            carrier.product_fixed_price = carrier.fixed_price
+            sum_fixed_price = sum(line.price_total for line in carrier.rule_service_product_ids)
+            if sum_fixed_price > 0:
+                carrier.product_fixed_price = sum_fixed_price
+            elif carrier.fixed_price > 0:
+                carrier.product_fixed_price = carrier.fixed_price
 
     @api.model
     def create(self, vals):

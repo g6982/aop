@@ -26,11 +26,11 @@ class SaleAdvancePaymentInv(models.TransientModel):
     sale_order_ids = fields.Many2many('sale.order', string='Orders')
 
     selected_order_lines = fields.One2many('make.invoice.sale.order.line', 'payment_inv_id', string='Order lines')
-    selected_order_line_ids = fields.Many2many('sale.order.line')
 
-    @api.onchange('invoice_type')
+    @api.onchange('invoice_type', 'sale_order_ids')
     def parse_sale_order_line_ids(self):
-        if not self.invoice_type:
+        if not self.invoice_type or not self.sale_order_ids:
+            self.selected_order_lines = False
             return False
 
         if self.invoice_type == 'suspense_invoice':
@@ -46,11 +46,6 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     'sale_order_line_id': line_id.id
                 }))
         self.selected_order_lines = data
-        self.selected_order_line_ids = [(6, 0, line_ids.ids)]
-
-    # @api.depends('selected_order_lines', 'selected_order_lines.sale_order_line_id', 'selected_order_lines.receipt_amount')
-    # def update_selected_order_line_ids(self):
-    #     pass
 
     @api.model
     def default_get(self, fields_list):
@@ -199,6 +194,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
             raise UserError('Reconciliation batch no: [{reconciliation_batch_no}] can\'t repeat!'.format(
                 reconciliation_batch_no=self.reconciliation_batch_no
             ))
+        if not self.selected_order_lines:
+            raise UserError('You must select more than one record.')
 
         invoice_res = []
         if self.invoice_product_type == 'main_product':
@@ -258,8 +255,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     def _get_child_service_product_data(self):
         invoice_res = []
-        legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(
-            lambda x: x.invoice_lines is False)
+        legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(lambda x: x if not x.invoice_lines else '')
+
         product_ids = self._get_child_service_product(legal_order_line_ids.mapped('stock_picking_ids'))
 
         _logger.info({
@@ -293,8 +290,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
     def _get_main_service_product_data(self):
         invoice_res = []
 
-        legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(
-            lambda x: x.invoice_lines is False)
+        legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(lambda x: x if not x.invoice_lines else '')
 
         # for sale_id in self.sale_order_ids:
         for sale_id in legal_order_line_ids.mapped('order_id'):
