@@ -108,7 +108,7 @@
 <!--                </xpath>-->
 
                 <xpath expr="//field[@name='order_line']" position="attributes">
-                    <attribute name="context">{'state': state, 'default_customer_contract_id': customer_contract_id}</attribute>
+                    <attribute name="context">{'state': state</attribute>
                 </xpath>
 
                 <!-- 根据状态显示-->
