@@ -180,9 +180,9 @@ class SaleOrderLine(models.Model):
     def _transfer_district_to_location(self, partner_id):
         location_obj = self.env['stock.location']
         filter_domain = []
-        if partner_id.district_id:
+        if partner_id.district_id if hasattr(partner_id, 'district_id') else False:
             filter_domain = [('name', '=', partner_id.district_id.name)]
-        elif partner_id.city_id:
+        elif partner_id.city_id if hasattr(partner_id, 'city_id') else False:
             filter_domain = [('name', '=', partner_id.city_id.name)]
 
         if filter_domain:
@@ -220,9 +220,6 @@ class SaleOrder(models.Model):
         res = self.env['customer.aop.contract'].search([
             ('partner_id', '=', res.partner_id.id)
         ])
-        # _logger.info({
-        #     'res': res
-        # })
         return res[0] if res else False
 
     def _transfer_district_to_location(self, partner_id):
@@ -256,16 +253,6 @@ class SaleOrder(models.Model):
         delivery_ids = [line_id for line_id in contract_line_ids if
                         order_from_location_id.id == line_id.from_location_id.id and
                         order_to_location_id.id == line_id.to_location_id.id]
-        # delivery_ids = []
-        # for line_id in contract_line_ids:
-        #     if line_id.product_id.id == order_line.product_id.id and line_id.from_location_id.id == order_from_location_id.id and line_id.to_location_id.id == order_to_location_id.id:
-        #         delivery_ids.append(line_id)
-
-        _logger.info({
-            'delivery_ids': delivery_ids,
-            'order_line': order_line.product_id,
-            'contract_line_ids': contract_line_ids
-        })
         return delivery_ids
 
     # 针对导入，根据货物，选择出对应的服务产品和路由，如果路由存在多个，默认选择第一条

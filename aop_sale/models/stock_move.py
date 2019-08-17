@@ -3,6 +3,8 @@ from odoo import api, fields, models, _
 import logging
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare, float_round, float_is_zero
+
+
 _logger = logging.getLogger(__name__)
 
 
@@ -90,6 +92,7 @@ class StockMove(models.Model):
         return False
 
     # 重写该方法
+    # 预留使用已存在的vin_id
     def _update_reserved_quantity(self, need, available_quantity, location_id, lot_id=None, package_id=None, owner_id=None, strict=True):
         """ Create or update move lines.
         """
@@ -97,10 +100,10 @@ class StockMove(models.Model):
 
         # FIXME: 重写该方法，使用 stock.move ，即sale.order.line 传过来的lot_id/vin_id
         if not lot_id:
-            if self.vin_id:
-                lot_id = self.vin_id
-            else:
-                lot_id = self.env['stock.production.lot']
+            lot_id = self.env['stock.production.lot']
+
+        if hasattr(self, 'vin_id'):
+            lot_id = self.vin_id
         if not package_id:
             package_id = self.env['stock.quant.package']
         if not owner_id:
