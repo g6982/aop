@@ -72,7 +72,7 @@ class StockPickingBatch(models.Model):
                 data = {
                     'product_id': line_id.service_product_id.id,
                     'transfer_product_id': line_id.product_id.id,
-                    # 'service_product_id': line_id.picking_type_id.product_id.id,
+                    'service_product_id': line_id.picking_type_id.service_product_id.id if line_id.picking_type_id.service_product_id else False,
                     'product_qty': line_id.product_uom_qty,
                     'name': line_id.service_product_id.name,
                     'date_planned': fields.Datetime.now(),
