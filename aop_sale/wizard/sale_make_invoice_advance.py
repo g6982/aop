@@ -19,21 +19,20 @@ class SaleAdvancePaymentInv(models.TransientModel):
         ('main_product', 'Main product'),
         ('child_product', 'Child product')
     ], required=True, string='Invoice product type')
-    invoice_type = fields.Selection([
-        ('suspense_invoice', 'Temporary estimate'),
-        ('adv_receipt', 'Advance receipt')
-    ])
+
+    invoice_state = fields.Boolean('Advance receipt')
+
     sale_order_ids = fields.Many2many('sale.order', string='Orders')
 
     selected_order_lines = fields.One2many('make.invoice.sale.order.line', 'payment_inv_id', string='Order lines')
 
-    @api.onchange('invoice_type', 'sale_order_ids')
+    @api.onchange('sale_order_ids', 'invoice_state')
     def parse_sale_order_line_ids(self):
-        if not self.invoice_type or not self.sale_order_ids:
+        if not self.sale_order_ids:
             self.selected_order_lines = False
             return False
 
-        if self.invoice_type == 'suspense_invoice':
+        if not self.invoice_state:
             line_ids = self.sale_order_ids.mapped('order_line').filtered(
                 lambda x: x.handover_number is not False or x.state == 'sale')
         else:
