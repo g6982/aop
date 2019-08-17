@@ -136,13 +136,13 @@ msgstr "地址管理"
 #. module: aop_sale
 #: selection:sale.advance.payment.inv,invoice_type:0
 msgid "Advance receipt"
-msgstr ""
+msgstr "预收"
 
 #. module: aop_sale
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:102
 #, python-format
 msgid "Advance: %s"
-msgstr ""
+msgstr "预付: %s"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__aging
@@ -1741,7 +1741,7 @@ msgstr "订单行"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__selected_order_lines
 msgid "Order lines"
-msgstr ""
+msgstr "订单行"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__order_no
