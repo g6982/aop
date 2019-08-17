@@ -2,6 +2,7 @@
 from datetime import datetime, timedelta
 from odoo import api, fields, models, _
 import logging
+import time
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -45,6 +46,7 @@ class StockPickingBatch(models.Model):
     def _get_purchase_data(self):
         vendor = self.partner_id.id
         res = {
+            'name': str(time.time()),
             'partner_id': vendor,
             'user_id': self.env.user.id,
             'invoice_status': 'no',

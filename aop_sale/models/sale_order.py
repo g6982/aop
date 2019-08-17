@@ -23,7 +23,8 @@ class SaleOrderLine(models.Model):
     contract_id = fields.Many2one('aop.contract', 'Contract')
     customer_contract_id = fields.Many2one('customer.aop.contract', 'Contract')
 
-    delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier', compute='_get_delivery_carrier_id', store=True)
+    delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier',
+                                          compute='_get_delivery_carrier_id', store=True)
 
     vin_code = fields.Char('VIN Code')
 
@@ -33,6 +34,9 @@ class SaleOrderLine(models.Model):
     # 针对单条订单行，也能创建stock,picking，而不影响整个的状态
     stock_picking_state = fields.Boolean('Picking state', compute='_compute_stock_picking_state', copy=False)
     stock_picking_ids = fields.Many2many('stock.picking', string='Pickings', copy=False)
+
+    allowed_route_ids = fields.Many2many('stock.location.route', copy=False)
+    allowed_service_product_ids = fields.Many2many('product.product', domain=[('sale_ok', '=', True)], copy=False)
 
     @api.onchange('stock_picking_ids')
     def _compute_stock_picking_state(self):
@@ -55,17 +59,42 @@ class SaleOrderLine(models.Model):
             if order_line.route_id and order_line.from_location_id and order_line.to_location_id:
                 from_location_id = self._transfer_district_to_location(order_line.from_location_id)
                 to_location_id = self._transfer_district_to_location(order_line.to_location_id)
-                delivery_id = self.env['delivery.carrier'].search([
+                search_domain = [
                     ('customer_contract_id', '=', order_line.customer_contract_id.id),
                     ('route_id', '=', order_line.route_id.id),
                     ('from_location_id', '=', from_location_id.id),
                     ('to_location_id', '=', to_location_id.id)
-                ])
+                ]
+                delivery_id = self.env['delivery.carrier'].search(search_domain)
+
+                # 多条条款，对应相同的路由，不同的服务产品
                 if delivery_id:
+                    route_ids = delivery_id.mapped('route_id')
+                    service_product_ids = delivery_id.mapped('service_product_id')
+                    # 设置过滤规则
+                    order_line.allowed_route_ids = [(6, 0, route_ids.ids)]
+                    order_line.allowed_service_product_ids = [(6, 0, service_product_ids.ids)]
+
+                    delivery_id = delivery_id[0]
                     order_line.delivery_carrier_id = delivery_id.id
                     order_line.service_product_id = delivery_id.service_product_id.id
                     order_line.price_unit = delivery_id.service_product_id.list_price
             else:
+                if order_line.from_location_id and order_line.to_location_id:
+                    from_location_id = self._transfer_district_to_location(order_line.from_location_id)
+                    to_location_id = self._transfer_district_to_location(order_line.to_location_id)
+                    search_domain = [
+                        ('customer_contract_id', '=', order_line.customer_contract_id.id),
+                        ('from_location_id', '=', from_location_id.id),
+                        ('to_location_id', '=', to_location_id.id)
+                    ]
+                    delivery_id = self.env['delivery.carrier'].search(search_domain)
+                    route_ids = delivery_id.mapped('route_id')
+                    service_product_ids = delivery_id.mapped('service_product_id')
+
+                    order_line.allowed_route_ids = [(6, 0, route_ids.ids)]
+                    order_line.allowed_service_product_ids = [(6, 0, service_product_ids.ids)]
+
                 order_line.delivery_carrier_id = False
                 order_line.service_product_id = False
 
@@ -170,8 +199,8 @@ class SaleOrderLine(models.Model):
                                                   line.name,
                                                   line.order_id.name, values)
             except UserError as error:
-                raise UserError(error)
-                return False
+                # raise UserError(error)
+                # return False
                 errors.append(error.name)
         if errors:
             raise UserError('\n'.join(errors))
@@ -190,9 +219,9 @@ class SaleOrderLine(models.Model):
         else:
             # 保留取上级的默认客户位置
             location_id = partner_id.parent_id.property_stock_customer
-        _logger.info({
-            'location_id': location_id
-        })
+        # _logger.info({
+        #     'location_id': location_id
+        # })
         return location_id
 
 
@@ -205,6 +234,7 @@ class SaleOrder(models.Model):
 
     # 部分完成的情况
     state = fields.Selection(selection_add=[('part_done', 'Part done')])
+    # customer_contract_id = fields.Many2one('customer.aop.contract', 'Contract')
 
     @api.depends('partner_id')
     def _get_order_type(self):
@@ -253,11 +283,19 @@ class SaleOrder(models.Model):
         delivery_ids = [line_id for line_id in contract_line_ids if
                         order_from_location_id.id == line_id.from_location_id.id and
                         order_to_location_id.id == line_id.to_location_id.id]
+
+        _logger.info({
+            'delivery_ids': delivery_ids
+        })
         return delivery_ids
 
     # 针对导入，根据货物，选择出对应的服务产品和路由，如果路由存在多个，默认选择第一条
     def _find_service_product(self, contract_line):
         return contract_line[0].service_product_id if contract_line else False
+
+    # 过滤
+    def _find_service_product_ids(self, contract_line):
+        return [line.mapped('service_product_id').id for line in contract_line if line.mapped('service_product_id')] if contract_line else False
 
     # TODO: 废弃
     # 路线的选择，使用开始位置和结束位置，多条，自己选择
@@ -297,6 +335,10 @@ class SaleOrder(models.Model):
     def _find_contract_route_id(self, contract_line):
         return contract_line[0].route_id if contract_line else False
 
+    # 过滤
+    def _find_contract_route_ids(self, contract_line):
+        return [line.mapped('route_id').id for line in contract_line if line.mapped('route_id')] if contract_line else False
+
     @api.model
     def create(self, vals):
         res = super(SaleOrder, self).create(vals)
@@ -315,15 +357,23 @@ class SaleOrder(models.Model):
             # 默认使用第一条
             delivery_carrier_id = self._find_contract_line(contract_id, line_id)
             service_product_id = self._find_service_product(delivery_carrier_id)
+            service_product_ids = self._find_service_product_ids(delivery_carrier_id)
             route_id = self._find_contract_route_id(delivery_carrier_id)
+            route_ids = self._find_contract_route_ids(delivery_carrier_id)
 
+            _logger.info({
+                'route_ids': route_ids,
+                'service_product_ids': service_product_ids
+            })
             data.append(
                 (1, line_id.id, {
                     'service_product_id': service_product_id.id if service_product_id else False,
                     'route_id': route_id.id if route_id else False,
                     'price_unit': service_product_id.list_price if service_product_id else 1,
                     'delivery_carrier_id': delivery_carrier_id[0].id if delivery_carrier_id else False,
-                    'customer_contract_id': contract_id.id
+                    'customer_contract_id': contract_id.id,
+                    'allowed_service_product_ids': [(6, 0, service_product_ids)] if service_product_ids else False,
+                    'allowed_route_ids': [(6, 0, route_ids)] if route_ids else False
                 })
             )
 
