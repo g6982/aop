@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <data noupdate="1">
+    <data noupdate="0">
         <record id="stock.stock_location_locations" model="stock.location">
             <field name="name">物理位置</field>
             <field name="usage">view</field>
