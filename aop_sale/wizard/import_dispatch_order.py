@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.tools.translate import _
 import logging
 import xlrd
 from xlrd import xldate_as_tuple
@@ -49,7 +50,7 @@ class ImportDispatchOrder(models.TransientModel):
 
             # 跳转到导入成功后的tree界面
             return {
-                'name': 'Dispatch Order',
+                'name': _('Dispatch Order'),
                 'view_type': 'form',
                 'view_id': False,
                 'views': [(view_id, 'tree'), (form_id, 'form')],
