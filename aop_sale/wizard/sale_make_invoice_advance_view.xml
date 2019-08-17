@@ -13,7 +13,7 @@
                     <tree editable="bottom">
                         <field name="sale_order_line_id"/>
                         <field name="price_subtotal"/>
-                        <field name="receipt_amount"/>
+                        <field name="receipt_amount" invisible="1"/>
                     </tree>
                 </field>
                 <field name="invoice_product_type"/>
