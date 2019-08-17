@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-16 06:17+0000\n"
-"PO-Revision-Date: 2019-08-16 06:17+0000\n"
+"POT-Creation-Date: 2019-08-17 12:31+0000\n"
+"PO-Revision-Date: 2019-08-17 12:31+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr " * 这个 '草稿' 状态是指当用户生成了一个新的、但还�
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 msgid "<span class=\"o_form_label\" attrs=\"{'invisible': ['|',('state','=','draft'), ('type','!=','out_refund')]}\">Credit Note</span>"
-msgstr "<span class=\"o_form_label\" attrs=\"{'invisible': ['|',('state','=','draft'), ('type','!=','out_refund')]}\">红字发票</span>"
+msgstr "<span class=\"o_form_label\" attrs=\"{'invisible': ['|',('state','=','draft'), ('type','!=','out_refund')]}\">退款发票</span>"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_aop_contract
@@ -134,15 +134,15 @@ msgid "Address"
 msgstr "地址管理"
 
 #. module: aop_sale
-#: selection:sale.advance.payment.inv,invoice_type:0
+#: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__invoice_state
 msgid "Advance receipt"
-msgstr ""
+msgstr "预收"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:102
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:101
 #, python-format
 msgid "Advance: %s"
-msgstr ""
+msgstr "预付: %s"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__aging
@@ -155,6 +155,16 @@ msgstr "时效(天)"
 #: selection:account.tax.invoice.wizard,tax_invoice_method:0
 msgid "All"
 msgstr "所有"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__allowed_route_ids
+msgid "Allowed Route"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__allowed_service_product_ids
+msgid "Allowed Service Product"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_res_partner__allow_warehouse_ids
@@ -280,7 +290,7 @@ msgstr "银行账户"
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__partner_bank_id
 msgid "Bank Account Number to which the invoice will be paid. A Company bank account if this is a Customer Invoice or Vendor Credit Note, otherwise a Partner bank account number."
-msgstr "已支付的发票将记录银行账号。如果这是客户发票或供应商红字发票，则是公司银行账户，否则是合作伙伴银行帐号。"
+msgstr "已支付的发票将记录银行账号。如果这是客户发票或供应商信用票，则是公司银行账户，否则是合作伙伴银行帐号。"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_base_warehouse_view
@@ -728,7 +738,7 @@ msgstr "已交货数量"
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
 msgid "Delivery"
-msgstr "任务"
+msgstr "交货"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__partner_shipping_id
@@ -767,7 +777,7 @@ msgstr "合同条款"
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__delivery_to_partner_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking__delivery_to_partner_id
 msgid "Delivery to partner"
-msgstr ""
+msgstr "交付的客户"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__name
@@ -868,13 +878,13 @@ msgid "Done"
 msgstr "完成"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:144
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:143
 #, python-format
 msgid "Down Payment"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:141
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:140
 #, python-format
 msgid "Down payment of %s%%"
 msgstr ""
@@ -892,7 +902,7 @@ msgstr "草稿"
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 msgid "Draft Credit Note"
-msgstr "草稿红字发票"
+msgstr "草稿信用票"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
@@ -1007,7 +1017,7 @@ msgstr "源位置"
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order__from_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__from_location_id
 msgid "From location"
-msgstr "源位置"
+msgstr "接车点"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
@@ -1200,7 +1210,7 @@ msgid "Insurance cover"
 msgstr "保险范围"
 
 #. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_form_view
 #: model_terms:ir.ui.view,arch_db:aop_sale.insurance_management_tree
 msgid "Insurance management"
 msgstr "保险管理"
@@ -1226,7 +1236,7 @@ msgid "Inventory Routes"
 msgstr "库存路线"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:205
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:215
 #: model:ir.model,name:aop_sale.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
@@ -1274,14 +1284,9 @@ msgid "Invoice Reference"
 msgstr "发票参考"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__invoice_type
-msgid "Invoice Type"
-msgstr ""
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__refund_invoice_id
 msgid "Invoice for which this invoice is the credit note"
-msgstr "此发票为红字发票的发票"
+msgstr "此发票为信用票的发票"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__invoice_line_ids
@@ -1719,7 +1724,7 @@ msgstr "正式订单"
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__sale_order_line_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__sale_order_line_id
 msgid "Order Line"
-msgstr ""
+msgstr "订单行"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__state
@@ -1741,7 +1746,7 @@ msgstr "订单行"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__selected_order_lines
 msgid "Order lines"
-msgstr ""
+msgstr "订单行"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__order_no
@@ -1922,7 +1927,7 @@ msgstr "步骤"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__stock_picking_ids
 msgid "Pickings"
-msgstr "调度"
+msgstr "拣货"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__plan_number
@@ -2162,7 +2167,7 @@ msgstr "参考/说明"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__refund_invoice_ids
 msgid "Refund Invoices"
-msgstr "红字发票"
+msgstr "退款发票"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__residual_company_signed
@@ -2593,11 +2598,6 @@ msgid "Technical field holding the number given to the invoice, automatically se
 msgstr "当确认发票时，发票号将会自动生成。当取消的发票再次审核，回到草稿状态的发票再次验证时，都会生成相同的号码。"
 
 #. module: aop_sale
-#: selection:sale.advance.payment.inv,invoice_type:0
-msgid "Temporary estimate"
-msgstr ""
-
-#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 msgid "Terms and conditions..."
 msgstr "条款和条件..."
@@ -2633,26 +2633,26 @@ msgid "The payment communication that will be automatically populated once the i
 msgstr "一旦发票被验证，付款通知会被自动发出。你应另发通告。"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:89
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:88
 #, python-format
 msgid "The product used to invoice a down payment should be of type 'Service'. Please use another product or update this product."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:86
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:85
 #, python-format
 msgid "The product used to invoice a down payment should have an invoice policy set to \"Ordered quantities\". Please update your deposit product to be able to create a deposit invoice."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:137
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:136
 #, python-format
 msgid "The value of the down payment amount must be positive."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:132
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:309
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:131
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:332
 #, python-format
 msgid "There is no income account defined for this product: \"%s\". You may have to install a chart of account from Accounting app, settings menu."
 msgstr ""
@@ -2673,7 +2673,7 @@ msgstr "目的位置"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__to_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__to_location_id
 msgid "To location"
-msgstr "目的位置"
+msgstr "送车点"
 
 #. module: aop_sale
 #: selection:account.tax.invoice,activity_state:0
@@ -2973,7 +2973,7 @@ msgid "You can not create recursive analytic accounts."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:347
+#: code:addons/aop_sale/models/sale_order.py:388
 #, python-format
 msgid "You can not make order until the product have vin or stock."
 msgstr "你要等到产品有vin或库存才可以确认订单."
