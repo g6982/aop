@@ -234,7 +234,6 @@ class SaleOrder(models.Model):
 
     # 部分完成的情况
     state = fields.Selection(selection_add=[('part_done', 'Part done')])
-    # customer_contract_id = fields.Many2one('customer.aop.contract', 'Contract')
 
     @api.depends('partner_id')
     def _get_order_type(self):

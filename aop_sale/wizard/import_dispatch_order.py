@@ -113,6 +113,7 @@ class ImportDispatchOrder(models.TransientModel):
                 'state': 'draft',
                 'picking_id': picking_id.id,
                 'picking_type_id': picking_type_id.id if picking_type_id else False,
+                'service_product_id': picking_type_id.service_product_id.id if picking_type_id.service_product_id else False,
                 'procure_method': 'make_to_stock',
                 'picking_code': 'incoming',
                 'vin_id': vin_id.id,
