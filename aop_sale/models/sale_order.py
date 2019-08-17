@@ -40,34 +40,34 @@ class SaleOrderLine(models.Model):
             if not line.stock_picking_ids:
                 line.stock_picking_state = False
             else:
-                picking_state = line.stock_picking_ids.filtered(lambda x: x.state is not 'cancel')
+                picking_state = line.stock_picking_ids.filtered(lambda x: x.state not in ['cancel'])
+                _logger.info({
+                    'picking_state': picking_state
+                })
                 if picking_state:
                     line.stock_picking_state = True
                 else:
                     line.stock_picking_state = False
 
-    @api.onchange('route_id', 'from_location_id', 'to_location_id')
+    @api.depends('route_id', 'from_location_id', 'to_location_id')
     def _get_delivery_carrier_id(self):
         for order_line in self:
             if order_line.route_id and order_line.from_location_id and order_line.to_location_id:
+                from_location_id = self._transfer_district_to_location(order_line.from_location_id)
+                to_location_id = self._transfer_district_to_location(order_line.to_location_id)
                 delivery_id = self.env['delivery.carrier'].search([
                     ('customer_contract_id', '=', order_line.customer_contract_id.id),
                     ('route_id', '=', order_line.route_id.id),
-                    ('start_position', '=', order_line.from_location_id.parent_id.id),
-                    ('end_position', '=', order_line.to_location_id.parent_id.id)
+                    ('from_location_id', '=', from_location_id.id),
+                    ('to_location_id', '=', to_location_id.id)
                 ])
-                # TODO: 一定能搜到？
-                # _logger.info({
-                #     'delivery_id': delivery_id,
-                #     'route_id': order_line.route_id,
-                #     'contract_id': order_line.customer_contract_id
-                # })
                 if delivery_id:
                     order_line.delivery_carrier_id = delivery_id.id
                     order_line.service_product_id = delivery_id.service_product_id.id
                     order_line.price_unit = delivery_id.service_product_id.list_price
             else:
                 order_line.delivery_carrier_id = False
+                order_line.service_product_id = False
 
     # 新增 服务产品
     @api.multi
@@ -119,6 +119,10 @@ class SaleOrderLine(models.Model):
         precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
         errors = []
         for line in self:
+            line._compute_stock_picking_state()
+            _logger.info({
+                'line.stock_picking_state': line.stock_picking_state
+            })
             if line.stock_picking_state or not line.vin:
                 continue
 
