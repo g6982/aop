@@ -2470,7 +2470,7 @@ msgstr "库存规则"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order__stock_picking_batch_id
 msgid "Stock batch"
-msgstr "批量拣货"
+msgstr "批量调度"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__price_subtotal
