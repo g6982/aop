@@ -188,3 +188,12 @@ msgstr "内部"
 #, python-format
 msgid "Receipts"
 msgstr "接车"
+
+#. module: stock
+#: code:addons/stock/models/stock_rule.py:305
+#, python-format
+msgid ""
+"No procurement rule found in location \"%s\" for product \"%s\".\n"
+" Check routes configuration."
+msgstr ""
+" \"%s\" 中的货物 \"%s\"找不到路由设置，请联系管理员!"
