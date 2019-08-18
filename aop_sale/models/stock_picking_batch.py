@@ -70,14 +70,16 @@ class StockPickingBatch(models.Model):
         for picking in self.picking_ids:
             for line_id in picking.move_lines:
                 data = {
-                    'product_id': line_id.service_product_id.id,
+                    #'product_id': line_id.service_product_id.id,
+                    'product_id': line_id.picking_type_id.service_product_id.id if line_id.picking_type_id.service_product_id else False,
                     'transfer_product_id': line_id.product_id.id,
                     'service_product_id': line_id.picking_type_id.service_product_id.id if line_id.picking_type_id.service_product_id else False,
                     'product_qty': line_id.product_uom_qty,
-                    'name': line_id.service_product_id.name,
+                    #'name': line_id.service_product_id.name,
+                    'name': line_id.name,
                     'date_planned': fields.Datetime.now(),
                     'price_unit': line_id.service_product_id.lst_price,
-                    'product_uom': line_id.service_product_id.uom_id.id
+                    'product_uom': line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False
                 }
                 res.append((0, 0, data))
                 # if not data['product_id'] in product_ids:
