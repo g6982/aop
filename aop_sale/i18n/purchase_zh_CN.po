@@ -42,3 +42,8 @@ msgstr "服务产品"
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Create Bill"
 msgstr "创建成本结算清单(在途)"
+
+#. module: purchase
+#: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
+msgid "Vendor Bills"
+msgstr "成本结算清单"

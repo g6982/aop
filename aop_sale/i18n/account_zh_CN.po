@@ -86,3 +86,10 @@ msgstr "成本费目"
 msgid "Chart of Accounts"
 msgstr "费目管理"
 
+#. module: account
+#: code:addons/account/models/account_invoice.py:488
+#: code:addons/account/models/account_invoice.py:1315
+#: model_terms:ir.ui.view,arch_db:account.invoice_supplier_form
+#: model_terms:ir.ui.view,arch_db:account.invoice_supplier_tree
+msgid "Vendor Bill"
+msgstr "成本结算清单"
