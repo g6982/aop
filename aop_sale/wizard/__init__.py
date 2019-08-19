@@ -4,4 +4,6 @@ from . import change_stock_picking
 from . import sale_make_invoice_advance
 from . import import_sale_order
 from . import import_dispatch_order
+from . import fill_service_product_wizard
+
 

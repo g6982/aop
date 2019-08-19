@@ -30,7 +30,18 @@ class StockPickingBatch(models.Model):
     # 生成采购订单，采购：服务产品
     def create_purchase_order(self):
         try:
-            data = self._get_purchase_data()
+            data, service_product_context = self._get_purchase_data()
+
+            if service_product_context:
+                return {
+                    'name': _(u'测试'),
+                    'view_type': 'form',
+                    "view_mode": 'form',
+                    'res_model': 'fill.service.product.wizard',
+                    'type': 'ir.actions.act_window',
+                    'context': service_product_context,
+                    'target': 'new',
+                }
 
             # 跨公司创建
             res = self.env['purchase.order'].sudo().create(data)
@@ -54,26 +65,44 @@ class StockPickingBatch(models.Model):
             'stock_picking_batch_id': self.id,
             'company_id': self._match_company_id(self.partner_id)
         }
-        line_data = self._get_purchase_line_data()
+
+        data = self._get_purchase_line_data()
+        line_data, lost_service_product_id = data[0], data[-1]
+
+        service_product_context = []
+        if lost_service_product_id:
+            service_product_context = {
+                'default_stock_picking_batch_id': self.id,
+                'default_wizard_line_ids': [(0, 0, {
+                    'picking_id': line.id,
+                    'from_location_id': line.location_id.id,
+                    'to_location_id': line.location_dest_id.id
+                }) for line in lost_service_product_id],
+            }
         res.update({
             'order_line': line_data
         })
-        return res
+        return res, service_product_context
 
     # 服务产品
     # 产品不能添加公司属性值
     def _get_purchase_line_data(self):
         res = []
 
-        product_ids = []
+        lost_service_product_id = []
 
         for picking in self.picking_ids:
+
+            service_product_id = self._parse_service_product_supplier(picking)
+
+            if not service_product_id:
+                lost_service_product_id.append(picking)
+
             for line_id in picking.move_lines:
                 data = {
-                    #'product_id': line_id.service_product_id.id,
-                    'product_id': line_id.picking_type_id.service_product_id.id if line_id.picking_type_id.service_product_id else False,
+                    'product_id': service_product_id.id if service_product_id else line_id.picking_type_id.service_product_id.id if line_id.picking_type_id.service_product_id else False,
                     'transfer_product_id': line_id.product_id.id,
-                    'service_product_id': line_id.picking_type_id.service_product_id.id if line_id.picking_type_id.service_product_id else False,
+                    'service_product_id': service_product_id.id if service_product_id else False,
                     'product_qty': line_id.product_uom_qty,
                     #'name': line_id.service_product_id.name,
                     'name': line_id.name,
@@ -85,7 +114,17 @@ class StockPickingBatch(models.Model):
                 # if not data['product_id'] in product_ids:
                 #     product_ids.append(data['product_id'])
                 #     res.append((0, 0, data))
-        return res
+        return [res, lost_service_product_id]
+
+    # 供应商合同里面获取服务产品
+    def _parse_service_product_supplier(self, picking):
+        delivery_carrier_id = self.env['delivery.carrier'].search([
+            ('supplier_contract_id.partner_id', '=', picking.partner_id.id),
+            ('from_location_id', '=', picking.location_id.id),
+            ('to_location_id', '=', picking.location_dest_id.id)
+        ])
+
+        return delivery_carrier_id[0].service_product_id if delivery_carrier_id else False
 
     def _match_company_id(self, partner_id):
         res = self.env['res.company'].sudo().search([('code', '=', partner_id.ref)])

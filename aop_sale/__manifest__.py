@@ -47,5 +47,6 @@
         'wizard/import_sale_order.xml',
         'wizard/import_dispatch_order.xml',
         'wizard/sale_make_invoice_advance_view.xml',
+        'wizard/fill_service_product_wizard.xml',
     ],
 }
