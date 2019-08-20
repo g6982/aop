@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_invoice_order_statement_wizard_form" model="ir.ui.view">
+            <field name="name">invoice.order.statement.wizard</field>
+            <field name="model">invoice.order.statement.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="start_date"/>
+                        </group>
+                        <group>
+                            <field name="end_date"/>
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button name="get_statement_report" string="Statement" class="oe_highlight"
+                                type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_invoice_order_statement" model="ir.actions.act_window">
+            <field name="name">Statement</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">invoice.order.statement.wizard</field>
+            <field name="target">new</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <menuitem id="invoice_order_statement_wizard"
+                  name="Statement"
+                  action="action_invoice_order_statement"
+                  parent="account.menu_finance_receivables"/>
+
+    </data>
+</odoo>

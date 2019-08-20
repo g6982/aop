@@ -7,7 +7,8 @@
         中集AOP
     """,
     'author': "1di0t",
-    'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management', 'purchase', 'delivery', 'stock_picking_batch',
+    'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management',
+                'purchase', 'delivery', 'stock_picking_batch',
                 'barcodes', 'delivery_hs_code', 'account_period', 'mail'],
     'data': [
         'security/access_group.xml',
@@ -48,5 +49,7 @@
         'wizard/import_dispatch_order.xml',
         'wizard/sale_make_invoice_advance_view.xml',
         'wizard/fill_service_product_wizard.xml',
+        'wizard/statement_report.xml',
+        'report/report_statement.xml',
     ],
 }
