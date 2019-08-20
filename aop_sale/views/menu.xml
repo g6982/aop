@@ -74,11 +74,13 @@
                   parent="product_manager_menu"
                   sequence="30" />
 
+        <!--
          <menuitem id="sub_menu_product_bundle"
              action="odoo_product_pack_bundle.bundle_product_template_action"
              name="Bundle Products"
              sequence="40"
              parent="product_manager_menu"/>
+         -->
 
         <!-- 一级菜单 -->
         <menuitem id="customer_contract_manager_menu"

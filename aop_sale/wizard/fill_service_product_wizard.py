@@ -51,6 +51,7 @@ class FillServiceProductWizard(models.TransientModel):
             if not service_product_id:
                 picking_line = self.wizard_line_ids.filtered(lambda x: x.picking_id == picking)
                 service_product_id = picking_line.service_product_id
+                amount = picking_line.amount
 
             for line_id in picking.move_lines:
                 data = {
@@ -60,7 +61,8 @@ class FillServiceProductWizard(models.TransientModel):
                     'product_qty': line_id.product_uom_qty,
                     'name': line_id.name,
                     'date_planned': fields.Datetime.now(),
-                    'price_unit': line_id.service_product_id.lst_price,
+                    #'price_unit': line_id.service_product_id.lst_price,
+                    'price_unit': amount,
                     'product_uom': service_product_id.uom_id.id
                 }
                 res.append((0, 0, data))
