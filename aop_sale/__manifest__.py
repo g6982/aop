@@ -51,5 +51,6 @@
         'wizard/fill_service_product_wizard.xml',
         'wizard/statement_report.xml',
         'report/report_statement.xml',
+
     ],
 }
