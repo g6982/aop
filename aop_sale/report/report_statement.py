@@ -25,6 +25,21 @@ ROW_LIST = {
     'col_8': 16,
 }
 
+MERGE_FORMAT = {
+    'bold': True,
+    'border': 1,
+    'align': 'center',
+    'valign': 'center'
+}
+
+DATE_MERGE_FORMAT = {
+    'bold': True,
+    'border': 1,
+    'align': 'center',
+    'valign': 'center',
+    'num_format': 'yyyy-mm-dd'
+}
+
 
 class ReportStatement(models.AbstractModel):
     _name = 'report.aop_sale.standard_statement_report_xlsx'
@@ -37,18 +52,14 @@ class ReportStatement(models.AbstractModel):
         sheet = workbook.add_worksheet('statement01')
 
         # 格式化
-        merge_format = workbook.add_format({
-            'bold': True,
-            'border': 1,
-            'align': 'center',
-            'valign': 'center'
-        })
+        merge_format = workbook.add_format(MERGE_FORMAT)
+        date_merge_format = workbook.add_format(DATE_MERGE_FORMAT)
 
         border = workbook.add_format({
             'border': 1
         })
 
-        sheet = self._format_sheet_head(sheet, merge_format)
+        sheet = self._format_sheet_head(sheet, merge_format, date_merge_format)
         # for obj in records:
         #     report_name = obj.name
         #     # One sheet by order
@@ -56,10 +67,10 @@ class ReportStatement(models.AbstractModel):
         #     bold = workbook.add_format({'bold': True})
         #     sheet.write(0, 0, obj.name, bold)
 
-    def _format_sheet_head(self, sheet, merge_format):
+    def _format_sheet_head(self, sheet, merge_format, date_merge_format):
         sheet.merge_range(ROW_LIST.get('row_1'), u'生产费用报销单', merge_format)
         sheet.merge_range(ROW_LIST.get('row_2'), u'报销单位：重庆中集-重庆中集汽车物流有限责任公司', merge_format)
-        sheet.merge_range(ROW_LIST.get('row_3_col_1'), fields.Datetime.now(), merge_format)
+        sheet.merge_range(ROW_LIST.get('row_3_col_1'), fields.Datetime.now(), date_merge_format)
         sheet.merge_range(ROW_LIST.get('row_3_col_2'), u'报销单号： ' + str(time.time()), merge_format)
         sheet.merge_range(ROW_LIST.get('row_4_col_1'), u'销售体系', merge_format)
         sheet.merge_range(ROW_LIST.get('row_4_col_2'), u'长安福特', merge_format)
