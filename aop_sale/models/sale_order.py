@@ -368,7 +368,8 @@ class SaleOrder(models.Model):
                 (1, line_id.id, {
                     'service_product_id': service_product_id.id if service_product_id else False,
                     'route_id': route_id.id if route_id else False,
-                    'price_unit': service_product_id.list_price if service_product_id else 1,
+                    # 'price_unit': service_product_id.list_price if service_product_id else 1,
+                    'price_unit': service_product_id.standard_price if service_product_id else 1,
                     'delivery_carrier_id': delivery_carrier_id[0].id if delivery_carrier_id else False,
                     'customer_contract_id': contract_id.id,
                     'allowed_service_product_ids': [(6, 0, service_product_ids)] if service_product_ids else False,
