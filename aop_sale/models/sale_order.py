@@ -3,7 +3,9 @@ from odoo import api, fields, models, _
 import logging
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_compare
 from odoo.exceptions import UserError
-from odoo.addons.sale_stock.models.sale_order import SaleOrder as InheritSaleOrder
+import time
+
+
 _logger = logging.getLogger(__name__)
 
 
@@ -37,6 +39,106 @@ class SaleOrderLine(models.Model):
 
     allowed_route_ids = fields.Many2many('stock.location.route', copy=False)
     allowed_service_product_ids = fields.Many2many('product.product', domain=[('sale_ok', '=', True)], copy=False)
+
+    replenish_picking_id = fields.Many2one('stock.picking', copy=False)
+
+    allowed_vin_ids = fields.Many2many('stock.production.lot', copy=False)
+
+    def replenish_stock_picking_order(self):
+        try:
+            for line in self:
+                if not line.vin_code or line.vin or not line.order_id or line.replenish_picking_id:
+                    continue
+                _logger.info({
+                    'vin_code': line.vin_code,
+                    'vin': line.vin,
+                    'replenish_picking_id': line.replenish_picking_id
+                })
+                line.create_stock_picking_in_stock()
+        except Exception as e:
+            self._cr.rollback()
+            raise UserError(e)
+
+    @api.multi
+    def create_stock_picking_in_stock(self):
+        return self._parse_stock_in_picking_data()
+
+    def get_stock_picking_type_id(self, location_id):
+        res = self.env['stock.picking.type'].search([
+            ('default_location_dest_id', '=', location_id.id)
+        ])
+
+        res = self.env['stock.picking.type'].browse(651)
+        return res[0] if res else False
+
+    def get_vin_id_in_stock(self):
+        vin_obj = self.env['stock.production.lot']
+
+        vin_id = vin_obj.search([
+            ('name', '=', self.vin_code),
+            ('product_id', '=', self.product_id.id)
+        ])
+
+        if not vin_id:
+            vin_id = vin_obj.create({
+                'name': self.vin_code,
+                'product_id': self.product_id.id if self.product_id else False
+            })
+        return vin_id
+
+    @api.multi
+    def _parse_stock_in_picking_data(self):
+        for line in self:
+            partner_id = line.order_id.partner_id
+            to_location_id = line._transfer_district_to_location(line.from_location_id)
+            picking_type_id = line.get_stock_picking_type_id(to_location_id)
+            product_id = line.product_id
+            vin_id = line.get_vin_id_in_stock()
+            picking_obj = self.env['stock.picking']
+            data = {
+                'date': line.create_date,
+                'partner_id': partner_id.id,
+                'location_id': partner_id.property_stock_supplier.id if partner_id else False,
+                'location_dest_id': to_location_id.id,
+                'picking_type_id': picking_type_id.id if picking_type_id else False,
+                'scheduled_date': line.create_date,
+                'picking_type_code': 'incoming',
+            }
+
+            picking_id = picking_obj.create(data)
+
+            line.replenish_picking_id = picking_id.id
+            move_data = {
+                'name': product_id.name + '/income' + str(time.time()),
+                'product_id': product_id.id if product_id else False,
+                'product_uom_qty': 1,
+                'product_uom': product_id.uom_id.id if product_id else False,
+                'location_id': partner_id.property_stock_supplier.id if partner_id else False,
+                'location_dest_id': picking_type_id.default_location_dest_id.id if picking_type_id else False,
+                'state': 'draft',
+                'picking_id': picking_id.id,
+                'picking_type_id': picking_type_id.id if picking_type_id else False,
+                'service_product_id': picking_type_id.service_product_id.id if picking_type_id.service_product_id else False,
+                'procure_method': 'make_to_stock',
+                'picking_code': 'incoming',
+                'vin_id': vin_id.id,
+            }
+            move_id = self.env['stock.move'].create(move_data)
+
+            move_id = move_id.filtered(lambda x: x.state not in ('done', 'cancel'))._action_confirm()
+            move_id._action_assign()
+
+            # 填充VIN
+            picking_id.move_line_ids.lot_id = vin_id.id
+            picking_id.move_line_ids.qty_done = 1
+            picking_id.move_line_ids.lot_name = vin_id.name
+
+            picking_id.button_validate()
+
+            # _logger.info({
+            #     'picking_id': picking_id,
+            #     'state': picking_id.state
+            # })
 
     @api.onchange('stock_picking_ids')
     def _compute_stock_picking_state(self):
@@ -219,9 +321,6 @@ class SaleOrderLine(models.Model):
         else:
             # 保留取上级的默认客户位置
             location_id = partner_id.parent_id.property_stock_customer
-        # _logger.info({
-        #     'location_id': location_id
-        # })
         return location_id
 
 
@@ -294,7 +393,8 @@ class SaleOrder(models.Model):
 
     # 过滤
     def _find_service_product_ids(self, contract_line):
-        return [line.mapped('service_product_id').id for line in contract_line if line.mapped('service_product_id')] if contract_line else False
+        return [line.mapped('service_product_id').id for line in contract_line if
+                line.mapped('service_product_id')] if contract_line else False
 
     # TODO: 废弃
     # 路线的选择，使用开始位置和结束位置，多条，自己选择
@@ -336,7 +436,8 @@ class SaleOrder(models.Model):
 
     # 过滤
     def _find_contract_route_ids(self, contract_line):
-        return [line.mapped('route_id').id for line in contract_line if line.mapped('route_id')] if contract_line else False
+        return [line.mapped('route_id').id for line in contract_line if
+                line.mapped('route_id')] if contract_line else False
 
     @api.model
     def create(self, vals):
@@ -349,6 +450,9 @@ class SaleOrder(models.Model):
         # _logger.info({
         #     'contract_id': contract_id
         # })
+
+        res.order_line.replenish_stock_picking_order()
+
         data = []
         for line_id in res.order_line:
             # 获取数据
@@ -360,20 +464,24 @@ class SaleOrder(models.Model):
             route_id = self._find_contract_route_id(delivery_carrier_id)
             route_ids = self._find_contract_route_ids(delivery_carrier_id)
 
-            _logger.info({
-                'route_ids': route_ids,
-                'service_product_ids': service_product_ids
-            })
-            data.append(
-                (1, line_id.id, {
+            # _logger.info({
+            #     'route_ids': route_ids,
+            #     'service_product_ids': service_product_ids
+            # })
+            tmp = {
                     'service_product_id': service_product_id.id if service_product_id else False,
                     'route_id': route_id.id if route_id else False,
-                    'price_unit': delivery_carrier_id[0].fixed_price,
+                    'price_unit': delivery_carrier_id[0].fixed_price if delivery_carrier_id else 0,
                     'delivery_carrier_id': delivery_carrier_id[0].id if delivery_carrier_id else False,
                     'customer_contract_id': contract_id.id,
                     'allowed_service_product_ids': [(6, 0, service_product_ids)] if service_product_ids else False,
                     'allowed_route_ids': [(6, 0, route_ids)] if route_ids else False
-                })
+                }
+            if not line_id.vin:
+                tmp['vin'] = self.get_vin_id_stock(line_id)
+
+            data.append(
+                (1, line_id.id, tmp)
             )
 
         if data:
@@ -384,6 +492,15 @@ class SaleOrder(models.Model):
             res.order_line._compute_amount()
 
         return res
+
+    def get_vin_id_stock(self, line_id):
+        res = self.env['stock.production.lot'].search([
+            ('name', '=', line_id.vin_code),
+            ('product_id', '=', line_id.product_id.id)
+        ])
+        if len(res) > 1:
+            raise UserError('More than one record.')
+        return res.id if res else False
 
     @api.multi
     def action_confirm(self):

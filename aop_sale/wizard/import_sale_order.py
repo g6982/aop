@@ -14,6 +14,7 @@ _logger = logging.getLogger(__name__)
 class ImportSaleOrder(models.TransientModel):
     _name = 'import.sale.order.wizard'
 
+    from_location_id = fields.Many2one('res.partner')
     partner_id = fields.Many2one('res.partner', 'Partner')
     file = fields.Binary('File')
 
@@ -33,9 +34,14 @@ class ImportSaleOrder(models.TransientModel):
             sale_order = self.env['sale.order']
             sheet_data = self._parse_import_file()
             order_data = self._parse_order_data()
-            partner_data = self._parse_partner_id(sheet_data)
-            product_data = self._parse_product_data(sheet_data)
-            line_data = self._parse_order_line_data(sheet_data, product_data, partner_data)
+
+            _logger.info({
+                'self.from_location_id': self.from_location_id
+            })
+            # 选了 from_location_id 就是二次起跳
+            partner_data = self._parse_partner_id(sheet_data, from_location_id=self.from_location_id)
+            product_data = self._parse_product_data(sheet_data, from_location_id=self.from_location_id)
+            line_data = self._parse_order_line_data(sheet_data, product_data, partner_data, from_location_id=self.from_location_id)
             order_data.update({
                 'order_line': line_data,
             })
@@ -87,66 +93,117 @@ class ImportSaleOrder(models.TransientModel):
     # price_unit
     # tax_id
     # 订单行的数据
-    def _parse_order_line_data(self, sheet_data, product_data, partner_data):
+    def _parse_order_line_data(self, sheet_data, product_data, partner_data, from_location_id=False):
         line_values = []
-        for x in range(6, sheet_data.nrows - 1):
-            if not sheet_data.cell_value(x, 1):
-                continue
+        if not from_location_id:
+            for x in range(6, sheet_data.nrows - 1):
+                if not sheet_data.cell_value(x, 1):
+                    continue
 
-            product_id = self._find_product_id(sheet_data.cell_value(x, 6), product_data)
-            from_location_id = self._find_from_to_location(sheet_data.cell_value(x, 2), partner_data)
-            to_location_id = self._find_from_to_location(sheet_data.cell_value(x, 10), partner_data)
-            # _logger.info({
-            #     'product_id': product_id,
-            #     'from_location_id': from_location_id,
-            #     'to_location_id': to_location_id,
-            #     'from': sheet_data.cell_value(x, 2),
-            #     'to': sheet_data.cell_value(x, 11)
-            # })
-            if not product_id:
-                continue
-            vin_id = self._find_vin_id(sheet_data.cell_value(x, 4), product_id)
+                product_id = self._find_product_id(sheet_data.cell_value(x, 6), product_data)
+                from_location_id = self._find_from_to_location(sheet_data.cell_value(x, 2), partner_data)
+                to_location_id = self._find_from_to_location(sheet_data.cell_value(x, 10), partner_data)
+                # _logger.info({
+                #     'product_id': product_id,
+                #     'from_location_id': from_location_id,
+                #     'to_location_id': to_location_id,
+                #     'from': sheet_data.cell_value(x, 2),
+                #     'to': sheet_data.cell_value(x, 11)
+                # })
+                if not product_id:
+                    continue
+                vin_id = self._find_vin_id(sheet_data.cell_value(x, 4), product_id)
 
-            line_data = (0, 0, {
-                'product_id': product_id.id,
-                # 'service_product_id': False,
-                'from_location_id': from_location_id.id if from_location_id else False,
-                'to_location_id': to_location_id.id if to_location_id else False,
-                'vin': vin_id.id if vin_id else False,
-                'vin_code': sheet_data.cell_value(x, 4),
-                'name': product_id.name,
-                'product_uom_qty': 1,
-                'product_uom': product_id.uom_id.id,
-                'price_unit': 1
-            })
-            line_values.append(line_data)
+                line_data = (0, 0, {
+                    'product_id': product_id.id,
+                    # 'service_product_id': False,
+                    'from_location_id': from_location_id.id if from_location_id else False,
+                    'to_location_id': to_location_id.id if to_location_id else False,
+                    'vin': vin_id.id if vin_id else False,
+                    'vin_code': sheet_data.cell_value(x, 4),
+                    'name': product_id.name,
+                    'product_uom_qty': 1,
+                    'product_uom': product_id.uom_id.id,
+                    'price_unit': 1
+                })
+                line_values.append(line_data)
             # _logger.info({
             #     'line_data': line_data
             # })
             # print(line_values)
+        else:
+            for x in range(1, sheet_data.nrows - 1):
+
+                product_id = self._find_product_id(sheet_data.cell_value(x, 10), product_data)
+                from_location_id = from_location_id
+                to_location_id = self._find_from_to_location(sheet_data.cell_value(x, 6), partner_data)
+                # _logger.info({
+                #     'product_id': product_id,
+                #     'from_location_id': from_location_id,
+                #     'to_location_id': to_location_id,
+                #     'from': sheet_data.cell_value(x, 2),
+                #     'to': sheet_data.cell_value(x, 11)
+                # })
+                if not product_id:
+                    continue
+                vin_id = self._find_vin_id(sheet_data.cell_value(x, 9), product_id)
+
+                line_data = (0, 0, {
+                    'product_id': product_id.id,
+                    # 'service_product_id': False,
+                    'from_location_id': from_location_id.id if from_location_id else False,
+                    'to_location_id': to_location_id.id if to_location_id else False,
+                    'vin': vin_id.id if vin_id else False,
+                    'vin_code': sheet_data.cell_value(x, 9),
+                    'name': product_id.name,
+                    'product_uom_qty': 1,
+                    'product_uom': product_id.uom_id.id,
+                    'price_unit': 1
+                })
+                line_values.append(line_data)
         return line_values
 
-    def _parse_product_data(self, sheet_data):
+    def _parse_product_data(self, sheet_data, from_location_id=False):
         product_dict = {}
-        # partner_name = sheet_data.row_values(4)
-        product_name = sheet_data.col_values(6)
+        if not from_location_id:
+            # partner_name = sheet_data.row_values(4)
+            product_name = sheet_data.col_values(6)
 
-        if not product_name:
-            return False
+            if not product_name:
+                return False
 
-        product_name = list(set(product_name[6:]))
+            product_name = list(set(product_name[6:]))
 
-        product_obj = self.env['product.product']
+            product_obj = self.env['product.product']
 
-        for p_name in product_name:
-            p_name = p_name.replace('\u202d', '').replace('\u202c', '')
-            if not p_name:
-                continue
-            product_id = product_obj.sudo().search([('default_code', '=', p_name[:3])])
-            product_dict[p_name[:3]] = product_id
-        _logger.info({
-            'product_dict': product_dict
-        })
+            for p_name in product_name:
+                p_name = p_name.replace('\u202d', '').replace('\u202c', '')
+                if not p_name:
+                    continue
+                product_id = product_obj.sudo().search([('default_code', '=', p_name[:3])])
+                product_dict[p_name[:3]] = product_id
+            _logger.info({
+                'product_dict': product_dict
+            })
+        else:
+            product_name = sheet_data.col_values(10)
+
+            if not product_name:
+                return False
+
+            product_name = list(set(product_name[1:]))
+
+            product_obj = self.env['product.product']
+
+            for p_name in product_name:
+                p_name = p_name.replace('\u202d', '').replace('\u202c', '')
+                if not p_name:
+                    continue
+                product_id = product_obj.sudo().search([('default_code', '=', p_name[:3])])
+                product_dict[p_name[:3]] = product_id
+            _logger.info({
+                'product_dict': product_dict
+            })
         return product_dict
 
     def _find_product_id(self, product_type, product_data):
@@ -154,24 +211,40 @@ class ImportSaleOrder(models.TransientModel):
         product_id = product_data.get(product_type[:3], False)
         return product_id if product_id else False
 
-    def _parse_partner_id(self, sheet_data):
+    def _parse_partner_id(self, sheet_data, from_location_id=False):
         partner_dict = {}
-        # partner_name = sheet_data.row_values(4)
-        from_partner_name = sheet_data.col_values(2)
-        to_partner_name = sheet_data.col_values(10)
+        if not from_location_id:
+            # partner_name = sheet_data.row_values(4)
+            from_partner_name = sheet_data.col_values(2)
+            to_partner_name = sheet_data.col_values(10)
 
-        if not from_partner_name and not to_partner_name:
-            return False
+            if not from_partner_name and not to_partner_name:
+                return False
 
-        partner_name = list(set(from_partner_name[6:] + to_partner_name[6:]))
+            partner_name = list(set(from_partner_name[6:] + to_partner_name[6:]))
 
-        partner_obj = self.env['res.partner']
+            partner_obj = self.env['res.partner']
 
-        for p_name in partner_name:
-            partner_id = partner_obj.sudo().search([('ref', '=', p_name)])
-            partner_dict[p_name] = partner_id
+            for p_name in partner_name:
+                partner_id = partner_obj.sudo().search([('ref', '=', p_name)])
+                partner_dict[p_name] = partner_id
 
-        return partner_dict
+            return partner_dict
+        else:
+            to_partner_name = sheet_data.col_values(6)
+
+            if not to_partner_name:
+                return False
+
+            partner_name = list(set(to_partner_name[1:]))
+
+            partner_obj = self.env['res.partner']
+
+            for p_name in partner_name:
+                partner_id = partner_obj.sudo().search([('ref', '=', p_name)])
+                partner_dict[p_name] = partner_id
+
+            return partner_dict
 
     # 查找接车地和目的地
     def _find_from_to_location(self, name, partner_data):

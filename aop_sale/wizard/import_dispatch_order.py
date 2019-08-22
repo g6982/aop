@@ -217,7 +217,6 @@ class ImportDispatchOrder(models.TransientModel):
 
         for picking_name in picking_value:
             res = picking_obj.search([
-                #('name', '=', u'收货'),
                 ('name', '=', u'接车'),
                 ('warehouse_id.name', '=', picking_name)
             ])
