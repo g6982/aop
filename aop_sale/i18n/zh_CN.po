@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-19 04:11+0000\n"
-"PO-Revision-Date: 2019-08-19 04:11+0000\n"
+"POT-Creation-Date: 2019-08-22 01:00+0000\n"
+"PO-Revision-Date: 2019-08-22 01:00+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -332,11 +332,6 @@ msgid "Brand"
 msgstr "品牌"
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.sub_menu_product_bundle
-msgid "Bundle Products"
-msgstr "捆绑产品"
-
-#. module: aop_sale
 #: selection:stock.rule,action:0
 msgid "Buy"
 msgstr "购买"
@@ -628,6 +623,7 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__create_uid
@@ -663,6 +659,7 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__create_date
@@ -872,6 +869,7 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__display_name
@@ -879,6 +877,7 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__display_name
@@ -952,6 +951,11 @@ msgstr "到期时间"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__end_position
 msgid "End"
 msgstr "终点"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__end_date
+msgid "End Date"
+msgstr "结束日期"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__date_end
@@ -1110,6 +1114,7 @@ msgstr "有未清项"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__id
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__id
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__id
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__id
@@ -1117,6 +1122,7 @@ msgstr "有未清项"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__id
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__id
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__id
+#: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx__id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__id
@@ -1420,6 +1426,7 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order____last_update
@@ -1427,6 +1434,7 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract____last_update
@@ -1455,6 +1463,7 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__write_uid
@@ -1490,6 +1499,7 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__write_date
@@ -1955,7 +1965,7 @@ msgstr "权限管理"
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__picking_id
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__picking_id
 msgid "Picking"
-msgstr "编号"
+msgstr "分拣"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_stock_picking_type
@@ -2463,6 +2473,11 @@ msgid "Standard price"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__start_date
+msgid "Start Date"
+msgstr "开始日期"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__date_start
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__date_start
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__date_start
@@ -2476,6 +2491,13 @@ msgstr "合同开始时间"
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__state
 msgid "State"
 msgstr "省/ 州"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_invoice_order_statement
+#: model:ir.ui.menu,name:aop_sale.invoice_order_statement_wizard
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_order_statement_wizard_form
+msgid "Statement"
+msgstr "报告"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__state
@@ -3024,7 +3046,7 @@ msgid "You can not create recursive analytic accounts."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:394
+#: code:addons/aop_sale/models/sale_order.py:391
 #, python-format
 msgid "You can not make order until the product have vin or stock."
 msgstr "你要等到产品有vin或库存才可以确认订单."
@@ -3145,6 +3167,11 @@ msgid "insurance.management.type"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_invoice_order_statement_wizard
+msgid "invoice.order.statement.wizard"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_make_invoice_sale_order_line
 msgid "make.invoice.sale.order.line"
 msgstr ""
@@ -3197,6 +3224,11 @@ msgid "picking"
 msgstr "任务"
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_report_aop_sale_standard_statement_report_xlsx
+msgid "report.aop_sale.standard_statement_report_xlsx"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__responsible_department
 msgid "responsible department"
 msgstr "责任部门"
@@ -3209,6 +3241,11 @@ msgstr "责任方"
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_rule_service_product
 msgid "rule.service.product"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.actions.report,name:aop_sale.standard_statement_report_xlsx
+msgid "statement"
 msgstr ""
 
 #. module: aop_sale
