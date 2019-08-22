@@ -322,7 +322,7 @@ class SaleOrderLine(models.Model):
         location_id = None
         if filter_domain:
             location_id = location_obj.search(filter_domain)
-            
+
         if not location_id:
             # 保留取上级的默认客户位置
             location_id = partner_id.parent_id.property_stock_customer
