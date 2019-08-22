@@ -15,7 +15,7 @@ CQ_COL = {
     'vin_code': 5,
     'product_id': 6,
     'to_location_id': 9,
-    'start_index': 1
+    'start_index': 0
 }
 
 CT_COL = {
@@ -129,9 +129,11 @@ class ImportSaleOrder(models.TransientModel):
                                from_partner_index=None, to_partner_index=None, product_index=None, start_index=None,
                                vin_index=None):
         line_values = []
+
         if not from_location_id:
-            for x in range(start_index, sheet_data.nrows - 1):
-                if not sheet_data.cell_value(x, 1):
+            for x in range(start_index, sheet_data.nrows):
+
+                if not sheet_data.cell_value(x, start_index):
                     continue
 
                 product_id = self._find_product_id(sheet_data.cell_value(x, product_index), product_data)
@@ -160,7 +162,7 @@ class ImportSaleOrder(models.TransientModel):
             # })
             # print(line_values)
         else:
-            for x in range(1, sheet_data.nrows - 1):
+            for x in range(1, sheet_data.nrows):
 
                 product_id = self._find_product_id(sheet_data.cell_value(x, 10), product_data)
                 from_location_id = from_location_id
