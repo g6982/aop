@@ -316,9 +316,14 @@ class SaleOrderLine(models.Model):
         elif partner_id.city_id if hasattr(partner_id, 'city_id') else False:
             filter_domain = [('name', '=', partner_id.city_id.name)]
 
+        if not filter_domain:
+            filter_domain = [('name', '=', partner_id.name)]
+
+        location_id = None
         if filter_domain:
             location_id = location_obj.search(filter_domain)
-        else:
+            
+        if not location_id:
             # 保留取上级的默认客户位置
             location_id = partner_id.parent_id.property_stock_customer
         return location_id
