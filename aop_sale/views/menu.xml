@@ -181,44 +181,54 @@
         -->
 
         <!-- 一级菜单 -->
+        <!--
         <menuitem id="customer_manager_menu"
                   parent="main_data_menu_root"
                   name="Customer"
                   sequence="60"
 
         />
+        -->
 
         <!-- 二级菜单 -->
+        <!--
         <menuitem id="customer_info_manager_menu"
                   parent="customer_manager_menu"
                   name="Custom information manage"
                   action="base.action_partner_form"
                   sequence="10"
         />
+        -->
 
         <!-- 二级菜单 -->
+        <!--
         <menuitem id="address_manager_menu"
                   parent="customer_manager_menu"
                   name="Address"
                   action="base.action_partner_form"
                   sequence="20"
         />
+        -->
 
         <!-- 一级菜单 -->
+        <!--
         <menuitem id="supplier_manager_menu"
                   parent="main_data_menu_root"
                   name="Supplier"
                   sequence="70"
 
         />
+        -->
 
         <!-- 二级菜单 -->
+        <!--
         <menuitem id="supplier_manager_sub_menu"
                   parent="supplier_manager_menu"
                   name="Supplier"
                   action="base.action_partner_supplier_form"
                   sequence="10"
         />
+        -->
 
         <!-- 一级菜单 -->
         <!--
