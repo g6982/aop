@@ -133,7 +133,7 @@ class SaleOrderLine(models.Model):
             picking_id.move_line_ids.qty_done = 1
             picking_id.move_line_ids.lot_name = vin_id.name
 
-            picking_id.button_validate()
+            # picking_id.button_validate()
 
             # _logger.info({
             #     'picking_id': picking_id,

@@ -10,6 +10,22 @@ import re
 
 _logger = logging.getLogger(__name__)
 
+CQ_COL = {
+    'from_location_id': 3,
+    'vin_code': 5,
+    'product_id': 6,
+    'to_location_id': 9,
+    'start_index': 1
+}
+
+CT_COL = {
+    'from_location_id': 2,
+    'vin_code': 4,
+    'product_id': 6,
+    'to_location_id': 10,
+    'start_index': 6
+}
+
 
 class ImportSaleOrder(models.TransientModel):
     _name = 'import.sale.order.wizard'
@@ -17,6 +33,7 @@ class ImportSaleOrder(models.TransientModel):
     from_location_id = fields.Many2one('res.partner')
     partner_id = fields.Many2one('res.partner', 'Partner')
     file = fields.Binary('File')
+    is_transfer = fields.Boolean('Transfer')
 
     # 读文件
     def _parse_import_file(self):
@@ -35,13 +52,32 @@ class ImportSaleOrder(models.TransientModel):
             sheet_data = self._parse_import_file()
             order_data = self._parse_order_data()
 
-            _logger.info({
-                'self.from_location_id': self.from_location_id
-            })
+            if self.is_transfer:
+                product_index = CQ_COL.get('product_id')
+                start_index = CQ_COL.get('start_index')
+                from_partner_index = CQ_COL.get('from_location_id')
+                to_partner_index = CQ_COL.get('to_location_id')
+                vin_index = CQ_COL.get('vin_code')
+            else:
+                product_index = CT_COL.get('product_id')
+                start_index = CT_COL.get('start_index')
+                from_partner_index = CT_COL.get('from_location_id')
+                to_partner_index = CT_COL.get('to_location_id')
+                vin_index = CT_COL.get('vin_code')
+
             # 选了 from_location_id 就是二次起跳
-            partner_data = self._parse_partner_id(sheet_data, from_location_id=self.from_location_id)
-            product_data = self._parse_product_data(sheet_data, from_location_id=self.from_location_id)
-            line_data = self._parse_order_line_data(sheet_data, product_data, partner_data, from_location_id=self.from_location_id)
+            partner_data = self._parse_partner_id(sheet_data, from_location_id=self.from_location_id,
+                                                  from_partner_index=from_partner_index,
+                                                  to_partner_index=to_partner_index, start_index=start_index)
+            product_data = self._parse_product_data(sheet_data, from_location_id=self.from_location_id,
+                                                    product_index=product_index, start_index=start_index)
+            line_data = self._parse_order_line_data(sheet_data, product_data, partner_data,
+                                                    from_location_id=self.from_location_id,
+                                                    from_partner_index=from_partner_index,
+                                                    to_partner_index=to_partner_index,
+                                                    product_index=product_index,
+                                                    start_index=start_index,
+                                                    vin_index=vin_index)
             order_data.update({
                 'order_line': line_data,
             })
@@ -52,10 +88,6 @@ class ImportSaleOrder(models.TransientModel):
 
             view_id = self.env.ref('sale.view_quotation_tree_with_onboarding').id
             form_id = self.env.ref('sale.view_order_form').id
-
-            # return {
-            #     "type": "ir.actions.do_nothing",
-            # }
 
             # 跳转到导入成功后的tree界面
             return {
@@ -93,26 +125,22 @@ class ImportSaleOrder(models.TransientModel):
     # price_unit
     # tax_id
     # 订单行的数据
-    def _parse_order_line_data(self, sheet_data, product_data, partner_data, from_location_id=False):
+    def _parse_order_line_data(self, sheet_data, product_data, partner_data, from_location_id=False,
+                               from_partner_index=None, to_partner_index=None, product_index=None, start_index=None,
+                               vin_index=None):
         line_values = []
         if not from_location_id:
-            for x in range(6, sheet_data.nrows - 1):
+            for x in range(start_index, sheet_data.nrows - 1):
                 if not sheet_data.cell_value(x, 1):
                     continue
 
-                product_id = self._find_product_id(sheet_data.cell_value(x, 6), product_data)
-                from_location_id = self._find_from_to_location(sheet_data.cell_value(x, 2), partner_data)
-                to_location_id = self._find_from_to_location(sheet_data.cell_value(x, 10), partner_data)
-                # _logger.info({
-                #     'product_id': product_id,
-                #     'from_location_id': from_location_id,
-                #     'to_location_id': to_location_id,
-                #     'from': sheet_data.cell_value(x, 2),
-                #     'to': sheet_data.cell_value(x, 11)
-                # })
+                product_id = self._find_product_id(sheet_data.cell_value(x, product_index), product_data)
+                from_location_id = self._find_from_to_location(sheet_data.cell_value(x, from_partner_index),
+                                                               partner_data)
+                to_location_id = self._find_from_to_location(sheet_data.cell_value(x, to_partner_index), partner_data)
                 if not product_id:
                     continue
-                vin_id = self._find_vin_id(sheet_data.cell_value(x, 4), product_id)
+                vin_id = self._find_vin_id(sheet_data.cell_value(x, vin_index), product_id)
 
                 line_data = (0, 0, {
                     'product_id': product_id.id,
@@ -120,7 +148,7 @@ class ImportSaleOrder(models.TransientModel):
                     'from_location_id': from_location_id.id if from_location_id else False,
                     'to_location_id': to_location_id.id if to_location_id else False,
                     'vin': vin_id.id if vin_id else False,
-                    'vin_code': sheet_data.cell_value(x, 4),
+                    'vin_code': sheet_data.cell_value(x, vin_index),
                     'name': product_id.name,
                     'product_uom_qty': 1,
                     'product_uom': product_id.uom_id.id,
@@ -163,16 +191,17 @@ class ImportSaleOrder(models.TransientModel):
                 line_values.append(line_data)
         return line_values
 
-    def _parse_product_data(self, sheet_data, from_location_id=False):
+    def _parse_product_data(self, sheet_data, from_location_id=False, product_index=None, start_index=None):
         product_dict = {}
         if not from_location_id:
+
             # partner_name = sheet_data.row_values(4)
-            product_name = sheet_data.col_values(6)
+            product_name = sheet_data.col_values(product_index)
 
             if not product_name:
                 return False
 
-            product_name = list(set(product_name[6:]))
+            product_name = list(set(product_name[start_index:]))
 
             product_obj = self.env['product.product']
 
@@ -211,17 +240,20 @@ class ImportSaleOrder(models.TransientModel):
         product_id = product_data.get(product_type[:3], False)
         return product_id if product_id else False
 
-    def _parse_partner_id(self, sheet_data, from_location_id=False):
+    def _parse_partner_id(self, sheet_data, from_location_id=False, from_partner_index=None, to_partner_index=None,
+                          start_index=None):
         partner_dict = {}
         if not from_location_id:
+            # CQ 和 CT
+
             # partner_name = sheet_data.row_values(4)
-            from_partner_name = sheet_data.col_values(2)
-            to_partner_name = sheet_data.col_values(10)
+            from_partner_name = sheet_data.col_values(from_partner_index)
+            to_partner_name = sheet_data.col_values(to_partner_index)
 
             if not from_partner_name and not to_partner_name:
                 return False
 
-            partner_name = list(set(from_partner_name[6:] + to_partner_name[6:]))
+            partner_name = list(set(from_partner_name[start_index:] + to_partner_name[start_index:]))
 
             partner_obj = self.env['res.partner']
 
