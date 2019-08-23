@@ -76,7 +76,7 @@
             <field name="model">supplier.aop.contract</field>
             <field name="arch" type="xml">
                 <tree string="Contract">
-
+                    <field name="partner_id"/>
                     <field name="name"/>
                     <field name="serial_number"/>
                     <field name="version_id"/>
@@ -87,12 +87,23 @@
             </field>
         </record>
 
+        <record id="view_supplier_aop_contract_search" model="ir.ui.view">
+            <field name="name">supplier.aop.contract.search</field>
+            <field name="model">supplier.aop.contract</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="partner_id"/>
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
         <record id="action_aop_supplier_contract_view" model="ir.actions.act_window">
             <field name="name">Supplier contract</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">supplier.aop.contract</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,search</field>
         </record>
     </data>
 </odoo>
