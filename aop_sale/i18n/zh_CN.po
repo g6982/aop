@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-22 14:52+0000\n"
-"PO-Revision-Date: 2019-08-22 14:52+0000\n"
+"POT-Creation-Date: 2019-08-23 01:07+0000\n"
+"PO-Revision-Date: 2019-08-23 01:07+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2813,7 +2813,7 @@ msgstr "交易"
 #: model:ir.model,name:aop_sale.model_stock_picking
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__is_transfer
 msgid "Transfer"
-msgstr "中转"
+msgstr "任务"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__transfer_product_id
@@ -2996,6 +2996,11 @@ msgstr "体积"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_partner_form_inherit
 msgid "Warehouse"
 msgstr "仓库"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__transfer_way
+msgid "Way"
+msgstr "运输方式"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__website_message_ids
