@@ -12,6 +12,51 @@ _logger = logging.getLogger(__name__)
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
+    # @api.depends('route_id', 'from_location_id', 'to_location_id')
+    def _get_delivery_carrier_id(self):
+        for order_line in self:
+            if order_line.route_id and order_line.from_location_id and order_line.to_location_id:
+                from_location_id = self._transfer_district_to_location(order_line.from_location_id)
+                to_location_id = self._transfer_district_to_location(order_line.to_location_id)
+                search_domain = [
+                    ('customer_contract_id', '=', order_line.customer_contract_id.id),
+                    ('route_id', '=', order_line.route_id.id),
+                    ('from_location_id', '=', from_location_id.id),
+                    ('to_location_id', '=', to_location_id.id)
+                ]
+                delivery_id = self.env['delivery.carrier'].search(search_domain)
+
+                # 多条条款，对应相同的路由，不同的服务产品
+                if delivery_id:
+                    route_ids = delivery_id.mapped('route_id')
+                    service_product_ids = delivery_id.mapped('service_product_id')
+                    # 设置过滤规则
+                    order_line.allowed_route_ids = [(6, 0, route_ids.ids)]
+                    order_line.allowed_service_product_ids = [(6, 0, service_product_ids.ids)]
+
+                    delivery_id = delivery_id[0]
+                    order_line.delivery_carrier_id = delivery_id.id
+                    order_line.service_product_id = delivery_id.service_product_id.id
+                    order_line.price_unit = delivery_id.service_product_id.list_price
+            else:
+                if order_line.from_location_id and order_line.to_location_id:
+                    from_location_id = self._transfer_district_to_location(order_line.from_location_id)
+                    to_location_id = self._transfer_district_to_location(order_line.to_location_id)
+                    search_domain = [
+                        ('customer_contract_id', '=', order_line.customer_contract_id.id),
+                        ('from_location_id', '=', from_location_id.id),
+                        ('to_location_id', '=', to_location_id.id)
+                    ]
+                    delivery_id = self.env['delivery.carrier'].search(search_domain)
+                    route_ids = delivery_id.mapped('route_id')
+                    service_product_ids = delivery_id.mapped('service_product_id')
+
+                    order_line.allowed_route_ids = [(6, 0, route_ids.ids)]
+                    order_line.allowed_service_product_ids = [(6, 0, service_product_ids.ids)]
+
+                order_line.delivery_carrier_id = False
+                order_line.service_product_id = False
+
     vin = fields.Many2one('stock.production.lot', 'VIN', domain="[('product_id','=', product_id)]")
 
     service_product_id = fields.Many2one('product.product', string='Product', domain=[('sale_ok', '=', True)],
@@ -25,8 +70,11 @@ class SaleOrderLine(models.Model):
     contract_id = fields.Many2one('aop.contract', 'Contract')
     customer_contract_id = fields.Many2one('customer.aop.contract', 'Contract')
 
+    #delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier',
+    #                                     compute='_get_delivery_carrier_id', store=True)
+
     delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier',
-                                          compute='_get_delivery_carrier_id', store=True)
+                                         default=_get_delivery_carrier_id)
 
     vin_code = fields.Char('VIN Code')
 
@@ -155,50 +203,7 @@ class SaleOrderLine(models.Model):
                 else:
                     line.stock_picking_state = False
 
-    @api.depends('route_id', 'from_location_id', 'to_location_id')
-    def _get_delivery_carrier_id(self):
-        for order_line in self:
-            if order_line.route_id and order_line.from_location_id and order_line.to_location_id:
-                from_location_id = self._transfer_district_to_location(order_line.from_location_id)
-                to_location_id = self._transfer_district_to_location(order_line.to_location_id)
-                search_domain = [
-                    ('customer_contract_id', '=', order_line.customer_contract_id.id),
-                    ('route_id', '=', order_line.route_id.id),
-                    ('from_location_id', '=', from_location_id.id),
-                    ('to_location_id', '=', to_location_id.id)
-                ]
-                delivery_id = self.env['delivery.carrier'].search(search_domain)
 
-                # 多条条款，对应相同的路由，不同的服务产品
-                if delivery_id:
-                    route_ids = delivery_id.mapped('route_id')
-                    service_product_ids = delivery_id.mapped('service_product_id')
-                    # 设置过滤规则
-                    order_line.allowed_route_ids = [(6, 0, route_ids.ids)]
-                    order_line.allowed_service_product_ids = [(6, 0, service_product_ids.ids)]
-
-                    delivery_id = delivery_id[0]
-                    order_line.delivery_carrier_id = delivery_id.id
-                    order_line.service_product_id = delivery_id.service_product_id.id
-                    order_line.price_unit = delivery_id.service_product_id.list_price
-            else:
-                if order_line.from_location_id and order_line.to_location_id:
-                    from_location_id = self._transfer_district_to_location(order_line.from_location_id)
-                    to_location_id = self._transfer_district_to_location(order_line.to_location_id)
-                    search_domain = [
-                        ('customer_contract_id', '=', order_line.customer_contract_id.id),
-                        ('from_location_id', '=', from_location_id.id),
-                        ('to_location_id', '=', to_location_id.id)
-                    ]
-                    delivery_id = self.env['delivery.carrier'].search(search_domain)
-                    route_ids = delivery_id.mapped('route_id')
-                    service_product_ids = delivery_id.mapped('service_product_id')
-
-                    order_line.allowed_route_ids = [(6, 0, route_ids.ids)]
-                    order_line.allowed_service_product_ids = [(6, 0, service_product_ids.ids)]
-
-                order_line.delivery_carrier_id = False
-                order_line.service_product_id = False
 
     # 新增 服务产品
     @api.multi
