@@ -34,7 +34,7 @@
                         string="Create purchase"
                         type="object"
                         class="oe_highlight"
-                        attrs="{'invisible': ['|', ('picking_purchase_id', '!=', False), ('dispatch_type', 'not in', 'center_type')]}"
+                        attrs="{'invisible': ('picking_purchase_id', '!=', False)}"
                 />
 
             </xpath>
