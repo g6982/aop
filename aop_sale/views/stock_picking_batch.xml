@@ -23,7 +23,7 @@
 
                 <field name="picking_purchase_id"
                        string="采购订单"
-                       attrs="{'invisible': ['|', ('picking_purchase_id', '=', False), ('dispatch_type', 'not in', 'center_type')]}"
+                       attrs="{'invisible': ('picking_purchase_id', '=', False)}"
                 />
 
             </field>
