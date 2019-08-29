@@ -14,6 +14,8 @@ class StockPicking(models.Model):
     sale_order_line_id = fields.Many2one('sale.order.line', 'Order line')
     handover_number = fields.Char('Handover number')
 
+    vin = fields.Many2one(string='vin', related='move_ids_without_package.move_line_ids.lot_id')
+
     def match_sale_order(self):
         return self._match_sale_order()
 
