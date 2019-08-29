@@ -83,7 +83,8 @@ class StockMove(models.Model):
         res = super(StockMove, self)._get_new_picking_values()
         res.update({
             'delivery_to_partner_id': self.delivery_to_partner_id.id,
-            'sale_order_line_id': self.sale_order_line_id.id
+            'sale_order_line_id': self.sale_order_line_id.id,
+            'vin_id': self.vin_id.id
         })
         return res
 
