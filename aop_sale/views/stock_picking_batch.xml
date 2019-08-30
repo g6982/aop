@@ -50,7 +50,7 @@
                                options="{'not_delete': True}">
                             <tree>
                                 <field name="name"/>
-                                <field name="vin"/>
+                                <field name="vin_id"/>
                                 <field name="picking_type_id"/>
                                 <field name="location_id"/>
                                 <field name="location_dest_id"/>
