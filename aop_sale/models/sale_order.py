@@ -388,9 +388,23 @@ class SaleOrder(models.Model):
         # product_template_id.product_variant_ids
         # TODO: 待定， 是否需要递归查询呢？
         # 暂定： 获取上级
-        delivery_ids = [line_id for line_id in contract_line_ids if
-                        order_from_location_id.id == line_id.from_location_id.id and
-                        order_to_location_id.id == line_id.to_location_id.id]
+        # delivery_ids = [line_id for line_id in contract_line_ids if
+        #                 order_from_location_id.id == line_id.from_location_id.id and
+        #                 order_to_location_id.id == line_id.to_location_id.id]
+
+        delivery_ids = []
+
+        for line_id in contract_line_ids:
+            if order_from_location_id.id == line_id.from_location_id.id and    \
+                    order_to_location_id.id == line_id.to_location_id.id:
+
+                # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
+                line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
+                delivery_ids.append(line_id)
+
+        delivery_ids = list(set(delivery_ids))
+
+
 
         _logger.info({
             'delivery_ids': delivery_ids

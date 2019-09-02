@@ -39,6 +39,8 @@ class AopContract(models.Model):
         ('done', 'Done')
     ], default='draft', track_visibility='always')
 
+
+
     @api.onchange('delivery_carrier_ids')
     def onchange_rule_line(self):
         data = []

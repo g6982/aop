@@ -83,6 +83,7 @@
                                         <field name="from_location_id"/>
                                         <field name="to_location_id"/>
                                         <field name="fixed_price" string="Contract price"/>
+                                        <field name="goto_delivery_carrier_id"/>
                                     </tree>
                                 </field>
                             </page>

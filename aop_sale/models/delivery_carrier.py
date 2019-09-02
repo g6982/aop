@@ -19,8 +19,8 @@ class DeliveryCarrier(models.Model):
                                           ondelete='restrict')
     contract_id = fields.Many2one('aop.contract', 'contract')
 
-    customer_contract_id = fields.Many2one('customer.aop.contract', 'Customer contract')
-    supplier_contract_id = fields.Many2one('supplier.aop.contract', 'Supplier contract')
+    customer_contract_id = fields.Many2one('customer.aop.contract', 'Customer contract', ondelete='cascade')
+    supplier_contract_id = fields.Many2one('supplier.aop.contract', 'Supplier contract', ondelete='cascade')
 
     route_id = fields.Many2one('stock.location.route', string='Route')
 
@@ -48,6 +48,9 @@ class DeliveryCarrier(models.Model):
     rule_id = fields.Many2one('stock.rule', string='Rule')
 
     product_fixed_price = fields.Float('Product fixed price')
+
+    goto_delivery_carrier_id = fields.Many2one(
+        'delivery.carrier', 'Goto Contract Terms')
 
     @api.onchange('from_location_id', 'to_location_id')
     def domain_route_ids(self):
