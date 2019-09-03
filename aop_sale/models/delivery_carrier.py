@@ -10,6 +10,11 @@ _logger = logging.getLogger(__name__)
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
 
+    # 条款名称不重复的限制
+    _sql_constraints = [
+        ('unique_name', 'unique(name)', 'the name must be unique!')
+    ]
+
     product_id = fields.Many2one('product.product', string='Products', domain=[('type', '=', 'product')],
                                  required=False,
                                  ondelete='restrict')

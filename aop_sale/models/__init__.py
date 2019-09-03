@@ -14,6 +14,7 @@ from . import mass_loss
 from . import account_invoice
 from . import account_tax_invoice
 from . import stock_warehouse
+from . import stock_location
 from . import stock_location_route
 from . import stock_picking
 from . import base_warehouse

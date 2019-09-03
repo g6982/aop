@@ -10,6 +10,11 @@ _logger = logging.getLogger(__name__)
 class StockLocationRoute(models.Model):
     _inherit = 'stock.location.route'
 
+    # 路由名称不重复的限制
+    _sql_constraints = [
+        ('unique_name', 'unique(name)', 'the name must be unique!')
+    ]
+
     service_product_id = fields.Many2one('product.product', string='Service product')
     product_selectable = fields.Boolean(
         'Applicable on Product', default=False,

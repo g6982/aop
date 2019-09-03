@@ -12,6 +12,11 @@ class Warehouse(models.Model):
     _parent_store = True
     _order = 'name'
 
+    # 仓库名称不重复的限制
+    _sql_constraints = [
+        ('unique_name', 'unique(name)', 'the name must be unique!')
+    ]
+
     parent_id = fields.Many2one(
         'stock.warehouse', 'Parent warehouse', index=True, ondelete='cascade')
     child_ids = fields.One2many('stock.warehouse', 'parent_id', 'Contains')
