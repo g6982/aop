@@ -113,10 +113,11 @@ class SaleOrderLine(models.Model):
 
     def get_stock_picking_type_id(self, location_id):
         res = self.env['stock.picking.type'].search([
-            ('default_location_dest_id', '=', location_id.id)
-        ])
+            #('default_location_dest_id', '=', location_id.id)
+            ('name', '=', u'接车')
+        ], limit=1)
 
-        res = self.env['stock.picking.type'].browse(651)
+        #res = self.env['stock.picking.type'].browse(651)
         return res[0] if res else False
 
     def get_vin_id_in_stock(self):
