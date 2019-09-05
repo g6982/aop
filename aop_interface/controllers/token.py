@@ -65,6 +65,9 @@ class AccessToken(http.Controller):
             post.get("password"),
         )
         _credentials_includes_in_body = all([db, username, password])
+        _logger.info({
+            '_credentials_includes_in_body': _credentials_includes_in_body
+        })
         if not _credentials_includes_in_body:
             # The request post body is empty the credetials maybe passed via the headers.
             headers = request.httprequest.headers

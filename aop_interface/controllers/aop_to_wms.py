@@ -41,6 +41,7 @@ class AopToWms(http.Controller):
                 'from_location_id': picking_id.location_id.name,
                 'to_location_id': picking_id.location_dest_id.name,
                 'picking_type_id': picking_id.picking_type_id.name,
-                'quantity_done': 1
+                'quantity_done': 1,
+                'warehouse_id': picking_id.picking_type_id.warehouse_id.name
             })
         return data
