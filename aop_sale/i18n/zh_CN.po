@@ -2653,12 +2653,12 @@ msgstr "订单行"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__from_location_id
 msgid ""
-msgstr "源位置"
+msgstr "接车点"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__to_location_id
 msgid ""
-msgstr "目的位置"
+msgstr "送车点"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__tax_invoice_no

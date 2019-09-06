@@ -124,3 +124,10 @@ msgstr "创建结算清单"
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
 msgid "Invoices"
 msgstr "收入结算清单"
+
+#. module: sale
+#: model_terms:ir.ui.view,arch_db:sale.view_sale_advance_payment_inv
+msgid ""
+"Invoices will be created in draft so that you can review\n"
+"                        them before validation."
+msgstr "草稿收入结算清单将被创建，以便于在验证前检查"
