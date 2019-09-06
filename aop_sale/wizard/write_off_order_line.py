@@ -19,12 +19,14 @@ class WriteOffLineWizard(models.TransientModel):
                 'file_validate': line.file_validate
             })
             data.append({
+                'name': line.file_name,
                 'res_model': 'sale.order',
-                'res_id': line.sale_order_line_id.order_id,
+                'res_id': line.sale_order_line_id.order_id.id,
                 'datas': line.file_validate,
                 'type': 'binary'
             })
-        # res = self.env['ir.attachment'].create(data)
+
+        res = self.env['ir.attachment'].create(data)
         return True
 
 
@@ -35,3 +37,4 @@ class WriteOffLineWizardLine(models.TransientModel):
     sale_order_line_id = fields.Many2one('sale.order.line')
     handover_number = fields.Char('Handover')
     file_validate = fields.Binary('file')
+    file_name = fields.Char("File Name")
