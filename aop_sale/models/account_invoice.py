@@ -95,6 +95,7 @@ class AccountInvoiceLine(models.Model):
     tax_invoice_amount = fields.Float('Tax invoice amount')
 
     sale_order_line_id = fields.Many2one('sale.order.line', 'Sale order line')
+    price_subtotal = fields.Monetary(related='sale_order_line_id.price_subtotal', readonly=True)
     from_location_id = fields.Many2one('res.partner', related='sale_order_line_id.from_location_id', readonly=True)
     to_location_id = fields.Many2one('res.partner', related='sale_order_line_id.to_location_id', readonly=True)
 

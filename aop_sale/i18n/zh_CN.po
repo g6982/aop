@@ -2646,6 +2646,21 @@ msgid "Tax invoice amount"
 msgstr "开票金额"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__sale_order_line_id
+msgid "Sale order line"
+msgstr "订单行"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__from_location_id
+msgid ""
+msgstr "源位置"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__to_location_id
+msgid ""
+msgstr "目的位置"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__tax_invoice_no
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_no
 msgid "Tax invoice no"

@@ -114,3 +114,13 @@ msgstr "结算单位"
 #, python-format
 msgid "Sales Order"
 msgstr "正式订单"
+
+#. module: sale
+#: model_terms:ir.ui.view,arch_db:sale.view_sale_advance_payment_inv
+msgid "Create Invoices"
+msgstr "创建结算清单"
+
+#. module: sale
+#: model_terms:ir.ui.view,arch_db:sale.view_order_form
+msgid "Invoices"
+msgstr "收入结算清单"

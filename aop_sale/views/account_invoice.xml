@@ -15,6 +15,7 @@
 
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="replace">
                     <field name="sale_order_line_id"/>
+                    <field name="price_subtotal"/>
                     <field name="from_location_id"/>
                     <field name="to_location_id"/>
                 </xpath>
