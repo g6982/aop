@@ -390,5 +390,16 @@
                 action="product_vehicle_type_action_form" id="menu_product_vehicle_type_stock"
                 parent="stock.menu_product_in_config_stock"/>
 
+
+<!--        核销-->
+        <record id="action_write_off_line_order_wizard" model="ir.actions.act_window">
+            <field name="name">Write-off</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">write.off.line.wizard</field>
+            <field name="target">new</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
     </data>
 </odoo>

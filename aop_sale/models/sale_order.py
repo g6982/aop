@@ -92,6 +92,8 @@ class SaleOrderLine(models.Model):
 
     allowed_vin_ids = fields.Many2many('stock.production.lot', copy=False)
 
+    file_validate = fields.Binary('file')
+
     def replenish_stock_picking_order(self):
         try:
             for line in self:
@@ -344,6 +346,38 @@ class SaleOrder(models.Model):
 
     # 部分完成的情况
     state = fields.Selection(selection_add=[('part_done', 'Part done')])
+
+    write_off_state = fields.Selection([
+        ('draft', 'Draft'),
+        ('done', 'Done')
+    ], default='draft', string='Write off state')
+
+    # 核销的数据
+    def _get_write_off_context(self):
+        order_lines = self.order_line
+
+        res = []
+        for x in order_lines:
+            res.append(
+                (0, 0, {
+                    'sale_order_line_id': x.id
+                })
+            )
+        return {
+            'default_write_off_line_ids': res
+        }
+
+    def write_off_order_line(self):
+        context_write_off = self._get_write_off_context()
+        return {
+            'name': 'Write-off',
+            'view_type': 'form',
+            "view_mode": 'form',
+            'res_model': 'write.off.line.wizard',
+            'type': 'ir.actions.act_window',
+            'context': context_write_off,
+            'target': 'new',
+        }
 
     @api.depends('partner_id')
     def _get_order_type(self):

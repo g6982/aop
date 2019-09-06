@@ -179,11 +179,9 @@
 
                 </xpath>
 
-                <!--
-                <xpath expr="//group[@name='sale_total']" position="attributes">
-                    <attribute name="invisible">[('state', '!=', 'sale')]</attribute>
+                <xpath expr="//button[@name='action_cancel']" position="after">
+                    <button name="write_off_order_line" string="Write-off" type="object" class="oe_highlight"/>
                 </xpath>
-                -->
 
 
 
@@ -217,6 +215,10 @@
                            domain="[('type','=','service'), ('id', 'in', allowed_service_product_ids)]" attrs="{'required': 0}"/>
                     <field name="delivery_carrier_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                     <field name="customer_contract_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                </xpath>
+
+                <xpath expr="//header/field[@name='state']" position="after">
+                    <field name="write_off_state" widget="statusbar" statusbar_visible="draft,done"/>
                 </xpath>
 
             </field>

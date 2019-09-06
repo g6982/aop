@@ -50,6 +50,7 @@
         'wizard/sale_make_invoice_advance_view.xml',
         'wizard/fill_service_product_wizard.xml',
         'wizard/statement_report.xml',
+        'wizard/write_off_order_line.xml',
         'report/report_statement.xml',
     ],
 }
