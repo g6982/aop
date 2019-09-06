@@ -39,6 +39,7 @@
             <field name="mode">extension</field>
             <field name="arch" type="xml">
                 <field name="partner_id" position="before">
+                    <field name="reconciliation_batch_no"/>
                     <field name="account_period_id"/>
                 </field>
             </field>
@@ -69,6 +70,18 @@
                         <field name="account_period_id"/>
                     </xpath>
                 </data>
+            </field>
+        </record>
+
+        <record id="view_account_invoice_filter_inherit_aop_sale" model="ir.ui.view">
+            <field name="name">account.invoice.groupby</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="reconciliation_batch_no"/>
+                </xpath>
+
             </field>
         </record>
 
