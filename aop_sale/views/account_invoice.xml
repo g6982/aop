@@ -2,8 +2,6 @@
 <odoo>
     <data>
 
-
-
         <!-- 收入台账form   -->
         <record id="view_account_invoice_form_inherit" model="ir.ui.view">
             <field name="name">account.invoice.form</field>
@@ -11,11 +9,15 @@
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
 
-
-
                 <xpath expr="//field[@name='cash_rounding_id']" position="after">
-                       <field name="account_period_id"/>
-                   </xpath>
+                    <field name="account_period_id"/>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="replace">
+                    <field name="sale_order_line_id"/>
+                    <field name="from_location_id"/>
+                    <field name="to_location_id"/>
+                </xpath>
 
             </field>
         </record>
