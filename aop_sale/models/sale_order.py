@@ -370,7 +370,7 @@ class SaleOrder(models.Model):
     def write_off_order_line(self):
         context_write_off = self._get_write_off_context()
         return {
-            'name': 'Write-off',
+            'name': _('Write-off'),
             'view_type': 'form',
             "view_mode": 'form',
             'res_model': 'write.off.line.wizard',
