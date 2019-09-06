@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-03 05:45+0000\n"
-"PO-Revision-Date: 2019-09-03 05:45+0000\n"
+"POT-Creation-Date: 2019-09-06 06:23+0000\n"
+"PO-Revision-Date: 2019-09-06 06:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -635,6 +635,8 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__create_uid
 msgid "Created by"
 msgstr "创建人"
 
@@ -671,6 +673,8 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__create_date
 msgid "Created on"
 msgstr "创建时间"
 
@@ -876,6 +880,8 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
@@ -894,6 +900,7 @@ msgstr "单据关注者"
 #: selection:customer.aop.contract,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
 #: selection:mass.loss.order,state:0
+#: selection:sale.order,write_off_state:0
 #: selection:supplier.aop.contract,state:0
 msgid "Done"
 msgstr "完成"
@@ -916,6 +923,7 @@ msgstr ""
 #: selection:customer.aop.contract,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 #: selection:mass.loss.order,state:0
+#: selection:sale.order,write_off_state:0
 #: selection:supplier.aop.contract,state:0
 msgid "Draft"
 msgstr "草稿"
@@ -1046,6 +1054,8 @@ msgid "From Location"
 msgstr "源位置"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__from_location_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__from_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__from_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order__from_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__from_location_id
@@ -1081,6 +1091,11 @@ msgstr "分组"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__guide_price
 msgid "Guide Price"
 msgstr "指导价"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__handover_number
+msgid "Handover"
+msgstr "交接单号"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__handover_number
@@ -1127,6 +1142,8 @@ msgstr "有未清项"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__id
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__id
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__id
 msgid "ID"
 msgstr ""
 
@@ -1274,12 +1291,17 @@ msgid "International Commercial Terms are a series of predefined commercial term
 msgstr "国际商业条款是一系列用于国际交易的事先定义的商业条款。"
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_stock_location
+msgid "Inventory Locations"
+msgstr "库存位置"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_stock_location_route
 msgid "Inventory Routes"
 msgstr "库存路线"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:215
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:216
 #: model:ir.model,name:aop_sale.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
@@ -1439,6 +1461,8 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line____last_update
 msgid "Last Modified on"
 msgstr "最后修改日"
 
@@ -1475,6 +1499,8 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__write_uid
 msgid "Last Updated by"
 msgstr "最后更新者"
 
@@ -1511,6 +1537,8 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__write_date
 msgid "Last Updated on"
 msgstr "最后更新时间"
 
@@ -1528,6 +1556,11 @@ msgstr "上/下层"
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__line_ids
 msgid "Line"
 msgstr "行"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__line_wizard_id
+msgid "Line Wizard"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard__wizard_line_ids
@@ -2324,6 +2357,17 @@ msgid "Sale Order"
 msgstr "销售订单"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__sale_order_line_id
+msgid "Sale Order Line"
+msgstr "销售订单行"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__sale_order_line_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__sale_order_line_id
+msgid "Sale order line"
+msgstr "销售订单行"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
 msgstr "销售预付款发票"
@@ -2523,7 +2567,7 @@ msgstr "基于活动的状态 \n"
 " 计划：未来的活动。"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_warehouse.py:25
+#: code:addons/aop_sale/models/stock_warehouse.py:30
 #, python-format
 msgid "Stock"
 msgstr ""
@@ -2544,6 +2588,8 @@ msgid "Stock batch"
 msgstr "批量调度"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__line_price_subtotal
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__line_price_subtotal
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__price_subtotal
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 msgid "Subtotal"
@@ -2646,26 +2692,6 @@ msgid "Tax invoice amount"
 msgstr "开票金额"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__sale_order_line_id
-msgid "Sale order line"
-msgstr "订单行"
-
-#. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__from_location_id
-msgid ""
-msgstr "接车点"
-
-#. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__line_price_subtotal
-msgid ""
-msgstr "订单价"
-
-#. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__to_location_id
-msgid ""
-msgstr "送车点"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__tax_invoice_no
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_no
 msgid "Tax invoice no"
@@ -2747,7 +2773,7 @@ msgstr ""
 
 #. module: aop_sale
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:131
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:332
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:335
 #, python-format
 msgid "There is no income account defined for this product: \"%s\". You may have to install a chart of account from Accounting app, settings menu."
 msgstr ""
@@ -2766,10 +2792,12 @@ msgid "To Location"
 msgstr "目的位置"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__to_location_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__to_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__to_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__to_location_id
 msgid "To location"
-msgstr "送车点"
+msgstr "目的位置"
 
 #. module: aop_sale
 #: selection:account.tax.invoice,activity_state:0
@@ -2928,6 +2956,8 @@ msgid "User manage"
 msgstr "用户管理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__vin_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__vin_id
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__vin_code
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__vin
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__vin_id
@@ -3064,6 +3094,23 @@ msgid "When checked, the route will be selectable in the Inventory tab of the Pr
 msgstr "一旦勾选了，此路径在产品表格中的库存页面将会显示为可选的。这将会比仓库路径的优先级更高。"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__write_off_line_ids
+msgid "Write Off Line"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order__write_off_state
+msgid "Write off state"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_write_off_line_order_wizard
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_write_off_order_line_wizard_form
+msgid "Write-off"
+msgstr "核销"
+
+#. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__partner_id
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice_line__partner_id
 msgid "You can find a contact by its Name, TIN, Email or Internal Reference."
@@ -3076,7 +3123,7 @@ msgid "You can not create recursive analytic accounts."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:532
+#: code:addons/aop_sale/models/sale_order.py:567
 #, python-format
 msgid "You can not make order until the product have vin or stock."
 msgstr "你要等到产品有vin或库存才可以确认订单."
@@ -3155,6 +3202,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
 msgid "days"
 msgstr "天"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__file_validate
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__file_validate
+msgid "file"
+msgstr "文件"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_fill_service_product_wizard
@@ -3300,6 +3353,9 @@ msgstr "名字和上级 必须唯一"
 
 #. module: aop_sale
 #: sql_constraint:delivery.carrier:0
+#: sql_constraint:stock.location:0
+#: sql_constraint:stock.location.route:0
+#: sql_constraint:stock.warehouse:0
 msgid "the name must be unique!"
 msgstr ""
 
@@ -3322,6 +3378,16 @@ msgstr "铁路调度"
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__amount_by_group
 msgid "type: [(name, amount, base, formated amount, formated base)]"
 msgstr "类型: [(name, amount, base, formated amount, formated base)]"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_write_off_line_wizard
+msgid "write.off.line.wizard"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_write_off_line_wizard_line
+msgid "write.off.line.wizard.line"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_insurance_management
