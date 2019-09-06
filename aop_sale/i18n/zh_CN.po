@@ -2656,6 +2656,11 @@ msgid ""
 msgstr "源位置"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__line_price_subtotal
+msgid ""
+msgstr "订单价"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__to_location_id
 msgid ""
 msgstr "目的位置"

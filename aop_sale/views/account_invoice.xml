@@ -15,9 +15,17 @@
 
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="replace">
                     <field name="sale_order_line_id"/>
-                    <field name="price_subtotal"/>
+                    <field name="vin_id"/>
                     <field name="from_location_id"/>
                     <field name="to_location_id"/>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="replace">
+                    <field name="line_price_subtotal"/>
+                </xpath>
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree" position="attributes">
+                    <attribute name="decoration-danger">line_price_subtotal != price_subtotal</attribute>
                 </xpath>
 
             </field>
