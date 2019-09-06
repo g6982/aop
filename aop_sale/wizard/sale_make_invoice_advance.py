@@ -208,8 +208,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
         try:
             inv_obj = self.env['account.invoice']
             res = inv_obj.create(invoice_res)
-            if not res:
-                raise UserError('Error!')
+            # if not res:
+            #     raise UserError('Error!')
             view_id = self.env.ref('account.invoice_tree_with_onboarding').id
             form_id = self.env.ref('account.invoice_form').id
             return {
