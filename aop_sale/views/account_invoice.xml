@@ -82,6 +82,12 @@
                     <field name="reconciliation_batch_no"/>
                 </xpath>
 
+                <xpath expr="//filter[@name='group_by_partner_id']" position="before">
+                    <filter name="group_by_reconciliation_batch_no"
+                        string="Reconciliation batch no"
+                        context="{'group_by':'reconciliation_batch_no'}"/>
+                </xpath>
+
             </field>
         </record>
 
