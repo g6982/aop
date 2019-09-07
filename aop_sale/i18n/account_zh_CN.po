@@ -98,3 +98,8 @@ msgstr "成本结算清单"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_filter_inherit_aop_sale
 msgid "Reconciliation batch no"
 msgstr "对账批次号"
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.invoice_form
+msgid "Invoice Lines"
+msgstr "结算清单行"
