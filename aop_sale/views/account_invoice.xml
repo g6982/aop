@@ -28,6 +28,14 @@
                     <attribute name="decoration-danger">line_price_subtotal != price_subtotal</attribute>
                 </xpath>
 
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='team_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
             </field>
         </record>
 
@@ -80,6 +88,12 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='user_id']" position="after">
                     <field name="reconciliation_batch_no"/>
+                </xpath>
+
+                <xpath expr="//filter[@name='group_by_partner_id']" position="before">
+                    <filter name="group_by_reconciliation_batch_no"
+                        string="Reconciliation batch no"
+                        context="{'group_by':'reconciliation_batch_no'}"/>
                 </xpath>
 
             </field>
