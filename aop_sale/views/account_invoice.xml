@@ -21,6 +21,11 @@
                     <attribute name="string">Service Product</attribute>
                 </xpath>
 
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='uom_id']" position="before">
+                    <field name="line_price_subtotal"/>
+                    <field name="purchase_line_price" string="Purchase price"/>
+                </xpath>
+
             </field>
         </record>
 

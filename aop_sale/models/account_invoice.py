@@ -109,4 +109,5 @@ class AccountInvoiceLine(models.Model):
     to_location_id = fields.Many2one('res.partner', related='sale_order_line_id.to_location_id', readonly=True)
     vin_id = fields.Many2one('stock.production.lot', 'VIN', related='sale_order_line_id.vin', readonly=True)
     contract_price = fields.Float('Contract price')
+    purchase_line_price = fields.Monetary(related='purchase_line_id.price_subtotal')
 
