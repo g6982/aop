@@ -3427,3 +3427,7 @@ msgstr ""
 msgid "采购订单"
 msgstr ""
 
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
+msgid "Service Product"
+msgstr "服务产品"
