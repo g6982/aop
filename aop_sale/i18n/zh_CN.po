@@ -3436,3 +3436,40 @@ msgstr "服务产品"
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 msgid "Purchase price"
 msgstr "采购价"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__tmp_estimate
+msgid "Temporary estimate"
+msgstr "暂估"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__pre_billing
+msgid "Pre-billing"
+msgstr "预开票"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__advance_receipt
+msgid "Advance receipt"
+msgstr "预收票"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__period_id
+msgid "Period"
+msgstr "期间"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_month_close_wizard_form
+msgid "Monthly"
+msgstr "月结"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_month_close_wizard_form
+msgid "Cancel"
+msgstr "取消月结"
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.month_close_wizard_menu_id
+#: model:ir.ui.menu,name:aop_sale.month_close_wizard_id
+#: model:ir.actions.act_window,name:aop_sale.action_month_close_wizard_view
+msgid "Monthly"
+msgstr "月结"

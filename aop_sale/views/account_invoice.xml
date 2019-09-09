@@ -24,6 +24,12 @@
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='uom_id']" position="before">
                     <field name="line_price_subtotal"/>
                     <field name="purchase_line_price" string="Purchase price"/>
+                    <field name="tmp_estimate"/>
+                    <field name="advance_receipt"/>
+                </xpath>
+
+                <xpath expr="//sheet" position="attributes">
+                    <attribute name="class">o_form_sheet_full_width</attribute>
                 </xpath>
 
             </field>
@@ -50,6 +56,8 @@
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="replace">
                     <field name="contract_price"/>
                     <field name="line_price_subtotal"/>
+                    <field name="tmp_estimate"/>
+                    <field name="pre_billing"/>
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_line_ids']/tree" position="attributes">

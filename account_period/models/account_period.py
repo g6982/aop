@@ -24,3 +24,5 @@ class AccountPeriod(models.Model):
                              help='When monthly periods are created. The status is \'Draft\'. At the end of monthly period it is in \'Done\' status.')
     company_id = fields.Many2one('res.company', related='fiscalyear_id.company_id', string='Company', store=True,
                                  readonly=True)
+
+    monthly_state = fields.Boolean('Monthly state')

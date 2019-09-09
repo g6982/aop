@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_month_close_wizard_form" model="ir.ui.view">
+            <field name="name">month.close.wizard</field>
+            <field name="model">month.close.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="period_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                    </group>
+
+                    <footer>
+                        <button name="start_generate_monthly" string="Monthly" class="oe_highlight"
+                                type="object"/>
+                        <button name="cancel_monthly" string="Cancel" class="oe_highlight"
+                                type="object"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

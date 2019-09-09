@@ -7,5 +7,6 @@ from . import import_dispatch_order
 from . import fill_service_product_wizard
 from . import statement_report
 from . import write_off_order_line
+from . import month_close
 
 

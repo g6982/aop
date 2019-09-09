@@ -111,3 +111,8 @@ class AccountInvoiceLine(models.Model):
     contract_price = fields.Float('Contract price')
     purchase_line_price = fields.Monetary(related='purchase_line_id.price_subtotal')
 
+    tmp_estimate = fields.Float('Temporary estimate')
+
+    pre_billing = fields.Float('Pre-billing')
+    advance_receipt = fields.Float('Advance receipt')
+

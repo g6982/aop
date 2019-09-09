@@ -401,5 +401,19 @@
             <field name="view_mode">form</field>
         </record>
 
+        <menuitem id="month_close_wizard_menu_id" parent="account.menu_finance" name="Monthly"/>
+
+        <record id="action_month_close_wizard_view" model="ir.actions.act_window">
+            <field name="name">Monthly</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">month.close.wizard</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <menuitem id="month_close_wizard_id" parent="month_close_wizard_menu_id" action="action_month_close_wizard_view"
+                  name="Monthly"/>
+
     </data>
 </odoo>
