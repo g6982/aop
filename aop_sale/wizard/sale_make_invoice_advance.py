@@ -148,6 +148,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
         else:
             tax_ids = taxes.ids
 
+        contract_price = self._get_contract_price(so_line)
+
         invoice = inv_obj.create({
             'name': order.client_order_ref or order.name,
             'origin': order.name,
@@ -167,6 +169,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 'product_id': self.product_id.id,
                 'sale_line_ids': [(6, 0, [so_line.id])],
                 'sale_order_line_id': so_line.id,
+                'contract_price': contract_price,
                 'invoice_line_tax_ids': [(6, 0, tax_ids)],
                 'analytic_tag_ids': [(6, 0, so_line.analytic_tag_ids.ids)],
                 'account_analytic_id': order.analytic_account_id.id or False,
@@ -266,6 +269,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
         for sale_id in legal_order_line_ids:
             invoice_data = self._invoice_data(sale_id.order_id)
 
+            contract_price = self._get_contract_price(sale_id)
             for product_id in product_ids:
                 tmp = invoice_data
                 account_id = self._get_account_id(product_id)
@@ -280,6 +284,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         'uom_id': product_id.uom_id.id,
                         'sale_line_ids': [(6, 0, sale_id.ids)],
                         'sale_order_line_id': sale_id[0].id,
+                        'contract_price': contract_price,
                         'invoice_line_tax_ids': [(6, 0, product_id.taxes_id.ids)],
                         'analytic_tag_ids': False,
                         'account_analytic_id': False
@@ -300,6 +305,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
             # for line in sale_id.order_line:
             for line in legal_order_line_ids:
                 account_id = self._get_account_id(line.service_product_id, order=line.order_id)
+                contract_price = self._get_contract_price(line)
                 line_data.append((0, 0, {
                     'name': str(time.time()),
                     'origin': sale_id.name,
@@ -311,6 +317,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     'product_id': line.service_product_id.id,
                     'sale_line_ids': [(6, 0, [line.id])],
                     'sale_order_line_id': line.id,
+                    'contract_price': contract_price,
                     'invoice_line_tax_ids': [(6, 0, line.tax_id.ids)],
                     'analytic_tag_ids': [(6, 0, line.analytic_tag_ids.ids)],
                     'account_analytic_id': sale_id.analytic_account_id.id or False,
@@ -337,6 +344,23 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     'You may have to install a chart of account from Accounting app, settings menu.') %
                 (service_product_id.name,))
         return account_id
+
+    # 合同价格
+    def _get_contract_price(self, line_id):
+        delivery_obj = self.env['delivery.carrier']
+
+        from_location_id = line_id._transfer_district_to_location(line_id.from_location_id)
+        to_location_id = line_id._transfer_district_to_location(line_id.to_location_id)
+
+        customer_contract_id = self.env['customer.aop.contract'].search([
+            ('partner_id', '=', line_id.order_partner_id.id)
+        ])
+        delivery_id = delivery_obj.search([
+            ('from_location_id', '=', from_location_id.id),
+            ('to_location_id', '=', to_location_id.id),
+            ('customer_contract_id', '=', customer_contract_id.id)
+        ])
+        return delivery_id[0].fixed_price if delivery_id else 0
 
 
 class InvoiceOrderLine(models.TransientModel):

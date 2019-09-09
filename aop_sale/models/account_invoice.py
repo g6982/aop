@@ -88,6 +88,15 @@ class AccountInvoice(models.Model):
         })
         return data
 
+    def _prepare_invoice_line_from_po_line(self, line):
+        res = super(AccountInvoice, self)._prepare_invoice_line_from_po_line(line)
+
+        if line.sale_line_id:
+            res.update({
+                'sale_order_line_id': line.sale_line_id
+            })
+        return res
+
 
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
@@ -99,4 +108,5 @@ class AccountInvoiceLine(models.Model):
     from_location_id = fields.Many2one('res.partner', related='sale_order_line_id.from_location_id', readonly=True)
     to_location_id = fields.Many2one('res.partner', related='sale_order_line_id.to_location_id', readonly=True)
     vin_id = fields.Many2one('stock.production.lot', 'VIN', related='sale_order_line_id.vin', readonly=True)
+    contract_price = fields.Float('Contract price')
 

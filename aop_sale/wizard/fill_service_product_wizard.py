@@ -60,6 +60,7 @@ class FillServiceProductWizard(models.TransientModel):
                     'service_product_id': service_product_id.id if service_product_id else False,
                     'product_qty': line_id.product_uom_qty,
                     'name': line_id.name,
+                    'sale_line_id': line_id.sale_order_line_id.id,
                     'date_planned': fields.Datetime.now(),
                     #'price_unit': line_id.service_product_id.lst_price,
                     'price_unit': amount,

@@ -59,5 +59,4 @@ class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
     transfer_product_id = fields.Many2one('product.product', 'Transfer product')
-
     transfer_way = fields.Char('Way')

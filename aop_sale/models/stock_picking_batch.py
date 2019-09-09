@@ -104,7 +104,7 @@ class StockPickingBatch(models.Model):
                     'transfer_product_id': line_id.product_id.id,
                     'service_product_id': service_product_id.id if service_product_id else False,
                     'product_qty': line_id.product_uom_qty,
-                    #'name': line_id.service_product_id.name,
+                    'sale_line_id': line_id.sale_order_line_id.id,
                     'name': line_id.name,
                     'date_planned': fields.Datetime.now(),
                     'price_unit': line_id.service_product_id.lst_price,

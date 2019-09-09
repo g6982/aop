@@ -23,7 +23,7 @@
 
                 <field name="picking_purchase_id"
                        string="采购订单"
-                       attrs="{'invisible': ('picking_purchase_id', '=', False)}"
+                       attrs="{'invisible': [('picking_purchase_id', '=', False)]}"
                 />
 
             </field>
@@ -34,7 +34,7 @@
                         string="Create purchase"
                         type="object"
                         class="oe_highlight"
-                        attrs="{'invisible': ('picking_purchase_id', '!=', False)}"
+                        attrs="{'invisible': [('picking_purchase_id', '!=', False)]}"
                 />
 
             </xpath>

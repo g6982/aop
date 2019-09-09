@@ -2,6 +2,24 @@
 <odoo>
     <data>
 
+        <!-- 成本台账form   -->
+        <record id="form_view_invoice_supplier_form_inherit" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="after">
+                    <field name="purchase_line_id"/>
+                    <field name="sale_order_line_id"/>
+                    <field name="vin_id"/>
+                    <field name="from_location_id"/>
+                    <field name="to_location_id"/>
+                </xpath>
+
+            </field>
+        </record>
+
         <!-- 收入台账form   -->
         <record id="view_account_invoice_form_inherit" model="ir.ui.view">
             <field name="name">account.invoice.form</field>
@@ -21,6 +39,7 @@
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="replace">
+                    <field name="contract_price"/>
                     <field name="line_price_subtotal"/>
                 </xpath>
 
@@ -70,7 +89,6 @@
         <record id="account_invoice_supplier_form__inherit_aop_sale" model="ir.ui.view">
             <field name="name">account.invoice.supplier.form..inherit.aop_sale</field>
             <field name="model">account.invoice</field>
-
             <field name="inherit_id" ref="purchase.view_invoice_supplier_purchase_form"/>
             <field name="arch" type="xml">
                 <data>
