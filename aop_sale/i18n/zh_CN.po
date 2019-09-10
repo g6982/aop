@@ -3440,7 +3440,7 @@ msgstr "采购价"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__tmp_estimate
 msgid "Temporary estimate"
-msgstr "暂估"
+msgstr "收入确认"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__pre_billing
