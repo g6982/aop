@@ -3439,16 +3439,24 @@ msgstr "采购价"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__tmp_estimate
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice__tmp_estimate
 msgid "Temporary estimate"
 msgstr "收入确认"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__contract_price
+msgid "Contract price"
+msgstr "合同价"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__pre_billing
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice__pre_billing
 msgid "Pre-billing"
 msgstr "预开票"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__advance_receipt
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice__advance_receipt
 msgid "Advance receipt"
 msgstr "预收票"
 
@@ -3459,11 +3467,6 @@ msgstr "期间"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_month_close_wizard_form
-msgid "Monthly"
-msgstr "月结"
-
-#. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_month_close_wizard_form
 msgid "Cancel"
 msgstr "取消月结"
 
@@ -3471,5 +3474,6 @@ msgstr "取消月结"
 #: model:ir.ui.menu,name:aop_sale.month_close_wizard_menu_id
 #: model:ir.ui.menu,name:aop_sale.month_close_wizard_id
 #: model:ir.actions.act_window,name:aop_sale.action_month_close_wizard_view
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_month_close_wizard_form
 msgid "Monthly"
 msgstr "月结"

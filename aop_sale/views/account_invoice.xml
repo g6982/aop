@@ -32,6 +32,11 @@
                     <attribute name="class">o_form_sheet_full_width</attribute>
                 </xpath>
 
+                <xpath expr="//field[@name='account_period_id']" position="after">
+                    <field name="tmp_estimate"/>
+                    <field name="advance_receipt"/>
+                </xpath>
+
             </field>
         </record>
 
@@ -41,6 +46,11 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='date_due']" position="after">
+                    <field name="tmp_estimate"/>
+                    <field name="pre_billing"/>
+                </xpath>
 
                 <xpath expr="//field[@name='cash_rounding_id']" position="after">
                     <field name="account_period_id"/>

@@ -17,6 +17,17 @@ class AccountInvoice(models.Model):
 
     account_period_id = fields.Many2one('account.period', string='Period')
 
+    tmp_estimate = fields.Float('Temporary estimate', compute='_compute_estimate_billing_receipt', store=True)
+    pre_billing = fields.Float('Pre-billing', compute='_compute_estimate_billing_receipt', store=True)
+    advance_receipt = fields.Float('Advance receipt', compute='_compute_estimate_billing_receipt', store=True)
+
+    @api.depends('invoice_line_ids.pre_billing', 'invoice_line_ids.tmp_estimate', 'invoice_line_ids.advance_receipt')
+    def _compute_estimate_billing_receipt(self):
+        for line in self:
+            line.pre_billing = sum(x.pre_billing for x in line.invoice_line_ids)
+            line.tmp_estimate = sum(x.tmp_estimate for x in line.invoice_line_ids)
+            line.advance_receipt = sum(x.advance_receipt for x in line.invoice_line_ids)
+
     def create_account_tax_invoice(self):
         if self.account_tax_invoice_id:
             view = self.env.ref('aop_sale.tax_invoice_form')
