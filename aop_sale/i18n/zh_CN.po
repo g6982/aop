@@ -3458,7 +3458,7 @@ msgstr "预开票"
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__advance_receipt
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__advance_receipt
 msgid "Advance receipt"
-msgstr "预收票"
+msgstr "预开票"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__period_id
