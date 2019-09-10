@@ -283,3 +283,7 @@ msgstr "待关闭"
 msgid "When monthly periods are created. The status is 'Draft'. At the end of monthly period it is in 'Done' status."
 msgstr "会计月度新建时，状态为“草稿”；会计月度结束时，状态为“完成”。"
 
+#. module: account_period
+#: model:ir.model.fields,field_description:account_period.field_account_period__monthly_state
+msgid "Monthly state"
+msgstr "月结状态"
