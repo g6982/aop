@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0-20190412\n"
+"Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-03 05:57+0000\n"
-"PO-Revision-Date: 2019-06-03 05:57+0000\n"
+"POT-Creation-Date: 2019-09-10 01:33+0000\n"
+"PO-Revision-Date: 2019-09-10 01:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "会计期间"
 #. module: account_period
 #: model_terms:ir.actions.act_window,help:account_period.action_account_period
 msgid "An accounting period typically is a month or a quarter. It\n"
-"            usually corresponds to the periods of the tax declaration."
+"                usually corresponds to the periods of the tax declaration."
 msgstr "会计期间通常是一个月或一个季度。它通常对应纳税申报的期间。"
 
 #. module: account_period
@@ -96,13 +96,16 @@ msgstr "创建时间"
 #. module: account_period
 #: model_terms:ir.actions.act_window,help:account_period.action_account_fiscalyear
 msgid "Define your company's financial year according to your needs. A\n"
-"            financial year is a period at the end of which a company's\n"
-"            accounts are made up (usually 12 months). The financial year is\n"
-"            usually referred to by the date in which it ends. For example,\n"
-"            if a company's financial year ends November 30, 2011, then\n"
-"            everything between December 1, 2010 and November 30, 2011\n"
-"            would be referred to as FY 2011."
-msgstr "单击建立新的会计年度.\n              </p><p>\n                根据需要定义公司的会计年度。会计年度通常是公司的账户最后结转的期间，通常是12个月。会计年度通常和结束日期有关。例如，假如一个公司的会计年度结束在2011年11月30日，那么在2010年30月1日至1年2011月12日的每一个交易会被记录到2011会计年度。              </p>\n            "
+"                financial year is a period at the end of which a company's\n"
+"                accounts are made up (usually 12 months). The financial year is\n"
+"                usually referred to by the date in which it ends. For example,\n"
+"                if a company's financial year ends November 30, 2011, then\n"
+"                everything between December 1, 2010 and November 30, 2011\n"
+"                would be referred to as FY 2011."
+msgstr "单击建立新的会计年度.\n"
+"              </p><p>\n"
+"                根据需要定义公司的会计年度。会计年度通常是公司的账户最后结转的期间，通常是12个月。会计年度通常和结束日期有关。例如，假如一个公司的会计年度结束在2011年11月30日，那么在2010年30月1日至1年2011月12日的每一个交易会被记录到2011会计年度。              </p>\n"
+"            "
 
 #. module: account_period
 #: model:ir.model.fields,field_description:account_period.field_account_fiscalyear__display_name
@@ -118,7 +121,7 @@ msgstr "持续时间"
 #. module: account_period
 #: model:ir.model.fields,field_description:account_period.field_account_fiscalyear__date_stop
 msgid "End Date"
-msgstr "终止日期"
+msgstr "结束日期"
 
 #. module: account_period
 #: model:ir.model.fields,field_description:account_period.field_account_period__date_stop
@@ -137,7 +140,7 @@ msgstr "会计年度"
 #: model:ir.actions.act_window,name:account_period.action_account_fiscalyear
 #: model:ir.ui.menu,name:account_period.menu_action_account_fiscalyear
 msgid "Fiscal Years"
-msgstr "会计年度"
+msgstr "财年"
 
 #. module: account_period
 #: model_terms:ir.ui.view,arch_db:account_period.view_account_fiscalyear_form
@@ -158,7 +161,7 @@ msgstr "分组"
 #: model:ir.model.fields,field_description:account_period.field_account_fiscalyear__id
 #: model:ir.model.fields,field_description:account_period.field_account_period__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: account_period
 #: model:ir.model,name:account_period.model_account_move
@@ -187,6 +190,11 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:account_period.field_account_period__write_date
 msgid "Last Updated on"
 msgstr "最后更新时间"
+
+#. module: account_period
+#: model:ir.model.fields,field_description:account_period.field_account_period__monthly_state
+msgid "Monthly state"
+msgstr "月结状态"
 
 #. module: account_period
 #: selection:account.fiscalyear,state:0
