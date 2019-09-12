@@ -47,6 +47,13 @@
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
 
+                 <xpath expr="//field[@name='state']" position="attributes">
+                     <attribute name="statusbar_visible">draft,account,open,paid</attribute>
+                     <!--
+                     <attribute name="options">{'clickable': '1'}</attribute>
+                     -->
+                </xpath>
+
                 <xpath expr="//field[@name='date_due']" position="after">
                     <field name="tmp_estimate"/>
                     <field name="pre_billing"/>
@@ -64,14 +71,15 @@
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="replace">
-                    <field name="contract_price"/>
                     <field name="line_price_subtotal" string='Sale line price'/>
+                    <field name="contract_price"/>
+                    <field name="customer_price"/>
                     <field name="tmp_estimate"/>
                     <field name="pre_billing"/>
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_line_ids']/tree" position="attributes">
-                    <attribute name="decoration-danger">line_price_subtotal != price_subtotal</attribute>
+                    <attribute name="decoration-danger">contract_price != customer_price</attribute>
                 </xpath>
 
                 <xpath expr="//field[@name='user_id']" position="attributes">

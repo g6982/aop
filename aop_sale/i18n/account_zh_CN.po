@@ -103,3 +103,9 @@ msgstr "对账批次号"
 #: model_terms:ir.ui.view,arch_db:account.invoice_form
 msgid "Invoice Lines"
 msgstr "结算清单行"
+
+#. module: account
+#: selection:account.invoice,state:0 selection:account.invoice.report,state:0
+#: model_terms:ir.ui.view,arch_db:account.view_account_invoice_filter
+msgid "Open"
+msgstr "完成"

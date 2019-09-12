@@ -21,6 +21,23 @@ class AccountInvoice(models.Model):
     pre_billing = fields.Float('Pre-billing', compute='_compute_estimate_billing_receipt', store=True)
     advance_receipt = fields.Float('Advance receipt', compute='_compute_estimate_billing_receipt', store=True)
 
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('account', 'Account Checking'),
+        ('open', 'Open'),
+        ('in_payment', 'In Payment'),
+        ('paid', 'Paid'),
+        ('cancel', 'Cancelled'),
+    ], string='Status', index=True, readonly=True, default='draft',
+        track_visibility='onchange', copy=False,
+        help=" * The 'Draft' status is used when a user is encoding a new and unconfirmed Invoice.\n"
+             " * The 'Open' status is used when user creates invoice, an invoice number is generated. It stays in the open status till the user pays the invoice.\n"
+             " * The 'In Payment' status is used when payments have been registered for the entirety of the invoice in a journal configured to post entries at bank reconciliation only, and some of them haven't been reconciled with a bank statement line yet.\n"
+             " * The 'Paid' status is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled.\n"
+             " * The 'Cancelled' status is used when user cancel invoice.")
+
+
+
     @api.depends('invoice_line_ids.pre_billing', 'invoice_line_ids.tmp_estimate', 'invoice_line_ids.advance_receipt')
     def _compute_estimate_billing_receipt(self):
         for line in self:
@@ -126,4 +143,6 @@ class AccountInvoiceLine(models.Model):
 
     pre_billing = fields.Float('Pre-billing')
     advance_receipt = fields.Float('Advance receipt')
+
+    customer_price = fields.Float('Customer price')
 
