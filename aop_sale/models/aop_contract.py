@@ -34,12 +34,14 @@ class AopContract(models.Model):
     aging = fields.Float('Aging(day)', default=1)
     contract_rule_ids = fields.One2many('contract.stock.rule.line', 'rule_contract_id', 'Contract rule line')
 
+    active = fields.Boolean(default=True)
+
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done')
-    ], default='draft', track_visibility='always')
-
-
+    ], default='draft',
+        string='State',
+        track_visibility='always')
 
     @api.onchange('delivery_carrier_ids')
     def onchange_rule_line(self):
@@ -55,11 +57,17 @@ class AopContract(models.Model):
         self.contract_rule_ids = data
 
     def set_contract_state(self):
-        self.state = 'done'
+        self.write({
+            'state': 'done',
+            'active': True
+        })
 
     def cancel_contract(self):
-        if self.state == 'done':
-            self.state = 'draft'
+        if self.state == 'done' or self.active:
+            self.write({
+                'state': 'draft',
+                'active': False
+            })
 
     # @api.model
     # def create(self, vals):

@@ -352,6 +352,27 @@ class SaleOrder(models.Model):
         ('done', 'Done')
     ], default='draft', string='Write off state')
 
+    # 检查月结
+    @api.constrains('partner_id')
+    def _check_monthly_state(self):
+        period_obj = self.env['account.period']
+        search_domain = False
+        if self.create_date:
+            search_domain = [
+                ('date_start', '<=', self.create_date),
+                ('date_stop', '>=', self.create_date),
+                ('monthly_state', '=', True)
+            ]
+        elif self.date_order:
+            search_domain = [
+                ('date_start', '<=', self.date_order),
+                ('date_stop', '>=', self.date_order),
+                ('monthly_state', '=', True)
+            ]
+        if search_domain:
+            if period_obj.search(search_domain):
+                raise UserError('Has been monthly!')
+
     # 核销的数据
     def _get_write_off_context(self):
         order_lines = self.order_line

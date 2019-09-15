@@ -364,6 +364,7 @@ msgstr "按 销售员"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_month_close_wizard_form
 msgid "Cancel"
 msgstr "取消"
@@ -909,6 +910,7 @@ msgstr "单据关注者"
 #: selection:aop.contract,state:0
 #: selection:customer.aop.contract,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 #: selection:mass.loss.order,state:0
 #: selection:sale.order,write_off_state:0
 #: selection:supplier.aop.contract,state:0
@@ -2588,7 +2590,7 @@ msgstr "合同开始时间"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__state
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__state
 msgid "State"
-msgstr "省/ 州"
+msgstr "状态"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_invoice_order_statement
