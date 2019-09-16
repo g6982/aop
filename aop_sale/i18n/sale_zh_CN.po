@@ -131,3 +131,8 @@ msgid ""
 "Invoices will be created in draft so that you can review\n"
 "                        them before validation."
 msgstr "草稿回款结算清单将被创建，以便于在验证前检查"
+
+#. module: sale_management
+#: model_terms:ir.ui.view,arch_db:sale_management.sale_order_view_form
+msgid "Create Invoice"
+msgstr "创建回款结算清单"
