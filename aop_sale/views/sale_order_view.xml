@@ -180,7 +180,7 @@
                 </xpath>
 
                 <xpath expr="//button[@name='action_cancel']" position="after">
-                    <button name="write_off_order_line" string="Write-off" type="object" class="oe_highlight"/>
+                    <button name="write_off_order_line" string="Write-off" type="object" class="oe_highlight" invisible="1"/>
                 </xpath>
 
 
