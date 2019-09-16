@@ -866,6 +866,11 @@ msgid "Dispatch"
 msgstr "调度订单"
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_purchase_fill_vin_product
+msgid "Purchase fill data"
+msgstr "采购回填数据"
+
+#. module: aop_sale
 #: code:addons/aop_sale/wizard/import_dispatch_order.py:53
 #, python-format
 msgid "Dispatch Order"
