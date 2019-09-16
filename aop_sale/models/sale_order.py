@@ -94,6 +94,18 @@ class SaleOrderLine(models.Model):
 
     file_validate = fields.Binary('file')
 
+    current_picking_id = fields.Many2one('stock.picking', 'Current picking task', compute='_compute_current_picking_id')
+    current_picking_type_id = fields.Many2one('stock.picking.type', related='current_picking_id.picking_type_id')
+
+    @api.multi
+    @api.depends('stock_picking_ids', 'stock_picking_ids.state')
+    def _compute_current_picking_id(self):
+        for line in self:
+            current_picking_id = line.stock_picking_ids.filtered(lambda x: x.state == 'assigned')
+            if not current_picking_id:
+                current_picking_id = line.stock_picking_ids[-1] if line.stock_picking_ids else False
+            line.current_picking_id = current_picking_id
+
     def replenish_stock_picking_order(self):
         try:
             for line in self:
