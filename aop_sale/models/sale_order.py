@@ -572,7 +572,12 @@ class SaleOrder(models.Model):
             res.order_line._compute_amount()
 
         return res
-
+    @api.multi
+    def write(self, vals):
+        for line in self:
+            line._check_monthly_state()
+        return super(SaleOrder, self).write(vals)
+    
     def get_vin_id_stock(self, line_id):
         res = self.env['stock.production.lot'].search([
             ('name', '=', line_id.vin_code),

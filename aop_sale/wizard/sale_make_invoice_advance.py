@@ -215,6 +215,20 @@ class SaleAdvancePaymentInv(models.TransientModel):
             #     raise UserError('Error!')
             view_id = self.env.ref('account.invoice_tree_with_onboarding').id
             form_id = self.env.ref('account.invoice_form').id
+            if self._context.get('period_id', False):
+                context = {
+                    'default_period_id': self._context.get('period_id')
+                }
+                return {
+                    'name': _('Monthly'),
+                    'view_type': 'form',
+                    "view_mode": 'form',
+                    'res_model': 'month.close.wizard',
+                    'type': 'ir.actions.act_window',
+                    'context': context,
+                    'target': 'new',
+                }
+
             return {
                 'name': _('Invoice'),
                 'view_type': 'form',
@@ -302,8 +316,13 @@ class SaleAdvancePaymentInv(models.TransientModel):
         for sale_id in legal_order_line_ids.mapped('order_id'):
             invoice_data = self._invoice_data(sale_id)
             line_data = []
-            # for line in sale_id.order_line:
-            for line in legal_order_line_ids:
+            # 筛选出没有生成结算清单的明细行
+            sale_line_ids = sale_id.order_line.filtered(lambda x: x if not x.invoice_lines else '')
+
+            # for line in legal_order_line_ids:
+            for line in sale_line_ids:
+                if not line:
+                    continue
                 account_id = self._get_account_id(line.service_product_id, order=line.order_id)
                 contract_price = self._get_contract_price(line)
                 line_data.append((0, 0, {
