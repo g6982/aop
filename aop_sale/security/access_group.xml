@@ -25,4 +25,9 @@
         <field name="comment">Restricted Menus Group</field>
     </record>
 
+<!--    采购单回填VIN-->
+    <record id="group_purchase_fill_vin_product" model="res.groups">
+        <field name="name">Purchase fill data</field>
+    </record>
+
 </odoo>

@@ -51,7 +51,8 @@ class StockPickingBatch(models.Model):
             })
         except Exception as e:
             self._cr.rollback()
-            raise UserError(e)
+            import traceback
+            raise UserError(traceback.format_exc())
 
     # 跨公司生成采购订单，对应的客户，即是对应公司的客户
     def _get_purchase_data(self):
@@ -102,18 +103,31 @@ class StockPickingBatch(models.Model):
                 data = {
                     'product_id': service_product_id.id if service_product_id else line_id.picking_type_id.service_product_id.id if line_id.picking_type_id.service_product_id else False,
                     'transfer_product_id': line_id.product_id.id,
-                    'service_product_id': service_product_id.id if service_product_id else False,
+                    # 'service_product_id': service_product_id.id if service_product_id else False,
                     'product_qty': line_id.product_uom_qty,
                     'sale_line_id': line_id.sale_order_line_id.id,
                     'name': line_id.name,
                     'date_planned': fields.Datetime.now(),
                     'price_unit': line_id.service_product_id.lst_price,
-                    'product_uom': line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False
+                    'product_uom': line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False,
+                    'batch_stock_picking_id': picking.id
                 }
                 res.append((0, 0, data))
                 # if not data['product_id'] in product_ids:
                 #     product_ids.append(data['product_id'])
                 #     res.append((0, 0, data))
+            if not picking.move_lines and service_product_id:
+                data = {
+                    'product_id': service_product_id.id,
+                    'product_qty': 1,
+                    'name': service_product_id.name,
+                    'product_uom': service_product_id.uom_id.id,
+                    'batch_stock_picking_id': picking.id,
+                    'price_unit': service_product_id.lst_price,
+                    'date_planned': fields.Datetime.now(),
+                }
+                res.append((0, 0, data))
+
         return [res, lost_service_product_id]
 
     # 供应商合同里面获取服务产品
