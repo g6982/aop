@@ -23,7 +23,7 @@ class MonthClose(models.TransientModel):
             raise UserError('Please cancel monthly first')
 
         sale_order_line_ids = self.find_sale_order_not_invoice()
-        
+
         if sale_order_line_ids:
             context = {
                 'active_ids': [x.mapped('order_id').id for x in sale_order_line_ids],

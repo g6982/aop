@@ -312,35 +312,31 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
         legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(lambda x: x if not x.invoice_lines else '')
 
-        # for sale_id in self.sale_order_ids:
-        for sale_id in legal_order_line_ids.mapped('order_id'):
-            invoice_data = self._invoice_data(sale_id)
+        for line_id in legal_order_line_ids:
+            sale_order_id = line_id.mapped('order_id')
+            invoice_data = self._invoice_data(sale_order_id)
             line_data = []
-            # 筛选出没有生成结算清单的明细行
-            sale_line_ids = sale_id.order_line.filtered(lambda x: x if not x.invoice_lines else '')
 
-            # for line in legal_order_line_ids:
-            for line in sale_line_ids:
-                if not line:
-                    continue
-                account_id = self._get_account_id(line.service_product_id, order=line.order_id)
-                contract_price = self._get_contract_price(line)
-                line_data.append((0, 0, {
-                    'name': str(time.time()),
-                    'origin': sale_id.name,
-                    'account_id': account_id,
-                    'price_unit': line.service_product_id.list_price,
-                    'quantity': 1.0,
-                    'discount': 0.0,
-                    'uom_id': line.service_product_id.uom_id.id,
-                    'product_id': line.service_product_id.id,
-                    'sale_line_ids': [(6, 0, [line.id])],
-                    'sale_order_line_id': line.id,
-                    'contract_price': contract_price,
-                    'invoice_line_tax_ids': [(6, 0, line.tax_id.ids)],
-                    'analytic_tag_ids': [(6, 0, line.analytic_tag_ids.ids)],
-                    'account_analytic_id': sale_id.analytic_account_id.id or False,
-                }))
+            account_id = self._get_account_id(line_id.service_product_id, order=sale_order_id)
+            contract_price = self._get_contract_price(line_id)
+
+            line_data.append((0, 0, {
+                'name': str(time.time()),
+                'origin': sale_order_id.name,
+                'account_id': account_id,
+                'price_unit': line_id.service_product_id.list_price,
+                'quantity': 1.0,
+                'discount': 0.0,
+                'uom_id': line_id.service_product_id.uom_id.id,
+                'product_id': line_id.service_product_id.id,
+                'sale_line_ids': [(6, 0, [line_id.id])],
+                'sale_order_line_id': line_id.id,
+                'contract_price': contract_price,
+                'invoice_line_tax_ids': [(6, 0, line_id.tax_id.ids)],
+                'analytic_tag_ids': [(6, 0, line_id.analytic_tag_ids.ids)],
+                'account_analytic_id': sale_order_id.analytic_account_id.id or False,
+            }))
+
             invoice_data.update({
                 'invoice_line_ids': line_data
             })
