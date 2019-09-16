@@ -22,7 +22,8 @@ class MonthClose(models.TransientModel):
         sale_order_line_ids = self.find_sale_order_not_invoice()
         if sale_order_line_ids:
             context = {
-                'active_ids': sale_order_line_ids.mapped('order_id').ids
+                'active_ids': sale_order_line_ids.mapped('order_id').ids,
+                'period_id': self.period_id
             }
             return {
                 'name': _('Make invoice'),

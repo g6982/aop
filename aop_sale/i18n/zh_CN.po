@@ -849,6 +849,11 @@ msgid "Dispatch"
 msgstr "调度订单"
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_check_aop_contract
+msgid "Check contract"
+msgstr "合同审核"
+
+#. module: aop_sale
 #: code:addons/aop_sale/wizard/import_dispatch_order.py:53
 #, python-format
 msgid "Dispatch Order"
@@ -968,7 +973,7 @@ msgstr "草稿发票"
 #. module: aop_sale
 #: model:res.groups,name:aop_sale.group_aop_sale_scheduling
 msgid "Draft order"
-msgstr ""
+msgstr "临时订单"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__date_due

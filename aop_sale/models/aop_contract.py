@@ -61,6 +61,13 @@ class AopContract(models.Model):
             'state': 'done',
             'active': True
         })
+    
+    @api.multi
+    def toggle_active(self):
+        res = super(AopContract, self).toggle_active()
+        for line in self:
+            line.state = 'done' if line.active else 'draft'
+        return res
 
     def cancel_contract(self):
         if self.state == 'done' or self.active:
