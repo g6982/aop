@@ -133,6 +133,8 @@ class AccountInvoiceLine(models.Model):
 
     sale_order_line_id = fields.Many2one('sale.order.line', 'Sale order line')
     line_price_subtotal = fields.Monetary(related='sale_order_line_id.price_subtotal', readonly=True)
+    line_price_unit =  fields.Float(related='sale_order_line_id.price_unit', readonly=True)
+
     from_location_id = fields.Many2one('res.partner', related='sale_order_line_id.from_location_id', readonly=True)
     to_location_id = fields.Many2one('res.partner', related='sale_order_line_id.to_location_id', readonly=True)
     vin_id = fields.Many2one('stock.production.lot', 'VIN', related='sale_order_line_id.vin', readonly=True)

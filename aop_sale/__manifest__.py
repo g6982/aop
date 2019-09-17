@@ -42,6 +42,7 @@
         'views/res_partner.xml',
         'views/menu.xml',
         'views/restricted_menu.xml',
+        'views/handover_vin_view.xml',
         'views/base.xml',
         'views/dispatch_order.xml',
         'wizard/account_tax_invoice_wizard.xml',

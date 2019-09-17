@@ -415,5 +415,16 @@
         <menuitem id="month_close_wizard_id" parent="month_close_wizard_menu_id" action="action_month_close_wizard_view"
                   name="Monthly"/>
 
+        <record id="action_handover_vin_view" model="ir.actions.act_window">
+            <field name="name">Handover VIN</field>
+            <field name="res_model">handover.vin</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="handover_vin_menu_id"
+                  name="Handover VIN"
+                  action="action_handover_vin_view"
+                  parent="sale.sale_order_menu"/>
     </data>
 </odoo>

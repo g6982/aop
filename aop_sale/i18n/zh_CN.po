@@ -2465,6 +2465,12 @@ msgid "Sale line price"
 msgstr "订单价"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
+msgid "Sale line unit"
+msgstr "销售价(税)"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__sale_order_line_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__sale_order_line_id
 msgid "Sale order line"
