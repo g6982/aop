@@ -78,6 +78,10 @@
                     <field name="to_location_id"/>
                 </xpath>
 
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="string">customer price</attribute>
+                </xpath>
+
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="before">
                     <field name="line_price_subtotal" string='Sale line price'/>
                     <field name="line_price_unit" string='Sale line unit'/>
