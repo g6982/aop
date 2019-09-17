@@ -11,8 +11,8 @@ class HandoverVin(models.Model):
     _name = 'handover.vin'
     _inherit = ['mail.thread']
 
-    name = fields.Char('Name')
-    vin_code = fields.Char('VIN')
+    name = fields.Char('Handover number', track_visibility='onchange')
+    vin_code = fields.Char('VIN', track_visibility='onchange')
 
     order_line_id = fields.Many2one('sale.order.line', compute='_compute_sale_order_line', store=True)
     write_user_id = fields.Many2one('res.users', default=lambda self: self.env.user)
@@ -20,11 +20,15 @@ class HandoverVin(models.Model):
 
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('done', 'Done')
+        ('done', 'Done'),
+        ('verify', 'Verify')
     ], default='draft', track_visibility='onchange')
 
     verify_user_id = fields.Many2one('res.users', track_visibility='onchange')
     verify_datetime = fields.Datetime('Verify time', track_visibility='onchange')
+
+    finance_verify_user_id = fields.Many2one('res.users', track_visibility='onchange')
+    finance_verify_datetime = fields.Datetime('Finance verify time', track_visibility='onchange')
 
     @api.multi
     @api.depends('name')
@@ -59,4 +63,24 @@ class HandoverVin(models.Model):
                     'state': 'draft',
                     'verify_user_id': False,
                     'verify_datetime': False
+                })
+
+    @api.multi
+    def finance_verify_handover(self):
+        for line in self:
+            if line.state == 'done':
+                line.sudo().write({
+                    'state': 'verify',
+                    'finance_verify_user_id': self.env.user.id,
+                    'finance_verify_datetime': fields.Datetime.now()
+                })
+
+    @api.multi
+    def cancel_finance_verify(self):
+        for line in self:
+            if line.state == 'verify':
+                line.sudo().write({
+                    'state': 'done',
+                    'finance_verify_user_id': False,
+                    'finance_verify_datetime': False
                 })

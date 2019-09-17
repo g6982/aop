@@ -11,22 +11,33 @@
                         <button name="verify_handover"
                                 string="Verify"
                                 type="object"
-                                attrs="{'invisible': [('state', '=', 'done')]}"
+                                attrs="{'invisible': [('state', 'in', ['done', 'verify'])]}"
                                 class="oe_highlight"/>
                         <button name="cancel_verify_handover"
                                 string="Cancel"
-                                attrs="{'invisible': [('state', '=', 'draft')]}"
+                                attrs="{'invisible': [('state', 'in', ['draft', 'verify'])]}"
                                 type="object"
                                 class="oe_highlight"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                        <button name="finance_verify_handover"
+                                string="Finance verify"
+                                attrs="{'invisible': [('state', 'in', ['draft', 'verify'])]}"
+                                type="object"
+                                class="oe_highlight"/>
+                        <button name="cancel_finance_verify"
+                                string="Finance cancel verify"
+                                attrs="{'invisible': [('state', '!=', 'verify')]}"
+                                type="object"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done,verify"/>
                     </header>
                     <sheet>
+
                         <group>
                             <group>
-                                <field name="name"/>
+                                <field name="name" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             </group>
                             <group>
-                                <field name="vin_code"/>
+                                <field name="vin_code" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             </group>
                         </group>
 
@@ -53,6 +64,17 @@
                             <group>
                                 <field name="verify_datetime" readonly="1"
                                        attrs="{'invisible': [('verify_datetime', '=', False)]}"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="finance_verify_user_id" readonly="1"
+                                       attrs="{'invisible': [('finance_verify_user_id', '=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="finance_verify_datetime" readonly="1"
+                                       attrs="{'invisible': [('finance_verify_datetime', '=', False)]}"/>
                             </group>
                         </group>
                     </sheet>
