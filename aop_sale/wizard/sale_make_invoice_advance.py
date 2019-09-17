@@ -366,20 +366,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     # 合同价格
     def _get_contract_price(self, line_id):
-        delivery_obj = self.env['delivery.carrier']
-
-        from_location_id = line_id._transfer_district_to_location(line_id.from_location_id)
-        to_location_id = line_id._transfer_district_to_location(line_id.to_location_id)
-
-        customer_contract_id = self.env['customer.aop.contract'].search([
-            ('partner_id', '=', line_id.order_partner_id.id)
-        ])
-        delivery_id = delivery_obj.search([
-            ('from_location_id', '=', from_location_id.id),
-            ('to_location_id', '=', to_location_id.id),
-            ('customer_contract_id', '=', customer_contract_id.id)
-        ])
-        return delivery_id[0].fixed_price if delivery_id else 0
+        return line_id.delivery_carrier_id.fixed_price
 
 
 class InvoiceOrderLine(models.TransientModel):
