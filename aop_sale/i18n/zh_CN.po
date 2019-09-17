@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-16 09:10+0000\n"
-"PO-Revision-Date: 2019-09-16 09:10+0000\n"
+"POT-Creation-Date: 2019-09-17 07:46+0000\n"
+"PO-Revision-Date: 2019-09-17 07:46+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -88,6 +88,7 @@ msgstr "动作"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_needaction
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_needaction
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_needaction
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_needaction
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_needaction
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_needaction
 msgid "Action Needed"
@@ -152,7 +153,7 @@ msgid "Advance receipt"
 msgstr "预收票"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:101
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:105
 #, python-format
 msgid "Advance: %s"
 msgstr ""
@@ -276,6 +277,7 @@ msgstr "相关采购订单，当采购订单在供应商账单上被选择时候
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_attachment_count
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_attachment_count
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_attachment_count
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_attachment_count
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_attachment_count
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_attachment_count
 msgid "Attachment Count"
@@ -339,6 +341,11 @@ msgid "Batch Picking"
 msgstr "批量调度"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__batch_stock_picking_id
+msgid "Batch Stock Picking"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__box_no
 msgid "Box no"
 msgstr "厢号"
@@ -378,6 +385,7 @@ msgstr "按 销售员"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_month_close_wizard_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 msgid "Cancel"
@@ -489,6 +497,11 @@ msgstr "确认"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__confirm_time
 msgid "Confirm Time"
 msgstr "确认时间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__picking_confirm_date
+msgid "Confirm date"
+msgstr ""
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_picking_batch_form_inherit_create_purchase
@@ -647,6 +660,7 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_uid
@@ -686,6 +700,7 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_date
@@ -860,11 +875,6 @@ msgid "Dispatch"
 msgstr "调度订单"
 
 #. module: aop_sale
-#: model:res.groups,name:aop_sale.group_purchase_fill_vin_product
-msgid "Purchase fill data"
-msgstr "采购回填数据"
-
-#. module: aop_sale
 #: code:addons/aop_sale/wizard/import_dispatch_order.py:53
 #, python-format
 msgid "Dispatch Order"
@@ -903,6 +913,7 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__display_name
@@ -939,6 +950,7 @@ msgstr "单据关注者"
 #. module: aop_sale
 #: selection:aop.contract,state:0
 #: selection:customer.aop.contract,state:0
+#: selection:handover.vin,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 #: selection:mass.loss.order,state:0
@@ -948,13 +960,13 @@ msgid "Done"
 msgstr "完成"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:143
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:147
 #, python-format
 msgid "Down Payment"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:140
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:144
 #, python-format
 msgid "Down payment of %s%%"
 msgstr ""
@@ -964,6 +976,7 @@ msgstr ""
 #: selection:account.tax.invoice,state:0
 #: selection:aop.contract,state:0
 #: selection:customer.aop.contract,state:0
+#: selection:handover.vin,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 #: selection:mass.loss.order,state:0
 #: selection:sale.order,write_off_state:0
@@ -1048,6 +1061,26 @@ msgid "Fill Service Product"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__finance_verify_user_id
+msgid "Finance Verify User"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
+msgid "Finance cancel verify"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
+msgid "Finance verify"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__finance_verify_datetime
+msgid "Finance verify time"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.financial_manager_menu
 msgid "Financial"
 msgstr "财务管理"
@@ -1071,6 +1104,7 @@ msgstr "固定价格"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_follower_ids
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_follower_ids
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_follower_ids
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_follower_ids
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_follower_ids
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_follower_ids
 msgid "Followers"
@@ -1080,6 +1114,7 @@ msgstr "关注者"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_channel_ids
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_channel_ids
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_channel_ids
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_channel_ids
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_channel_ids
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_channel_ids
 msgid "Followers (Channels)"
@@ -1089,6 +1124,7 @@ msgstr "关注者(渠道)"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_partner_ids
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_partner_ids
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_partner_ids
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_partner_ids
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_partner_ids
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_partner_ids
 msgid "Followers (Partners)"
@@ -1146,6 +1182,13 @@ msgid "Handover"
 msgstr "交接单号"
 
 #. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_handover_vin_view
+#: model:ir.ui.menu,name:aop_sale.handover_vin_menu_id
+msgid "Handover VIN"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__name
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__handover_number
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking__handover_number
 msgid "Handover number"
@@ -1173,6 +1216,7 @@ msgstr "有未清项"
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__id
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__id
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__id
 #: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__id
@@ -1200,6 +1244,7 @@ msgstr ""
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_unread
 #: model:ir.model.fields,help:aop_sale.field_aop_contract__message_unread
 #: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_unread
+#: model:ir.model.fields,help:aop_sale.field_handover_vin__message_unread
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_unread
 #: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_unread
 msgid "If checked new messages require your attention."
@@ -1209,6 +1254,7 @@ msgstr "查看是否有需要留意的新消息。"
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_needaction
 #: model:ir.model.fields,help:aop_sale.field_aop_contract__message_needaction
 #: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_needaction
+#: model:ir.model.fields,help:aop_sale.field_handover_vin__message_needaction
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_needaction
 #: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_needaction
 msgid "If checked, new messages require your attention."
@@ -1218,6 +1264,7 @@ msgstr "确认后, 出现提示消息."
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_has_error
 #: model:ir.model.fields,help:aop_sale.field_aop_contract__message_has_error
 #: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_has_error
+#: model:ir.model.fields,help:aop_sale.field_handover_vin__message_has_error
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_has_error
 #: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_has_error
 msgid "If checked, some messages have a delivery error."
@@ -1351,7 +1398,7 @@ msgid "Inventory Routes"
 msgstr "库存路线"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:233
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:237
 #: model:ir.model,name:aop_sale.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
@@ -1422,6 +1469,7 @@ msgstr "已开发票数量"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_is_follower
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_is_follower
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_is_follower
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_is_follower
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_is_follower
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_is_follower
 msgid "Is Follower"
@@ -1494,6 +1542,7 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management____last_update
@@ -1534,6 +1583,7 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_uid
@@ -1573,6 +1623,7 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_import_dispatch_order_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_date
@@ -1659,6 +1710,7 @@ msgstr "下层"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_main_attachment_id
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_main_attachment_id
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_main_attachment_id
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_main_attachment_id
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_main_attachment_id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_main_attachment_id
 msgid "Main Attachment"
@@ -1720,6 +1772,7 @@ msgstr "匹配订单"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_has_error
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_has_error
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_has_error
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_has_error
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_has_error
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_has_error
 msgid "Message Delivery error"
@@ -1729,6 +1782,7 @@ msgstr "消息递送错误"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_ids
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_ids
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_ids
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_ids
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_ids
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_ids
 msgid "Messages"
@@ -1740,7 +1794,7 @@ msgid "Model"
 msgstr "模型"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:223
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:227
 #: model:ir.actions.act_window,name:aop_sale.action_month_close_wizard_view
 #: model:ir.ui.menu,name:aop_sale.month_close_wizard_id
 #: model:ir.ui.menu,name:aop_sale.month_close_wizard_menu_id
@@ -1828,6 +1882,7 @@ msgstr "号码"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_needaction_counter
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_needaction_counter
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_needaction_counter
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_needaction_counter
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_needaction_counter
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_needaction_counter
 msgid "Number of Actions"
@@ -1837,6 +1892,7 @@ msgstr "操作次数"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_has_error_counter
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_has_error_counter
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_has_error_counter
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_has_error_counter
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_has_error_counter
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_has_error_counter
 msgid "Number of error"
@@ -1846,6 +1902,7 @@ msgstr "错误个数"
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_needaction_counter
 #: model:ir.model.fields,help:aop_sale.field_aop_contract__message_needaction_counter
 #: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_needaction_counter
+#: model:ir.model.fields,help:aop_sale.field_handover_vin__message_needaction_counter
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_needaction_counter
 #: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_needaction_counter
 msgid "Number of messages which requires an action"
@@ -1855,6 +1912,7 @@ msgstr "需要操作消息数量"
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_has_error_counter
 #: model:ir.model.fields,help:aop_sale.field_aop_contract__message_has_error_counter
 #: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_has_error_counter
+#: model:ir.model.fields,help:aop_sale.field_handover_vin__message_has_error_counter
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_has_error_counter
 #: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_has_error_counter
 msgid "Number of messages with delivery error"
@@ -1864,6 +1922,7 @@ msgstr "递送错误消息数量"
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__message_unread_counter
 #: model:ir.model.fields,help:aop_sale.field_aop_contract__message_unread_counter
 #: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__message_unread_counter
+#: model:ir.model.fields,help:aop_sale.field_handover_vin__message_unread_counter
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__message_unread_counter
 #: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__message_unread_counter
 msgid "Number of unread messages"
@@ -1874,7 +1933,7 @@ msgstr "未读消息数量"
 #: selection:account.tax.invoice,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Open"
-msgstr "完成"
+msgstr "确认"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__current_picking_type_id
@@ -1887,6 +1946,7 @@ msgid "Order"
 msgstr "正式订单"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__order_line_id
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__sale_order_line_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__sale_order_line_id
 msgid "Order Line"
@@ -2245,6 +2305,11 @@ msgstr "采购订单"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__purchase_line_id
 msgid "Purchase Order Line"
 msgstr "采购订单行"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_purchase_fill_vin_product
+msgid "Purchase fill data"
+msgstr "采购回填数据"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
@@ -2640,8 +2705,10 @@ msgstr "合同开始时间"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__state
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__state
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__state
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__state
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__state
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_search
 msgid "State"
 msgstr "省/ 州"
 
@@ -2869,26 +2936,26 @@ msgid "The payment communication that will be automatically populated once the i
 msgstr "一旦发票被验证，付款通知会被自动发出。你应另发通告。"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:88
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:92
 #, python-format
 msgid "The product used to invoice a down payment should be of type 'Service'. Please use another product or update this product."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:85
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:89
 #, python-format
 msgid "The product used to invoice a down payment should have an invoice policy set to \"Ordered quantities\". Please update your deposit product to be able to create a deposit invoice."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:136
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:140
 #, python-format
 msgid "The value of the down payment amount must be positive."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:131
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:357
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:135
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:363
 #, python-format
 msgid "There is no income account defined for this product: \"%s\". You may have to install a chart of account from Accounting app, settings menu."
 msgstr ""
@@ -3012,6 +3079,8 @@ msgid "Type of Operation"
 msgstr "作业的类型"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__line_price_unit
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__line_price_unit
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__price_unit
 msgid "Unit Price"
 msgstr "单价"
@@ -3031,6 +3100,7 @@ msgstr "单位"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_unread
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_unread
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_unread
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_unread
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_unread
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_unread
 msgid "Unread Messages"
@@ -3040,6 +3110,7 @@ msgstr "未读消息"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_unread_counter
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__message_unread_counter
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__message_unread_counter
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__message_unread_counter
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__message_unread_counter
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_unread_counter
 msgid "Unread Messages Counter"
@@ -3073,7 +3144,9 @@ msgstr "用户管理"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__vin_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__vin_id
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__vin_code
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__vin_code
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__vin_code
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__vin
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__vin_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking__vin_id
@@ -3147,6 +3220,22 @@ msgid "Vendors"
 msgstr "供应商"
 
 #. module: aop_sale
+#: selection:handover.vin,state:0
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
+msgid "Verify"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__verify_user_id
+msgid "Verify User"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__verify_datetime
+msgid "Verify time"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__version_id
 #: model:ir.model.fields,field_description:aop_sale.field_contract_version__name
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__version_id
@@ -3177,6 +3266,7 @@ msgstr "运输方式"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__website_message_ids
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__website_message_ids
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__website_message_ids
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__website_message_ids
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__website_message_ids
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__website_message_ids
 msgid "Website Messages"
@@ -3186,6 +3276,7 @@ msgstr "网站信息"
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__website_message_ids
 #: model:ir.model.fields,help:aop_sale.field_aop_contract__website_message_ids
 #: model:ir.model.fields,help:aop_sale.field_customer_aop_contract__website_message_ids
+#: model:ir.model.fields,help:aop_sale.field_handover_vin__website_message_ids
 #: model:ir.model.fields,help:aop_sale.field_mass_loss_order__website_message_ids
 #: model:ir.model.fields,help:aop_sale.field_supplier_aop_contract__website_message_ids
 msgid "Website communication history"
@@ -3214,12 +3305,22 @@ msgid "Write Off Line"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__write_user_id
+msgid "Write User"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order__write_off_state
 msgid "Write off state"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:406
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__write_datetime
+msgid "Write time"
+msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/sale_order.py:412
 #: model:ir.actions.act_window,name:aop_sale.action_write_off_line_order_wizard
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_write_off_order_line_wizard_form
@@ -3240,7 +3341,7 @@ msgid "You can not create recursive analytic accounts."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:605
+#: code:addons/aop_sale/models/sale_order.py:611
 #, python-format
 msgid "You can not make order until the product have vin or stock."
 msgstr "你要等到产品有vin或库存才可以确认订单."
@@ -3316,6 +3417,11 @@ msgid "customer aop contract"
 msgstr ""
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
+msgid "customer price"
+msgstr "客户价格"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_customer_contract_stock_rule_line
 msgid "customer.contract.stock.rule.line"
 msgstr ""
@@ -3350,6 +3456,11 @@ msgstr "对于这个客户，你可以将它们分配为标记此发票已支付
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__found_department
 msgid "found department"
 msgstr "发现部门"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_handover_vin
+msgid "handover.vin"
+msgstr ""
 
 #. module: aop_sale
 #: selection:stock.picking.batch,dispatch_type:0
