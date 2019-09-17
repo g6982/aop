@@ -8,8 +8,16 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <button name="verify_handover" string="Verify" type="object" class="oe_highlight"/>
-                        <button name="cancel_verify_handover" string="Cancel" type="object" class="oe_highlight"/>
+                        <button name="verify_handover"
+                                string="Verify"
+                                type="object"
+                                attrs="{'invisible': [('state', '=', 'done')]}"
+                                class="oe_highlight"/>
+                        <button name="cancel_verify_handover"
+                                string="Cancel"
+                                attrs="{'invisible': [('state', '=', 'draft')]}"
+                                type="object"
+                                class="oe_highlight"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
                     </header>
                     <sheet>
@@ -33,7 +41,18 @@
 
                         <group>
                             <group>
-                                <field name="order_line_id"/>
+                                <field name="order_line_id" attrs="{'invisible': [('order_line_id', '=', False)]}"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="verify_user_id" readonly="1"
+                                       attrs="{'invisible': [('verify_user_id', '=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="verify_datetime" readonly="1"
+                                       attrs="{'invisible': [('verify_datetime', '=', False)]}"/>
                             </group>
                         </group>
                     </sheet>

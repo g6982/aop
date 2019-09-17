@@ -21,10 +21,10 @@ class HandoverVin(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done')
-    ], default='draft')
+    ], default='draft', track_visibility='onchange')
 
-    verify_user_id = fields.Many2one('res.users')
-    verify_datetime = fields.Datetime('Verify time')
+    verify_user_id = fields.Many2one('res.users', track_visibility='onchange')
+    verify_datetime = fields.Datetime('Verify time', track_visibility='onchange')
 
     @api.multi
     @api.depends('name')
@@ -41,8 +41,22 @@ class HandoverVin(models.Model):
             line.order_line_id = tmp.id
             tmp.handover_number = line.name
 
+    @api.multi
     def verify_handover(self):
-        pass
+        for line in self:
+            if line.state == 'draft':
+                line.sudo().write({
+                    'state': 'done',
+                    'verify_user_id': self.env.user.id,
+                    'verify_datetime': fields.Datetime.now()
+                })
 
+    @api.multi
     def cancel_verify_handover(self):
-        pass
+        for line in self:
+            if line.state == 'done':
+                line.sudo().write({
+                    'state': 'draft',
+                    'verify_user_id': False,
+                    'verify_datetime': False
+                })
