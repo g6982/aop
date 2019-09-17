@@ -41,6 +41,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
         #     line_ids = self.sale_order_ids.mapped('order_line').filtered(
         #         lambda x: x.handover_number is False or x.state != 'sale')
 
+        self.selected_order_lines = False
+
         data = []
         for line_id in line_ids:
             data.append((0, 0, {

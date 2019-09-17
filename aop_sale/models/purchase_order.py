@@ -66,15 +66,12 @@ class PurchaseOrder(models.Model):
             vin_obj = self.env['stock.production.lot']
             vin_domain = [('name', '=', line_id.vin_code), ('product_id', '=', line_id.transfer_product_id.id)]
 
-            vin_id = False
-            if not vin_obj.search(vin_domain):
+            vin_id = vin_obj.search(vin_domain)
+            if not vin_id:
                 vin_id = vin_obj.create({
                     'name': line_id.vin_code,
                     'product_id': line_id.transfer_product_id.id
                 })
-            _logger.info({
-                'vin': vin_id
-            })
             data = {
                 'product_id': line_id.transfer_product_id.id,
                 'product_uom': line_id.transfer_product_id.uom_id.id,
@@ -87,12 +84,12 @@ class PurchaseOrder(models.Model):
                 'location_dest_id': line_id.batch_stock_picking_id.location_dest_id.id
             }
             stock_move_data.append(data)
+            line_id.batch_stock_picking_id.write({
+                'vin_id': vin_id.id
+            })
 
-        _logger.info({
-            'stock_move_data': stock_move_data
-        })
         # 生成 stock.move
-        res = stock_move_obj.create(stock_move_data)
+        stock_move_obj.create(stock_move_data)
 
         self.order_line.mapped('batch_stock_picking_id').action_confirm()
 
