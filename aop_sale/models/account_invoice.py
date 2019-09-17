@@ -15,7 +15,7 @@ class AccountInvoice(models.Model):
 
     account_batch_no = fields.Char(string='Account batch')
 
-    account_period_id = fields.Many2one('account.period', string='Period', compute='_compute_period_id')
+    account_period_id = fields.Many2one('account.period', string='Period', compute='_compute_period_id', store=True)
 
     tmp_estimate = fields.Float('Temporary estimate', compute='_compute_estimate_billing_receipt', store=True)
     pre_billing = fields.Float('Pre-billing', compute='_compute_estimate_billing_receipt', store=True)
