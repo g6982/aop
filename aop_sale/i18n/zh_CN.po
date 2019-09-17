@@ -761,12 +761,6 @@ msgid "Customer contract"
 msgstr "客户合同管理"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__customer_price
-#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__customer_price
-msgid "Customer price"
-msgstr "客户价格"
-
-#. module: aop_sale
 #: selection:stock.picking.type,code:0
 msgid "Customers"
 msgstr "客户"

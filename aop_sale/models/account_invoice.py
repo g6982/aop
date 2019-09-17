@@ -159,5 +159,5 @@ class AccountInvoiceLine(models.Model):
     pre_billing = fields.Float('Pre-billing')
     advance_receipt = fields.Float('Advance receipt')
 
-    customer_price = fields.Float('Customer price')
+    # customer_price = fields.Float('Customer price')
 

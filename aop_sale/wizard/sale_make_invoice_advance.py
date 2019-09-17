@@ -306,7 +306,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         'invoice_line_tax_ids': [(6, 0, product_id.taxes_id.ids)],
                         'analytic_tag_ids': False,
                         'account_analytic_id': False,
-                        'customer_price': contract_price
+                        # 'customer_price': contract_price
                     })],
                 })
                 invoice_res.append(tmp)
@@ -329,7 +329,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 'name': str(time.time()),
                 'origin': sale_order_id.name,
                 'account_id': account_id,
-                'price_unit': line_id.service_product_id.list_price,
+                'price_unit': contract_price,
                 'quantity': 1.0,
                 'discount': 0.0,
                 'uom_id': line_id.service_product_id.uom_id.id,
@@ -340,7 +340,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 'invoice_line_tax_ids': [(6, 0, line_id.tax_id.ids)],
                 'analytic_tag_ids': [(6, 0, line_id.analytic_tag_ids.ids)],
                 'account_analytic_id': sale_order_id.analytic_account_id.id or False,
-                'customer_price': contract_price
+                # 'customer_price': contract_price
             }))
 
             invoice_data.update({
