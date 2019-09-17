@@ -15,7 +15,7 @@ class AccountInvoice(models.Model):
 
     account_batch_no = fields.Char(string='Account batch')
 
-    account_period_id = fields.Many2one('account.period', string='Period')
+    account_period_id = fields.Many2one('account.period', string='Period', compute='_compute_period_id')
 
     tmp_estimate = fields.Float('Temporary estimate', compute='_compute_estimate_billing_receipt', store=True)
     pre_billing = fields.Float('Pre-billing', compute='_compute_estimate_billing_receipt', store=True)
@@ -36,6 +36,19 @@ class AccountInvoice(models.Model):
              " * The 'Paid' status is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled.\n"
              " * The 'Cancelled' status is used when user cancel invoice.")
 
+    # 任务完成生成的有完成时间
+    # 没有完成的(预收)就用当前时间
+    @api.multi
+    @api.depends('date_invoice')
+    def _compute_period_id(self):
+        period_obj = self.env['account.period']
+        for line in self:
+            if line.date_invoice:
+                current_period_id = period_obj.search([
+                    ('date_start', '<=', line.date_invoice),
+                    ('date_stop', '>=', line.date_invoice)
+                ])
+                line.account_period_id = current_period_id.id
 
 
     @api.depends('invoice_line_ids.pre_billing', 'invoice_line_ids.tmp_estimate', 'invoice_line_ids.advance_receipt')
