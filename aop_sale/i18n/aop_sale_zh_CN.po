@@ -65,3 +65,7 @@ msgstr "源位置"
 msgid "To location"
 msgstr "目的位置"
 
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__is_transfer
+msgid "Transfer"
+msgstr "中转"
