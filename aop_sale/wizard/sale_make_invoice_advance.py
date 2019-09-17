@@ -32,12 +32,14 @@ class SaleAdvancePaymentInv(models.TransientModel):
             self.selected_order_lines = False
             return False
 
-        if not self.invoice_state:
-            line_ids = self.sale_order_ids.mapped('order_line').filtered(
-                lambda x: x.handover_number is not False or x.state == 'sale')
-        else:
-            line_ids = self.sale_order_ids.mapped('order_line').filtered(
-                lambda x: x.handover_number is False or x.state != 'sale')
+        line_ids = self.sale_order_ids.mapped('order_line')
+
+        # if not self.invoice_state:
+        #     line_ids = self.sale_order_ids.mapped('order_line').filtered(
+        #         lambda x: x.handover_number is not False or x.state == 'sale')
+        # else:
+        #     line_ids = self.sale_order_ids.mapped('order_line').filtered(
+        #         lambda x: x.handover_number is False or x.state != 'sale')
 
         data = []
         for line_id in line_ids:
