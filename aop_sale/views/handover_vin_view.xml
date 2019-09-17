@@ -98,5 +98,19 @@
                 </tree>
             </field>
         </record>
+
+        <record id="view_handover_vin_search" model="ir.ui.view">
+            <field name="name">handover.vin.search</field>
+            <field name="model">handover.vin</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="vin_code"/>
+                    <group>
+                        <filter string="State" name="state" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
     </data>
 </odoo>
