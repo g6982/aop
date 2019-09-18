@@ -20,9 +20,13 @@ class HandoverVin(models.Model):
 
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('done', 'Done'),
-        ('verify', 'Verify')
+        ('register', 'Register'),
+        ('done', 'Audit'),
+        ('verify', 'Finance verify')
     ], default='draft', track_visibility='onchange')
+
+    register_user_id = fields.Many2one('res.users', track_visibility='onchange')
+    register_datetime = fields.Datetime('register time', track_visibility='onchange')
 
     verify_user_id = fields.Many2one('res.users', track_visibility='onchange')
     verify_datetime = fields.Datetime('Verify time', track_visibility='onchange')

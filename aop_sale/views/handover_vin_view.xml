@@ -28,7 +28,7 @@
                                 attrs="{'invisible': [('state', '!=', 'verify')]}"
                                 type="object"
                                 class="oe_highlight"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,done,verify"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,register,done,verify"/>
                     </header>
                     <sheet>
 
