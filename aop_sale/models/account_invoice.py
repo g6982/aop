@@ -21,6 +21,8 @@ class AccountInvoice(models.Model):
     pre_billing = fields.Float('Pre-billing', compute='_compute_estimate_billing_receipt', store=True)
     advance_receipt = fields.Float('Advance receipt', compute='_compute_estimate_billing_receipt', store=True)
 
+    cost_passage = fields.Float('Cost Passage', compute='_compute_estimate_billing_receipt', store=True)
+
     state = fields.Selection([
         ('draft', 'Draft'),
         ('account', 'Account Checking'),
@@ -63,12 +65,13 @@ class AccountInvoice(models.Model):
                 line.account_period_id = current_period_id.id
 
 
-    @api.depends('invoice_line_ids.pre_billing', 'invoice_line_ids.tmp_estimate', 'invoice_line_ids.advance_receipt')
+    @api.depends('invoice_line_ids.pre_billing', 'invoice_line_ids.tmp_estimate', 'invoice_line_ids.advance_receipt', 'invoice_line_ids.cost_passage')
     def _compute_estimate_billing_receipt(self):
         for line in self:
             line.pre_billing = sum(x.pre_billing for x in line.invoice_line_ids)
             line.tmp_estimate = sum(x.tmp_estimate for x in line.invoice_line_ids)
             line.advance_receipt = sum(x.advance_receipt for x in line.invoice_line_ids)
+            line.cost_passage = sum(x.cost_passage for x in line.invoice_line_ids)
 
     def create_account_tax_invoice(self):
         if self.account_tax_invoice_id:
@@ -171,5 +174,5 @@ class AccountInvoiceLine(models.Model):
     pre_billing = fields.Float('Pre-billing')
     advance_receipt = fields.Float('Advance receipt')
 
-    # customer_price = fields.Float('Customer price')
+    cost_passage = fields.Float('Cost Passage')
 
