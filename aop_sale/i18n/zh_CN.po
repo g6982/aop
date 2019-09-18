@@ -1185,7 +1185,7 @@ msgstr "交接单号"
 #: model:ir.actions.act_window,name:aop_sale.action_handover_vin_view
 #: model:ir.ui.menu,name:aop_sale.handover_vin_menu_id
 msgid "Handover VIN"
-msgstr ""
+msgstr "交接单管理"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__name
@@ -2051,7 +2051,7 @@ msgstr "上级仓库"
 #. module: aop_sale
 #: selection:sale.order,state:0
 msgid "Part done"
-msgstr ""
+msgstr "部分完成"
 
 #. module: aop_sale
 #: sql_constraint:mass.loss.part:0
@@ -3129,7 +3129,7 @@ msgstr "按公司本位币计的不含税金额"
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 msgid "Update task"
-msgstr ""
+msgstr "更新任务"
 
 #. module: aop_sale
 #: selection:mount.car.plan,layer_option:0

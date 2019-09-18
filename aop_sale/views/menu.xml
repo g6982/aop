@@ -99,20 +99,24 @@
         />
 
         <!-- 二级菜单 -->
+        <!--
         <menuitem id="customer_rate_manager_menu"
                   parent="delivery.menu_delivery"
                   name="Customer contract"
                   action="action_customer_aop_contract_view"
                   sequence="10"
         />
+        -->
 
         <!--供应商合同-->
+        <!--
         <menuitem id="aop_supplier_contract_manager_menu"
                   parent="delivery.menu_delivery"
                   name="Supplier contract manager"
                   action="action_aop_supplier_contract_view"
                   sequence="20"
         />
+        -->
 
         <!-- 二级菜单 -->
         <!--

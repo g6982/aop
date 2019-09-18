@@ -197,3 +197,9 @@ msgid ""
 " Check routes configuration."
 msgstr ""
 " \"%s\" 中的货物 \"%s\"找不到路由设置，请联系管理员!"
+
+#. module: stock
+#: model:ir.actions.act_window,name:stock.action_production_lot_form
+#: model:ir.ui.menu,name:stock.menu_action_production_lot_form
+msgid "Lots/Serial Numbers"
+msgstr "VIN"
