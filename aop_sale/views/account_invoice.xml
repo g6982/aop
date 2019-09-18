@@ -154,7 +154,7 @@
             </field>
         </record>
 
-        <!--
+
         <record id="view_account_invoice_filter_inherit_aop_sale" model="ir.ui.view">
             <field name="name">account.invoice.groupby</field>
             <field name="model">account.invoice</field>
@@ -172,6 +172,6 @@
 
             </field>
         </record>
--->
+
     </data>
 </odoo>
