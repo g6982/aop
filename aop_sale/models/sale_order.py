@@ -94,23 +94,30 @@ class SaleOrderLine(models.Model):
 
     file_validate = fields.Binary('file')
 
-    current_picking_id = fields.Many2one('stock.picking', 'Current picking task', compute='_compute_current_picking_id')
+    current_picking_id = fields.Many2one('stock.picking', 'Current picking task', compute='_compute_current_picking_id', store=True)
     current_picking_type_id = fields.Many2one('stock.picking.type', related='current_picking_id.picking_type_id')
     picking_confirm_date = fields.Datetime('Confirm date')
 
     @api.multi
-    @api.depends('stock_picking_ids', 'stock_picking_ids.state')
+    @api.depends('stock_picking_ids', 'stock_picking_ids.state', 'stock_picking_ids.date_done')
     def _compute_current_picking_id(self):
         for line in self:
-            current_picking_id = line.stock_picking_ids.filtered(lambda x: x.state == 'assigned')
-            if not current_picking_id:
-                current_picking_id = line.stock_picking_ids.sorted('id')[-1] if line.stock_picking_ids else False
-                line.picking_confirm_date = current_picking_id.date_done if current_picking_id else False
-            line.current_picking_id = current_picking_id
 
-            done_picking_ids = line.stock_picking_ids.filtered(lambda x: x.state == 'done')
-            if len(done_picking_ids) == len(line.stock_picking_ids):
-                line.picking_confirm_date = line.stock_picking_ids.sorted('id')[-1].date_done if line.stock_picking_ids else False
+            current_picking_id = line.stock_picking_ids.filtered(lambda x: x.state == 'assigned')
+
+            last_picking_id = None
+            if line.stock_picking_ids:
+                last_picking_id = line.stock_picking_ids.sorted('id')[-1]
+            if not last_picking_id:
+                continue
+
+            if not current_picking_id:
+                current_picking_id = last_picking_id
+
+            line.current_picking_id = current_picking_id.id
+
+            if current_picking_id.state == 'done' and current_picking_id.id == last_picking_id.id:
+                line.picking_confirm_date = current_picking_id.date_done
 
     def replenish_stock_picking_order(self):
         try:
