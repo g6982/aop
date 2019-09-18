@@ -46,52 +46,11 @@ class FillServiceProductWizard(models.TransientModel):
 
         for picking in self.stock_picking_batch_id.picking_ids:
 
-<<<<<<< HEAD
             for _ in range(picking.picking_incoming_number) if picking.picking_incoming_number > 1 else []:
                 res = self._parse_purchase_line_data(res, picking)
             if picking.picking_incoming_number <= 1:
                 res = self._parse_purchase_line_data(res, picking)
-=======
-            service_product_id = self._parse_service_product_supplier(picking)
 
-            if not service_product_id:
-                picking_line = self.wizard_line_ids.filtered(lambda x: x.picking_id == picking)[0]
-                service_product_id = picking_line.service_product_id
-                amount = picking_line.amount
-
-            # stock.picking 有 stock.move
-            for line_id in picking.move_lines:
-                data = {
-                    'product_id': service_product_id.id,
-                    'transfer_product_id': line_id.product_id.id,
-                    # 'service_product_id': service_product_id.id if service_product_id else False,
-                    'product_qty': line_id.product_uom_qty,
-                    'name': line_id.name,
-                    'sale_line_id': line_id.sale_order_line_id.id,
-                    'date_planned': fields.Datetime.now(),
-                    #'price_unit': line_id.service_product_id.lst_price,
-                    'price_unit': amount,
-                    'product_uom': service_product_id.uom_id.id,
-                    'batch_stock_picking_id': picking.id
-                }
-                res.append((0, 0, data))
-                # if not data['product_id'] in product_ids:
-                #     product_ids.append(data['product_id'])
-                #     res.append((0, 0, data))
-
-            # stock.picking 没有 stock.move
-            if not picking.move_lines:
-                data = {
-                    'product_id': service_product_id.id,
-                    'product_qty': 1,
-                    'name': service_product_id.name,
-                    'product_uom': service_product_id.uom_id.id,
-                    'batch_stock_picking_id': picking.id,
-                    'price_unit': amount,
-                    'date_planned': fields.Datetime.now(),
-                }
-                res.append((0, 0, data))
->>>>>>> 377c914ad3696f252b03a8c437121ab60d3d7cfe
         return res
 
     def _parse_purchase_line_data(self, res, picking):
