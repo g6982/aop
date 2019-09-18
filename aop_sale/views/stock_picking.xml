@@ -34,6 +34,9 @@
                     <field name="handover_number"/>
                 </xpath>
 
+                <xpath expr="//field[@name='picking_type_id']" position="after">
+                    <field name="picking_incoming_number"/>
+                </xpath>
             </field>
         </record>
 

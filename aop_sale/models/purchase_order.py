@@ -84,9 +84,9 @@ class PurchaseOrder(models.Model):
                 'location_dest_id': line_id.batch_stock_picking_id.location_dest_id.id
             }
             stock_move_data.append(data)
-            line_id.batch_stock_picking_id.write({
-                'vin_id': vin_id.id
-            })
+            # line_id.batch_stock_picking_id.write({
+            #     'vin_id': vin_id.id
+            # })
 
         # 生成 stock.move
         stock_move_obj.create(stock_move_data)
@@ -95,14 +95,8 @@ class PurchaseOrder(models.Model):
 
     # 填充批次号
     def _fill_serial_no(self, picking_id):
-        _logger.info({
-            'picking_id.move_lines': picking_id.move_lines
-        })
         for move_id in picking_id.move_lines:
             for line in move_id.move_line_ids:
-                _logger.info({
-                    'move_id.vin_id.id': move_id.vin_id.id
-                })
                 line.write({
                     'lot_id': move_id.vin_id.id,
                     'qty_done': line.product_uom_qty

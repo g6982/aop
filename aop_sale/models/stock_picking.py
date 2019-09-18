@@ -15,6 +15,7 @@ class StockPicking(models.Model):
     handover_number = fields.Char('Handover number')
 
     vin_id = fields.Many2one('stock.production.lot', string='VIN')
+    picking_incoming_number = fields.Integer('Picking incoming number')
 
     def match_sale_order(self):
         return self._match_sale_order()

@@ -93,42 +93,48 @@ class StockPickingBatch(models.Model):
         lost_service_product_id = []
 
         for picking in self.picking_ids:
-
-            service_product_id = self._parse_service_product_supplier(picking)
-
-            if not service_product_id:
-                lost_service_product_id.append(picking)
-
-            for line_id in picking.move_lines:
-                data = {
-                    'product_id': service_product_id.id if service_product_id else line_id.picking_type_id.service_product_id.id if line_id.picking_type_id.service_product_id else False,
-                    'transfer_product_id': line_id.product_id.id,
-                    # 'service_product_id': service_product_id.id if service_product_id else False,
-                    'product_qty': line_id.product_uom_qty,
-                    'sale_line_id': line_id.sale_order_line_id.id,
-                    'name': line_id.name,
-                    'date_planned': fields.Datetime.now(),
-                    'price_unit': line_id.service_product_id.lst_price,
-                    'product_uom': line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False,
-                    'batch_stock_picking_id': picking.id
-                }
-                res.append((0, 0, data))
-                # if not data['product_id'] in product_ids:
-                #     product_ids.append(data['product_id'])
-                #     res.append((0, 0, data))
-            if not picking.move_lines and service_product_id:
-                data = {
-                    'product_id': service_product_id.id,
-                    'product_qty': 1,
-                    'name': service_product_id.name,
-                    'product_uom': service_product_id.uom_id.id,
-                    'batch_stock_picking_id': picking.id,
-                    'price_unit': service_product_id.lst_price,
-                    'date_planned': fields.Datetime.now(),
-                }
-                res.append((0, 0, data))
+            for _ in range(picking.picking_incoming_number) if picking.picking_incoming_number > 1 else []:
+                res = self._parse_purchase_line_data(picking, lost_service_product_id, res)
+            if picking.picking_incoming_number <= 1:
+                res = self._parse_purchase_line_data(picking, lost_service_product_id, res)
 
         return [res, lost_service_product_id]
+
+    def _parse_purchase_line_data(self, picking, lost_service_product_id, res):
+        service_product_id = self._parse_service_product_supplier(picking)
+
+        if not service_product_id:
+            lost_service_product_id.append(picking)
+
+        for line_id in picking.move_lines:
+            data = {
+                'product_id': service_product_id.id if service_product_id else line_id.picking_type_id.service_product_id.id if line_id.picking_type_id.service_product_id else False,
+                'transfer_product_id': line_id.product_id.id,
+                # 'service_product_id': service_product_id.id if service_product_id else False,
+                'product_qty': line_id.product_uom_qty,
+                'sale_line_id': line_id.sale_order_line_id.id,
+                'name': line_id.name,
+                'date_planned': fields.Datetime.now(),
+                'price_unit': line_id.service_product_id.lst_price,
+                'product_uom': line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False,
+                'batch_stock_picking_id': picking.id
+            }
+            res.append((0, 0, data))
+            # if not data['product_id'] in product_ids:
+            #     product_ids.append(data['product_id'])
+            #     res.append((0, 0, data))
+        if not picking.move_lines and service_product_id:
+            data = {
+                'product_id': service_product_id.id,
+                'product_qty': 1,
+                'name': service_product_id.name,
+                'product_uom': service_product_id.uom_id.id,
+                'batch_stock_picking_id': picking.id,
+                'price_unit': service_product_id.lst_price,
+                'date_planned': fields.Datetime.now(),
+            }
+            res.append((0, 0, data))
+        return res
 
     # 供应商合同里面获取服务产品
     def _parse_service_product_supplier(self, picking):
@@ -137,7 +143,6 @@ class StockPickingBatch(models.Model):
             ('from_location_id', '=', picking.location_id.id),
             ('to_location_id', '=', picking.location_dest_id.id)
         ])
-
         return delivery_carrier_id[0].service_product_id if delivery_carrier_id else False
 
     def _match_company_id(self, partner_id):
