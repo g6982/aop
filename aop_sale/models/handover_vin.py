@@ -51,11 +51,20 @@ class HandoverVin(models.Model):
             })
             line.order_line_id = tmp.id
 
+    @api.multi
+    def register_handover(self):
+        for line in self:
+            if line.state == 'draft':
+                line.sudo().write({
+                    'state': 'register',
+                    'register_user_id': self.env.user.id,
+                    'register_datetime': fields.Datetime.now()
+                })
 
     @api.multi
     def verify_handover(self):
         for line in self:
-            if line.state == 'draft':
+            if line.state == 'register':
                 line.sudo().write({
                     'state': 'done',
                     'verify_user_id': self.env.user.id,

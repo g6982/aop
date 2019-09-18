@@ -8,10 +8,15 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
+                        <button name="register_handover"
+                                string="Register"
+                                type="object"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}"
+                                class="oe_highlight"/>
                         <button name="verify_handover"
                                 string="Verify"
                                 type="object"
-                                attrs="{'invisible': [('state', 'in', ['done', 'verify'])]}"
+                                attrs="{'invisible': [('state', 'not in', ['register'])]}"
                                 class="oe_highlight"/>
                         <button name="cancel_verify_handover"
                                 string="Cancel"
@@ -20,7 +25,7 @@
                                 class="oe_highlight"/>
                         <button name="finance_verify_handover"
                                 string="Finance verify"
-                                attrs="{'invisible': [('state', 'in', ['draft', 'verify'])]}"
+                                attrs="{'invisible': [('state', 'not in', ['done'])]}"
                                 type="object"
                                 class="oe_highlight"/>
                         <button name="cancel_finance_verify"
