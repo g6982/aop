@@ -49,7 +49,7 @@ class FillServiceProductWizard(models.TransientModel):
             service_product_id = self._parse_service_product_supplier(picking)
 
             if not service_product_id:
-                picking_line = self.wizard_line_ids.filtered(lambda x: x.picking_id == picking)
+                picking_line = self.wizard_line_ids.filtered(lambda x: x.picking_id == picking)[0]
                 service_product_id = picking_line.service_product_id
                 amount = picking_line.amount
 

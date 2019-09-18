@@ -11,6 +11,11 @@ class HandoverVin(models.Model):
     _name = 'handover.vin'
     _inherit = ['mail.thread']
 
+    # 名字(交接单号)和vin不重复的限制
+    _sql_constraints = [
+        ('unique_name_vin_code', 'unique(name, vin_code)', 'the name and vin_code must be unique!')
+    ]
+
     name = fields.Char('Handover number', track_visibility='onchange')
     vin_code = fields.Char('VIN', track_visibility='onchange')
 

@@ -2156,7 +2156,7 @@ msgstr "拣货类型"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking__picking_incoming_number
 msgid "Picking incoming number"
-msgstr ""
+msgstr "接车数量"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__stock_picking_state

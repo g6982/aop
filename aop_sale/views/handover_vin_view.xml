@@ -28,6 +28,7 @@
                                 attrs="{'invisible': [('state', 'not in', ['done'])]}"
                                 type="object"
                                 class="oe_highlight"/>
+
                         <button name="cancel_finance_verify"
                                 string="Finance cancel verify"
                                 attrs="{'invisible': [('state', '!=', 'verify')]}"
