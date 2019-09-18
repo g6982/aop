@@ -42,7 +42,7 @@
                 </xpath>
 
                 <xpath expr="//field[@name='account_period_id']" position="after">
-                    <field name="tmp_estimate"/>
+                    <field name="tmp_estimate" string="cost estimate"/>
                     <field name="cost_passage"/>
                     <field name="advance_receipt"/>
                 </xpath>

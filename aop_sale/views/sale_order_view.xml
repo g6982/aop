@@ -316,18 +316,11 @@
                                     }"
                                     />
                                 </div>
-                                <!--                            <label for="qty_delivered" string="Delivered Quantity" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>-->
-                                <label for="qty_delivered" string="Delivered Quantity"/>
-                                <!--                            <div attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}">-->
+                                <label for="qty_delivered" string="Delivered Quantity" invisible="1" />
                                 <field name="qty_delivered"
-                                       attrs="{'readonly': [('qty_delivered_method', '!=', 'manual')]}"/>
-                                <!--                            </div>-->
-                                <!--                            <label for="qty_invoiced" string="Invoiced Quantity" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>-->
-                                <label for="qty_invoiced" string="Invoiced Quantity"/>
-                                <!--                            <div attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}">-->
-                                <!--                                <field name="qty_invoiced" attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>-->
-                                <field name="qty_invoiced"/>
-                                <!--                            </div>-->
+                                       attrs="{'readonly': [('qty_delivered_method', '!=', 'manual')]}" invisible="1" />
+                                <label for="qty_invoiced" string="Invoiced Quantity" invisible="1" />
+                                <field name="qty_invoiced" invisible="1" />
                                 <field name="price_unit"/>
                                 <label for="discount" groups="sale.group_discount_per_so_line"/>
                                 <div name="discount" groups="sale.group_discount_per_so_line">
@@ -384,16 +377,19 @@
                     <field name="to_location_id"/>
                     <field name="vin"/>
                     <field name="order_partner_id"/>
+                    <field name="current_picking_type_id"/>
+                    <field name="picking_confirm_date"/>
                     <field name="name"/>
                     <field name="salesman_id"/>
                     <field name="product_uom_qty" string="Qty"/>
+                    <!--
                     <field name="qty_delivered"/>
                     <field name="qty_invoiced"/>
                     <field name="qty_to_invoice"/>
+                    -->
                     <field name="product_uom" string="Unit of Measure" groups="uom.group_uom"/>
                     <field name="price_subtotal" sum="Total" widget="monetary"/>
-                    <field name="current_picking_type_id"/>
-                    <field name="picking_confirm_date"/>
+
                 </tree>
             </field>
         </record>

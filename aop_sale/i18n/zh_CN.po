@@ -501,7 +501,7 @@ msgstr "确认时间"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__picking_confirm_date
 msgid "Confirm date"
-msgstr ""
+msgstr "任务完成时间"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_picking_batch_form_inherit_create_purchase
