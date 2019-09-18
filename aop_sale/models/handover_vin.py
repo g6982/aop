@@ -35,15 +35,18 @@ class HandoverVin(models.Model):
     def _compute_sale_order_line(self):
         order_line_obj = self.env['sale.order.line']
         for line in self:
-            tmp = order_line_obj.search([('vin_code', '=', line.vin_code)])
+            tmp = order_line_obj.search(['|', ('vin_code', '=', line.vin_code), ('vin.name', '=', line.vin_code)])
             if not tmp:
                 continue
 
             if len(tmp) > 1:
                 raise UserError('More than one records!')
 
+            tmp.write({
+                'handover_number': line.name
+            })
             line.order_line_id = tmp.id
-            tmp.handover_number = line.name
+
 
     @api.multi
     def verify_handover(self):
