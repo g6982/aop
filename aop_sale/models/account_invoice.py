@@ -43,6 +43,11 @@ class AccountInvoice(models.Model):
             if line.account_period_id.monthly_state:
                 raise UserError('Has been monthly!')
 
+    @api.multi
+    def unlink(self):
+        self._check_monthly_state()
+        return super(AccountInvoice, self).unlink()
+
     # 任务完成生成的有完成时间
     # 没有完成的(预收)就用当前时间
     @api.multi
