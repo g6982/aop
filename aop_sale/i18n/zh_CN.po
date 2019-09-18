@@ -1069,22 +1069,22 @@ msgstr ""
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__finance_verify_user_id
 msgid "Finance Verify User"
-msgstr ""
+msgstr "财务审核人"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
 msgid "Finance cancel verify"
-msgstr ""
+msgstr "退回交接单"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
 msgid "Finance verify"
-msgstr ""
+msgstr "财务核销"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__finance_verify_datetime
 msgid "Finance verify time"
-msgstr ""
+msgstr "财务核销时间"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.financial_manager_menu
@@ -3223,17 +3223,17 @@ msgstr "供应商"
 #: selection:handover.vin,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
 msgid "Verify"
-msgstr ""
+msgstr "审核"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__verify_user_id
 msgid "Verify User"
-msgstr ""
+msgstr "审核人"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__verify_datetime
 msgid "Verify time"
-msgstr ""
+msgstr "审核时间"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__version_id
