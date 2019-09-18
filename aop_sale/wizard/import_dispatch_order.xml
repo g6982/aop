@@ -28,10 +28,12 @@
             <field name="view_mode">form</field>
         </record>
 
+        <!--
         <menuitem id="import_dispatch_order"
                   name="Import Dispatch Order"
                   action="action_import_dispatch_order"
                   parent="stock.menu_stock_warehouse_mgmt"/>
+         -->
 
     </data>
 </odoo>

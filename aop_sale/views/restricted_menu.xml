@@ -38,6 +38,53 @@
     </record>
 
 
+    <!-- 对所有用户隐藏“销售->待开票”菜单 -->
+    <record id="sale.menu_sale_invoicing" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“销售->报告”菜单 -->
+    <record id="sale.menu_report_product_all" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“销售->配置->正式订单”菜单 -->
+    <record id="sale.menu_sales_config" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“销售->配置->产品”菜单 -->
+    <record id="sale.prod_config_main" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“销售->配置->活动类型”菜单 -->
+    <record id="sale.prod_config_main" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“销售->配置->产品”菜单 -->
+    <record id="sale_management.menu_product_settings" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“物流网络->作业->库存调整”菜单 -->
+    <record id="stock.menu_action_inventory_form" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“物流网络->作业->报废”菜单 -->
+    <record id="stock.menu_stock_scrap" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“物流网络->作业->运行调度器”菜单 -->
+    <record id="stock.menu_procurement_compute" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+
+
     <!-- 对所有用户隐藏“物流网络->主数据->产品”菜单 -->
     <record id="stock.menu_product_variant_config_stock" model="ir.ui.menu">
         <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
@@ -45,6 +92,41 @@
 
     <!-- 对所有用户隐藏“物流网络->主数据->产品变体”菜单 -->
     <record id="stock.product_product_menu" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“物流网络->主数据->订货规则”菜单 -->
+    <record id="stock.menu_reordering_rules_config" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“物流网络->报告”菜单 -->
+    <record id="stock.menu_warehouse_report" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“采购->采购->产品”菜单 -->
+    <record id="purchase.menu_procurement_partner_contact_form" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“采购->采购->产品变体”菜单 -->
+    <record id="purchase.product_product_menu" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“采购->控制”菜单 -->
+    <record id="purchase.menu_purchase_control" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“采购->报告”菜单 -->
+    <record id="purchase.purchase_report" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+     <!-- 对所有用户隐藏“采购->配置->产品”菜单 -->
+    <record id="purchase.menu_product_in_config_purchase" model="ir.ui.menu">
         <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
     </record>
 

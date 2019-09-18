@@ -1185,7 +1185,7 @@ msgstr "交接单号"
 #: model:ir.actions.act_window,name:aop_sale.action_handover_vin_view
 #: model:ir.ui.menu,name:aop_sale.handover_vin_menu_id
 msgid "Handover VIN"
-msgstr ""
+msgstr "交接单管理"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__name

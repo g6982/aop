@@ -11,10 +11,12 @@
             <field name="context">{'dispatch_order': True}</field>
         </record>
 
+        <!--
         <menuitem id="dispatch_order"
                   name="Dispatch order"
                   action="action_dispatch_order"
                   parent="stock.menu_stock_warehouse_mgmt"
                   sequence="2" groups="aop_sale.group_dispatch_right"/>
+        -->
     </data>
 </odoo>
