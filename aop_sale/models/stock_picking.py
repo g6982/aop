@@ -42,8 +42,9 @@ class StockPicking(models.Model):
 
     @api.multi
     def button_validate(self):
+        for picking_id in self:
+            self._fill_serial_no(picking_id)
         res = super(StockPicking, self).button_validate()
-        self.sudo()._validate_origin_order()
         return res
 
     # 回溯原单据
