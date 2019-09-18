@@ -94,9 +94,9 @@ class StockPickingBatch(models.Model):
 
         for picking in self.picking_ids:
             for _ in range(picking.picking_incoming_number) if picking.picking_incoming_number > 1 else []:
-                res = self._parse_purchase_line_data(picking, lost_service_product_id, res)
+                res, lost_service_product_id = self._parse_purchase_line_data(picking, lost_service_product_id, res)
             if picking.picking_incoming_number <= 1:
-                res = self._parse_purchase_line_data(picking, lost_service_product_id, res)
+                res, lost_service_product_id = self._parse_purchase_line_data(picking, lost_service_product_id, res)
 
         return [res, lost_service_product_id]
 
@@ -134,7 +134,8 @@ class StockPickingBatch(models.Model):
                 'date_planned': fields.Datetime.now(),
             }
             res.append((0, 0, data))
-        return res
+        lost_service_product_id = list(set(lost_service_product_id))
+        return res, lost_service_product_id
 
     # 供应商合同里面获取服务产品
     def _parse_service_product_supplier(self, picking):
