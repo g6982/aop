@@ -49,15 +49,29 @@
                         <group>
                             <group>
                                 <field name="write_user_id" readonly="1"/>
+
+
                             </group>
                             <group>
                                 <field name="write_datetime" readonly="1"/>
+
                             </group>
                         </group>
 
                         <group>
                             <group>
                                 <field name="order_line_id" attrs="{'invisible': [('order_line_id', '=', False)]}"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="register_user_id" readonly="1"
+                                       attrs="{'invisible': [('register_user_id', '=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="register_datetime" readonly="1"
+                                       attrs="{'invisible': [('register_datetime', '=', False)]}"/>
                             </group>
                         </group>
 

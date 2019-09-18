@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-18 09:11+0000\n"
-"PO-Revision-Date: 2019-09-18 09:11+0000\n"
+"POT-Creation-Date: 2019-09-18 09:29+0000\n"
+"PO-Revision-Date: 2019-09-18 09:29+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2435,13 +2435,14 @@ msgstr "退款发票"
 
 #. module: aop_sale
 #: selection:handover.vin,state:0
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
 msgid "Register"
 msgstr "登记"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__register_user_id
 msgid "Register User"
-msgstr ""
+msgstr "登记人"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__residual_company_signed
@@ -3567,7 +3568,7 @@ msgstr "任务"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__register_datetime
 msgid "register time"
-msgstr ""
+msgstr "登记时间"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_report_aop_sale_standard_statement_report_xlsx

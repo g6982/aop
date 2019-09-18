@@ -74,7 +74,7 @@ class HandoverVin(models.Model):
     @api.multi
     def cancel_verify_handover(self):
         for line in self:
-            if line.state == 'done':
+            if line.state == 'done' or line.state == 'register':
                 line.sudo().write({
                     'state': 'draft',
                     'verify_user_id': False,
