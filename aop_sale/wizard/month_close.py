@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 class MonthClose(models.TransientModel):
     _name = 'month.close.wizard'
 
-    period_id = fields.Many2one('account.period', string='Period')
+    period_id = fields.Many2one('account.period', string='Period', required=True)
 
     # 1. 将没有生成结算清单的销售订单行，生成结算清单
     # 2. 标记月结状态

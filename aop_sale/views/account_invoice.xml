@@ -134,6 +134,7 @@
             <field name="arch" type="xml">
                 <field name="vendor_display_name" position="before">
                     <field name="account_period_id"/>
+                    <field name="reconciliation_batch_no"/>
                 </field>
                 <field name="amount_untaxed" position="before">
                     <field name="tmp_estimate"/>
