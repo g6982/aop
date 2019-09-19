@@ -62,8 +62,10 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
                 'invoice_line_ids': line_data
             })
             data.append(invoice_data)
-        invoice_obj = self.env['account.invoice']
-        invoice_obj.create(data)
+            
+        if data:
+            invoice_obj = self.env['account.invoice']
+            invoice_obj.create(data)
 
     def _prepare_invoice_line_from_po_line(self, line):
         if line.product_id.purchase_method == 'purchase':
