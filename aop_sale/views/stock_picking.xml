@@ -37,6 +37,13 @@
                 <xpath expr="//field[@name='picking_type_id']" position="after">
                     <field name="picking_incoming_number"/>
                 </xpath>
+
+                <xpath expr="//field[@name='location_id']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible': 0}
+                    </attribute>
+                </xpath>
+
             </field>
         </record>
 
