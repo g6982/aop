@@ -54,6 +54,7 @@
         'wizard/statement_report.xml',
         'wizard/write_off_order_line.xml',
         'wizard/month_close.xml',
+        'wizard/purchase_wizard.xml',
         'report/report_statement.xml',
     ],
 }

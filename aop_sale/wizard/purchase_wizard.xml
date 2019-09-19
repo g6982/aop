@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="view_purchase_invoice_wizard_form" model="ir.ui.view">
+        <field name="name">purchase.order.invoice.wizard</field>
+        <field name="model">purchase.order.invoice.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="purchase_order_ids"
+                       widget="many2many_tags"
+                       options="{'no_quick_create': True, 'no_create_edit': True}"
+                       string="Purchase orders"/>
+                </group>
+                <group>
+                    <field name="reconciliation_batch_no"/>
+                </group>
+
+                <footer>
+                    <button name="generate_account_invoice" string="Invoice" class="oe_highlight" type="object"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
