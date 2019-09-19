@@ -4,9 +4,7 @@ from odoo import models, fields, api, _
 import logging
 import xlrd
 from odoo.exceptions import UserError
-import binascii
-import traceback
-import re
+from odoo.tools.float_utils import float_compare
 
 _logger = logging.getLogger(__name__)
 
@@ -38,6 +36,7 @@ class MonthClose(models.TransientModel):
                 'context': context,
                 'target': 'new',
             }
+        self._purchase_create_invoice()
         self.period_id.monthly_state = True
 
     def cancel_monthly(self):
@@ -60,3 +59,68 @@ class MonthClose(models.TransientModel):
             line_ids.append(sale_line_id)
 
         return line_ids
+
+    # 采购单生成成本结算清单
+    def _purchase_create_invoice(self):
+        data = []
+        purchase_ids = self.env['purchase.order'].search([('invoice_ids', '=', False)])
+        for line in purchase_ids:
+            invoice_data = {
+                'partner_id': line.partner_id.id,
+                'partner_shipping_id': line.partner_id.id,
+                'company_id': line.company_id.id if line.company_id else False,
+                'type': 'in_invoice',
+                'purchase_id': line.id,
+                'origin': line.name,
+                'currency_id': line.currency_id.id,
+                'account_id': line.partner_id.property_account_receivable_id.id,
+                'date_invoice': fields.Date.today()
+            }
+            line_data = []
+            for line_id in line.order_line:
+                tmp = self._prepare_invoice_line_from_po_line(line_id)
+                line_data.append((0, 0, tmp))
+            invoice_data.update({
+                'invoice_line_ids': line_data
+            })
+            data.append(invoice_data)
+        invoice_obj = self.env['account.invoice']
+        invoice_obj.create(data)
+
+    def _prepare_invoice_line_from_po_line(self, line):
+        if line.product_id.purchase_method == 'purchase':
+            qty = line.product_qty - line.qty_invoiced
+        else:
+            qty = line.qty_received - line.qty_invoiced
+        if float_compare(qty, 0.0, precision_rounding=line.product_uom.rounding) <= 0:
+            qty = 0.0
+        taxes = line.taxes_id
+        invoice_line_tax_ids = line.order_id.fiscal_position_id.map_tax(taxes, line.product_id, line.order_id.partner_id)
+        invoice_line = self.env['account.invoice.line']
+        # date = self.date or self.date_invoice
+        date = False
+        journal_domain = [
+            ('type', '=', 'purchase'),
+            ('company_id', '=', line.order_id.company_id.id),
+            ('currency_id', '=', line.order_id.partner_id.property_purchase_currency_id.id),
+        ]
+        journal_id = self.env['account.journal'].search(journal_domain, limit=1)
+        data = {
+            'purchase_line_id': line.id,
+            'name': line.order_id.name + ': ' + line.name,
+            'origin': line.order_id.origin,
+            'uom_id': line.product_uom.id,
+            'product_id': line.product_id.id,
+            'account_id': invoice_line.with_context({'journal_id': journal_id.id, 'type': 'in_invoice'})._default_account(),
+            'price_unit': line.order_id.currency_id._convert(
+                line.price_unit, line.order_id.currency_id, line.company_id, date or fields.Date.today(), round=False),
+            'quantity': qty,
+            'discount': 0.0,
+            'account_analytic_id': line.account_analytic_id.id,
+            'analytic_tag_ids': line.analytic_tag_ids.ids,
+            'invoice_line_tax_ids': invoice_line_tax_ids.ids
+        }
+        account = invoice_line.get_invoice_line_account('in_invoice', line.product_id, line.order_id.fiscal_position_id, self.env.user.company_id)
+        if account:
+            data['account_id'] = account.id
+        return data
