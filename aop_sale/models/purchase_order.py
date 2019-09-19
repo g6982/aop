@@ -2,6 +2,7 @@
 from datetime import datetime, timedelta
 from odoo import api, fields, models, _
 import logging
+import time
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -76,7 +77,7 @@ class PurchaseOrder(models.Model):
                 'product_id': line_id.transfer_product_id.id,
                 'product_uom': line_id.transfer_product_id.uom_id.id,
                 'product_uom_qty': 1,
-                'name': line_id.transfer_product_id.name,
+                'name': line_id.transfer_product_id.name + '/' + str(time.time()),
                 'vin_id': vin_id.id,
                 'picking_id': line_id.batch_stock_picking_id.id,
                 'picking_type_id': line_id.batch_stock_picking_id.picking_type_id.id,
@@ -90,8 +91,6 @@ class PurchaseOrder(models.Model):
 
         # 生成 stock.move
         res = stock_move_obj.create(stock_move_data)
-
-        raise UserError(stock_move_data, res)
 
         self.order_line.mapped('batch_stock_picking_id').action_confirm()
 
