@@ -91,9 +91,8 @@ class PurchaseOrder(models.Model):
         # 生成 stock.move
         res = stock_move_obj.create(stock_move_data)
 
-        if not res:
-            raise UserError(stock_move_data)
-        
+        raise UserError(stock_move_data, res)
+
         self.order_line.mapped('batch_stock_picking_id').action_confirm()
 
     # 填充批次号
