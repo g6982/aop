@@ -77,7 +77,7 @@ class PurchaseOrder(models.Model):
                 'product_id': line_id.transfer_product_id.id,
                 'product_uom': line_id.transfer_product_id.uom_id.id,
                 'product_uom_qty': 1,
-                'name': line_id.transfer_product_id.name + '/' + str(time.time()),
+                'name': line_id.transfer_product_id.name,
                 'vin_id': vin_id.id,
                 'picking_id': line_id.batch_stock_picking_id.id,
                 'picking_type_id': line_id.batch_stock_picking_id.picking_type_id.id,
