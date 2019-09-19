@@ -154,5 +154,6 @@ class StockMove(models.Model):
                     self.env['stock.move.line'].create(self._prepare_move_line_vals(quantity=quantity, reserved_quant=reserved_quant))
         return taken_quantity
 
+    # FIXME： 合并会报错
     def _action_confirm(self, merge=False, merge_into=False):
         return super(StockMove, self)._action_confirm(False, merge_into)
