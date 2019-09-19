@@ -96,27 +96,23 @@ class SaleOrderLine(models.Model):
 
     current_picking_id = fields.Many2one('stock.picking', 'Current picking task', compute='_compute_current_picking_id', store=True)
     current_picking_type_id = fields.Many2one('stock.picking.type', related='current_picking_id.picking_type_id')
-    picking_confirm_date = fields.Datetime('Confirm date')
+    picking_confirm_date = fields.Datetime('Confirm date', compute='_compute_current_picking_id', store=True)
 
     @api.multi
     @api.depends('stock_picking_ids', 'stock_picking_ids.state', 'stock_picking_ids.date_done')
     def _compute_current_picking_id(self):
         for line in self:
+            if not line.stock_picking_ids:
+                continue
 
             current_picking_id = line.stock_picking_ids.filtered(lambda x: x.state == 'assigned')
 
-            last_picking_id = None
-            if line.stock_picking_ids:
-                last_picking_id = line.stock_picking_ids.sorted('id')[-1]
-            if not last_picking_id:
-                continue
-
             if not current_picking_id:
-                current_picking_id = last_picking_id
+                current_picking_id = line.stock_picking_ids.sorted('id')[-1]
 
             line.current_picking_id = current_picking_id.id
 
-            if current_picking_id.state == 'done' and current_picking_id.id == last_picking_id.id:
+            if current_picking_id.state == 'done' and current_picking_id.id == line.stock_picking_ids.sorted('id')[-1].id:
                 line.picking_confirm_date = current_picking_id.date_done
 
     def replenish_stock_picking_order(self):
