@@ -108,8 +108,19 @@ class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
     transfer_product_id = fields.Many2one('product.product', 'Transfer product')
+
     vin_code = fields.Char('VIN')
+
+    vehicle_number = fields.Char(string='Vehicle number')
 
     transfer_way = fields.Char('Way')
 
+    train_type = fields.Char(string='Train type')
+
+    cargo_line = fields.Char(string='Cargo line')
+
+    box_number = fields.Char(string='Box number')
+
     batch_stock_picking_id = fields.Many2one('stock.picking')
+
+

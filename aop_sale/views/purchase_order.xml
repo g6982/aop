@@ -34,7 +34,11 @@
                            groups="aop_sale.group_purchase_fill_vin_product"
                            options="{'no_quick_create': True, 'no_create_edit': True}"/>
                     <field name="vin_code" groups="aop_sale.group_purchase_fill_vin_product"/>
+                    <field name="vehicle_number"/>
                     <field name="transfer_way"/>
+                    <field name="train_type"/>
+                    <field name="cargo_line"/>
+                    <field name="box_number"/>
                     <field name="sale_line_id" readonly="1"/>
                 </xpath>
             </field>

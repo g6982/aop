@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-18 09:29+0000\n"
-"PO-Revision-Date: 2019-09-18 09:29+0000\n"
+"POT-Creation-Date: 2019-09-19 09:47+0000\n"
+"PO-Revision-Date: 2019-09-19 09:47+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -356,6 +356,11 @@ msgid "Box no"
 msgstr "厢号"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__box_number
+msgid "Box number"
+msgstr "车厢号"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__brand_id
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__brand
 msgid "Brand"
@@ -407,6 +412,11 @@ msgstr "取消拣货"
 #: selection:sale.order,state:0
 msgid "Cancelled"
 msgstr "已取消"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__cargo_line
+msgid "Cargo line"
+msgstr "货线"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__carrier_id
@@ -687,6 +697,7 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__create_uid
@@ -727,6 +738,7 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__create_date
@@ -938,6 +950,7 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__display_name
@@ -1241,6 +1254,7 @@ msgstr "有未清项"
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__id
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__id
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx__id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__id
@@ -1413,6 +1427,7 @@ msgstr "库存路线"
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_invoice_wizard_form
 #, python-format
 msgid "Invoice"
 msgstr "发票"
@@ -1566,6 +1581,7 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product____last_update
@@ -1607,6 +1623,7 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__write_uid
@@ -1647,6 +1664,7 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__write_date
@@ -1737,7 +1755,7 @@ msgid "Main product"
 msgstr "主产品"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/month_close.py:33
+#: code:addons/aop_sale/wizard/month_close.py:31
 #, python-format
 msgid "Make invoice"
 msgstr ""
@@ -2313,6 +2331,7 @@ msgstr "购买方"
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_purchase_order
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__purchase_id
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__purchase_order_ids
 msgid "Purchase Order"
 msgstr "采购订单"
 
@@ -2326,6 +2345,11 @@ msgstr "采购订单行"
 #: model:res.groups,name:aop_sale.group_purchase_fill_vin_product
 msgid "Purchase fill data"
 msgstr "采购回填数据"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_invoice_wizard_form
+msgid "Purchase orders"
+msgstr "采购订单"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
@@ -2412,6 +2436,7 @@ msgstr "临时订单送出"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__reconciliation_batch_no
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__reconciliation_batch_no
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__reconciliation_batch_no
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__reconciliation_batch_no
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_filter_inherit_aop_sale
 msgid "Reconciliation batch no"
@@ -2442,7 +2467,7 @@ msgstr "登记"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__register_user_id
 msgid "Register User"
-msgstr "登记人"
+msgstr "登记用户"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__residual_company_signed
@@ -3201,12 +3226,14 @@ msgid "Vehicle model"
 msgstr "车型"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__vehicle_number
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__vehicle_number
 msgid "Vehicle number"
 msgstr "车辆编号"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_product_product__vehicle_type_id
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__vehicle_type
 msgid "Vehicle type"
 msgstr "车型类别"
 
@@ -3281,7 +3308,7 @@ msgstr "仓库"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__transfer_way
 msgid "Way"
-msgstr "运力来源"
+msgstr "运输方式"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__website_message_ids
@@ -3341,7 +3368,7 @@ msgid "Write time"
 msgstr "更新时间"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:412
+#: code:addons/aop_sale/models/sale_order.py:418
 #: model:ir.actions.act_window,name:aop_sale.action_write_off_line_order_wizard
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_write_off_order_line_wizard_form
@@ -3360,12 +3387,6 @@ msgstr "可以通过姓名、TIN、邮箱或者内部关联找到一个联系人
 #, python-format
 msgid "You can not create recursive analytic accounts."
 msgstr ""
-
-#. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:611
-#, python-format
-msgid "You can not make order until the product have vin or stock."
-msgstr "你要等到产品有vin或库存才可以确认订单."
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
@@ -3566,6 +3587,11 @@ msgid "picking"
 msgstr "任务"
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_purchase_order_invoice_wizard
+msgid "purchase.order.invoice.wizard"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__register_datetime
 msgid "register time"
 msgstr "登记时间"
@@ -3614,6 +3640,11 @@ msgstr "公司编码必须唯一"
 #: sql_constraint:res.partner:0
 msgid "the name and parent_id must be unique!"
 msgstr "名字和上级 必须唯一"
+
+#. module: aop_sale
+#: sql_constraint:handover.vin:0
+msgid "the name and vin_code must be unique!"
+msgstr ""
 
 #. module: aop_sale
 #: sql_constraint:delivery.carrier:0

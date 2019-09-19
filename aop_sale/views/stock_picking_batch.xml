@@ -12,9 +12,9 @@
 
                 <field name="dispatch_type"/>
 
-                <field name="plan_number" attrs='{"invisible": [("dispatch_type", "!=", "train_type")]}'/>
+                <field name="plan_number" attrs='{"invisible": 1}'/>
 
-                <field name="vehicle_number" attrs='{"invisible": [("dispatch_type", "!=", "highway_type")]}'/>
+                <field name="vehicle_number" attrs='{"invisible": 1}'/>
 
 
                 <field name="partner_id"

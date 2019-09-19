@@ -69,3 +69,8 @@ msgstr "目的位置"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__is_transfer
 msgid "Transfer"
 msgstr "中转"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_invoice_wizard_form
+msgid "Invoice"
+msgstr "生成付款结算清单"
