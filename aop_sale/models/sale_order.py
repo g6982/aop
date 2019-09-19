@@ -151,12 +151,12 @@ class SaleOrderLine(models.Model):
             ('product_id', '=', self.product_id.id)
         ])
 
-        if not vin_id:
-            vin_id = vin_obj.create({
-                'name': self.vin_code,
-                'product_id': self.product_id.id if self.product_id else False
-            })
-        return vin_id
+        # if not vin_id:
+        #     vin_id = vin_obj.create({
+        #         'name': self.vin_code,
+        #         'product_id': self.product_id.id if self.product_id else False
+        #     })
+        return vin_id.id if vin_id else False
 
     @api.multi
     def _parse_stock_in_picking_data(self):
@@ -280,9 +280,7 @@ class SaleOrderLine(models.Model):
         errors = []
         for line in self:
             line._compute_stock_picking_state()
-            _logger.info({
-                'line.stock_picking_state': line.stock_picking_state
-            })
+
             if line.stock_picking_state or not line.vin:
                 continue
 
@@ -356,6 +354,11 @@ class SaleOrderLine(models.Model):
             # 保留取上级的默认客户位置
             location_id = partner_id.parent_id.property_stock_customer
         return location_id
+
+    # 先把订单的vin 填写
+    def _fill_order_line_vin_id(self):
+        for line in self:
+            line.vin = line.get_vin_id_in_stock()
 
 
 class SaleOrder(models.Model):
@@ -481,11 +484,6 @@ class SaleOrder(models.Model):
 
         delivery_ids = list(set(delivery_ids))
 
-
-
-        _logger.info({
-            'delivery_ids': delivery_ids
-        })
         return delivery_ids
 
     # 针对导入，根据货物，选择出对应的服务产品和路由，如果路由存在多个，默认选择第一条
@@ -552,7 +550,8 @@ class SaleOrder(models.Model):
         #     'contract_id': contract_id
         # })
 
-        res.order_line.replenish_stock_picking_order()
+        # 接车单创建
+        # res.order_line.replenish_stock_picking_order()
 
         data = []
         for line_id in res.order_line:
@@ -610,8 +609,8 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-        if not any([True if line.mapped('vin') else False for line in self.order_line]):
-            raise UserError(_('You can not make order until the product have vin or stock.'))
+        # if not any([True if line.mapped('vin') else False for line in self.order_line]):
+        #     raise UserError(_('You can not make order until the product have vin or stock.'))
         res = super(SaleOrder, self).action_confirm()
 
         # FIXME: 补丁
@@ -650,6 +649,7 @@ class SaleOrder(models.Model):
         for order in self:
             order_line_ids = order.order_line.filtered(lambda x: x.stock_picking_state is False)
             if order_line_ids:
+                order_line_ids._fill_order_line_vin_id()
                 order_line_ids._action_launch_stock_rule()
 
             order_line_ids._compute_stock_picking_state()

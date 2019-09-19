@@ -2,7 +2,7 @@
 
 from odoo import models, fields, api, _
 import logging
-import xlrd
+import time
 from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_compare
 
@@ -64,6 +64,7 @@ class MonthClose(models.TransientModel):
     def _purchase_create_invoice(self):
         data = []
         purchase_ids = self.env['purchase.order'].search([('invoice_ids', '=', False)])
+        reconciliation_batch_no = str(time.time())
         for line in purchase_ids:
             invoice_data = {
                 'partner_id': line.partner_id.id,
@@ -74,7 +75,8 @@ class MonthClose(models.TransientModel):
                 'origin': line.name,
                 'currency_id': line.currency_id.id,
                 'account_id': line.partner_id.property_account_receivable_id.id,
-                'date_invoice': fields.Date.today()
+                'date_invoice': fields.Date.today(),
+                'reconciliation_batch_no': reconciliation_batch_no
             }
             line_data = []
             for line_id in line.order_line:
