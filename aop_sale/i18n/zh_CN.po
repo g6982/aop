@@ -3281,7 +3281,7 @@ msgstr "仓库"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__transfer_way
 msgid "Way"
-msgstr "运输方式"
+msgstr "运力来源"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__website_message_ids
