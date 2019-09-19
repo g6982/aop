@@ -32,8 +32,8 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
     def generate_account_invoice(self):
         self.judge_purchase_not_draft()
 
+        purchase_ids = self.purchase_order_ids
         data = []
-        purchase_ids = self.env['purchase.order'].search([('invoice_ids', '=', False)])
         reconciliation_batch_no = self.reconciliation_batch_no
         for line in purchase_ids:
             invoice_data = {
@@ -50,14 +50,22 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             }
             line_data = []
             for line_id in line.order_line:
+                # 如果已经生成了。不需要继续生成
+                if line_id.invoice_lines:
+                    continue
                 tmp = self._prepare_invoice_line_from_po_line(line_id)
                 line_data.append((0, 0, tmp))
+
+            if not line_data:
+                continue
             invoice_data.update({
                 'invoice_line_ids': line_data
             })
             data.append(invoice_data)
-        invoice_obj = self.env['account.invoice']
-        invoice_obj.create(data)
+
+        if data:
+            invoice_obj = self.env['account.invoice']
+            invoice_obj.create(data)
 
     def _prepare_invoice_line_from_po_line(self, line):
         if line.product_id.purchase_method == 'purchase':
