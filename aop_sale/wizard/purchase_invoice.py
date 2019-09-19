@@ -62,7 +62,7 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
                 'invoice_line_ids': line_data
             })
             data.append(invoice_data)
-            
+
         if data:
             invoice_obj = self.env['account.invoice']
             invoice_obj.create(data)

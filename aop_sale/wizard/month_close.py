@@ -63,7 +63,7 @@ class MonthClose(models.TransientModel):
     # 采购单生成成本结算清单
     def _purchase_create_invoice(self):
         data = []
-        purchase_ids = self.env['purchase.order'].search([('invoice_ids', '=', False)])
+        purchase_ids = self.env['purchase.order'].search([('invoice_count', '<=', 0), ('state', '=', 'purchase')])
         reconciliation_batch_no = str(time.time())
         for line in purchase_ids:
             invoice_data = {
