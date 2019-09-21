@@ -3,10 +3,11 @@
 from odoo import models, fields, api
 import logging
 import xlrd
+from xlrd import xldate_as_tuple
+from datetime import datetime
 from odoo.exceptions import UserError
 import binascii
 import traceback
-import re
 
 _logger = logging.getLogger(__name__)
 
@@ -15,7 +16,8 @@ CQ_COL = {
     'vin_code': 5,
     'product_id': 6,
     'to_location_id': 9,
-    'start_index': 0
+    'start_index': 0,
+    'file_planned_date': 14
 }
 
 CT_COL = {
@@ -23,7 +25,8 @@ CT_COL = {
     'vin_code': 4,
     'product_id': 6,
     'to_location_id': 10,
-    'start_index': 6
+    'start_index': 6,
+    'file_planned_date': 0
 }
 
 
@@ -46,6 +49,8 @@ class ImportSaleOrder(models.TransientModel):
     def start_import_sale_order(self):
         return self._import_sale_order()
 
+    # 勾选了任务，导入的是CQ
+    # 没有勾选，导入CT
     def _import_sale_order(self):
         try:
             sale_order = self.env['sale.order']
@@ -58,12 +63,14 @@ class ImportSaleOrder(models.TransientModel):
                 from_partner_index = CQ_COL.get('from_location_id')
                 to_partner_index = CQ_COL.get('to_location_id')
                 vin_index = CQ_COL.get('vin_code')
+                file_planned_date_index = CQ_COL.get('file_planned_date')
             else:
                 product_index = CT_COL.get('product_id')
                 start_index = CT_COL.get('start_index')
                 from_partner_index = CT_COL.get('from_location_id')
                 to_partner_index = CT_COL.get('to_location_id')
                 vin_index = CT_COL.get('vin_code')
+                file_planned_date_index = CT_COL.get('file_planned_date')
 
             # 选了 from_location_id 就是二次起跳
             partner_data = self._parse_partner_id(sheet_data, from_location_id=self.from_location_id,
@@ -77,7 +84,9 @@ class ImportSaleOrder(models.TransientModel):
                                                     to_partner_index=to_partner_index,
                                                     product_index=product_index,
                                                     start_index=start_index,
-                                                    vin_index=vin_index)
+                                                    vin_index=vin_index,
+                                                    file_planned_date_index=file_planned_date_index
+                                                    )
             order_data.update({
                 'order_line': line_data,
             })
@@ -127,9 +136,10 @@ class ImportSaleOrder(models.TransientModel):
     # 订单行的数据
     def _parse_order_line_data(self, sheet_data, product_data, partner_data, from_location_id=False,
                                from_partner_index=None, to_partner_index=None, product_index=None, start_index=None,
-                               vin_index=None):
+                               vin_index=None, file_planned_date_index=None):
         line_values = []
 
+        # 选择了 from_location_id, 二次起跳
         if not from_location_id:
             for x in range(start_index, sheet_data.nrows):
 
@@ -144,6 +154,8 @@ class ImportSaleOrder(models.TransientModel):
                     continue
                 vin_id = self._find_vin_id(sheet_data.cell_value(x, vin_index), product_id)
 
+                file_planned_date = datetime(*xldate_as_tuple(sheet_data.cell_value(x, file_planned_date_index), 0)).date()
+
                 line_data = (0, 0, {
                     'product_id': product_id.id,
                     # 'service_product_id': False,
@@ -154,7 +166,8 @@ class ImportSaleOrder(models.TransientModel):
                     'name': product_id.name,
                     'product_uom_qty': 1,
                     'product_uom': product_id.uom_id.id,
-                    'price_unit': 1
+                    'price_unit': 1,
+                    'file_planned_date': file_planned_date
                 })
                 line_values.append(line_data)
             # _logger.info({
@@ -178,6 +191,9 @@ class ImportSaleOrder(models.TransientModel):
                     continue
                 vin_id = self._find_vin_id(sheet_data.cell_value(x, 9), product_id)
 
+                file_planned_date_index = 23
+                file_planned_date = datetime(*xldate_as_tuple(sheet_data.cell_value(x, file_planned_date_index), 0)).date()
+
                 line_data = (0, 0, {
                     'product_id': product_id.id,
                     # 'service_product_id': False,
@@ -188,7 +204,8 @@ class ImportSaleOrder(models.TransientModel):
                     'name': product_id.name,
                     'product_uom_qty': 1,
                     'product_uom': product_id.uom_id.id,
-                    'price_unit': 1
+                    'price_unit': 1,
+                    'file_planned_date': file_planned_date
                 })
                 line_values.append(line_data)
         return line_values

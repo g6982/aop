@@ -98,6 +98,8 @@ class SaleOrderLine(models.Model):
     current_picking_type_id = fields.Many2one('stock.picking.type', related='current_picking_id.picking_type_id')
     picking_confirm_date = fields.Datetime('Confirm date', compute='_compute_current_picking_id', store=True)
 
+    file_planned_date = fields.Date('Imported date')
+
     @api.multi
     @api.depends('stock_picking_ids', 'stock_picking_ids.state', 'stock_picking_ids.date_done')
     def _compute_current_picking_id(self):
