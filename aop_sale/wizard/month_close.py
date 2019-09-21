@@ -136,9 +136,6 @@ class MonthClose(models.TransientModel):
 
         for partner_id in partner_ids:
             code = self.env['ir.sequence'].next_by_code('seq_invoice_supplier_code')
-            _logger.info({
-                'code': code
-            })
             data.update({
                 partner_id.id: self.part_partner_id_code(partner_id, code)
             })
