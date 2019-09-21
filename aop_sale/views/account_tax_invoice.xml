@@ -79,6 +79,7 @@
             <field name="model">account.tax.invoice</field>
             <field name="arch" type="xml">
                 <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" string="Invoice">
+                    <field name="tax_invoice_no"/>
                     <field name="partner_id" groups="base.group_user" string="Customer"/>
                     <field name="date_invoice"/>
                     <field name="number"/>
@@ -102,17 +103,17 @@
             </field>
         </record>
 
-        <record id="invoice_tree_with_onboarding" model="ir.ui.view">
-            <field name="name">account.invoice.tree.with.onboarding</field>
-            <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="invoice_tree"/>
-            <field name="mode">primary</field>
-            <field name="arch" type="xml">
-                <xpath expr="//tree" position="attributes">
-                    <attribute name="banner_route">/account/account_invoice_onboarding</attribute>
-                </xpath>
-            </field>
-        </record>
+<!--        <record id="invoice_tree_with_onboarding" model="ir.ui.view">-->
+<!--            <field name="name">account.invoice.tree.with.onboarding</field>-->
+<!--            <field name="model">account.invoice</field>-->
+<!--            <field name="inherit_id" ref="invoice_tree"/>-->
+<!--            <field name="mode">primary</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//tree" position="attributes">-->
+<!--                    <attribute name="banner_route">/account/account_invoice_onboarding</attribute>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
 
         <record id="invoice_form" model="ir.ui.view">
             <field name="name">account.tax.invoice.form</field>
