@@ -136,6 +136,9 @@ class MonthClose(models.TransientModel):
 
         for partner_id in partner_ids:
             code = self.env['ir.sequence'].next_by_code('seq_invoice_supplier_code')
+            _logger.info({
+                'code': code
+            })
             data.update({
                 partner_id.id: self.part_partner_id_code(partner_id, code)
             })
@@ -146,7 +149,9 @@ class MonthClose(models.TransientModel):
         if not code:
             return False
         code_part = code.split('/')
-        code = '/'.join(x for x in code_part[:-1])
-        code = code + '/' + str(partner_id.id) + '/' + code_part[-1]
+
+        code_part.insert(4, str(partner_id.id))
+
+        code = '/'.join(x for x in code_part)
 
         return code
