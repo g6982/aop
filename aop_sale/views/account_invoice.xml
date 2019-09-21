@@ -42,6 +42,10 @@
                     <field name="advance_receipt"/>
                 </xpath>
 
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="string">customer price</attribute>
+                </xpath>
+
                 <xpath expr="//sheet" position="attributes">
                     <attribute name="class">o_form_sheet_full_width</attribute>
                 </xpath>
@@ -51,6 +55,8 @@
                     <field name="cost_passage"/>
                     <field name="advance_receipt"/>
                 </xpath>
+
+
 
             </field>
         </record>
@@ -163,9 +169,7 @@
                         <field name="account_period_id"/>
                     </xpath>
 
-                    <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
-                    <attribute name="string">customer price</attribute>
-                </xpath>
+
 
                 </data>
             </field>
