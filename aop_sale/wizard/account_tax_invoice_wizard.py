@@ -21,6 +21,33 @@ class AccountTaxInvoiceWizard(models.TransientModel):
     tax_invoice_number = fields.Float('Tax invoice number')
 
     @api.model
+    def _compute_tax_invoice_no(self):
+        tax_invoice_obj = self.env['account.tax.invoice']
+        tax_domain = [
+            ('tax_invoice_no', '!=', False),
+        ]
+        tax_invoice_ids = tax_invoice_obj.search(tax_domain)
+
+        data = []
+        if not tax_invoice_ids:
+            return []
+
+        for x in list(set(tax_invoice_ids.mapped('tax_invoice_no'))):
+            data.append(
+                (x, x)
+            )
+        return data
+
+    tax_invoices_no = fields.Selection(selection=lambda self: self._compute_tax_invoice_no(), string='Tax invoices no')
+
+    @api.onchange('tax_invoices_no')
+    def _onchange_tax_invoices_no(self):
+        if self.tax_invoices_no:
+            self.tax_invoice_no = self.tax_invoices_no
+            invoice_lines = self.env['account.tax.invoice'].search([('tax_invoice_no', '=', self.tax_invoices_no)])
+            self.invoice_line_ids = [(6, 0, invoice_lines.mapped('invoice_line_ids').mapped('invoice_line_id').ids if invoice_lines.mapped('invoice_line_ids') else [])]
+
+    @api.model
     def default_get(self, fields_list):
         res = super(AccountTaxInvoiceWizard, self).default_get(fields_list)
         if self.env.context.get('active_ids'):
@@ -59,6 +86,7 @@ class AccountTaxInvoiceWizard(models.TransientModel):
                 'uom_id': line_id.product_id.uom_id.id,
                 'price_unit': amount,
                 'account_id': line_id.account_id.id,
+                'invoice_line_id': line_id.id
             }))
         return line_data
 
@@ -66,7 +94,8 @@ class AccountTaxInvoiceWizard(models.TransientModel):
     def _compute_invoice_amount_all(self, line_id, tax_invoice_number, invoice_line_ids):
         left_amount = line_id.price_subtotal - line_id.tax_invoice_amount
         line_id.write({
-            'tax_invoice_amount': line_id.price_subtotal
+            'tax_invoice_amount': line_id.price_subtotal,
+            'tax_invoice_state': tax_invoice_state
         })
         return round(float(left_amount) * 1000, -1) / 1000
 
@@ -101,5 +130,5 @@ class AccountTaxInvoiceWizard(models.TransientModel):
         data.update({
             'invoice_line_ids': line_data
         })
-        tax_invoice = self.env['account.tax.invoice']
-        res = tax_invoice.create(data)
+        tax_invoice_obj = self.env['account.tax.invoice']
+        res = tax_invoice_obj.create(data)

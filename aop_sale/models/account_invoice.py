@@ -159,6 +159,7 @@ class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 
     tax_invoice_amount = fields.Float('Tax invoice amount')
+    tax_invoice_state = fields.Boolean('Tax invoice state', default=False)
 
     sale_order_line_id = fields.Many2one('sale.order.line', 'Sale order line')
     line_price_subtotal = fields.Monetary(related='sale_order_line_id.price_subtotal', readonly=True)

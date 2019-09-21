@@ -9,6 +9,7 @@
                     <group>
                         <group>
                             <field name="tax_invoice_no"/>
+                            <field name="tax_invoices_no"/>
                         </group>
                         <group>
                             <field name="partner_id"/>
