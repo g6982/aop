@@ -74,3 +74,8 @@ msgstr "中转"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_invoice_wizard_form
 msgid "Invoice"
 msgstr "生成付款结算清单"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_month_close_wizard_form
+msgid "Cancel"
+msgstr "取消月结"
