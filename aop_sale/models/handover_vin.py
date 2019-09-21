@@ -39,6 +39,9 @@ class HandoverVin(models.Model):
     finance_verify_user_id = fields.Many2one('res.users', track_visibility='onchange')
     finance_verify_datetime = fields.Datetime('Finance verify time', track_visibility='onchange')
 
+    file_planned_date = fields.Date('Planned date', related='order_line_id.file_planned_date', readonly=True)
+    to_location_id = fields.Many2one('res.partner', related='order_line_id.to_location_id', readonly=True)
+
     @api.multi
     @api.depends('name')
     def _compute_sale_order_line(self):

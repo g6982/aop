@@ -63,6 +63,10 @@
                             <group>
                                 <field name="order_line_id" attrs="{'invisible': [('order_line_id', '=', False)]}"/>
                             </group>
+                            <group>
+                                <field name="file_planned_date" attrs="{'invisible': [('file_planned_date', '=', False)]}"/>
+                                <field name="to_location_id" attrs="{'invisible': [('to_location_id', '=', False)]}"/>
+                            </group>
                         </group>
 
                         <group>
@@ -115,6 +119,8 @@
                     <field name="vin_code"/>
                     <field name="write_user_id"/>
                     <field name="write_datetime"/>
+                    <field name="file_planned_date"/>
+                    <field name="to_location_id"/>
                 </tree>
             </field>
         </record>
