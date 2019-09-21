@@ -71,6 +71,8 @@
                     <field name="tmp_estimate" string="cost estimate"/>
                     <field name="cost_passage"/>
                     <field name="advance_receipt"/>
+                    <field name="verify_user" attrs="{'invisible': [('verify_user', '=', False)]}"/>
+                    <field name="verify_time" attrs="{'invisible': [('verify_time', '=', False)]}"/>
                 </xpath>
 
 
