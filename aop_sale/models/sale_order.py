@@ -619,7 +619,6 @@ class SaleOrder(models.Model):
                     continue
                 line_id._fill_order_line_vin_id()
 
-        vin_order_ids = False
         # 如果一个VIN都没有。不运行
         vin_order_ids = self.mapped('order_line').filtered(lambda x: not x.vin)
 
@@ -640,13 +639,12 @@ class SaleOrder(models.Model):
         for order in self:
             order.mapped('order_line')._compute_stock_picking_state()
 
-            # 存在完成，且部分完成，才写入部分完成的状态
-            if not all(order.mapped('order_line').mapped('stock_picking_state')) and not any(order.mapped('order_line').mapped('stock_picking_state')):
+            # 存在完成，且部分未完成，才写入部分完成的状态
+            if order.mapped('order_line').filtered(lambda x: x.stock_picking_state) and order.mapped('order_line').filtered(lambda x: not x.stock_picking_state):
                 order.write({
                     'state': 'part_done',
                     'confirmation_date': fields.Datetime.now()
                 })
-
         return res
 
     # # 取消的同时。删除
