@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-19 09:59+0000\n"
-"PO-Revision-Date: 2019-09-19 09:59+0000\n"
+"POT-Creation-Date: 2019-09-21 06:33+0000\n"
+"PO-Revision-Date: 2019-09-21 06:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -633,11 +633,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_fill_service_product_wizard_form_view
 msgid "Create"
 msgstr "创建"
-
-#. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
-msgid "Create Invoice"
-msgstr "创建回款结算清单"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_stock_rule__procure_method
@@ -1422,6 +1417,8 @@ msgid "Inventory Routes"
 msgstr "库存路线"
 
 #. module: aop_sale
+#: selection:account.invoice,state:0
+#: selection:account.tax.invoice,state:0
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:237
 #: model:ir.model,name:aop_sale.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
@@ -2576,12 +2573,6 @@ msgid "Sale line price"
 msgstr "订单价"
 
 #. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
-msgid "Sale line unit"
-msgstr "销售价(税)"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__sale_order_line_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__sale_order_line_id
 msgid "Sale order line"
@@ -3372,7 +3363,7 @@ msgid "Write time"
 msgstr "更新时间"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:418
+#: code:addons/aop_sale/models/sale_order.py:420
 #: model:ir.actions.act_window,name:aop_sale.action_write_off_line_order_wizard
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_write_off_order_line_wizard_form
