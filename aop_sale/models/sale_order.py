@@ -613,9 +613,19 @@ class SaleOrder(models.Model):
     def action_confirm(self):
         # # 先去填充一次VIN
         for order in self:
-            vin_order_ids = order.order_line.filtered(lambda x: x.vin is False)
-            if vin_order_ids:
-                vin_order_ids._fill_order_line_vin_id()
+            order_line_ids = order.order_line
+            for line_id in order_line_ids:
+                if line_id.vin:
+                    continue
+                line_id._fill_order_line_vin_id()
+
+        vin_order_ids = False
+        # 如果一个VIN都没有。不运行
+        vin_order_ids = self.mapped('order_line').filtered(lambda x: not x.vin)
+
+        # 全部都没VIN
+        if len(self.mapped('order_line')) == len(vin_order_ids):
+            return True
 
         # if not any([True if line.mapped('vin') else False for line in self.order_line]):
         #     raise UserError(_('You can not make order until the product have vin or stock.'))
@@ -630,12 +640,8 @@ class SaleOrder(models.Model):
         for order in self:
             order.mapped('order_line')._compute_stock_picking_state()
 
-            vin_order_ids = order.order_line.filtered(lambda x: x.vin is not False)
-
-            if not vin_order_ids:
-                continue
-
-            if not all(order.mapped('order_line').mapped('stock_picking_state')):
+            # 存在完成，且部分完成，才写入部分完成的状态
+            if not all(order.mapped('order_line').mapped('stock_picking_state')) and not any(order.mapped('order_line').mapped('stock_picking_state')):
                 order.write({
                     'state': 'part_done',
                     'confirmation_date': fields.Datetime.now()
@@ -661,7 +667,7 @@ class SaleOrder(models.Model):
     @api.multi
     def update_stock_picking(self):
         for order in self:
-            order_line_ids = order.order_line.filtered(lambda x: x.stock_picking_state is False)
+            order_line_ids = order.order_line.filtered(lambda x: not x.stock_picking_state)
             if order_line_ids:
                 order_line_ids._fill_order_line_vin_id()
                 order_line_ids._action_launch_stock_rule()
