@@ -622,7 +622,18 @@ class SaleOrder(models.Model):
             lambda picking: picking.state == 'assigned') else False
 
         for order in self:
+            # 先去填充一次VIN
+            vin_order_ids = order.order_line.filtered(lambda x: x.vin is False)
+            if vin_order_ids:
+                vin_order_ids._fill_order_line_vin_id()
+
             order.mapped('order_line')._compute_stock_picking_state()
+
+            vin_order_ids = order.order_line.filtered(lambda x: x.vin is not False)
+
+            if not vin_order_ids:
+                continue
+
             if not all(order.mapped('order_line').mapped('stock_picking_state')):
                 order.write({
                     'state': 'part_done',
