@@ -64,6 +64,8 @@ class MonthClose(models.TransientModel):
     def _purchase_create_invoice(self):
         data = []
         purchase_ids = self.env['purchase.order'].search([('invoice_count', '<=', 0), ('state', '=', 'purchase')])
+        partner_ids = self._parse_partner_id(purchase_ids)
+
         reconciliation_batch_no = str(time.time())
         for line in purchase_ids:
             invoice_data = {
@@ -76,7 +78,7 @@ class MonthClose(models.TransientModel):
                 'currency_id': line.currency_id.id,
                 'account_id': line.partner_id.property_account_receivable_id.id,
                 'date_invoice': fields.Date.today(),
-                'reconciliation_batch_no': reconciliation_batch_no
+                'reconciliation_batch_no': partner_ids.get(line.partner_id.id, reconciliation_batch_no)
             }
             line_data = []
             for line_id in line.order_line:
@@ -126,3 +128,22 @@ class MonthClose(models.TransientModel):
         if account:
             data['account_id'] = account.id
         return data
+
+    def _parse_partner_id(self, purchase_ids):
+        partner_ids = purchase_ids.mapped('partner_id')
+
+        data = {}
+
+        for partner_id in partner_ids:
+            code = self.env['ir.sequence'].next_by_code('seq_invoice_supplier_code')
+            data.update({
+                partner_id.id: self.part_partner_id_code(partner_id, code)
+            })
+        return data
+
+    def part_partner_id_code(self, partner_id, code):
+        code_part = code.split('/')
+        code = '/'.join(x for x in code_part[:-1])
+        code = code + '/' + str(partner_id.id) + '/' + code_part[-1]
+
+        return code
