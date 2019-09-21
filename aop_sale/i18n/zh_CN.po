@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-21 12:36+0000\n"
-"PO-Revision-Date: 2019-09-21 12:36+0000\n"
+"POT-Creation-Date: 2019-09-21 12:50+0000\n"
+"PO-Revision-Date: 2019-09-21 12:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1972,7 +1972,7 @@ msgstr "未读消息数量"
 #: selection:account.tax.invoice,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Open"
-msgstr "确认"
+msgstr "对账"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__current_picking_type_id
@@ -3323,7 +3323,7 @@ msgstr "审核时间"
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__verify_user
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__verify_user
 msgid "Verify user"
-msgstr ""
+msgstr "审核人"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__version_id
