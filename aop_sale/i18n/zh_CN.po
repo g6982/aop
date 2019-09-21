@@ -1758,7 +1758,7 @@ msgstr "主产品"
 #: code:addons/aop_sale/wizard/month_close.py:31
 #, python-format
 msgid "Make invoice"
-msgstr ""
+msgstr "生成回款/付款结算清单"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__mass_attachment_ids
