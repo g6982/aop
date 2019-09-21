@@ -611,6 +611,12 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
+        # # 先去填充一次VIN
+        for order in self:
+            vin_order_ids = order.order_line.filtered(lambda x: x.vin is False)
+            if vin_order_ids:
+                vin_order_ids._fill_order_line_vin_id()
+
         # if not any([True if line.mapped('vin') else False for line in self.order_line]):
         #     raise UserError(_('You can not make order until the product have vin or stock.'))
         res = super(SaleOrder, self).action_confirm()
@@ -622,11 +628,6 @@ class SaleOrder(models.Model):
             lambda picking: picking.state == 'assigned') else False
 
         for order in self:
-            # 先去填充一次VIN
-            vin_order_ids = order.order_line.filtered(lambda x: x.vin is False)
-            if vin_order_ids:
-                vin_order_ids._fill_order_line_vin_id()
-
             order.mapped('order_line')._compute_stock_picking_state()
 
             vin_order_ids = order.order_line.filtered(lambda x: x.vin is not False)
