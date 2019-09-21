@@ -21,7 +21,13 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
         else:
             res = super(PurchaseOrderInvoiceWizard, self).default_get(fields_list)
             ids = self._context.get('active_ids', [])
+
+            purchase_partner_ids = self.env['purchase.order'].browse(ids).mapped('partner_id')
+            code = self.env['ir.sequence'].next_by_code('seq_invoice_supplier_code')
+            batch_no = self.part_partner_id_code(purchase_partner_ids, code)
+
             res['purchase_order_ids'] = [(6, 0, ids)]
+            res['reconciliation_batch_no'] = batch_no
             return res
 
     def judge_purchase_not_draft(self):
@@ -108,3 +114,15 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             data['account_id'] = account.id
         return data
 
+    def part_partner_id_code(self, partner_id, code):
+        partner_id = partner_id[0] if partner_id else False
+        # code is null? impossible!
+        if not code:
+            return False
+        code_part = code.split('/')
+
+        code_part.insert(4, str(partner_id.id))
+
+        code = '/'.join(x for x in code_part)
+
+        return code
