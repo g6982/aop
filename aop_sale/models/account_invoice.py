@@ -27,6 +27,7 @@ class AccountInvoice(models.Model):
         ('draft', 'Draft'),
         ('account', 'Account Checking'),
         ('open', 'Open'),
+        ('invoice', 'Invoice'),
         ('in_payment', 'In Payment'),
         ('paid', 'Paid'),
         ('cancel', 'Cancelled'),
