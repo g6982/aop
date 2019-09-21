@@ -3467,7 +3467,7 @@ msgstr ""
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
 msgid "customer price"
-msgstr "客户价格"
+msgstr "确认价"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_customer_contract_stock_rule_line
