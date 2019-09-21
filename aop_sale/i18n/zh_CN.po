@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-21 10:49+0000\n"
-"PO-Revision-Date: 2019-09-21 10:49+0000\n"
+"POT-Creation-Date: 2019-09-21 12:36+0000\n"
+"PO-Revision-Date: 2019-09-21 12:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -407,6 +407,12 @@ msgstr "取消"
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_picking_batch_form_inherit_create_purchase
 msgid "Cancel picking"
 msgstr "取消拣货"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
+msgid "Cancel verify"
+msgstr ""
 
 #. module: aop_sale
 #: selection:account.invoice,state:0
@@ -1480,6 +1486,7 @@ msgid "Invoice for which this invoice is the credit note"
 msgstr "此发票为信用票的发票"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__invoice_line_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__invoice_line_ids
 msgid "Invoice line"
 msgstr "结算清单明细行"
@@ -2443,6 +2450,12 @@ msgid "Quotation Sent"
 msgstr "临时订单送出"
 
 #. module: aop_sale
+#: selection:account.invoice,state:0
+#: selection:account.tax.invoice,state:0
+msgid "Reconciliation"
+msgstr "确认"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__reconciliation_batch_no
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__reconciliation_batch_no
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__reconciliation_batch_no
@@ -2927,6 +2940,17 @@ msgid "Tax invoice number"
 msgstr "比率/金额"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__tax_invoice_state
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__tax_invoice_state
+msgid "Tax invoice state"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoices_no
+msgid "Tax invoices no"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__invoice_line_tax_ids
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 msgid "Taxes"
@@ -3277,6 +3301,8 @@ msgid "Vendors"
 msgstr "供应商"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
 msgid "Verify"
 msgstr "审核"
@@ -3287,9 +3313,17 @@ msgid "Verify User"
 msgstr "审核人"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice__verify_time
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__verify_time
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__verify_datetime
 msgid "Verify time"
 msgstr "审核时间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice__verify_user
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__verify_user
+msgid "Verify user"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__version_id
@@ -3467,6 +3501,7 @@ msgid "customer aop contract"
 msgstr ""
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.account_invoice_supplier_form__inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
 msgid "customer price"
