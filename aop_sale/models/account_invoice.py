@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import api, exceptions, fields, models, _
 from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationError, Warning
+from odoo.tools import float_compare, float_is_zero
 
 import logging
 
@@ -23,6 +24,9 @@ class AccountInvoice(models.Model):
 
     cost_passage = fields.Float('Cost Passage', compute='_compute_estimate_billing_receipt', store=True)
 
+    verify_user = fields.Many2one('res.users', 'Verify user', track_visibility='onchange')
+    verify_time = fields.Datetime('Verify time', track_visibility='onchange')
+
     state = fields.Selection([
         ('draft', 'Draft'),
         ('account', 'Account Checking'),
@@ -31,6 +35,7 @@ class AccountInvoice(models.Model):
         ('in_payment', 'In Payment'),
         ('paid', 'Paid'),
         ('cancel', 'Cancelled'),
+        ('reconciliation', 'Reconciliation')
     ], string='Status', index=True, readonly=True, default='draft',
         track_visibility='onchange', copy=False,
         help=" * The 'Draft' status is used when a user is encoding a new and unconfirmed Invoice.\n"
@@ -38,6 +43,60 @@ class AccountInvoice(models.Model):
              " * The 'In Payment' status is used when payments have been registered for the entirety of the invoice in a journal configured to post entries at bank reconciliation only, and some of them haven't been reconciled with a bank statement line yet.\n"
              " * The 'Paid' status is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled.\n"
              " * The 'Cancelled' status is used when user cancel invoice.")
+
+    ###################################################################################################################
+    ###################################################################################################################
+    # 取消生成凭证
+    @api.multi
+    def action_move_create(self):
+        return True
+
+    # 取消生成凭证
+    @api.multi
+    def invoice_validate(self):
+        for invoice in self.filtered(lambda invoice: invoice.partner_id not in invoice.message_partner_ids):
+            invoice.message_subscribe([invoice.partner_id.id])
+
+            # # Auto-compute reference, if not already existing and if configured on company
+            # if not invoice.reference and invoice.type == 'out_invoice':
+            #     invoice.reference = invoice._get_computed_reference()
+            #
+            # # DO NOT FORWARD-PORT.
+            # # The reference is copied after the move creation because we need the move to get the invoice number but
+            # # we need the invoice number to get the reference.
+            # invoice.move_id.ref = invoice.reference
+        self._check_duplicate_supplier_reference()
+
+        return self.write({'state': 'open'})
+
+    # 取消支付
+    @api.one
+    @api.depends(
+        'state', 'currency_id', 'invoice_line_ids.price_subtotal',
+        'move_id.line_ids.amount_residual',
+        'move_id.line_ids.currency_id')
+    def _compute_residual(self):
+        res = super(AccountInvoice, self)._compute_residual()
+        self.reconciled = False
+    ###################################################################################################################
+    ###################################################################################################################
+
+    @api.multi
+    def verify_reconciliation(self):
+        for line in self:
+            line.write({
+                'verify_user': self.env.user.id,
+                'verify_time': fields.Datetime.now(),
+                'state': 'reconciliation'
+            })
+
+    def cancel_verify_reconciliation(self):
+        for line in self:
+            line.write({
+                'verify_user': False,
+                'verify_time': False,
+                'state': 'open'
+            })
 
     # 检查月结
     @api.constrains('account_period_id')
