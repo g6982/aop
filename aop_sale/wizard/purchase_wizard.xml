@@ -13,7 +13,7 @@
                        string="Purchase orders"/>
                 </group>
                 <group>
-                    <field name="reconciliation_batch_no"/>
+                    <field name="reconciliation_batch_no" attrs="{'readonly': 1}"/>
                 </group>
 
                 <footer>
