@@ -28,6 +28,7 @@ CT_COL = {
     'start_index': 6,
     'file_planned_date': 0
 }
+DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 
 class ImportSaleOrder(models.TransientModel):
@@ -192,7 +193,7 @@ class ImportSaleOrder(models.TransientModel):
                 vin_id = self._find_vin_id(sheet_data.cell_value(x, 9), product_id)
 
                 file_planned_date_index = 23
-                file_planned_date = datetime(*xldate_as_tuple(sheet_data.cell_value(x, file_planned_date_index), 0)).date()
+                file_planned_date = datetime.strptime(sheet_data.cell_value(x, file_planned_date_index), DATE_FORMAT).date()
 
                 line_data = (0, 0, {
                     'product_id': product_id.id,
