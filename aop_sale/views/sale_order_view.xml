@@ -234,10 +234,10 @@
                     <header>
                         <button name="action_confirm_sale_order" string="Confirm" type="object" class="oe_highlight"
                                 attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
-                        <button name="%(action_view_sale_advance_payment_inv_line)d" string="Create Invoice"
-                                type="action" class="btn-primary"
-                                attrs="{'invisible': [('state', '!=', 'sale')]}"
-                        />
+<!--                        <button name="%(action_view_sale_advance_payment_inv_line)d" string="Create Invoice"-->
+<!--                                type="action" class="btn-primary"-->
+<!--                                attrs="{'invisible': [('state', '!=', 'sale')]}"-->
+<!--                        />-->
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
