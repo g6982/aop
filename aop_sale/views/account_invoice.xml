@@ -162,6 +162,11 @@
                     <xpath expr="//field[@name='vendor_bill_purchase_id']" position="after">
                         <field name="account_period_id"/>
                     </xpath>
+
+                    <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="string">customer price</attribute>
+                </xpath>
+
                 </data>
             </field>
         </record>
