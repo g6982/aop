@@ -142,6 +142,9 @@ class MonthClose(models.TransientModel):
         return data
 
     def part_partner_id_code(self, partner_id, code):
+        # code is null? impossible!
+        if not code:
+            return False
         code_part = code.split('/')
         code = '/'.join(x for x in code_part[:-1])
         code = code + '/' + str(partner_id.id) + '/' + code_part[-1]
