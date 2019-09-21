@@ -79,3 +79,8 @@ msgstr "生成付款结算清单"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_month_close_wizard_form
 msgid "Cancel"
 msgstr "取消月结"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__to_location_id
+msgid "To location"
+msgstr "送车点"
