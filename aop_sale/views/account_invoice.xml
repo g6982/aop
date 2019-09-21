@@ -9,6 +9,11 @@
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
 
+                <xpath expr="//header" position="inside">
+                    <field name="state" invisible="1"/>
+                    <button name="action_invoice_cancel" attrs="{'invisible': [('state', '=', 'cancel')]}" string="Cancel" type="object" class="oe_highlight"/>
+                </xpath>
+
                 <xpath expr="//field[@name='state']" position="attributes">
                     <attribute name="statusbar_visible">draft,open,invoice,paid</attribute>
                     <!--
@@ -56,6 +61,10 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//button[@name='preview_invoice']" position="after">
+                    <field name="state" invisible="1"/>
+                    <button name="action_invoice_cancel" attrs="{'invisible': [('state', '=', 'cancel')]}" string="Cancel" type="object" class="oe_highlight"/>
+                </xpath>
 
                 <xpath expr="//field[@name='state']" position="attributes">
                     <attribute name="statusbar_visible">draft,account,open,paid</attribute>
