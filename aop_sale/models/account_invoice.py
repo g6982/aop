@@ -67,6 +67,10 @@ class AccountInvoice(models.Model):
             # invoice.move_id.ref = invoice.reference
         self._check_duplicate_supplier_reference()
 
+        if self.type == 'in_invoice':
+            return self.write({
+                'state': 'reconciliation'
+            })
         return self.write({'state': 'open'})
 
     # 取消支付

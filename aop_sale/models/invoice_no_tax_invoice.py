@@ -32,10 +32,6 @@ class InvoiceNoTaxInvoice(models.Model):
         actual_amount = sum(line.price_unit for line in self.invoice_line_ids)
         opened_amount = sum(line.price_unit for line in self.tax_invoice_line_ids)
 
-        _logger.info({
-            'actual_amount': actual_amount,
-            'opened_amount': opened_amount,
-        })
         actual_amount = self.update_number_digit(actual_amount)
         self.actual_amount = actual_amount
         opened_amount = self.update_number_digit(opened_amount)

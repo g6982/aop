@@ -19,16 +19,13 @@
                 </button>
                 
                 <xpath expr="//header" position="inside">
-                    <!--
-                    <field name="state" invisible="1"/>
-                    -->
-                    <button name="verify_reconciliation"
-                            string="Verify"
-                            class="oe_highlight"
-                            type="object"
-                            attrs="{'invisible': [('state', 'not in', ['open', 'paid'])]}"/>
-                    <button name="cancel_verify_reconciliation" string="Cancel verify" class="oe_highlight"
-                            type="object" attrs="{'invisible': [('state', '!=', 'reconciliation')]}"/>
+<!--                    <button name="verify_reconciliation"-->
+<!--                            string="Verify"-->
+<!--                            class="oe_highlight"-->
+<!--                            type="object"-->
+<!--                            attrs="{'invisible': [('state', 'not in', ['open', 'paid'])]}"/>-->
+<!--                    <button name="cancel_verify_reconciliation" string="Cancel verify" class="oe_highlight"-->
+<!--                            type="object" attrs="{'invisible': [('state', '!=', 'reconciliation')]}"/>-->
                     <button name="action_invoice_cancel" attrs="{'invisible': [('state', '=', 'cancel')]}"
                             string="Cancel" type="object" class="oe_highlight"/>
                 </xpath>
