@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-22 05:18+0000\n"
-"PO-Revision-Date: 2019-09-22 05:18+0000\n"
+"POT-Creation-Date: 2019-09-22 05:51+0000\n"
+"PO-Revision-Date: 2019-09-22 05:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1517,7 +1517,7 @@ msgstr "结算清单明细行"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_tree
 msgid "Invoice no"
-msgstr "发票批次"
+msgstr "多次开票"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__invoice_product_type
@@ -3610,6 +3610,12 @@ msgstr ""
 #: model:ir.model,name:aop_sale.model_insurance_management_type
 msgid "insurance.management.type"
 msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/invoice_no_tax_invoice.py:61
+#, python-format
+msgid "invoice no"
+msgstr "发票"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_invoice_no_tax_invoice
