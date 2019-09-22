@@ -84,3 +84,13 @@ msgstr "取消月结"
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__to_location_id
 msgid "To location"
 msgstr "送车点"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__invoice_line_ids
+msgid "Invoice Line"
+msgstr "结算清单行"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__tax_invoice_number
+msgid "Tax invoice number"
+msgstr "税务发票号"

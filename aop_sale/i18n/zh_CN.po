@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-21 12:50+0000\n"
-"PO-Revision-Date: 2019-09-21 12:50+0000\n"
+"POT-Creation-Date: 2019-09-22 05:10+0000\n"
+"PO-Revision-Date: 2019-09-22 05:10+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -117,6 +117,11 @@ msgstr "活动"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__activity_state
 msgid "Activity State"
 msgstr "活动状态"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__actual_amount
+msgid "Actual amount"
+msgstr "应开金额"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__purchase_id
@@ -307,6 +312,11 @@ msgstr "自动完成过去的账单."
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__balance
 msgid "Balance"
 msgstr "余额"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__balance_amount
+msgid "Balance amount"
+msgstr "剩余金额"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__partner_bank_id
@@ -548,6 +558,11 @@ msgid "Contains"
 msgstr "包含"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_form
+msgid "Continue"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__is_formal
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__rule_contract_id
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__is_formal
@@ -691,6 +706,7 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__create_uid
@@ -732,6 +748,7 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__create_date
@@ -944,6 +961,7 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__display_name
@@ -1248,6 +1266,7 @@ msgstr "有未清项"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__id
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__id
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__id
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__id
@@ -1455,6 +1474,7 @@ msgstr "发票标示"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_account_invoice_line
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__invoice_line_ids
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_line_tree
 msgid "Invoice Line"
 msgstr "发票行"
@@ -1490,6 +1510,14 @@ msgstr "此发票为信用票的发票"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__invoice_line_ids
 msgid "Invoice line"
 msgstr "结算清单明细行"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.account_invoice_no_tax_invoice_action
+#: model:ir.ui.menu,name:aop_sale.account_invoice_no_tax_invoice_menu
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_tree
+msgid "Invoice no"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__invoice_product_type
@@ -1583,6 +1611,7 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template____last_update
@@ -1625,6 +1654,7 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__write_uid
@@ -1666,6 +1696,7 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_order_statement_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_make_invoice_sale_order_line__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__write_date
@@ -1973,6 +2004,11 @@ msgstr "未读消息数量"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Open"
 msgstr "对账"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__opened_amount
+msgid "Opened amount"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__current_picking_type_id
@@ -2896,6 +2932,11 @@ msgid "Tax Excluded"
 msgstr "不含税"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__tax_invoice_id
+msgid "Tax Invoice"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_method
 msgid "Tax Invoice Method"
 msgstr "生成方法"
@@ -2929,12 +2970,19 @@ msgid "Tax invoice amount"
 msgstr "开票金额"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__tax_invoice_no
-#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_no
-msgid "Tax invoice no"
-msgstr "批次号"
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__tax_invoice_line_ids
+msgid "Tax invoice line"
+msgstr "发票行"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__tax_invoice_no
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_no
+#: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__name
+msgid "Tax invoice no"
+msgstr "发票批次号"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__tax_invoice_number
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_number
 msgid "Tax invoice number"
 msgstr "比率/金额"
@@ -2943,11 +2991,6 @@ msgstr "比率/金额"
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__tax_invoice_state
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__tax_invoice_state
 msgid "Tax invoice state"
-msgstr ""
-
-#. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoices_no
-msgid "Tax invoices no"
 msgstr ""
 
 #. module: aop_sale
@@ -3569,6 +3612,11 @@ msgid "insurance.management.type"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_invoice_no_tax_invoice
+msgid "invoice.no.tax.invoice"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_invoice_order_statement_wizard
 msgid "invoice.order.statement.wizard"
 msgstr ""
@@ -3629,6 +3677,16 @@ msgstr "待支付款项"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_change_stock_picking_form
 msgid "picking"
 msgstr "任务"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_form
+msgid "price_subtotal"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_form
+msgid "price_unit"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_purchase_order_invoice_wizard
@@ -3692,6 +3750,7 @@ msgstr ""
 
 #. module: aop_sale
 #: sql_constraint:delivery.carrier:0
+#: sql_constraint:invoice.no.tax.invoice:0
 #: sql_constraint:stock.location:0
 #: sql_constraint:stock.location.route:0
 #: sql_constraint:stock.warehouse:0
