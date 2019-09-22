@@ -148,6 +148,10 @@ class AccountTaxInvoiceWizard(models.TransientModel):
         res = self.env['invoice.no.tax.invoice'].search([
             ('tax_invoice_line_ids.invoice_line_id', 'in', self.invoice_line_ids.ids)
         ])
+
+        if not res:
+            return True
+
         # 理论上这样的记录不能超过1
         if len(res) > 1:
             raise UserError('You can\'t create multi different invoice no tax invoice with same invoice')
