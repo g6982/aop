@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 import logging
 from odoo.tools.float_utils import float_is_zero
 
@@ -58,7 +58,7 @@ class InvoiceNoTaxInvoice(models.Model):
             'active_ids': self.invoice_line_ids.ids
         }
         return {
-            'name': 'invoice no',
+            'name': _('invoice no'),
             'view_type': 'form',
             "view_mode": 'form',
             'res_model': 'account.tax.invoice.wizard',
