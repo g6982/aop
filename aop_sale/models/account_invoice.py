@@ -31,11 +31,11 @@ class AccountInvoice(models.Model):
         ('draft', 'Draft'),
         ('account', 'Account Checking'),
         ('open', 'Open'),
-        ('invoice', 'Invoice'),
         ('in_payment', 'In Payment'),
+        ('reconciliation', 'Reconciliation'),
+        ('invoice', 'Invoice'),
         ('paid', 'Paid'),
-        ('cancel', 'Cancelled'),
-        ('reconciliation', 'Reconciliation')
+        ('cancel', 'Cancelled')
     ], string='Status', index=True, readonly=True, default='draft',
         track_visibility='onchange', copy=False,
         help=" * The 'Draft' status is used when a user is encoding a new and unconfirmed Invoice.\n"

@@ -412,7 +412,7 @@ msgstr "取消拣货"
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
 msgid "Cancel verify"
-msgstr ""
+msgstr "取消审核"
 
 #. module: aop_sale
 #: selection:account.invoice,state:0
