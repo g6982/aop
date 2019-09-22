@@ -17,6 +17,7 @@
         'data/stock_data.xml',
         'data/invoice_supplier_no.xml',
         'views/invoice_no_tax_invoice.xml',
+        'views/purchase_invoice_batch_no.xml',
         'views/insurance_management.xml',
         'views/service_product.xml',
         'views/mass_loss.xml',

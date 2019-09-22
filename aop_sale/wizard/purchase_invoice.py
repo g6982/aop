@@ -16,7 +16,8 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        if self._context.get('active_model', False) == 'purchase.order':
+
+        if self._context.get('active_model', False) == 'purchase.order' or not self._context.get('active_ids', False):
             return []
         else:
             res = super(PurchaseOrderInvoiceWizard, self).default_get(fields_list)
@@ -71,7 +72,42 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
 
         if data:
             invoice_obj = self.env['account.invoice']
-            invoice_obj.create(data)
+            res = invoice_obj.create(data)
+            self._create_purchase_invoice_no(res)
+
+    # 供应商账单，创建一张表
+    def _create_purchase_invoice_no(self, invoice_ids):
+        purchase_invoice_batch_obj = self.env['purchase.invoice.batch.no']
+        invoice_batch_no = invoice_ids.read_group(
+            domain=[('id', 'in', invoice_ids.ids)],
+            fields=['reconciliation_batch_no'],
+            groupby='reconciliation_batch_no'
+        )
+        data = []
+        for batch_no in invoice_batch_no:
+            purchase_invoice_ids = invoice_ids.filtered(
+                lambda x: x.reconciliation_batch_no == batch_no.get('reconciliation_batch_no', False)
+            )
+            if not purchase_invoice_ids:
+                continue
+            invoice_batch_id = purchase_invoice_batch_obj.search([
+                ('name', '=', batch_no.get('reconciliation_batch_no', False)),
+                ('partner_id', '=', purchase_invoice_ids[0].partner_id.id)
+            ])
+            if invoice_batch_id:
+                # update
+                invoice_batch_id.update({
+                    'invoice_line_ids': [(4, line_id.id) for line_id in
+                                         purchase_invoice_ids.mapped('invoice_line_ids')]
+                })
+            else:
+                data.append({
+                    'name': batch_no.get('reconciliation_batch_no'),
+                    'partner_id': purchase_invoice_ids[0].partner_id.id,
+                    'invoice_line_ids': [(6, 0, purchase_invoice_ids.mapped('invoice_line_ids').ids)]
+                })
+        if data:
+            purchase_invoice_batch_obj.create(data)
 
     def _prepare_invoice_line_from_po_line(self, line):
         if line.product_id.purchase_method == 'purchase':

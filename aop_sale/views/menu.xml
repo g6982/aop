@@ -359,6 +359,7 @@
         <menuitem id="account_tax_invoice_menu" parent="account_tax_invoice" action="account_tax_invoice_action"
                   name="Tax invoice"/>
 
+<!--        税务发票批次号-->
         <record id="account_invoice_no_tax_invoice_action" model="ir.actions.act_window">
             <field name="name">Invoice no</field>
             <field name="type">ir.actions.act_window</field>
@@ -367,8 +368,23 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem id="account_invoice_no_tax_invoice_menu" parent="account_tax_invoice" action="account_invoice_no_tax_invoice_action"
+        <menuitem id="account_invoice_no_tax_invoice_menu" parent="account_tax_invoice"
+                  action="account_invoice_no_tax_invoice_action"
                   name="Invoice no"/>
+
+
+        <!--        结算清单，对账 批次号-->
+        <record id="account_purchase_invoice_batch_no_action" model="ir.actions.act_window">
+            <field name="name">Reconciliation batch no</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.invoice.batch.no</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="account_purchase_invoice_batch_no_menu" parent="account_tax_invoice"
+                  action="account_purchase_invoice_batch_no_action"
+                  name="Reconciliation batch no"/>
 
         <menuitem id="sale_order_line_id"
                   name="Order line"
