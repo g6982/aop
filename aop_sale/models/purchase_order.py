@@ -82,7 +82,7 @@ class PurchaseOrder(models.Model):
                 'picking_id': line_id.batch_stock_picking_id.id,
                 'picking_type_id': line_id.batch_stock_picking_id.picking_type_id.id,
                 'location_id': line_id.batch_stock_picking_id.location_id.id,
-                'location_dest_id': line_id.batch_stock_picking_id.location_dest_id.id
+                'location_dest_id': line_id.batch_stock_picking_id.location_dest_id.id,
             }
             stock_move_data.append(data)
             # line_id.batch_stock_picking_id.write({

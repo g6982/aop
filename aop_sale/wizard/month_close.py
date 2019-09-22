@@ -78,7 +78,7 @@ class MonthClose(models.TransientModel):
                 'currency_id': line.currency_id.id,
                 'account_id': line.partner_id.property_account_receivable_id.id,
                 'date_invoice': fields.Date.today(),
-                'reconciliation_batch_no': partner_ids.get(line.partner_id.id, reconciliation_batch_no)
+                'reconciliation_batch_no': partner_ids.get(line.partner_id.id, reconciliation_batch_no),
             }
             line_data = []
             for line_id in line.order_line:
@@ -153,7 +153,7 @@ class MonthClose(models.TransientModel):
             'account_id': invoice_line.with_context({'journal_id': journal_id.id, 'type': 'in_invoice'})._default_account(),
             'price_unit': line.order_id.currency_id._convert(
                 line.price_unit, line.order_id.currency_id, line.company_id, date or fields.Date.today(), round=False),
-            'quantity': qty,
+            'quantity': 1,
             'discount': 0.0,
             'account_analytic_id': line.account_analytic_id.id,
             'analytic_tag_ids': line.analytic_tag_ids.ids,
