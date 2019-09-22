@@ -16,6 +16,7 @@
         'security/ir.model.access.csv',
         'data/stock_data.xml',
         'data/invoice_supplier_no.xml',
+        'views/invoice_no_tax_invoice.xml',
         'views/insurance_management.xml',
         'views/service_product.xml',
         'views/mass_loss.xml',
