@@ -18,15 +18,7 @@ class PurchaseInvoiceBatchNo(models.Model):
     invoice_line_ids = fields.Many2many('account.invoice.line')
     partner_id = fields.Many2one('res.partner', string='Supplier')
 
-    # active_state = fields.Boolean(compute='unlink_null_records', store=True)
-    #
-    # # 空记录应该删除
-    # @api.multi
-    # @api.depends('invoice_line_ids', 'name')
-    # def unlink_null_records(self):
-    #     for line in self:
-    #         if not line.invoice_line_ids:
-    #             _logger.info({
-    #                 'delete': line
-    #             })
-    #             line.unlink()
+    invoice_no = fields.Char('Invoice no')
+
+    def action_confirm(self):
+        pass

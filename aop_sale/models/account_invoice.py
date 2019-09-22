@@ -123,10 +123,22 @@ class AccountInvoice(models.Model):
             if line.account_period_id.monthly_state:
                 raise UserError('Has been monthly!')
 
+    # 删除的时候，删除 purchase.invoice.batch.no
     @api.multi
     def unlink(self):
         self._check_monthly_state()
-        return super(AccountInvoice, self).unlink()
+        reconciliation_batch_no = self.mapped('reconciliation_batch_no')
+
+        res = super(AccountInvoice, self).unlink()
+
+        batch_ids = self.env['purchase.invoice.batch.no'].search([
+            ('name', 'in', reconciliation_batch_no)
+        ])
+        for line in batch_ids:
+            if not line.invoice_line_ids:
+                line.unlink()
+
+        return res
 
     # 任务完成生成的有完成时间
     # 没有完成的(预收)就用当前时间
