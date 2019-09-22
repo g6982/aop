@@ -19,13 +19,13 @@
                 </button>
                 
                 <xpath expr="//header" position="inside">
-<!--                    <button name="verify_reconciliation"-->
-<!--                            string="Verify"-->
-<!--                            class="oe_highlight"-->
-<!--                            type="object"-->
-<!--                            attrs="{'invisible': [('state', 'not in', ['open', 'paid'])]}"/>-->
-<!--                    <button name="cancel_verify_reconciliation" string="Cancel verify" class="oe_highlight"-->
-<!--                            type="object" attrs="{'invisible': [('state', '!=', 'reconciliation')]}"/>-->
+                    <button name="verify_reconciliation"
+                            string="Verify"
+                            class="oe_highlight"
+                            type="object"
+                            attrs="{'invisible': [('state', 'not in', ['open', 'paid', 'reconciliation'])]}"/>
+                    <button name="cancel_verify_reconciliation" string="Cancel verify" class="oe_highlight"
+                            type="object" attrs="{'invisible': [('state', '!=', 'invoice')]}"/>
                     <button name="action_invoice_cancel" attrs="{'invisible': [('state', '=', 'cancel')]}"
                             string="Cancel" type="object" class="oe_highlight"/>
                 </xpath>
@@ -71,11 +71,12 @@
                     <field name="tmp_estimate" string="cost estimate"/>
                     <field name="cost_passage"/>
                     <field name="advance_receipt"/>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_bank_id']" position="after">
                     <field name="verify_user" attrs="{'invisible': [('verify_user', '=', False)]}"/>
                     <field name="verify_time" attrs="{'invisible': [('verify_time', '=', False)]}"/>
                 </xpath>
-
-
 
             </field>
         </record>

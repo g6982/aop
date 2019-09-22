@@ -88,19 +88,33 @@ class AccountInvoice(models.Model):
     @api.multi
     def verify_reconciliation(self):
         for line in self:
-            line.write({
-                'verify_user': self.env.user.id,
-                'verify_time': fields.Datetime.now(),
-                'state': 'reconciliation'
-            })
+            if line.state == 'reconciliation' and line.type == 'in_invoice':
+                line.write({
+                    'verify_user': self.env.user.id,
+                    'verify_time': fields.Datetime.now(),
+                    'state': 'invoice'
+                })
+            else:
+                line.write({
+                    'verify_user': self.env.user.id,
+                    'verify_time': fields.Datetime.now(),
+                    'state': 'reconciliation'
+                })
 
     def cancel_verify_reconciliation(self):
         for line in self:
-            line.write({
-                'verify_user': False,
-                'verify_time': False,
-                'state': 'open'
-            })
+            if line.state == 'invoice' and line.type == 'in_invoice':
+                line.write({
+                    'verify_user': False,
+                    'verify_time': False,
+                    'state': 'reconciliation'
+                })
+            else:
+                line.write({
+                    'verify_user': False,
+                    'verify_time': False,
+                    'state': 'open'
+                })
 
     # 检查月结
     @api.constrains('account_period_id')
