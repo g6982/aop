@@ -121,7 +121,7 @@ class AccountInvoice(models.Model):
     def _check_monthly_state(self):
         for line in self:
             if line.account_period_id.monthly_state:
-                raise UserError('Has been monthly!')
+                raise UserError(_('Has been monthly!'))
 
     # 删除的时候，删除 purchase.invoice.batch.no
     @api.multi
