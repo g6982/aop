@@ -397,7 +397,7 @@ class SaleOrder(models.Model):
             ]
         if search_domain:
             if period_obj.search(search_domain):
-                raise UserError('Has been monthly!')
+                raise UserError(_('Has been monthly!'))
 
     # 核销的数据
     def _get_write_off_context(self):

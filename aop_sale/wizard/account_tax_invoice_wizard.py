@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 import logging
 import time
 from odoo.exceptions import UserError
@@ -154,8 +154,8 @@ class AccountTaxInvoiceWizard(models.TransientModel):
 
         # 理论上这样的记录不能超过1
         if len(res) > 1:
-            raise UserError('You can\'t create multi different invoice no tax invoice with same invoice')
+            raise UserError(_('You can\'t create multi different invoice no tax invoice with same invoice'))
 
         if res.name != self.tax_invoice_no:
-            raise UserError('There are already exist tax invoice, you must use the same tax invoice no!')
+            raise UserError(_('There are already exist tax invoice, you must use the same tax invoice no!'))
 

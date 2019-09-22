@@ -94,3 +94,9 @@ msgstr "结算清单行"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__tax_invoice_number
 msgid "Tax invoice number"
 msgstr "税务发票号"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.account_invoice_no_tax_invoice_action
+#: model:ir.ui.menu,name:aop_sale.account_invoice_no_tax_invoice_menu
+msgid "Invoice no"
+msgstr "发票批次"
