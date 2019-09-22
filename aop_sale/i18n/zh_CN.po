@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-22 05:51+0000\n"
-"PO-Revision-Date: 2019-09-22 05:51+0000\n"
+"POT-Creation-Date: 2019-09-22 06:17+0000\n"
+"PO-Revision-Date: 2019-09-22 06:17+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1245,6 +1245,12 @@ msgid "Has Outstanding"
 msgstr "有未清项"
 
 #. module: aop_sale
+#: code:addons/aop_sale/models/sale_order.py:400
+#, python-format
+msgid "Has been monthly!"
+msgstr "已月结!"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__id
@@ -1517,7 +1523,7 @@ msgstr "结算清单明细行"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_tree
 msgid "Invoice no"
-msgstr "多次开票"
+msgstr "发票批次"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__invoice_product_type
@@ -2237,7 +2243,7 @@ msgstr "步骤"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__stock_picking_ids
 msgid "Pickings"
-msgstr "拣货"
+msgstr "调度"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__plan_number
@@ -3071,6 +3077,12 @@ msgid "The value of the down payment amount must be positive."
 msgstr ""
 
 #. module: aop_sale
+#: code:addons/aop_sale/wizard/account_tax_invoice_wizard.py:160
+#, python-format
+msgid "There are already exist tax invoice, you must use the same tax invoice no!"
+msgstr "已经存在税务发票了，您必须使用相同的税务发票编号！"
+
+#. module: aop_sale
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:135
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:363
 #, python-format
@@ -3472,6 +3484,12 @@ msgstr "可以通过姓名、TIN、邮箱或者内部关联找到一个联系人
 #, python-format
 msgid "You can not create recursive analytic accounts."
 msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/wizard/account_tax_invoice_wizard.py:157
+#, python-format
+msgid "You can't create multi different invoice no tax invoice with same invoice"
+msgstr "同一结算清单您不能创建多个不同的发票批次号"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
