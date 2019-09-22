@@ -359,6 +359,17 @@
         <menuitem id="account_tax_invoice_menu" parent="account_tax_invoice" action="account_tax_invoice_action"
                   name="Tax invoice"/>
 
+        <record id="account_invoice_no_tax_invoice_action" model="ir.actions.act_window">
+            <field name="name">Invoice no</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">invoice.no.tax.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="account_invoice_no_tax_invoice_menu" parent="account_tax_invoice" action="account_invoice_no_tax_invoice_action"
+                  name="Invoice no"/>
+
         <menuitem id="sale_order_line_id"
                   name="Order line"
                   action="action_sale_order_line_view"
