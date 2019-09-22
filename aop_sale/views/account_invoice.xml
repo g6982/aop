@@ -32,7 +32,7 @@
                 </xpath>
 
                 <xpath expr="//field[@name='state']" position="attributes">
-                    <attribute name="statusbar_visible">draft,open,invoice,paid</attribute>
+                    <attribute name="statusbar_visible">draft,open,invoice,reconciliation</attribute>
                     <!--
                     <attribute name="options">{'clickable': '1'}</attribute>
                     -->
@@ -110,10 +110,10 @@
                 </xpath>
 
                 <xpath expr="//field[@name='state']" position="attributes">
-                    <attribute name="statusbar_visible">draft,account,open,paid</attribute>
-                    <!--
-                    <attribute name="options">{'clickable': '1'}</attribute>
-                    -->
+                    <attribute name="statusbar_visible">draft,open,reconciliation</attribute>
+
+
+
                 </xpath>
 
                 <xpath expr="//field[@name='date_due']" position="after">

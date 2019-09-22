@@ -108,4 +108,4 @@ msgstr "结算清单行"
 #: selection:account.invoice,state:0 selection:account.invoice.report,state:0
 #: model_terms:ir.ui.view,arch_db:account.view_account_invoice_filter
 msgid "Open"
-msgstr "确认"
+msgstr "对账"
