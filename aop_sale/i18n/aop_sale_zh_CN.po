@@ -100,3 +100,24 @@ msgstr "税务发票号"
 #: model:ir.ui.menu,name:aop_sale.account_invoice_no_tax_invoice_menu
 msgid "Invoice no"
 msgstr "发票批次"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.account_purchase_invoice_batch_no_action
+#: model:ir.ui.menu,name:aop_sale.account_purchase_invoice_batch_no_menu
+msgid "Reconciliation batch no"
+msgstr "供应商发票登记"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__invoice_no
+msgid "Invoice no"
+msgstr "发票号"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__invoice_line_ids
+msgid "Invoice Line"
+msgstr "结算清单行"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__partner_id
+msgid "Supplier"
+msgstr "供应商"
