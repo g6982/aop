@@ -20,12 +20,15 @@ class MonthClose(models.TransientModel):
         if self.period_id.monthly_state:
             raise UserError('Please cancel monthly first')
 
+        self._null_invoice_order_line_data()
         sale_order_line_ids = self.find_sale_order_not_invoice()
 
         if sale_order_line_ids:
+            # 月结操作的时候，需要生成收入确认的值
             context = {
                 'active_ids': [x.mapped('order_id').id for x in sale_order_line_ids],
-                'period_id': self.period_id.id
+                'period_id': self.period_id.id,
+                'monthly_confirm_invoice': True
             }
             return {
                 'name': _('Make invoice'),
@@ -42,6 +45,14 @@ class MonthClose(models.TransientModel):
     def cancel_monthly(self):
         self.period_id.monthly_state = False
 
+    # FIXME: 不知道为啥many2many 的值没有被删除
+    def _null_invoice_order_line_data(self):
+        sql_delete = '''
+            delete from sale_order_line_invoice_rel where invoice_line_id not in (select id from account_invoice_line)
+        '''
+        self.env.cr.execute(sql_delete)
+        self.env.cr.commit()
+
     # 筛选当前期间内的数据
     def find_sale_order_not_invoice(self):
         res = self.env['sale.order.line'].search([
@@ -50,10 +61,16 @@ class MonthClose(models.TransientModel):
             ('write_date', '<=', self.period_id.date_stop),
             ('order_id.state', '!=', 'draft')
         ])
+        _logger.info({
+            'res': res
+        })
         if not res:
             return False
         line_ids = []
         for sale_line_id in res:
+            _logger.info({
+                'state': sale_line_id.stock_picking_ids.mapped('state')
+            })
             if any(x.state != 'done' for x in sale_line_id.stock_picking_ids):
                 continue
             line_ids.append(sale_line_id)

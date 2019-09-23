@@ -195,12 +195,6 @@ class SaleAdvancePaymentInv(models.TransientModel):
     # 生成结算清单
     # 根据订单行生成
     def create_account_invoice(self):
-        if self.env['account.invoice'].search([
-            ('reconciliation_batch_no', '=', self.reconciliation_batch_no)
-        ]):
-            raise UserError('Reconciliation batch no: [{reconciliation_batch_no}] can\'t repeat!'.format(
-                reconciliation_batch_no=self.reconciliation_batch_no
-            ))
         if not self.selected_order_lines:
             raise UserError('You must select more than one record.')
 
@@ -287,6 +281,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
         for sale_id in legal_order_line_ids:
             invoice_data = self._invoice_data(sale_id.order_id)
 
+            tmp_estimate = sale_id.delivery_carrier_id.fixed_price if self._context.get(
+                'monthly_confirm_invoice') else 0
             contract_price = self._get_contract_price(sale_id)
             for product_id in product_ids:
                 tmp = invoice_data
@@ -306,6 +302,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         'invoice_line_tax_ids': [(6, 0, product_id.taxes_id.ids)],
                         'analytic_tag_ids': False,
                         'account_analytic_id': False,
+                        'tmp_estimate': tmp_estimate
                         # 'customer_price': contract_price
                     })],
                 })
@@ -325,6 +322,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
             account_id = self._get_account_id(line_id.service_product_id, order=sale_order_id)
             contract_price = self._get_contract_price(line_id)
 
+            tmp_estimate = line_id.delivery_carrier_id.fixed_price if self._context.get('monthly_confirm_invoice') else 0
             line_data.append((0, 0, {
                 'name': str(time.time()),
                 'origin': sale_order_id.name,
@@ -340,6 +338,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 'invoice_line_tax_ids': [(6, 0, line_id.tax_id.ids)],
                 'analytic_tag_ids': [(6, 0, line_id.analytic_tag_ids.ids)],
                 'account_analytic_id': sale_order_id.analytic_account_id.id or False,
+                'tmp_estimate': tmp_estimate
                 # 'customer_price': contract_price
             }))
 

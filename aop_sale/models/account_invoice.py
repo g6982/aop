@@ -262,8 +262,11 @@ class AccountInvoiceLine(models.Model):
 
     tmp_estimate = fields.Float('Temporary estimate')
 
-    pre_billing = fields.Float('Pre-billing')
+    pre_billing = fields.Float('Pre-billing', compute='_compute_pre_billing', store=True)
     advance_receipt = fields.Float('Advance receipt')
 
     cost_passage = fields.Float('Cost Passage')
 
+    @api.depends('sale_order_line_id.stock_picking_ids')
+    def _compute_pre_billing(self):
+        pass
