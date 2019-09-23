@@ -34,7 +34,7 @@ class PurchaseOrder(models.Model):
 
                     order_id._create_stock_move_by_purchase()
 
-                    for picking_id in order_id.mapped('stock_picking_batch_id').sudo().picking_ids:
+                    for picking_id in order_id.mapped('stock_picking_batch_id').sudo().picking_ids.sorted():
                         self.sudo()._fill_serial_no(picking_id)
                         picking_id.sudo().action_assign()
                         picking_id.sudo().button_validate()
