@@ -279,13 +279,19 @@ class AccountInvoiceLine(models.Model):
             if not line.sale_order_line_id:
                 continue
             if not line.sale_order_line_id.stock_picking_ids:
-                continue
-            if all(x.state == 'done' for x in line.sale_order_line_id.stock_picking_ids):
-                line.pre_billing = 0
-            else:
                 res = self.env['account.tax.invoice.line'].search([
                     ('invoice_line_id', '=', line.id)
                 ])
                 if not res:
                     continue
                 line.pre_billing = sum(x.price_unit for x in res)
+            else:
+                if all(x.state == 'done' for x in line.sale_order_line_id.stock_picking_ids):
+                    line.pre_billing = 0
+                else:
+                    res = self.env['account.tax.invoice.line'].search([
+                        ('invoice_line_id', '=', line.id)
+                    ])
+                    if not res:
+                        continue
+                    line.pre_billing = sum(x.price_unit for x in res)
