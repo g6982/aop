@@ -175,7 +175,7 @@ class MonthClose(models.TransientModel):
             'account_analytic_id': line.account_analytic_id.id,
             'analytic_tag_ids': line.analytic_tag_ids.ids,
             'invoice_line_tax_ids': invoice_line_tax_ids.ids,
-            'tm_estimate': price_unit,
+            'tmp_estimate': price_unit,
             'contract_price': self._get_contract_price(line)
         }
         account = invoice_line.get_invoice_line_account('in_invoice', line.product_id, line.order_id.fiscal_position_id, self.env.user.company_id)
