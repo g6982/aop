@@ -115,6 +115,9 @@ class AccountTaxInvoiceWizard(models.TransientModel):
             tax_invoice_obj = self.env['account.tax.invoice']
             res = tax_invoice_obj.create(data)
 
+            # 计算一次预开票
+            self.invoice_line_ids._compute_pre_billing()
+
             self._create_invoice_no(res)
         except Exception as e:
             self._cr.rollback()

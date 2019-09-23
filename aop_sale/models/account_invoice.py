@@ -252,7 +252,7 @@ class AccountInvoiceLine(models.Model):
 
     sale_order_line_id = fields.Many2one('sale.order.line', 'Sale order line')
     line_price_subtotal = fields.Monetary(related='sale_order_line_id.price_subtotal', readonly=True)
-    line_price_unit =  fields.Float(related='sale_order_line_id.price_unit', readonly=True)
+    line_price_unit = fields.Float(related='sale_order_line_id.price_unit', readonly=True)
 
     from_location_id = fields.Many2one('res.partner', related='sale_order_line_id.from_location_id', readonly=True)
     to_location_id = fields.Many2one('res.partner', related='sale_order_line_id.to_location_id', readonly=True)
@@ -267,6 +267,25 @@ class AccountInvoiceLine(models.Model):
 
     cost_passage = fields.Float('Cost Passage')
 
-    @api.depends('sale_order_line_id.stock_picking_ids')
+    @api.multi
+    @api.depends('sale_order_line_id.stock_picking_ids', 'sale_order_line_id.stock_picking_ids.state')
     def _compute_pre_billing(self):
-        pass
+        for line in self:
+            _logger.info({
+                'start': 'start'
+            })
+            if line.invoice_id.type != 'out_invoice':
+                continue
+            if not line.sale_order_line_id:
+                continue
+            if not line.sale_order_line_id.stock_picking_ids:
+                continue
+            if all(x.state == 'done' for x in line.sale_order_line_id.stock_picking_ids):
+                line.pre_billing = 0
+            else:
+                res = self.env['account.tax.invoice.line'].search([
+                    ('invoice_line_id', '=', line.id)
+                ])
+                if not res:
+                    continue
+                line.pre_billing = sum(x.price_unit for x in res)
