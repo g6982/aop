@@ -59,6 +59,7 @@
             <field name="arch" type="xml">
                 <tree string="Invoice no" create="0" import="0">
                     <field name="name"/>
+                    <field name="partner_id"/>
                     <field name="actual_amount"/>
                     <field name="opened_amount"/>
                     <field name="balance_amount"/>
