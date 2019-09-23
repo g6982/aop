@@ -126,6 +126,11 @@ class AccountTaxInvoiceWizard(models.TransientModel):
         tax_invoice_line_ids = res.mapped('invoice_line_ids')
         invoice_line_ids = self.invoice_line_ids
 
+        partner_ids = res.mapped('partner_id').ids
+        partner_ids = list(set(partner_ids))
+        if len(partner_ids) > 1:
+            raise UserWarning('You must select same partner.')
+
         invoice_id = invoice_no_obj.search([('name', '=', self.tax_invoice_no)])
 
         # 搜索到就修改更新，没有找到才创建
@@ -139,6 +144,7 @@ class AccountTaxInvoiceWizard(models.TransientModel):
             # Create
             invoice_no_obj.create({
                 'name': self.tax_invoice_no,
+                'partner_id': partner_ids[0] if partner_ids else False,
                 'invoice_line_ids': [(6, 0, invoice_line_ids.ids)],
                 'tax_invoice_line_ids': [(6, 0, tax_invoice_line_ids.ids)] if tax_invoice_line_ids else False
             })

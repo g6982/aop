@@ -15,7 +15,7 @@ class InvoiceNoTaxInvoice(models.Model):
     ]
 
     name = fields.Char('Tax invoice no')
-
+    partner_id = fields.Many2one('res.partner', 'Partner')
     invoice_line_ids = fields.Many2many('account.invoice.line')
 
     tax_invoice_line_ids = fields.One2many('account.tax.invoice.line', 'tax_invoice_id', string='Tax invoice line')
