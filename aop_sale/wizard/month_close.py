@@ -215,7 +215,7 @@ class MonthClose(models.TransientModel):
         res = self.env['delivery.carrier'].search([
             ('from_location_id', '=', picking_id.location_id.id),
             ('to_location_id', '=', picking_id.location_dest_id.id),
-            ('supplier_contract_id.partner_id', '=', picking_id.partner_id),
+            ('supplier_contract_id.partner_id', '=', picking_id.partner_id.id),
             ('service_product_id', '=', purchase_line_id.product_id.id)
         ])
         return res[0].fixed_price if res else 0
