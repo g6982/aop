@@ -126,3 +126,8 @@ msgstr "供应商"
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__partner_id
 msgid "Partner"
 msgstr "客户"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_number
+msgid "Tax invoice number"
+msgstr "比率/金额"
