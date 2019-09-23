@@ -196,7 +196,7 @@
                     <field name="reconciliation_batch_no"/>
                 </field>
                 <field name="amount_untaxed" position="before">
-                    <field name="tmp_estimate"/>
+                    <field name="tmp_estimate" string="cost estimate"/>
                     <field name="pre_billing"/>
                 </field>
             </field>
