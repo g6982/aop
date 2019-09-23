@@ -143,7 +143,9 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             'discount': 0.0,
             'account_analytic_id': line.account_analytic_id.id,
             'analytic_tag_ids': line.analytic_tag_ids.ids,
-            'invoice_line_tax_ids': invoice_line_tax_ids.ids
+            'invoice_line_tax_ids': invoice_line_tax_ids.ids,
+            'sale_order_line_id': line.sale_line_id.id if line.sale_line_id else False,
+            'sale_line_ids': [(6, 0, line.sale_line_id.ids)] if line.sale_line_id else False
         }
         account = invoice_line.get_invoice_line_account('in_invoice', line.product_id, line.order_id.fiscal_position_id,
                                                         self.env.user.company_id)
