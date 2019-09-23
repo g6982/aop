@@ -118,7 +118,7 @@ class StockPickingBatch(models.Model):
                 'price_unit': line_id.service_product_id.lst_price,
                 'product_uom': line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False,
                 'batch_stock_picking_id': picking.id,
-                'vin_code': line_id.vin_id.name
+                'vin_code': line_id.vin_id.name if line_id.vin_id else False
             }
             res.append((0, 0, data))
             # if not data['product_id'] in product_ids:
