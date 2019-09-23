@@ -40,11 +40,10 @@ class AccountTaxInvoice(models.Model):
     @api.multi
     def unlink(self):
         # 删除之前，回滚数据
+        # tax_invoice_line_ids
         for line in self:
             for line_id in line.invoice_line_ids:
-                if not line_id.invoice_line_id:
-                    continue
-                line_id.invoice_line_id.tax_invoice_amount -= line_id.invoice_line_id.price_unit
+                line_id.invoice_line_id.tax_invoice_amount -= line_id.price_unit
         return super(AccountInvoice, self).unlink()
 
 

@@ -44,6 +44,11 @@ class InvoiceNoTaxInvoice(models.Model):
 
     @api.multi
     def unlink(self):
+        # 删除的时候。需要先对税务发票进行删除处理
+        for line in self:
+            if not line.tax_invoice_line_ids:
+                continue
+            line.tax_invoice_line_ids.mapped('invoice_id').unlink()
         return super(InvoiceNoTaxInvoice, self).unlink()
 
     @api.multi
