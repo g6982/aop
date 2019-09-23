@@ -161,6 +161,8 @@ class MonthClose(models.TransientModel):
             ('currency_id', '=', line.order_id.partner_id.property_purchase_currency_id.id),
         ]
         journal_id = self.env['account.journal'].search(journal_domain, limit=1)
+        price_unit = line.order_id.currency_id._convert(
+                line.price_unit, line.order_id.currency_id, line.company_id, date or fields.Date.today(), round=False)
         data = {
             'purchase_line_id': line.id,
             'name': line.order_id.name + ': ' + line.name,
@@ -168,15 +170,13 @@ class MonthClose(models.TransientModel):
             'uom_id': line.product_uom.id,
             'product_id': line.product_id.id,
             'account_id': invoice_line.with_context({'journal_id': journal_id.id, 'type': 'in_invoice'})._default_account(),
-            'price_unit': line.order_id.currency_id._convert(
-                line.price_unit, line.order_id.currency_id, line.company_id, date or fields.Date.today(), round=False),
+            'price_unit': price_unit,
             'quantity': 1,
             'discount': 0.0,
             'account_analytic_id': line.account_analytic_id.id,
             'analytic_tag_ids': line.analytic_tag_ids.ids,
             'invoice_line_tax_ids': invoice_line_tax_ids.ids,
-            'tm_estimate': line.order_id.currency_id._convert(
-                line.price_unit, line.order_id.currency_id, line.company_id, date or fields.Date.today(), round=False),
+            'tm_estimate': price_unit,
             'contract_price': self._get_contract_price(line)
         }
         account = invoice_line.get_invoice_line_account('in_invoice', line.product_id, line.order_id.fiscal_position_id, self.env.user.company_id)
