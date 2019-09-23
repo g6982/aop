@@ -161,8 +161,7 @@ class MonthClose(models.TransientModel):
             ('currency_id', '=', line.order_id.partner_id.property_purchase_currency_id.id),
         ]
         journal_id = self.env['account.journal'].search(journal_domain, limit=1)
-        price_unit = line.order_id.currency_id._convert(
-                line.price_unit, line.order_id.currency_id, line.company_id, date or fields.Date.today(), round=False)
+        price_unit = line.price_unit
         data = {
             'purchase_line_id': line.id,
             'name': line.order_id.name + ': ' + line.name,
