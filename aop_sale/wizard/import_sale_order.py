@@ -29,6 +29,7 @@ CT_COL = {
     'file_planned_date': 0
 }
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+DATE_FORMAT_YMD = '%Y/%m/%d'
 
 
 class ImportSaleOrder(models.TransientModel):
@@ -154,8 +155,11 @@ class ImportSaleOrder(models.TransientModel):
                 if not product_id:
                     continue
                 vin_id = self._find_vin_id(sheet_data.cell_value(x, vin_index), product_id)
-
-                file_planned_date = datetime(*xldate_as_tuple(sheet_data.cell_value(x, file_planned_date_index), 0)).date()
+                try:
+                    file_planned_date = datetime(*xldate_as_tuple(sheet_data.cell_value(x, file_planned_date_index), 0)).date()
+                except TypeError as e:
+                    date_value = sheet_data.cell_value(x, file_planned_date_index).replace('\xa0', '')
+                    file_planned_date = datetime.strptime(date_value, DATE_FORMAT_YMD).date()
 
                 line_data = (0, 0, {
                     'product_id': product_id.id,
