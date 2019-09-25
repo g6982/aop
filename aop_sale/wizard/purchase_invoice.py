@@ -129,6 +129,7 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             ('currency_id', '=', line.order_id.partner_id.property_purchase_currency_id.id),
         ]
         journal_id = self.env['account.journal'].search(journal_domain, limit=1)
+        contract_price = self._get_contract_price(line)
         data = {
             'purchase_line_id': line.id,
             'name': line.order_id.name + ': ' + line.name,
@@ -137,8 +138,7 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             'product_id': line.product_id.id,
             'account_id': invoice_line.with_context(
                 {'journal_id': journal_id.id, 'type': 'in_invoice'})._default_account(),
-            'price_unit': line.order_id.currency_id._convert(
-                line.price_unit, line.order_id.currency_id, line.company_id, date or fields.Date.today(), round=False),
+            'price_unit': contract_price,
             'quantity': 1,
             'discount': 0.0,
             'account_analytic_id': line.account_analytic_id.id,
@@ -148,7 +148,7 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             'sale_line_ids': [(6, 0, line.sale_line_id.ids)] if line.sale_line_id else False,
             'location_id': line.batch_stock_picking_id.location_id.id,
             'location_dest_id': line.batch_stock_picking_id.location_dest_id.id,
-            'contract_price': self._get_contract_price(line)
+            'contract_price': contract_price
         }
         account = invoice_line.get_invoice_line_account('in_invoice', line.product_id, line.order_id.fiscal_position_id,
                                                         self.env.user.company_id)
