@@ -103,11 +103,7 @@ class StockPickingBatch(models.Model):
     def _parse_purchase_line_data(self, picking, lost_service_product_id, res):
         carrier_id = self._parse_service_product_supplier(picking)
 
-        _logger.info({
-            'carrier_id': carrier_id,
-            'price': carrier_id.product_standard_price
-        })
-        service_product_id = carrier_id.service_product_id
+        service_product_id = carrier_id.service_product_id if carrier_id else False
 
         if not service_product_id:
             lost_service_product_id.append(picking)
@@ -121,7 +117,7 @@ class StockPickingBatch(models.Model):
                 'sale_line_id': line_id.sale_order_line_id.id,
                 'name': line_id.name,
                 'date_planned': fields.Datetime.now(),
-                'price_unit': carrier_id.product_standard_price,
+                'price_unit': carrier_id.product_standard_price if carrier_id else 0,
                 'product_uom': line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False,
                 'batch_stock_picking_id': picking.id,
                 'vin_code': line_id.vin_id.name if line_id.vin_id else False
