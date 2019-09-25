@@ -311,7 +311,7 @@ class AccountInvoiceLine(models.Model):
     @api.depends('sale_order_line_id', 'sale_order_line_id.state')
     def _compute_advance_receipt(self):
         for line in self:
-            if line.state == 'sale':
+            if line.sale_order_line_id.picking_confirm_date:
                 line.advance_receipt = 0
 
     # 在途成本:  采购订单"完成"<state:purchase>
