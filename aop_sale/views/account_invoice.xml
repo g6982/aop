@@ -57,7 +57,7 @@
                     <field name="line_price_unit" string='Sale line price'/>
                     <field name="contract_price" attrs="{'readonly': 1}"/>
                     <field name="purchase_line_price" string="Purchase price"/>
-                    <field name="tmp_estimate" string="cost estimate"/>
+                    <field name="tmp_estimate" string="cost estimate" readonly="1"/>
                     <field name="cost_passage"/>
                     <field name="advance_receipt"/>
                 </xpath>
@@ -152,7 +152,7 @@
                     <field name="line_price_subtotal" string='Sale line price' invisible="1"/>
                     <field name="line_price_unit" string='Sale line price'/>
                     <field name="contract_price"/>
-                    <field name="tmp_estimate"/>
+                    <field name="tmp_estimate" readonly="1"/>
                     <field name="pre_billing"/>
                 </xpath>
 
