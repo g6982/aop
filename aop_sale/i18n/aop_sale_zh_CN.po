@@ -131,3 +131,8 @@ msgstr "客户"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_number
 msgid "Tax invoice number"
 msgstr "比率/金额"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__location_id
+msgid "Location"
+msgstr "源位置"
