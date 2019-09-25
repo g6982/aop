@@ -176,7 +176,7 @@ class MonthClose(models.TransientModel):
             'account_analytic_id': line.account_analytic_id.id,
             'analytic_tag_ids': line.analytic_tag_ids.ids,
             'invoice_line_tax_ids': invoice_line_tax_ids.ids,
-            'tmp_estimate': price_unit,
+            'tmp_estimate': contract_price,
             'contract_price': contract_price,
             'location_id': line.batch_stock_picking_id.location_id.id,
             'location_dest_id': line.batch_stock_picking_id.location_dest_id.id
