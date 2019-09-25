@@ -147,7 +147,7 @@ class StockPickingBatch(models.Model):
     # 查找供应商合同条款
     def _parse_service_product_supplier(self, picking):
         contract_domain = [
-            ('supplier_contract_id.partner_id', '=', picking.partner_id.id),
+            ('supplier_contract_id.partner_id', '=', self.partner_id.id),
             ('from_location_id', '=', picking.location_id.id),
             ('to_location_id', '=', picking.location_dest_id.id)
         ]

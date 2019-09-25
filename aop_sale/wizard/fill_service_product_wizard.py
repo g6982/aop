@@ -100,7 +100,7 @@ class FillServiceProductWizard(models.TransientModel):
     
     def _parse_service_product_supplier(self, picking):
         delivery_carrier_id = self.env['delivery.carrier'].search([
-            ('supplier_contract_id.partner_id', '=', picking.partner_id.id),
+            ('supplier_contract_id.partner_id', '=', self.stock_picking_batch_id.partner_id.id),
             ('from_location_id', '=', picking.location_id.id),
             ('to_location_id', '=', picking.location_dest_id.id)
         ])

@@ -267,7 +267,7 @@ class AccountInvoiceLine(models.Model):
     tmp_estimate = fields.Float('Temporary estimate')
 
     pre_billing = fields.Float('Pre-billing', compute='_compute_pre_billing', store=True)
-    advance_receipt = fields.Float('Advance receipt')
+    advance_receipt = fields.Float('Advance receipt', compute='_compute_advance_receipt', store=True)
 
     cost_passage = fields.Float('Cost Passage')
 
@@ -299,3 +299,10 @@ class AccountInvoiceLine(models.Model):
                     if not res:
                         continue
                     line.pre_billing = sum(x.price_unit for x in res)
+
+    @api.multi
+    @api.depends('sale_order_line_id', 'sale_order_line_id.state')
+    def _compute_advance_receipt(self):
+        for line in self:
+            if line.state == 'done':
+                line.advance_receipt = 0
