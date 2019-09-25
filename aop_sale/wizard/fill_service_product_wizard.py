@@ -56,7 +56,7 @@ class FillServiceProductWizard(models.TransientModel):
     def _parse_purchase_line_data(self, res, picking):
         carrier_id = self._parse_service_product_supplier(picking)
 
-        service_product_id = carrier_id.service_product_id
+        service_product_id = carrier_id.service_product_id if carrier_id else False
         amount = carrier_id.product_standard_price if carrier_id else 0
 
         if not service_product_id:
