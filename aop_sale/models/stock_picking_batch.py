@@ -101,7 +101,13 @@ class StockPickingBatch(models.Model):
         return [res, lost_service_product_id]
 
     def _parse_purchase_line_data(self, picking, lost_service_product_id, res):
-        service_product_id = self._parse_service_product_supplier(picking)
+        carrier_id = self._parse_service_product_supplier(picking)
+
+        _logger.info({
+            'carrier_id': carrier_id,
+            'price': carrier_id.product_standard_price
+        })
+        service_product_id = carrier_id.service_product_id
 
         if not service_product_id:
             lost_service_product_id.append(picking)
@@ -115,7 +121,7 @@ class StockPickingBatch(models.Model):
                 'sale_line_id': line_id.sale_order_line_id.id,
                 'name': line_id.name,
                 'date_planned': fields.Datetime.now(),
-                'price_unit': line_id.service_product_id.lst_price,
+                'price_unit': carrier_id.product_standard_price,
                 'product_uom': line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False,
                 'batch_stock_picking_id': picking.id,
                 'vin_code': line_id.vin_id.name if line_id.vin_id else False
@@ -131,21 +137,22 @@ class StockPickingBatch(models.Model):
                 'name': service_product_id.name,
                 'product_uom': service_product_id.uom_id.id,
                 'batch_stock_picking_id': picking.id,
-                'price_unit': service_product_id.lst_price,
+                'price_unit': carrier_id.product_standard_price,
                 'date_planned': fields.Datetime.now(),
             }
             res.append((0, 0, data))
         lost_service_product_id = list(set(lost_service_product_id))
         return res, lost_service_product_id
 
-    # 供应商合同里面获取服务产品
+    # 查找供应商合同条款
     def _parse_service_product_supplier(self, picking):
-        delivery_carrier_id = self.env['delivery.carrier'].search([
+        contract_domain = [
             ('supplier_contract_id.partner_id', '=', picking.partner_id.id),
             ('from_location_id', '=', picking.location_id.id),
             ('to_location_id', '=', picking.location_dest_id.id)
-        ])
-        return delivery_carrier_id[0].service_product_id if delivery_carrier_id else False
+        ]
+        delivery_carrier_id = self.env['delivery.carrier'].search(contract_domain)
+        return delivery_carrier_id[0] if delivery_carrier_id else False
 
     def _match_company_id(self, partner_id):
         res = self.env['res.company'].sudo().search([('code', '=', partner_id.ref)])

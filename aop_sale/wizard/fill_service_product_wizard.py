@@ -54,7 +54,10 @@ class FillServiceProductWizard(models.TransientModel):
         return res
 
     def _parse_purchase_line_data(self, res, picking):
-        service_product_id = self._parse_service_product_supplier(picking)
+        carrier_id = self._parse_service_product_supplier(picking)
+
+        service_product_id = carrier_id.service_product_id
+        amount = carrier_id.product_standard_price if carrier_id else 0
 
         if not service_product_id:
             picking_line = self.wizard_line_ids.filtered(lambda x: x.picking_id == picking)
@@ -102,7 +105,7 @@ class FillServiceProductWizard(models.TransientModel):
             ('to_location_id', '=', picking.location_dest_id.id)
         ])
 
-        return delivery_carrier_id[0].service_product_id if delivery_carrier_id else False
+        return delivery_carrier_id[0] if delivery_carrier_id else False
 
 
 class FillServiceProductWizardLine(models.TransientModel):

@@ -145,7 +145,10 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             'analytic_tag_ids': line.analytic_tag_ids.ids,
             'invoice_line_tax_ids': invoice_line_tax_ids.ids,
             'sale_order_line_id': line.sale_line_id.id if line.sale_line_id else False,
-            'sale_line_ids': [(6, 0, line.sale_line_id.ids)] if line.sale_line_id else False
+            'sale_line_ids': [(6, 0, line.sale_line_id.ids)] if line.sale_line_id else False,
+            'location_id': line.batch_stock_picking_id.location_id.id,
+            'location_dest_id': line.batch_stock_picking_id.location_dest_id.id,
+            'contract_price': self._get_contract_price(line)
         }
         account = invoice_line.get_invoice_line_account('in_invoice', line.product_id, line.order_id.fiscal_position_id,
                                                         self.env.user.company_id)
@@ -165,3 +168,15 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
         code = '/'.join(x for x in code_part)
 
         return code
+
+    def _get_contract_price(self, purchase_line_id):
+        picking_id = purchase_line_id.batch_stock_picking_id
+        if not picking_id:
+            return 0
+        res = self.env['delivery.carrier'].search([
+            ('from_location_id', '=', picking_id.location_id.id),
+            ('to_location_id', '=', picking_id.location_dest_id.id),
+            ('supplier_contract_id.partner_id', '=', picking_id.partner_id.id),
+            ('service_product_id', '=', purchase_line_id.product_id.id)
+        ])
+        return res[0].product_standard_price if res else 0

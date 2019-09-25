@@ -256,6 +256,10 @@ class AccountInvoiceLine(models.Model):
 
     from_location_id = fields.Many2one('res.partner', related='sale_order_line_id.from_location_id', readonly=True)
     to_location_id = fields.Many2one('res.partner', related='sale_order_line_id.to_location_id', readonly=True)
+
+    location_id = fields.Many2one('stock.location', readonly=True)
+    location_dest_id = fields.Many2one('stock.location', readonly=True)
+
     vin_id = fields.Many2one('stock.production.lot', 'VIN', related='sale_order_line_id.vin', readonly=True)
     contract_price = fields.Float('Contract price')
     purchase_line_price = fields.Monetary(related='purchase_line_id.price_subtotal')

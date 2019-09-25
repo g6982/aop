@@ -176,7 +176,9 @@ class MonthClose(models.TransientModel):
             'analytic_tag_ids': line.analytic_tag_ids.ids,
             'invoice_line_tax_ids': invoice_line_tax_ids.ids,
             'tmp_estimate': price_unit,
-            'contract_price': self._get_contract_price(line)
+            'contract_price': self._get_contract_price(line),
+            'location_id': line.batch_stock_picking_id.location_id.id,
+            'location_dest_id': line.batch_stock_picking_id.location_dest_id.id
         }
         account = invoice_line.get_invoice_line_account('in_invoice', line.product_id, line.order_id.fiscal_position_id, self.env.user.company_id)
         if account:
@@ -217,4 +219,4 @@ class MonthClose(models.TransientModel):
             ('supplier_contract_id.partner_id', '=', picking_id.partner_id.id),
             ('service_product_id', '=', purchase_line_id.product_id.id)
         ])
-        return res[0].fixed_price if res else 0
+        return res[0].product_standard_price if res else 0
