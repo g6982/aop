@@ -331,12 +331,12 @@ class AccountInvoiceLine(models.Model):
     @api.model
     def create(self, vals):
         self.mapped('invoice_id')._check_monthly_state()
-        return super(AccountInvoice, self).create(vals)
+        return super(AccountInvoiceLine, self).create(vals)
 
     @api.multi
     def write(self, vals):
         self.mapped('invoice_id')._check_monthly_state()
-        return super(AccountInvoice, self).write(vals)
+        return super(AccountInvoiceLine, self).write(vals)
 
     @api.multi
     def unlink(self):
