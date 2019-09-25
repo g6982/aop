@@ -117,11 +117,21 @@ class AccountInvoice(models.Model):
                 })
 
     # 检查月结
-    @api.constrains('account_period_id')
+    @api.constrains('account_period_id', 'name')
     def _check_monthly_state(self):
         for line in self:
             if line.account_period_id.monthly_state:
                 raise UserError(_('Has been monthly!'))
+
+    @api.model
+    def create(self, vals):
+        self._check_monthly_state()
+        return super(AccountInvoice, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        self._check_monthly_state()
+        return super(AccountInvoice, self).write(vals)
 
     # 删除的时候，删除 purchase.invoice.batch.no
     @api.multi
