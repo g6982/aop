@@ -96,7 +96,7 @@ class SaleOrderLine(models.Model):
 
     current_picking_id = fields.Many2one('stock.picking', 'Current picking task', compute='_compute_current_picking_id', store=True)
     current_picking_type_id = fields.Many2one('stock.picking.type', related='current_picking_id.picking_type_id')
-    picking_confirm_date = fields.Datetime('Confirm date', compute='_compute_current_picking_id', store=True)
+    picking_confirm_date = fields.Datetime('Confirm date', compute='_compute_current_picking_id', inverse='_set_picking_confirm_date', store=True)
 
     file_planned_date = fields.Date('Imported date')
 
@@ -116,6 +116,10 @@ class SaleOrderLine(models.Model):
 
             if current_picking_id.state == 'done' and current_picking_id.id == line.stock_picking_ids.sorted('id')[-1].id:
                 line.picking_confirm_date = current_picking_id.date_done
+
+
+    def _set_picking_confirm_date(self):
+        pass
 
     def replenish_stock_picking_order(self):
         try:
