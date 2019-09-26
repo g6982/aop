@@ -277,7 +277,10 @@ class AccountInvoiceLine(models.Model):
     tmp_estimate = fields.Float('Temporary estimate')
 
     pre_billing = fields.Float('Pre-billing', compute='_compute_pre_billing', store=True)
-    advance_receipt = fields.Float('Advance receipt', compute='_compute_advance_receipt', store=True)
+    advance_receipt = fields.Float('Advance receipt',
+                                   compute='_compute_advance_receipt',
+                                   inverse='_set_advance_receipt',
+                                   store=True)
 
     cost_passage = fields.Float('Cost Passage', compute='_compute_cost_passage', store=True)
 
@@ -311,8 +314,15 @@ class AccountInvoiceLine(models.Model):
     @api.depends('sale_order_line_id', 'sale_order_line_id.state')
     def _compute_advance_receipt(self):
         for line in self:
+            if line.account_period_id.monthly_state:
+                continue
             if line.sale_order_line_id.picking_confirm_date:
                 line.advance_receipt = 0
+
+    def _set_advance_receipt(self):
+        pass
+        # for line in self:
+        #     line.advance_receipt = line.advance_receipt
 
     # 在途成本:  采购订单"完成"<state:purchase>
     # 但是销售订单任务未完成的, 月结操作后值被锁定不会改变, 月结操作之前, 这一列的值会变化, 如果销售订单任务完成了, 该列的值会变为0.
@@ -320,13 +330,12 @@ class AccountInvoiceLine(models.Model):
     @api.depends('sale_order_line_id', 'purchase_line_id',
                  'sale_order_line_id.state', 'purchase_line_id.state', 'price_unit')
     def _compute_cost_passage(self):
-        self.ensure_one()
-
-        if not self.invoice_id.account_period_id.monthly_state:
-            if self.sale_order_line_id.picking_confirm_date:
-                self.cost_passage = 0
-            elif self.purchase_line_id.state == 'purchase':
-                self.cost_passage = self.price_unit
+        for line in self:
+            if not line.invoice_id.account_period_id.monthly_state:
+                if line.sale_order_line_id.picking_confirm_date:
+                    line.cost_passage = 0
+                elif line.purchase_line_id.state == 'purchase':
+                    line.cost_passage = line.price_unit
 
     @api.model
     def create(self, vals):
