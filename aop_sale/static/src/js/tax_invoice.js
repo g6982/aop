@@ -8,7 +8,7 @@ odoo.define('aop_sale.tax_invoice', function (require) {
             let $buttons = this._super.apply(this, arguments);
             let tree_model = this.modelName;
             let display_invoice = this.initialState.context['type'];
-            
+
             for (let i = 0; i < show_button_model.length; i++) {
                 if (tree_model == show_button_model[i] && display_invoice == 'out_invoice') {
                     let button2 = $("<button type='button' class='btn btn-sm btn-primary btn-default'>创建税务发票</button>")

@@ -154,7 +154,7 @@ class ImportSaleOrder(models.TransientModel):
                 to_location_id = self._find_from_to_location(sheet_data.cell_value(x, to_partner_index), partner_data)
                 if not product_id:
                     continue
-                vin_id = self._find_vin_id(sheet_data.cell_value(x, vin_index), product_id)
+                vin_id = self._find_vin_id(sheet_data.cell_value(x, vin_index), product_id, to_location_id=to_location_id)
                 try:
                     file_planned_date = datetime(*xldate_as_tuple(sheet_data.cell_value(x, file_planned_date_index), 0)).date()
                 except TypeError as e:
@@ -194,7 +194,7 @@ class ImportSaleOrder(models.TransientModel):
                 # })
                 if not product_id:
                     continue
-                vin_id = self._find_vin_id(sheet_data.cell_value(x, 9), product_id)
+                vin_id = self._find_vin_id(sheet_data.cell_value(x, 9), product_id, to_location_id=to_location_id)
 
                 file_planned_date_index = 23
                 file_planned_date = datetime.strptime(sheet_data.cell_value(x, file_planned_date_index), DATE_FORMAT).date()
@@ -307,7 +307,16 @@ class ImportSaleOrder(models.TransientModel):
         partner_id = partner_data.get(name, False)
         return partner_id if partner_id else False
 
-    def _find_vin_id(self, vin_code, product_id):
+    def _find_vin_id(self, vin_code, product_id, to_location_id=False):
+        if to_location_id:
+            # 如果订单行已经存在该VIN，则不能导入
+            res = self.env['sale.order.line'].search([
+                ('vin_code', '=', vin_code),
+                ('to_location_id', '=', to_location_id.id)
+            ])
+            if res:
+                raise UserError('Already exist VIN: {}'.format(vin_code))
+
         vin_id = self.env['stock.production.lot'].search([
             ('name', '=', vin_code),
             ('product_id', '=', product_id.id)
