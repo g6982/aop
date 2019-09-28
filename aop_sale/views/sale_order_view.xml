@@ -4,6 +4,11 @@
 
         <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
             <field name="domain">[('state', 'not in', ('sent', 'sale', 'done'))]</field>
+            <field name="context">{'display_invoice': False, 'search_default_my_quotation': 1}</field>
+        </record>
+
+        <record id="sale.action_orders" model="ir.actions.act_window">
+            <field name="context">{'display_invoice': True}</field>
         </record>
 
         <record id="action_view_sale_advance_payment_inv_line" model="ir.actions.act_window">
