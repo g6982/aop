@@ -2597,7 +2597,7 @@ msgstr "责任用户"
 #: model:res.groups,comment:aop_sale.group_hide_menus
 #: model:res.groups,name:aop_sale.group_hide_menus
 msgid "Restricted Menus Group"
-msgstr ""
+msgstr "限制菜单"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
