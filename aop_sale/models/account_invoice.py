@@ -311,10 +311,10 @@ class AccountInvoiceLine(models.Model):
                     line.pre_billing = sum(x.price_unit for x in res)
 
     @api.multi
-    @api.depends('sale_order_line_id', 'sale_order_line_id.state')
+    @api.depends('sale_order_line_id', 'sale_order_line_id.picking_confirm_date')
     def _compute_advance_receipt(self):
         for line in self:
-            if line.account_period_id.monthly_state:
+            if line.invoice_id.account_period_id.monthly_state:
                 continue
             if line.sale_order_line_id.picking_confirm_date:
                 line.advance_receipt = 0

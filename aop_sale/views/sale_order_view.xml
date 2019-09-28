@@ -367,6 +367,11 @@
                         <!--                            <label for="invoice_lines"/>-->
                         <!--                            <field name="invoice_lines"/>-->
                         <!--                        </div>-->
+
+                         <div groups="base.group_no_one">
+                              <label for="picking_confirm_date" />
+                             <field name="picking_confirm_date"/>
+                         </div>
                     </sheet>
                 </form>
             </field>
