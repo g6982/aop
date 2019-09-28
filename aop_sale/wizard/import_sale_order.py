@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.http import request
 import logging
 import xlrd
 from xlrd import xldate_as_tuple
@@ -49,6 +50,12 @@ class ImportSaleOrder(models.TransientModel):
 
     # 导入订单
     def start_import_sale_order(self):
+
+        # try:
+        #     res = self._import_sale_order()
+        # except Exception as exc:
+        #     raise UserError(exc.name)
+
         return self._import_sale_order()
 
     # 勾选了任务，导入的是CQ
@@ -80,6 +87,7 @@ class ImportSaleOrder(models.TransientModel):
                                                   to_partner_index=to_partner_index, start_index=start_index)
             product_data = self._parse_product_data(sheet_data, from_location_id=self.from_location_id,
                                                     product_index=product_index, start_index=start_index)
+
             line_data = self._parse_order_line_data(sheet_data, product_data, partner_data,
                                                     from_location_id=self.from_location_id,
                                                     from_partner_index=from_partner_index,
@@ -114,7 +122,10 @@ class ImportSaleOrder(models.TransientModel):
             }
         except Exception as e:
             self._cr.rollback()
-            raise UserError(traceback.format_exc())
+            if request and request.debug:
+                raise UserError(traceback.format_exc())
+
+            raise UserError(e.name)
 
     # 订单主体的数据
     def _parse_order_data(self):
@@ -155,6 +166,7 @@ class ImportSaleOrder(models.TransientModel):
                 if not product_id:
                     continue
                 vin_id = self._find_vin_id(sheet_data.cell_value(x, vin_index), product_id, to_location_id=to_location_id)
+
                 try:
                     file_planned_date = datetime(*xldate_as_tuple(sheet_data.cell_value(x, file_planned_date_index), 0)).date()
                 except TypeError as e:
@@ -315,7 +327,7 @@ class ImportSaleOrder(models.TransientModel):
                 ('to_location_id', '=', to_location_id.id)
             ])
             if res:
-                raise UserError('Already exist VIN: {}'.format(vin_code))
+                raise UserError(_('Already exist VIN: {}').format(vin_code))
 
         vin_id = self.env['stock.production.lot'].search([
             ('name', '=', vin_code),
