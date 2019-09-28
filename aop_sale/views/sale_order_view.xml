@@ -2,6 +2,23 @@
 <odoo>
     <data>
 
+        <record id="sale_order_view_tree_inherit_aop_sale" model="ir.ui.view">
+        <field name="name">sale.order.tree.inherit.aop.sale</field>
+        <field name="model">sale.order</field>
+        <field name="priority">3</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+
+            <field name="invoice_status" position="before">
+                <field name="state"/>
+            </field>
+
+            <field name="invoice_status" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
         <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
             <field name="domain">[('state', 'not in', ('sent', 'sale', 'done'))]</field>
             <field name="context">{'display_invoice': False, 'search_default_my_quotation': 1}</field>
