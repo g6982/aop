@@ -628,7 +628,7 @@ class SaleOrder(models.Model):
 
         # 全部都没VIN
         if len(self.mapped('order_line')) == len(vin_order_ids):
-            return True
+            raise UserError('Please wait until the VIN in stock. Any question, Contact administrator. ')
 
         # if not any([True if line.mapped('vin') else False for line in self.order_line]):
         #     raise UserError(_('You can not make order until the product have vin or stock.'))
