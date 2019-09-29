@@ -224,7 +224,7 @@
                     <field name="from_location_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                     <field name="to_location_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                     <field name="vin" options="{'no_quick_create': True, 'no_create_edit': True}"
-                           domain="[('product_id', '=', product_id), ('product_qty', '>', 0)]"/>
+                           domain="[('product_id', '=', product_id), ('product_qty', '>', 0)]" invisible="1"/>
 
                     <field name="vin_code" string="VIN" attrs="{'readonly': 1}"/>
                     <field name="allowed_route_ids" invisible="1"/>
