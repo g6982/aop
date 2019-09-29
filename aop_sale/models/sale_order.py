@@ -12,55 +12,31 @@ _logger = logging.getLogger(__name__)
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    # @api.depends('route_id', 'from_location_id', 'to_location_id')
-    def _get_delivery_carrier_id(self):
+    @api.multi
+    @api.depends('from_location_id', 'to_location_id')
+    def _compute_allowed_carrier_ids(self):
         for order_line in self:
-            if order_line.route_id and order_line.from_location_id and order_line.to_location_id:
+            if order_line.from_location_id and order_line.to_location_id:
                 from_location_id = self._transfer_district_to_location(order_line.from_location_id)
                 to_location_id = self._transfer_district_to_location(order_line.to_location_id)
                 search_domain = [
                     ('customer_contract_id', '=', order_line.customer_contract_id.id),
-                    ('route_id', '=', order_line.route_id.id),
                     ('from_location_id', '=', from_location_id.id),
                     ('to_location_id', '=', to_location_id.id)
                 ]
                 delivery_id = self.env['delivery.carrier'].search(search_domain)
 
-                # 多条条款，对应相同的路由，不同的服务产品
-                if delivery_id:
-                    route_ids = delivery_id.mapped('route_id')
-                    service_product_ids = delivery_id.mapped('service_product_id')
-                    # 设置过滤规则
-                    order_line.allowed_route_ids = [(6, 0, route_ids.ids)]
-                    order_line.allowed_service_product_ids = [(6, 0, service_product_ids.ids)]
-
-                    delivery_id = delivery_id[0]
-                    order_line.delivery_carrier_id = delivery_id.id
-                    order_line.service_product_id = delivery_id.service_product_id.id
-                    order_line.price_unit = delivery_id.service_product_id.list_price
-            else:
-                if order_line.from_location_id and order_line.to_location_id:
-                    from_location_id = self._transfer_district_to_location(order_line.from_location_id)
-                    to_location_id = self._transfer_district_to_location(order_line.to_location_id)
-                    search_domain = [
-                        ('customer_contract_id', '=', order_line.customer_contract_id.id),
-                        ('from_location_id', '=', from_location_id.id),
-                        ('to_location_id', '=', to_location_id.id)
-                    ]
-                    delivery_id = self.env['delivery.carrier'].search(search_domain)
-                    route_ids = delivery_id.mapped('route_id')
-                    service_product_ids = delivery_id.mapped('service_product_id')
-
-                    order_line.allowed_route_ids = [(6, 0, route_ids.ids)]
-                    order_line.allowed_service_product_ids = [(6, 0, service_product_ids.ids)]
-
-                order_line.delivery_carrier_id = False
-                order_line.service_product_id = False
+                order_line.allowed_carrier_ids = [(6, 0, delivery_id.ids)]
 
     vin = fields.Many2one('stock.production.lot', 'VIN', domain="[('product_id','=', product_id)]")
 
-    service_product_id = fields.Many2one('product.product', string='Product', domain=[('sale_ok', '=', True)],
-                                         ondelete='restrict')
+    service_product_id = fields.Many2one('product.product',
+                                         string='Product',
+                                         domain=[('sale_ok', '=', True)],
+                                         ondelete='restrict',
+                                         related='delivery_carrier_id.service_product_id',
+                                         readonly=True
+                                         )
     from_location_id = fields.Many2one('res.partner', 'From location')
     to_location_id = fields.Many2one('res.partner', 'To location')
     delivery_count = fields.Integer('Count', related='order_id.delivery_count')
@@ -70,11 +46,10 @@ class SaleOrderLine(models.Model):
     contract_id = fields.Many2one('aop.contract', 'Contract')
     customer_contract_id = fields.Many2one('customer.aop.contract', 'Contract')
 
-    #delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier',
-    #                                     compute='_get_delivery_carrier_id', store=True)
-
-    delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier',
-                                         default=_get_delivery_carrier_id)
+    delivery_carrier_id = fields.Many2one(
+        'delivery.carrier',
+        'Delivery carrier'
+    )
 
     vin_code = fields.Char('VIN Code')
 
@@ -85,8 +60,9 @@ class SaleOrderLine(models.Model):
     stock_picking_state = fields.Boolean('Picking state', compute='_compute_stock_picking_state', copy=False)
     stock_picking_ids = fields.Many2many('stock.picking', string='Pickings', copy=False)
 
-    allowed_route_ids = fields.Many2many('stock.location.route', copy=False)
-    allowed_service_product_ids = fields.Many2many('product.product', domain=[('sale_ok', '=', True)], copy=False)
+    # allowed_route_ids = fields.Many2many('stock.location.route', copy=False)
+    # allowed_service_product_ids = fields.Many2many('product.product', domain=[('sale_ok', '=', True)], copy=False)
+    allowed_carrier_ids = fields.Many2many('delivery.carrier', copy=False, compute='_compute_allowed_carrier_ids')
 
     replenish_picking_id = fields.Many2one('stock.picking', copy=False)
 
@@ -99,6 +75,13 @@ class SaleOrderLine(models.Model):
     picking_confirm_date = fields.Datetime('Confirm date', compute='_compute_current_picking_id', inverse='_set_picking_confirm_date', store=True)
 
     file_planned_date = fields.Date('Imported date')
+
+    route_id = fields.Many2one('stock.location.route',
+                               string='Route',
+                               related='delivery_carrier_id.route_id',
+                               store=True,
+                               readonly=True
+                               )
 
     @api.multi
     @api.depends('stock_picking_ids', 'stock_picking_ids.state', 'stock_picking_ids.date_done')
@@ -580,8 +563,7 @@ class SaleOrder(models.Model):
                     'price_unit': delivery_carrier_id[0].fixed_price if delivery_carrier_id else 0,
                     'delivery_carrier_id': delivery_carrier_id[0].id if delivery_carrier_id else False,
                     'customer_contract_id': contract_id.id,
-                    'allowed_service_product_ids': [(6, 0, service_product_ids)] if service_product_ids else False,
-                    'allowed_route_ids': [(6, 0, route_ids)] if route_ids else False
+                    'allowed_carrier_ids': [(6, 0, delivery_carrier_id.ids)] if delivery_carrier_id else False
                 }
             if not line_id.vin:
                 tmp['vin'] = self.get_vin_id_stock(line_id)
@@ -598,6 +580,7 @@ class SaleOrder(models.Model):
             res.order_line._compute_amount()
 
         return res
+
     @api.multi
     def write(self, vals):
         for line in self:
