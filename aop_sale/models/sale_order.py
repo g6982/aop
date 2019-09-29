@@ -123,13 +123,12 @@ class SaleOrderLine(models.Model):
     def create_stock_picking_in_stock(self):
         return self._parse_stock_in_picking_data()
 
+    # FIXME: 使用中文搜索？ serious ???!
     def get_stock_picking_type_id(self, location_id):
         res = self.env['stock.picking.type'].search([
-            #('default_location_dest_id', '=', location_id.id)
             ('name', '=', u'接车')
         ], limit=1)
 
-        #res = self.env['stock.picking.type'].browse(651)
         return res[0] if res else False
 
     def get_vin_id_in_stock(self):
@@ -598,6 +597,11 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
+
+        # 判断。如果判断的结果是存在VIN不在路由上的。则先进行调度
+        # if self.dispatch_or_not():
+        #     return self.change_vin_location_to_route()
+
         # # 先去填充一次VIN
         for order in self:
             order_line_ids = order.order_line
@@ -611,7 +615,7 @@ class SaleOrder(models.Model):
 
         # 全部都没VIN
         if len(self.mapped('order_line')) == len(vin_order_ids):
-            raise UserError('Please wait until the VIN in stock. Any question, Contact administrator. ')
+            raise UserError(_('Please wait until the VIN in stock. Any question, Contact administrator. '))
 
         # if not any([True if line.mapped('vin') else False for line in self.order_line]):
         #     raise UserError(_('You can not make order until the product have vin or stock.'))
@@ -662,3 +666,37 @@ class SaleOrder(models.Model):
                 order.write({
                     'state': 'sale'
                 })
+
+    def change_vin_location_to_route(self):
+        context_write_off = {
+            'default_sale_order_id': self.id
+        }
+        return {
+            'name': _('Dispatch'),
+            'view_type': 'form',
+            "view_mode": 'form',
+            'res_model': 'stock.location.to.route.location.wizard',
+            'type': 'ir.actions.act_window',
+            'context': context_write_off,
+            'target': 'new',
+        }
+
+    @api.multi
+    def dispatch_or_not(self):
+        # 在手数大于0 (=1)
+        # 预留为0
+        stock_quant_ids = self.env['stock.quant'].search([
+            ('quantity', '=', 1),
+            ('reserved_quantity', '=', 0)
+        ])
+        for order in self:
+            for line in order.order_line:
+                if not line.vin:
+                    continue
+
+                from_location_id = self._transfer_district_to_location(line.from_location_id)
+                if not stock_quant_ids.filtered(lambda x:
+                                                x.location_id == from_location_id.id and x.lot_id.id == line.vin.id):
+                    return True
+
+        return False

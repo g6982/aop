@@ -1,33 +1,59 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
+    <record model="ir.module.category" id="module_aop_sale">
+        <field name="name">AOP</field>
+        <field name="sequence">1000</field>
+    </record>
+
+    <!--
     <record id="group_aop_sale_customers" model="res.groups">
         <field name="name">Order</field>
         <field name="category_id" ref="base.module_category_sales_management"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
+    <!--
     <record id="group_aop_sale_scheduling" model="res.groups">
         <field name="name">Draft order</field>
         <field name="category_id" ref="base.module_category_sales_management"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
+    <!--  调度订单,功能已废弃  -->
+    <!--
     <record id="group_dispatch_right" model="res.groups">
         <field name="name">Dispatch</field>
         <field name="category_id" ref="base.module_category_sales_management"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
-    <!--创建隐藏菜单的用户组 -->
+     <!--    调度部门  Begin  -->
+
+    <!--
+    <record id="group_purchase_fill_vin_product" model="res.groups">
+        <field name="name">Purchase fill data</field>
+        <field name="category_id" ref="module_aop_sale"/>
+    </record>
+    -->
+
+
+    <!--    调度部门  End  -->
+
+
+    <!--    创建隐藏菜单的用户组  -->
     <record id="group_hide_menus" model="res.groups">
         <field name="name">Restricted Menus Group</field>
         <field name="comment">Restricted Menus Group</field>
     </record>
 
-<!--    采购单回填VIN-->
+    <!--    采购单回填VIN    -->
     <record id="group_purchase_fill_vin_product" model="res.groups">
         <field name="name">Purchase fill data</field>
+        <field name="category_id" ref="module_aop_sale"/>
     </record>
 
 </odoo>
