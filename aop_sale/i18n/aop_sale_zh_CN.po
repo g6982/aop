@@ -136,3 +136,13 @@ msgstr "比率/金额"
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__location_id
 msgid "Location"
 msgstr "源位置"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__from_location_id
+msgid "From location"
+msgstr "接车点"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__to_location_id
+msgid "To location"
+msgstr "送车点"

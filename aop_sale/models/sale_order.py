@@ -62,7 +62,7 @@ class SaleOrderLine(models.Model):
 
     # allowed_route_ids = fields.Many2many('stock.location.route', copy=False)
     # allowed_service_product_ids = fields.Many2many('product.product', domain=[('sale_ok', '=', True)], copy=False)
-    allowed_carrier_ids = fields.Many2many('delivery.carrier', copy=False, compute='_compute_allowed_carrier_ids')
+    allowed_carrier_ids = fields.Many2many('delivery.carrier', copy=False)
 
     replenish_picking_id = fields.Many2one('stock.picking', copy=False)
 
