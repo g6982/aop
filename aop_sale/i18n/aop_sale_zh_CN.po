@@ -146,3 +146,8 @@ msgstr "接车点"
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__to_location_id
 msgid "To location"
 msgstr "送车点"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_location_to_route_location_wizard_form
+msgid "Dispatch"
+msgstr "创建调度任务"

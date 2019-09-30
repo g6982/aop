@@ -18,6 +18,7 @@
         />
 
         <!-- 二级菜单 -->
+
         <menuitem id="user_manager_menu"
                   parent="system_manager_menu"
                   name="User manage"
@@ -27,20 +28,23 @@
 
 
         <!-- 二级菜单 -->
+
         <menuitem id="role_manager_menu"
                   parent="system_manager_menu"
-                  name="Role manage"
+                  name="Group manage"
                   action="base.action_res_groups"
                   sequence="20"
         />
 
         <!-- 二级菜单 -->
+         <!--
         <menuitem id="permission_manager_menu"
                   parent="system_manager_menu"
                   name="Permission manage"
                   action="base.action_res_groups"
                   sequence="30"
         />
+        -->
 
         <!-- 一级菜单 -->
         <menuitem id="product_manager_menu"
