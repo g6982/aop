@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-30 08:03+0000\n"
-"PO-Revision-Date: 2019-09-30 08:03+0000\n"
+"POT-Creation-Date: 2019-09-30 08:55+0000\n"
+"PO-Revision-Date: 2019-09-30 08:55+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1224,6 +1224,11 @@ msgid "Group By"
 msgstr "分组"
 
 #. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.role_manager_menu
+msgid "Group manage"
+msgstr "群组管理"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__guide_price
 msgid "Guide Price"
 msgstr "指导价"
@@ -2222,11 +2227,6 @@ msgid "Period"
 msgstr "会计期间"
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.permission_manager_menu
-msgid "Permission manage"
-msgstr "权限管理"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__picking_id
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__picking_id
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__picking_id
@@ -2598,11 +2598,6 @@ msgstr "限制菜单"
 #: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
 msgid "Return factory"
 msgstr "返厂"
-
-#. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.role_manager_menu
-msgid "Role manage"
-msgstr "角色管理"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__is_rounding_line
