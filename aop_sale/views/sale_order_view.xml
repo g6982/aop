@@ -208,13 +208,24 @@
                     <button name="write_off_order_line" string="Write-off" type="object" class="oe_highlight" invisible="1"/>
                 </xpath>
 
-
+                <!--    隐藏订购数量    -->
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
 
+                <!--    隐藏计量单位    -->
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">
                     <attribute name="options">{'no_quick_create': True, 'no_create_edit': True}</attribute>
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!--    隐藏已交货数量    -->
+                <xpath expr="//field[@name='order_line']/tree/field[@name='qty_delivered']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                 <!--    隐藏已开发票数量    -->
+                <xpath expr="//field[@name='order_line']/tree/field[@name='qty_invoiced']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
 
