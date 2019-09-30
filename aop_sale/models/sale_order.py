@@ -534,9 +534,6 @@ class SaleOrder(models.Model):
         contract_id = self._fetch_customer_contract(res)
         if not contract_id:
             return res
-        # _logger.info({
-        #     'contract_id': contract_id
-        # })
 
         # 接车单创建
         # res.order_line.replenish_stock_picking_order()
@@ -552,6 +549,7 @@ class SaleOrder(models.Model):
             route_id = self._find_contract_route_id(delivery_carrier_id)
             route_ids = self._find_contract_route_ids(delivery_carrier_id)
 
+            allowed_carrier_ids = [x.id for x in delivery_carrier_id]
             # _logger.info({
             #     'route_ids': route_ids,
             #     'service_product_ids': service_product_ids
@@ -562,7 +560,7 @@ class SaleOrder(models.Model):
                     'price_unit': delivery_carrier_id[0].fixed_price if delivery_carrier_id else 0,
                     'delivery_carrier_id': delivery_carrier_id[0].id if delivery_carrier_id else False,
                     'customer_contract_id': contract_id.id,
-                    'allowed_carrier_ids': [(6, 0, delivery_carrier_id.ids)] if delivery_carrier_id else False
+                    'allowed_carrier_ids': [(6, 0, allowed_carrier_ids)] if allowed_carrier_ids else False
                 }
             if not line_id.vin:
                 tmp['vin'] = self.get_vin_id_stock(line_id)
@@ -599,8 +597,8 @@ class SaleOrder(models.Model):
     def action_confirm(self):
 
         # 判断。如果判断的结果是存在VIN不在路由上的。则先进行调度
-        # if self.dispatch_or_not():
-        #     return self.change_vin_location_to_route()
+        if self.dispatch_or_not():
+            return self.change_vin_location_to_route()
 
         # # 先去填充一次VIN
         for order in self:
@@ -691,7 +689,7 @@ class SaleOrder(models.Model):
         ])
         for order in self:
             for line in order.order_line:
-                if not line.vin:
+                if not line.vin or line.replenish_picking_id:
                     continue
 
                 from_location_id = self._transfer_district_to_location(line.from_location_id)
