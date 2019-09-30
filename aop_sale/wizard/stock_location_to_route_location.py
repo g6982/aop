@@ -64,10 +64,12 @@ class StockLocationToRouteLocation(models.TransientModel):
 
             stock_location_id = stock_quant_ids.filtered(lambda x: x.lot_id.id == line_id.vin.id)
 
+            route_location_ids = line_id.route_id.rule_ids.mapped('location_src_id').ids
+
             if not stock_location_id:
                 continue
 
-            if from_location_id.id != stock_location_id.location_id.id:
+            if from_location_id.id != stock_location_id.location_id.id and stock_location_id.location_id.id not in route_location_ids:
                 data.append((0, 0, {
                     'sale_order_line_id': line_id.id,
                     'vin_id': line_id.vin.id,

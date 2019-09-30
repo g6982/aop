@@ -60,9 +60,12 @@ class SaleOrderLine(models.Model):
     stock_picking_state = fields.Boolean('Picking state', compute='_compute_stock_picking_state', copy=False)
     stock_picking_ids = fields.Many2many('stock.picking', string='Pickings', copy=False)
 
-    # allowed_route_ids = fields.Many2many('stock.location.route', copy=False)
-    # allowed_service_product_ids = fields.Many2many('product.product', domain=[('sale_ok', '=', True)], copy=False)
-    allowed_carrier_ids = fields.Many2many('delivery.carrier', copy=False)
+    allowed_carrier_ids = fields.Many2many(
+        'delivery.carrier',
+        copy=False,
+        compute='_compute_allowed_carrier_ids',
+        store=True
+    )
 
     replenish_picking_id = fields.Many2one('stock.picking', copy=False)
 
@@ -545,15 +548,9 @@ class SaleOrder(models.Model):
             # 默认使用第一条
             delivery_carrier_id = self._find_contract_line(contract_id, line_id)
             service_product_id = self._find_service_product(delivery_carrier_id)
-            service_product_ids = self._find_service_product_ids(delivery_carrier_id)
             route_id = self._find_contract_route_id(delivery_carrier_id)
-            route_ids = self._find_contract_route_ids(delivery_carrier_id)
 
             allowed_carrier_ids = [x.id for x in delivery_carrier_id]
-            # _logger.info({
-            #     'route_ids': route_ids,
-            #     'service_product_ids': service_product_ids
-            # })
             tmp = {
                     'service_product_id': service_product_id.id if service_product_id else False,
                     'route_id': route_id.id if route_id else False,
@@ -595,11 +592,6 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
-
-        # 判断。如果判断的结果是存在VIN不在路由上的。则先进行调度
-        if self.dispatch_or_not():
-            return self.change_vin_location_to_route()
-
         # # 先去填充一次VIN
         for order in self:
             order_line_ids = order.order_line
@@ -607,6 +599,10 @@ class SaleOrder(models.Model):
                 if line_id.vin:
                     continue
                 line_id._fill_order_line_vin_id()
+
+        # 判断。如果判断的结果是存在VIN不在路由上的。则先进行调度
+        if self.dispatch_or_not():
+            return self.change_vin_location_to_route()
 
         # 如果一个VIN都没有。不运行
         vin_order_ids = self.mapped('order_line').filtered(lambda x: not x.vin)
@@ -693,8 +689,10 @@ class SaleOrder(models.Model):
                     continue
 
                 from_location_id = self._transfer_district_to_location(line.from_location_id)
-                if not stock_quant_ids.filtered(lambda x:
-                                                x.location_id == from_location_id.id and x.lot_id.id == line.vin.id):
+                stock_location_id = stock_quant_ids.filtered(lambda x: x.lot_id.id == line.vin.id)
+                route_location_ids = line.route_id.rule_ids.mapped('location_src_id').ids
+
+                if from_location_id.id != stock_location_id.location_id.id and stock_location_id.location_id.id not in route_location_ids:
                     return True
 
         return False
