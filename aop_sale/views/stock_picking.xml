@@ -44,6 +44,12 @@
                     </attribute>
                 </xpath>
 
+                <xpath expr="//field[@name='location_dest_id']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible': 0}
+                    </attribute>
+                </xpath>
+
             </field>
         </record>
 
