@@ -461,5 +461,19 @@
                   name="Handover VIN"
                   action="action_handover_vin_view"
                   parent="sale.sale_order_menu"/>
+
+
+        <record id="action_billable_file_view" model="ir.actions.act_window">
+            <field name="name">Billable</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">billable.file</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="billable_file_id"
+                  name="Billable"
+                  action="action_billable_file_view"
+                  parent="account.menu_finance_receivables"/>
     </data>
 </odoo>

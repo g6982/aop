@@ -29,5 +29,7 @@ from . import account_account
 from . import handover_vin
 from . import invoice_no_tax_invoice
 from . import purchase_invoice_batch_no
+from . import billable_file
+
 
 

@@ -25,3 +25,4 @@ access_customer_contract_stock_rule_line,access_customer_contract_stock_rule_lin
 access_handover_vin,access_handover_vin,model_handover_vin,base.group_user,1,1,1,1
 access_invoice_no_tax_invoice,access_invoice_no_tax_invoice,model_invoice_no_tax_invoice,base.group_user,1,1,1,1
 access_purchase_invoice_batch_no,access_purchase_invoice_batch_no,model_purchase_invoice_batch_no,base.group_user,1,1,1,1
+access_billable_file,access_billable_file,model_billable_file,base.group_user,1,1,1,1

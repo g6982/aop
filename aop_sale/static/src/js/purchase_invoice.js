@@ -6,7 +6,6 @@ odoo.define('aop_sale.purchase_order_invoice', function (require) {
     ListController.include({
         renderButtons: function ($node) {
             let $buttons = this._super.apply(this, arguments);
-            console.log(this);
             let tree_model = this.modelName;
             for (let i = 0; i < show_button_model.length; i++) {
                 if (tree_model == show_button_model[i]) {
