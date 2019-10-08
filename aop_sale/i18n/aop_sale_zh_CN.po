@@ -151,3 +151,34 @@ msgstr "送车点"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_location_to_route_location_wizard_form
 msgid "Dispatch"
 msgstr "创建调度任务"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_billable_file__name
+msgid "Name"
+msgstr "交接单号"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_billable_file__number
+msgid "Number"
+msgstr "车型数量"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_billable_file__transfer_way
+msgid "Transfer"
+msgstr "运输方式"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_billable_file__price_unit
+msgid "Price unit"
+msgstr "单车价格"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_billable_file__price_total
+msgid "Price total"
+msgstr "金额"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_billable_file__amount
+msgid "Amount"
+msgstr "最终金额"
+
