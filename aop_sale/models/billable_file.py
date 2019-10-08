@@ -56,7 +56,7 @@ class BillableFile(models.Model):
                 }) for line in child_order_line_ids],
                 'invoice_product_type': 'child_product',
                 'reconciliation_batch_no': reconciliation_batch_no
-            }).create_account_invoice(order_line_amount)
+            }).create_account_invoice(order_line_amount=order_line_amount)
         if main_order_line_ids:
             invoice_obj.create({
                 'selected_order_lines': [(0, 0, {
@@ -64,7 +64,7 @@ class BillableFile(models.Model):
                 }) for line in main_order_line_ids],
                 'invoice_product_type': 'main_product',
                 'reconciliation_batch_no': reconciliation_batch_no
-            }).create_account_invoice(order_line_amount)
+            }).create_account_invoice(order_line_amount=order_line_amount)
 
 
 class BaseImport(models.TransientModel):

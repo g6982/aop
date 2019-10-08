@@ -200,9 +200,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
         invoice_res = []
         if self.invoice_product_type == 'main_product':
-            invoice_res = self._get_main_service_product_data(order_line_amount)
+            invoice_res = self._get_main_service_product_data(order_line_amount=order_line_amount)
         elif self.invoice_product_type == 'child_product':
-            invoice_res = self._get_child_service_product_data(order_line_amount)
+            invoice_res = self._get_child_service_product_data(order_line_amount=order_line_amount)
         return self._create_account_invoice(invoice_res)
 
     def _create_account_invoice(self, invoice_res):
@@ -242,7 +242,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
             import traceback
             raise UserError(traceback.format_exc())
 
-    def _invoice_data(self, order):
+    def _invoice_data(self, order, line_id=False):
         return {
             'name': order.client_order_ref or order.name + '/' + str(time.time()),
             'origin': order.name,
@@ -257,7 +257,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
             # 'team_id': order.team_id.id,
             'user_id': order.user_id.id,
             # 'comment': order.note,
-            'date_invoice': fields.Date.today(),
+            'date_invoice': line_id.picking_confirm_date if line_id else fields.Date.today(),
             'reconciliation_batch_no': self.reconciliation_batch_no
         }
 
@@ -274,12 +274,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
         product_ids = self._get_child_service_product(legal_order_line_ids.mapped('stock_picking_ids'))
 
-        _logger.info({
-            'product_ids': product_ids
-        })
         # for sale_id in self.sale_order_ids:
         for sale_id in legal_order_line_ids:
-            invoice_data = self._invoice_data(sale_id.order_id)
+            invoice_data = self._invoice_data(sale_id.order_id, line_id=sale_id)
 
             tmp_estimate = sale_id.delivery_carrier_id.fixed_price if self._context.get(
                 'monthly_confirm_invoice') else 0
@@ -316,7 +313,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
         for line_id in legal_order_line_ids:
             sale_order_id = line_id.mapped('order_id')
-            invoice_data = self._invoice_data(sale_order_id)
+            invoice_data = self._invoice_data(sale_order_id, line_id=line_id)
             line_data = []
 
             account_id = self._get_account_id(line_id.service_product_id, order=sale_order_id)
