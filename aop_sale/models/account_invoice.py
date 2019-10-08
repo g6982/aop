@@ -147,7 +147,7 @@ class AccountInvoice(models.Model):
         for line in batch_ids:
             if not line.invoice_line_ids:
                 line.unlink()
-        
+
         self._null_invoice_order_line_data()
         return res
 

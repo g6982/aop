@@ -31,6 +31,7 @@ class BillableFile(models.Model):
     def order_line_to_invoice(self):
         child_order_line_ids = []
         main_order_line_ids = []
+        order_line_amount = {}
         invoice_obj = self.env['sale.advance.payment.inv']
         reconciliation_batch_no = str(time.time())
         for line in self:
@@ -46,6 +47,8 @@ class BillableFile(models.Model):
                 child_order_line_ids.append(order_line)
             else:
                 main_order_line_ids.append(order_line)
+            order_line_amount[line.id] = line.amount
+
         if child_order_line_ids:
             invoice_obj.create({
                 'selected_order_lines': [(0, 0, {
@@ -53,7 +56,7 @@ class BillableFile(models.Model):
                 }) for line in child_order_line_ids],
                 'invoice_product_type': 'child_product',
                 'reconciliation_batch_no': reconciliation_batch_no
-            }).create_account_invoice()
+            }).create_account_invoice(order_line_amount)
         if main_order_line_ids:
             invoice_obj.create({
                 'selected_order_lines': [(0, 0, {
@@ -61,7 +64,7 @@ class BillableFile(models.Model):
                 }) for line in main_order_line_ids],
                 'invoice_product_type': 'main_product',
                 'reconciliation_batch_no': reconciliation_batch_no
-            }).create_account_invoice()
+            }).create_account_invoice(order_line_amount)
 
 
 class BaseImport(models.TransientModel):

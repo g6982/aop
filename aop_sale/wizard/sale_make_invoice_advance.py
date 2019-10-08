@@ -194,15 +194,15 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     # 生成结算清单
     # 根据订单行生成
-    def create_account_invoice(self):
+    def create_account_invoice(self, order_line_amount=False):
         if not self.selected_order_lines:
             raise UserError('You must select more than one record.')
 
         invoice_res = []
         if self.invoice_product_type == 'main_product':
-            invoice_res = self._get_main_service_product_data()
+            invoice_res = self._get_main_service_product_data(order_line_amount)
         elif self.invoice_product_type == 'child_product':
-            invoice_res = self._get_child_service_product_data()
+            invoice_res = self._get_child_service_product_data(order_line_amount)
         return self._create_account_invoice(invoice_res)
 
     def _create_account_invoice(self, invoice_res):
@@ -268,7 +268,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
         product_ids = [move_id.service_product_id for move_id in move_ids if move_id.service_product_id]
         return list(set(product_ids))
 
-    def _get_child_service_product_data(self):
+    def _get_child_service_product_data(self, order_line_amount=False):
         invoice_res = []
         legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(lambda x: x if not x.invoice_lines else '')
 
@@ -292,7 +292,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         'name': str(time.time()),
                         'origin': sale_id.name,
                         'account_id': account_id,
-                        'price_unit': product_id.list_price,
+                        'price_unit': order_line_amount.get(sale_id.id, product_id.list_price),
                         'quantity': 1,
                         'product_id': product_id.id,
                         'uom_id': product_id.uom_id.id,
@@ -309,7 +309,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 invoice_res.append(tmp)
         return invoice_res
 
-    def _get_main_service_product_data(self):
+    def _get_main_service_product_data(self, order_line_amount=False):
         invoice_res = []
 
         legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(lambda x: x if not x.invoice_lines else '')
@@ -327,7 +327,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 'name': str(time.time()),
                 'origin': sale_order_id.name,
                 'account_id': account_id,
-                'price_unit': contract_price,
+                'price_unit': order_line_amount.get(line_id.id, contract_price),
                 'quantity': 1.0,
                 'discount': 0.0,
                 'uom_id': line_id.service_product_id.uom_id.id,
