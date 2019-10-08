@@ -147,8 +147,17 @@ class AccountInvoice(models.Model):
         for line in batch_ids:
             if not line.invoice_line_ids:
                 line.unlink()
-
+        
+        self._null_invoice_order_line_data()
         return res
+
+    # FIXME: 不知道为啥many2many 的值没有被删除
+    def _null_invoice_order_line_data(self):
+        sql_delete = '''
+            delete from sale_order_line_invoice_rel where invoice_line_id not in (select id from account_invoice_line)
+        '''
+        self.env.cr.execute(sql_delete)
+        self.env.cr.commit()
 
     # 任务完成生成的有完成时间
     # 没有完成的(预收)就用当前时间
