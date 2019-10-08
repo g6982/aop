@@ -48,6 +48,7 @@
         'views/handover_vin_view.xml',
         'views/base.xml',
         'views/billable_file.xml',
+        'views/reconciliation_file.xml',
         'views/dispatch_order.xml',
         'wizard/account_tax_invoice_wizard.xml',
         'wizard/change_stock_picking.xml',

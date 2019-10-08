@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_reconciliation_file_form" model="ir.ui.view">
+            <field name="name">reconciliation.file.form</field>
+            <field name="model">reconciliation.file</field>
+            <field name="arch" type="xml">
+                <form edit="0" create="0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="transfer_way"/>
+                            </group>
+                            <group>
+                                <field name="batch_no"/>
+                                <field name="apply_no"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                            </group>
+                            <group>
+                                <field name="number"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="price_unit"/>
+                            </group>
+                            <group>
+                                <field name="price_total"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_reconciliation_file_tree" model="ir.ui.view">
+            <field name="name">reconciliation.file.tree</field>
+            <field name="model">reconciliation.file</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="batch_no"/>
+                    <field name="apply_no"/>
+                    <field name="product_id"/>
+                    <field name="number"/>
+                    <field name="transfer_way"/>
+                    <field name="price_unit"/>
+                    <field name="price_total"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
