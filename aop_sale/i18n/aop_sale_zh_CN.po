@@ -154,6 +154,7 @@ msgstr "创建调度任务"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__name
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__name
 msgid "Name"
 msgstr "交接单号"
 
@@ -182,3 +183,37 @@ msgstr "金额"
 msgid "Amount"
 msgstr "最终金额"
 
+#: model:ir.actions.act_window,name:aop_sale.action_reconciliation_file_view
+#: model:ir.ui.menu,name:aop_sale.reconciliation_file_id
+msgid "Reconciliation"
+msgstr "对账数据"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__apply_no
+msgid "Apply"
+msgstr "申请单号"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__product_id
+msgid "Product"
+msgstr "车型"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__number
+msgid "Number"
+msgstr "数量(台)"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__transfer_way
+msgid "Transfer"
+msgstr "承运商发运方式"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__price_unit
+msgid "Price unit"
+msgstr "单车价格"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__price_total
+msgid "Price total"
+msgstr "交接单总价格"
