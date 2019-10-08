@@ -475,5 +475,20 @@
                   name="Billable"
                   action="action_billable_file_view"
                   parent="account.menu_finance_receivables"/>
+
+<!--        对账-->
+        <record id="action_reconciliation_file_view" model="ir.actions.act_window">
+            <field name="name">Reconciliation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reconciliation.file</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="reconciliation_file_id"
+                  name="Reconciliation"
+                  action="action_reconciliation_file_view"
+                  parent="account.menu_finance_receivables"/>
+
     </data>
 </odoo>
