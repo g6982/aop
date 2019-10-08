@@ -7,7 +7,8 @@ from odoo import api, fields, models, _
 from odoo.addons import decimal_precision as dp
 from odoo.exceptions import UserError
 import logging
-
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from datetime import datetime
 _logger = logging.getLogger(__name__)
 
 
@@ -243,8 +244,10 @@ class SaleAdvancePaymentInv(models.TransientModel):
             raise UserError(traceback.format_exc())
 
     def _invoice_data(self, order, line_id=False):
+        date_invoice = False
         if line_id:
             date_invoice = line_id.picking_confirm_date if line_id.picking_confirm_date else fields.Date.today()
+            date_invoice = date_invoice.date() if hasattr(date_invoice, 'date') else date_invoice
         else:
             date_invoice = fields.Date.today()
         return {

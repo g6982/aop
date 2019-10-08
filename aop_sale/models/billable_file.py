@@ -28,6 +28,7 @@ class BillableFile(models.Model):
     vehicle_code = fields.Char('Vehicle code')
     product_id = fields.Many2one('product.product', compute='_compute_product_id', store=True)
 
+    @api.model
     @api.depends('vehicle_code')
     def _compute_product_id(self):
         for line in self:
