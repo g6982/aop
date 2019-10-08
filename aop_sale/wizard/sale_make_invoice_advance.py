@@ -243,6 +243,10 @@ class SaleAdvancePaymentInv(models.TransientModel):
             raise UserError(traceback.format_exc())
 
     def _invoice_data(self, order, line_id=False):
+        if line_id:
+            date_invoice = line_id.picking_confirm_date if line_id.picking_confirm_date else fields.Date.today()
+        else:
+            date_invoice = fields.Date.today()
         return {
             'name': order.client_order_ref or order.name + '/' + str(time.time()),
             'origin': order.name,
@@ -257,7 +261,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
             # 'team_id': order.team_id.id,
             'user_id': order.user_id.id,
             # 'comment': order.note,
-            'date_invoice': line_id.picking_confirm_date if line_id else fields.Date.today(),
+            'date_invoice': date_invoice,
             'reconciliation_batch_no': self.reconciliation_batch_no
         }
 
@@ -318,7 +322,6 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
             account_id = self._get_account_id(line_id.service_product_id, order=sale_order_id)
             contract_price = self._get_contract_price(line_id)
-
             tmp_estimate = line_id.delivery_carrier_id.fixed_price if self._context.get('monthly_confirm_invoice') else 0
             line_data.append((0, 0, {
                 'name': str(time.time()),

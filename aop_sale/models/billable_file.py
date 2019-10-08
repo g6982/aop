@@ -61,7 +61,7 @@ class BillableFile(models.Model):
                 child_order_line_ids.append(order_line)
             else:
                 main_order_line_ids.append(order_line)
-            order_line_amount[line.id] = line.amount
+            order_line_amount[order_line.id] = line.amount
 
         if child_order_line_ids:
             invoice_obj.create({
