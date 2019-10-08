@@ -12,6 +12,7 @@
                                 <field name="name"/>
                             </group>
                             <group>
+                                <field name="product_id"/>
                                 <field name="vin_code"/>
                             </group>
                         </group>
@@ -44,6 +45,7 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
+                    <field name="product_id"/>
                     <field name="vin_code"/>
                     <field name="number"/>
                     <field name="transfer_way"/>

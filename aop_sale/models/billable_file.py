@@ -25,6 +25,20 @@ class BillableFile(models.Model):
         ('main_product', 'Main product'),
         ('child_product', 'Child product')
     ], required=True, string='Invoice product type', default='main_product')
+    vehicle_code = fields.Char('Vehicle code')
+    product_id = fields.Many2one('product.product', compute='_compute_product_id', store=True)
+
+    @api.depends('vehicle_code')
+    def _compute_product_id(self):
+        for line in self:
+            if not line.vehicle_code:
+                continue
+            product_id = self.env['product.product'].search([
+                ('default_code', '=', line.vehicle_code[:3])
+            ])
+            if not product_id or len(product_id) != 1:
+                continue
+            line.product_id = product_id.id
 
     # 查找销售订单行，将交接单相同且没有生成回款结算清单的数据，生成回款结算清单
     @api.multi
