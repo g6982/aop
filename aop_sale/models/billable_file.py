@@ -63,6 +63,7 @@ class BillableFile(models.Model):
             else:
                 main_order_line_ids.append(order_line)
             order_line_amount[order_line.id] = line.amount
+            line.order_line_id = order_line.id
 
         if child_order_line_ids:
             invoice_obj.create({
@@ -93,3 +94,18 @@ class BaseImport(models.TransientModel):
             records = self.env['billable.file'].browse(res.get('ids'))
             records.order_line_to_invoice()
         return res
+
+    @api.model
+    def _convert_import_data(self, fields, options):
+        res = super(BaseImport, self)._convert_import_data(fields, options)
+        res = self._remove_error_symbol(res)
+        return res
+
+    # FIXME： excel 里面出现 \u202d 和 \u202c 这样的特殊字符
+    def _remove_error_symbol(self, res):
+        try:
+            data = res[0]
+            data = [[line_data.replace('\u202d', '').replace('\u202c', '') for line_data in line] for line in data]
+            return data, res[1]
+        except Exception as e:
+            return res
