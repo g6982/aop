@@ -19,6 +19,8 @@ class ReconciliationFile(models.Model):
     price_total = fields.Float('Price total')
     product_id = fields.Many2one('product.product', 'Product')
 
+    invoice_line_ids = fields.Many2many('account.invoice.line', string='Invoice line')
+
     @api.multi
     def reconciliation_account_invoice(self):
         for line in self:
@@ -26,9 +28,21 @@ class ReconciliationFile(models.Model):
                 ('sale_order_line_id.handover_number', '=', line.name),
                 ('sale_order_line_id.product_id', '=', line.product_id.id)
             ])
+            if not invoice_line_id:
+                continue
+            line.invoice_line_ids = [(6, 0, invoice_line_id.ids)]
+            for invoice_id in invoice_line_id.mapped('invoice_id'):
+                invoice_id.action_invoice_open()
 
-    @api.model
-    def create(self, vals):
-        res = super(ReconciliationFile, self).create(vals)
-        self.reconciliation_account_invoice()
+
+class BaseImport(models.TransientModel):
+    _inherit = 'base_import.import'
+
+    @api.multi
+    def do(self, fields, columns, options, dryrun=False):
+        res = super(BaseImport, self).do(fields, columns, options, dryrun)
+
+        if not dryrun and self.res_model == 'reconciliation.file':
+            records = self.env['reconciliation.file'].browse(res.get('ids'))
+            records.reconciliation_account_invoice()
         return res
