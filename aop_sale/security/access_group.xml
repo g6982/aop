@@ -31,102 +31,124 @@
     </record>
     -->
 
-    <!--    调度中心  Begin  -->
+    <!--                        调度中心  Begin                     -->
 
     <!--  调度中心/OTD管理员兼材料管理员  -->
     <record id="group_dispatch_otd_and_material_manager" model="res.groups">
         <field name="name">dispatch otd and material manager</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
     <!--  调度中心/值班员  -->
     <record id="group_dispatch_duty_staffer" model="res.groups">
         <field name="name">dispatch duty staffer</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
     <!--  调度中心/长安福特项目客服员  -->
     <record id="group_dispatch_changanfute_customer" model="res.groups">
         <field name="name">dispatch changanfute customer</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
     <!--  调度中心/网络项目客服员  -->
     <record id="group_dispatch_network_customer" model="res.groups">
         <field name="name">dispatch network customer</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  调度中心/副部长  -->
+    <record id="group_dispatch_undersecretary" model="res.groups">
+        <field name="name">dispatch undersecretary</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
 
-    <!--    调度中心  End  -->
+    <!--                    调度中心  End                       -->
 
-    <!--    财务部门  Begin  -->
+    <!--                    财务部门  Begin                     -->
 
     <!--  财务部门/副部长  -->
     <record id="group_finance_undersecretary" model="res.groups">
         <field name="name">finance undersecretary</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
-    <!--    财务部门  End  -->
+    <!--                    财务部门  End                       -->
 
-    <!--    市场部门  Begin  -->
+    <!--                    市场部门  Begin                     -->
 
     <!--  市场部门/内勤  -->
     <record id="group_market_inside_job" model="res.groups">
         <field name="name">market inside job</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
     <!--  市场部门/商务助理  -->
     <record id="group_market_business_assistant" model="res.groups">
         <field name="name">market business assistant</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
-    <!--    西安办事处  End  -->
+    <!--                    市场部门  End                     -->
+
+    <!--                    西安办事处  Begin                      -->
 
     <!--  西安办事处/内勤  -->
     <record id="group_xian_office_inside_job" model="res.groups">
         <field name="name">xian office inside job</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
     <!--  西安办事处/安全员  -->
     <record id="group_xian_office_safety_officer" model="res.groups">
         <field name="name">xian office safety officer</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
-    <!--    西安办事处  End  -->
+    <!--                    西安办事处  End                      -->
 
-    <!--    重庆基地  End  -->
+    <!--                    重庆基地  Begin                       -->
 
     <!--  重庆基地/内勤  -->
     <record id="group_cq_base_inside_job" model="res.groups">
         <field name="name">cq base inside job</field>
         <field name="category_id" ref="module_aop_sale"/>
+         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
     <!--  重庆基地/备品管理员  -->
     <record id="group_cq_base_spare_manager" model="res.groups">
         <field name="name">cq base safety officer</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
     <!--  重庆基地/库管  -->
     <record id="group_cq_base_kuguan" model="res.groups">
         <field name="name">cq base kuguan</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
     <!--  重庆基地/库管班长  -->
     <record id="group_cq_base_kuguan_monitor" model="res.groups">
         <field name="name">cq base kuguan monitor</field>
         <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
-    <!--    重庆基地  End  -->
+    <!--                    重庆基地  End                    -->
 
 
     <!--    创建隐藏菜单的用户组  -->
@@ -139,6 +161,76 @@
     <record id="group_purchase_fill_vin_product" model="res.groups">
         <field name="name">Purchase fill data</field>
         <field name="category_id" ref="module_aop_sale"/>
+    </record>
+
+    <!--  销售/订单/订单行  -->
+    <record id="group_sale_order_line_view" model="res.groups">
+        <field name="name">sale order line view</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  销售/订单/导入临时订单  -->
+    <record id="group_import_sale_order" model="res.groups">
+        <field name="name">import sale order</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  销售/订单/交接单管理  -->
+    <record id="group_handover_vin_view" model="res.groups">
+        <field name="name">handover vin view</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  结算清单/客户/可结算数据  -->
+    <record id="group_billable_file_view" model="res.groups">
+        <field name="name">billable file view</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  结算清单/客户/对账数据  -->
+    <record id="group_reconciliation_file_view" model="res.groups">
+        <field name="name">reconciliation file view</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  物流网络/保险管理  -->
+    <record id="group_insurance_manager" model="res.groups">
+        <field name="name">insurance manager</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  物流网络/质损管理  -->
+    <record id="group_mass_loss_manager" model="res.groups">
+        <field name="name">mass loss manager</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  物流网络/基地办事处  -->
+    <record id="group_base_warehouse_view" model="res.groups">
+        <field name="name">base warehouse view</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  物流网络/配置/交货/合同条款行  -->
+    <record id="group_delivery_carrier_form" model="res.groups">
+        <field name="name">delivery carrier form</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  物流网络/配置/交货/合同版本号  -->
+    <record id="group_contract_version_view" model="res.groups">
+        <field name="name">contract version view</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
 </odoo>

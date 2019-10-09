@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 12:19+0000\n"
-"PO-Revision-Date: 2019-10-08 12:19+0000\n"
+"POT-Creation-Date: 2019-10-09 08:27+0000\n"
+"PO-Revision-Date: 2019-10-09 08:27+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -163,7 +163,7 @@ msgid "Advance receipt"
 msgstr "预收票"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:105
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:106
 #, python-format
 msgid "Advance: %s"
 msgstr ""
@@ -264,7 +264,7 @@ msgstr "可应用于产品"
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__apply_no
 #: selection:mass.loss.order,state:0
 msgid "Apply"
-msgstr "申请"
+msgstr "申请单号"
 
 #. module: aop_sale
 #: selection:mass.loss.order,state:0
@@ -1047,13 +1047,13 @@ msgid "Done"
 msgstr "完成"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:147
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:148
 #, python-format
 msgid "Down Payment"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:144
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:145
 #, python-format
 msgid "Down payment of %s%%"
 msgstr ""
@@ -1494,7 +1494,7 @@ msgstr "库存路线"
 #. module: aop_sale
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:231
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:232
 #: model:ir.model,name:aop_sale.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
@@ -1552,6 +1552,7 @@ msgstr "此发票为信用票的发票"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__invoice_line_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__invoice_line_ids
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__invoice_line_ids
 msgid "Invoice line"
 msgstr "结算清单明细行"
 
@@ -1933,7 +1934,7 @@ msgid "Model"
 msgstr "模型"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:221
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:222
 #: model:ir.actions.act_window,name:aop_sale.action_month_close_wizard_view
 #: model:ir.ui.menu,name:aop_sale.month_close_wizard_id
 #: model:ir.ui.menu,name:aop_sale.month_close_wizard_menu_id
@@ -2019,7 +2020,7 @@ msgstr "备注"
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__number
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__number
 msgid "Number"
-msgstr "车型数量"
+msgstr "数量(台)"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__message_needaction_counter
@@ -2368,7 +2369,7 @@ msgstr "单价"
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__price_total
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_delivery_carrier_form_inherit
 msgid "Price total"
-msgstr "金额"
+msgstr "交接单总价格"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__price_unit
@@ -3151,19 +3152,19 @@ msgid "The payment communication that will be automatically populated once the i
 msgstr "一旦发票被验证，付款通知会被自动发出。你应另发通告。"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:92
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:93
 #, python-format
 msgid "The product used to invoice a down payment should be of type 'Service'. Please use another product or update this product."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:89
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:90
 #, python-format
 msgid "The product used to invoice a down payment should have an invoice policy set to \"Ordered quantities\". Please update your deposit product to be able to create a deposit invoice."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:140
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:141
 #, python-format
 msgid "The value of the down payment amount must be positive."
 msgstr ""
@@ -3175,8 +3176,8 @@ msgid "There are already exist tax invoice, you must use the same tax invoice no
 msgstr "已经存在税务发票了，您必须使用相同的税务发票编号！"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:135
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:359
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:136
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:365
 #, python-format
 msgid "There is no income account defined for this product: \"%s\". You may have to install a chart of account from Accounting app, settings menu."
 msgstr ""
@@ -3628,9 +3629,19 @@ msgid "aop.route.line"
 msgstr ""
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_base_warehouse_view
+msgid "base warehouse view"
+msgstr "基地办事处"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_billable_file
 msgid "billable file"
 msgstr ""
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_billable_file_view
+msgid "billable file view"
+msgstr "可结算数据"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_change_stock_picking_line_wizard
@@ -3653,6 +3664,11 @@ msgid "contract"
 msgstr "合同"
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_contract_version_view
+msgid "contract version view"
+msgstr "合同版本号"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_contract_project
 msgid "contract.project"
 msgstr ""
@@ -3672,6 +3688,26 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_supplier_tree_inherit_aop_sale
 msgid "cost estimate"
 msgstr "成本确认"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_cq_base_inside_job
+msgid "cq base inside job"
+msgstr "重庆基地/内勤"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_cq_base_kuguan
+msgid "cq base kuguan"
+msgstr "重庆基地/库管"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_cq_base_kuguan_monitor
+msgid "cq base kuguan monitor"
+msgstr "重庆基地/库管班长"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_cq_base_spare_manager
+msgid "cq base safety officer"
+msgstr "重庆基地/备品管理员"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_customer_aop_contract
@@ -3696,6 +3732,36 @@ msgid "days"
 msgstr "天"
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_delivery_carrier_form
+msgid "delivery carrier form"
+msgstr "合同条款行"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_dispatch_changanfute_customer
+msgid "dispatch changanfute customer"
+msgstr "调度中心/长安福特项目客服员"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_dispatch_duty_staffer
+msgid "dispatch duty staffer"
+msgstr "调度中心/值班员"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_dispatch_network_customer
+msgid "dispatch network customer"
+msgstr "调度中心/网络项目客服员"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_dispatch_otd_and_material_manager
+msgid "dispatch otd and material manager"
+msgstr "调度中心/OTD管理员兼材料管理员"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_dispatch_undersecretary
+msgid "dispatch undersecretary"
+msgstr "调度中心/副部长"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__file_validate
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__file_validate
 msgid "file"
@@ -3712,6 +3778,11 @@ msgid "fill.service.product.wizard.line"
 msgstr ""
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_finance_undersecretary
+msgid "finance undersecretary"
+msgstr "财务部门/副部长"
+
+#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 msgid "for this customer. You can allocate them to mark this invoice as paid."
 msgstr "对于这个客户，你可以将它们分配为标记此发票已支付。"
@@ -3720,6 +3791,11 @@ msgstr "对于这个客户，你可以将它们分配为标记此发票已支付
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__found_department
 msgid "found department"
 msgstr "发现部门"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_handover_vin_view
+msgid "handover vin view"
+msgstr "交接单管理"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_handover_vin
@@ -3732,6 +3808,11 @@ msgid "highway"
 msgstr "公路调度"
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_import_sale_order
+msgid "import sale order"
+msgstr "导入临时订单"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_import_dispatch_order_wizard
 msgid "import.dispatch.order.wizard"
 msgstr ""
@@ -3740,6 +3821,11 @@ msgstr ""
 #: model:ir.model,name:aop_sale.model_import_sale_order_wizard
 msgid "import.sale.order.wizard"
 msgstr ""
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_insurance_manager
+msgid "insurance manager"
+msgstr "保险管理"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_insurance_management_type
@@ -3766,6 +3852,21 @@ msgstr ""
 #: model:ir.model,name:aop_sale.model_make_invoice_sale_order_line
 msgid "make.invoice.sale.order.line"
 msgstr ""
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_market_business_assistant
+msgid "market business assistant"
+msgstr "市场部门/商务助理"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_market_inside_job
+msgid "market inside job"
+msgstr "市场部门/内勤"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_mass_loss_manager
+msgid "mass loss manager"
+msgstr "质损管理"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_mass_loss_attachment_template
@@ -3840,6 +3941,11 @@ msgid "purchase.order.invoice.wizard"
 msgstr ""
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_reconciliation_file_view
+msgid "reconciliation file view"
+msgstr "对账数据"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_reconciliation_file
 msgid "reconciliation.file"
 msgstr ""
@@ -3868,6 +3974,11 @@ msgstr "责任方"
 #: model:ir.model,name:aop_sale.model_rule_service_product
 msgid "rule.service.product"
 msgstr ""
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_sale_order_line_view
+msgid "sale order line view"
+msgstr "订单行"
 
 #. module: aop_sale
 #: model:ir.actions.report,name:aop_sale.standard_statement_report_xlsx
@@ -3948,6 +4059,16 @@ msgstr ""
 #: model:ir.model,name:aop_sale.model_write_off_line_wizard_line
 msgid "write.off.line.wizard.line"
 msgstr ""
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_xian_office_inside_job
+msgid "xian office inside job"
+msgstr "西安办事处/内勤"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_xian_office_safety_officer
+msgid "xian office safety officer"
+msgstr "西安办事处/安全员"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_insurance_management
