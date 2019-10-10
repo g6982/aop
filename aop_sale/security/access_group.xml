@@ -33,18 +33,20 @@
 
     <!--                    信息管理部  Begin                     -->
 
-    <!--  信息管理部/总监  -->
-    <record id="group_information_management_majordomo" model="res.groups">
-        <field name="name">information management majordomo</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-    </record>
+
 
     <!--  信息管理部/副经理  -->
     <record id="group_information_management_assistant_manager" model="res.groups">
         <field name="name">information_management_assistant_manager</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  信息管理部/总监  -->
+    <record id="group_information_management_majordomo" model="res.groups">
+        <field name="name">information management majordomo</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('group_information_management_assistant_manager'))]"/>
     </record>
 
     <!--                    信息管理部  End                     -->
@@ -170,6 +172,13 @@
 
     <!--                    重庆基地  End                    -->
 
+
+    <!--  外部供应商  -->
+    <record id="group_external_supplier" model="res.groups">
+        <field name="name">external supplier</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('group_information_management_assistant_manager'))]"/>
+    </record>
 
     <!--    创建隐藏菜单的用户组  -->
     <record id="group_hide_menus" model="res.groups">
