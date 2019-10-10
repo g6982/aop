@@ -4,7 +4,12 @@
 
         <record id="purchase.purchase_rfq" model="ir.actions.act_window">
             <field name="domain">[('state', 'not in', ('to_approve', 'purchase', 'done'))]</field>
+            <field name="context">{'display_invoice': False}</field>
         </record>
+
+         <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+             <field name="context">{'display_invoice': True}</field>
+         </record>
 
         <record model="ir.ui.view" id="purchase_order_form_inherit">
             <field name="name">purchase.order</field>
