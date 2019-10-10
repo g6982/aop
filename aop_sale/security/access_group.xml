@@ -51,18 +51,20 @@
 
     <!--                     调度中心  Begin                     -->
 
-    <!--  调度中心/OTD管理员兼材料管理员  -->
-    <record id="group_dispatch_otd_and_material_manager" model="res.groups">
-        <field name="name">dispatch otd and material manager</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-    </record>
+
 
     <!--  调度中心/值班员  -->
     <record id="group_dispatch_duty_staffer" model="res.groups">
         <field name="name">dispatch duty staffer</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  调度中心/OTD管理员兼材料管理员  -->
+    <record id="group_dispatch_otd_and_material_manager" model="res.groups">
+        <field name="name">dispatch otd and material manager</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('group_dispatch_duty_staffer'))]"/>
     </record>
 
     <!--  调度中心/长安福特项目客服员  -->
@@ -163,7 +165,7 @@
     <record id="group_cq_base_kuguan_monitor" model="res.groups">
         <field name="name">cq base kuguan monitor</field>
         <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="implied_ids" eval="[(4, ref('group_cq_base_kuguan'))]"/>
     </record>
 
     <!--                    重庆基地  End                    -->

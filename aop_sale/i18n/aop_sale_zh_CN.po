@@ -217,3 +217,13 @@ msgstr "单车价格"
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__price_total
 msgid "Price total"
 msgstr "交接单总价格"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__state
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__state
+#: model:ir.model.fields,field_description:aop_sale.field_handover_vin__state
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__state
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__state
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_search
+msgid "State"
+msgstr "状态"
