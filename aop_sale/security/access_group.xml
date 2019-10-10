@@ -164,73 +164,93 @@
     </record>
 
     <!--  销售/订单/订单行  -->
+    <!--
     <record id="group_sale_order_line_view" model="res.groups">
         <field name="name">sale order line view</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
     <!--  销售/订单/导入临时订单  -->
+    <!--
     <record id="group_import_sale_order" model="res.groups">
         <field name="name">import sale order</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
     <!--  销售/订单/交接单管理  -->
+    <!--
     <record id="group_handover_vin_view" model="res.groups">
         <field name="name">handover vin view</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
     <!--  结算清单/客户/可结算数据  -->
+    <!--
     <record id="group_billable_file_view" model="res.groups">
         <field name="name">billable file view</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
     <!--  结算清单/客户/对账数据  -->
+    <!--
     <record id="group_reconciliation_file_view" model="res.groups">
         <field name="name">reconciliation file view</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
     <!--  物流网络/保险管理  -->
+    <!--
     <record id="group_insurance_manager" model="res.groups">
         <field name="name">insurance manager</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
     <!--  物流网络/质损管理  -->
+    <!--
     <record id="group_mass_loss_manager" model="res.groups">
         <field name="name">mass loss manager</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
     <!--  物流网络/基地办事处  -->
+    <!--
     <record id="group_base_warehouse_view" model="res.groups">
         <field name="name">base warehouse view</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
     <!--  物流网络/配置/交货/合同条款行  -->
+    <!--
     <record id="group_delivery_carrier_form" model="res.groups">
         <field name="name">delivery carrier form</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
     <!--  物流网络/配置/交货/合同版本号  -->
+    <!--
     <record id="group_contract_version_view" model="res.groups">
         <field name="name">contract version view</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
+    -->
 
 </odoo>

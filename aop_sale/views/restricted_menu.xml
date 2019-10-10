@@ -136,6 +136,49 @@
         <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
     </record>
 
+    <!-- 对所有用户隐藏“网站->仪表板->分析”菜单 -->
+    <record id="website.menu_website_google_analytics" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
 
+     <!-- 对所有用户隐藏“结算清单->概览”菜单 -->
+    <record id="account.menu_board_journal_1" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“结算清单->客户->信用票”菜单 -->
+    <record id="account.menu_action_invoice_out_refund" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“结算清单->客户->产品”菜单 -->
+    <record id="account.product_product_menu_sellable" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“结算清单->客户->客户”菜单 -->
+    <record id="account.menu_account_customer" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“结算清单->供应商->退款”菜单 -->
+    <record id="account.menu_action_invoice_in_refund" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“结算清单->供应商->产品”菜单 -->
+    <record id="account.product_product_menu_purchasable" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“结算清单->供应商->供应商”菜单 -->
+    <record id="account.menu_account_supplier" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“结算清单->会计->动作->核销”菜单 -->
+    <record id="account.menu_action_manual_reconciliation" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
 
 </odoo>
