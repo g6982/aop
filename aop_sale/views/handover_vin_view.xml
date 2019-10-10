@@ -121,6 +121,7 @@
                     <field name="write_datetime"/>
                     <field name="file_planned_date"/>
                     <field name="to_location_id"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>

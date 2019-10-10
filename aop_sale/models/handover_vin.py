@@ -61,50 +61,65 @@ class HandoverVin(models.Model):
 
     @api.multi
     def register_handover(self):
-        for line in self:
-            if line.state == 'draft':
-                line.sudo().write({
-                    'state': 'register',
-                    'register_user_id': self.env.user.id,
-                    'register_datetime': fields.Datetime.now()
-                })
+        self.ensure_one()
+        res = self.env['handover.vin'].search([
+            ('name', '=', self.name),
+            ('state', '=', 'draft')
+        ])
+        res.sudo().write({
+            'state': 'register',
+            'register_user_id': self.env.user.id,
+            'register_datetime': fields.Datetime.now()
+        })
 
     @api.multi
     def verify_handover(self):
-        for line in self:
-            if line.state == 'register':
-                line.sudo().write({
-                    'state': 'done',
-                    'verify_user_id': self.env.user.id,
-                    'verify_datetime': fields.Datetime.now()
-                })
+        self.ensure_one()
+        res = self.env['handover.vin'].search([
+            ('name', '=', self.name),
+            ('state', '=', 'register')
+        ])
+        res.sudo().write({
+            'state': 'done',
+            'verify_user_id': self.env.user.id,
+            'verify_datetime': fields.Datetime.now()
+        })
 
     @api.multi
     def cancel_verify_handover(self):
-        for line in self:
-            if line.state == 'done' or line.state == 'register':
-                line.sudo().write({
-                    'state': 'draft',
-                    'verify_user_id': False,
-                    'verify_datetime': False
-                })
+        self.ensure_one()
+        res = self.env['handover.vin'].search([
+            ('name', '=', self.name),
+            ('state', 'in', ['register', 'done'])
+        ])
+        res.sudo().write({
+            'state': 'draft',
+            'verify_user_id': False,
+            'verify_datetime': False
+        })
 
     @api.multi
     def finance_verify_handover(self):
-        for line in self:
-            if line.state == 'done':
-                line.sudo().write({
-                    'state': 'verify',
-                    'finance_verify_user_id': self.env.user.id,
-                    'finance_verify_datetime': fields.Datetime.now()
-                })
+        self.ensure_one()
+        res = self.env['handover.vin'].search([
+            ('name', '=', self.name),
+            ('state', '=', 'done')
+        ])
+        res.sudo().write({
+            'state': 'verify',
+            'finance_verify_user_id': self.env.user.id,
+            'finance_verify_datetime': fields.Datetime.now()
+        })
 
     @api.multi
     def cancel_finance_verify(self):
-        for line in self:
-            if line.state == 'verify':
-                line.sudo().write({
-                    'state': 'done',
-                    'finance_verify_user_id': False,
-                    'finance_verify_datetime': False
-                })
+        self.ensure_one()
+        res = self.env['handover.vin'].search([
+            ('name', '=', self.name),
+            ('state', '=', 'verify')
+        ])
+        res.sudo().write({
+            'state': 'done',
+            'finance_verify_user_id': False,
+            'finance_verify_datetime': False
+        })
