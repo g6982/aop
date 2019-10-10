@@ -31,7 +31,25 @@
     </record>
     -->
 
-    <!--                        调度中心  Begin                     -->
+    <!--                    信息管理部  Begin                     -->
+
+    <!--  信息管理部/总监  -->
+    <record id="group_information_management_majordomo" model="res.groups">
+        <field name="name">information management majordomo</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  信息管理部/副经理  -->
+    <record id="group_information_management_assistant_manager" model="res.groups">
+        <field name="name">information_management_assistant_manager</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--                    信息管理部  End                     -->
+
+    <!--                     调度中心  Begin                     -->
 
     <!--  调度中心/OTD管理员兼材料管理员  -->
     <record id="group_dispatch_otd_and_material_manager" model="res.groups">
