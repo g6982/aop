@@ -233,3 +233,7 @@ msgstr "状态"
 msgid "Reconciliation batch no"
 msgstr "对账批次号"
 
+#. module: sale
+#: model_terms:ir.ui.view,arch_db:sale.view_order_form
+msgid "Set to Quotation"
+msgstr "设为临时订单"

@@ -194,7 +194,13 @@
     <!--    采购单回填VIN    -->
     <record id="group_purchase_fill_vin_product" model="res.groups">
         <field name="name">Purchase fill data</field>
-        <field name="category_id" ref="module_aop_sale"/>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--   合同审核     -->
+    <record id="group_check_aop_contract" model="res.groups">
+        <field name="name">Check contract</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
 
     <!-- ************************** 按钮权限组 **************************  -->
@@ -203,28 +209,62 @@
     <record id="group_generate_sale_order_invoice_button" model="res.groups">
         <field name="name">generate sale order invoice button</field>
         <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
 
+    <!--    销售/订单/临时订单/确认    -->
+    <record id="group_sale_order_action_confirm_button" model="res.groups">
+        <field name="name">sale order action confirm button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+     <!--    销售/订单/临时订单/取消    -->
+    <record id="group_sale_order_action_cancel_button" model="res.groups">
+        <field name="name">sale order action cancel button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    销售/订单/临时订单/设为临时订单    -->
+    <record id="group_sale_order_action_draft_button" model="res.groups">
+        <field name="name">sale order action draft button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
 
     <!--    采购/采购/采购订单/生成结算清单    -->
     <record id="group_generate_purchase_order_invoice_button" model="res.groups">
         <field name="name">generate purchase order invoice button</field>
         <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
 
+    <!--    采购/采购/询价单/确认订单    -->
+    <record id="group_purchase_order_button_confirm_button" model="res.groups">
+        <field name="name">purchase order button confirm button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    采购/采购/询价单/取消    -->
+    <record id="group_purchase_order_button_cancel_button" model="res.groups">
+        <field name="name">purchase order button cancel button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+
+
+    <!--    采购/采购/询价单/设为草稿    -->
+    <record id="group_purchase_order_button_draft_button" model="res.groups">
+        <field name="name">purchase order button draft button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
 
     <!--    物流网络/作业/任务/更改任务    -->
     <record id="group_change_stock_picking_wizard_button" model="res.groups">
         <field name="name">change stock picking wizard button</field>
         <field name="category_id" ref="module_aop_sale_others"/>
-
     </record>
 
     <!--    结算清单/客户/回款结算清单/创建税务发票    -->
     <record id="group_generate_tax_invoice_button" model="res.groups">
         <field name="name">generate tax invoice button</field>
         <field name="category_id" ref="module_aop_sale_others"/>
-
     </record>
 
 

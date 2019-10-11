@@ -11,7 +11,6 @@
                 'purchase', 'delivery', 'stock_picking_batch',
                 'barcodes', 'delivery_hs_code', 'account_period', 'mail'],
     'data': [
-        'security/aop_contract_group.xml',
         'security/access_group.xml',
         'security/ir.model.access.csv',
         'data/stock_data.xml',

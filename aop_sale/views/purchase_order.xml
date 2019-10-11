@@ -46,6 +46,53 @@
                     <field name="box_number"/>
                     <field name="sale_line_id" readonly="1"/>
                 </xpath>
+
+                <!-- 通过Email发送按钮隐藏 -->
+                <xpath expr="//button[@name='action_rfq_send'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 通过Email发送按钮隐藏 -->
+                <xpath expr="//button[@name='action_rfq_send'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 通过Email发送按钮隐藏 -->
+                <xpath expr="//button[@name='action_rfq_send'][3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 创建付款结算清单隐藏 -->
+                <xpath expr="//button[@name='action_view_invoice'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                 <!-- 创建付款结算清单隐藏 -->
+                <xpath expr="//button[@name='action_view_invoice'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 锁定隐藏 -->
+                <xpath expr="//button[@name='button_done']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 确认订单按钮 -->
+                <xpath expr="//button[@name='button_confirm'][2]" position="attributes">
+                    <attribute name="groups">aop_sale.group_purchase_order_button_confirm_button</attribute>
+                </xpath>
+
+                <!-- 取消按钮 -->
+                <xpath expr="//button[@name='button_cancel']" position="attributes">
+                    <attribute name="groups">aop_sale.group_purchase_order_button_cancel_button</attribute>
+                </xpath>
+
+                <!-- 取消按钮 -->
+                <xpath expr="//button[@name='button_draft']" position="attributes">
+                    <attribute name="groups">aop_sale.group_purchase_order_button_draft_button</attribute>
+                </xpath>
+
+
             </field>
         </record>
     </data>
