@@ -227,3 +227,13 @@ msgstr "交接单总价格"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_search
 msgid "State"
 msgstr "状态"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__reconciliation_batch_no
+msgid "Reconciliation batch no"
+msgstr "对账批次号"
+
+#. module: aop_sale
+#: model:ir.module.category,name:aop_sale.module_aop_sale_others
+msgid "AOP OTHERS"
+msgstr "AOP/其他"

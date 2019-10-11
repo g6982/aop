@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-10 08:40+0000\n"
-"PO-Revision-Date: 2019-10-10 08:40+0000\n"
+"POT-Creation-Date: 2019-10-11 05:58+0000\n"
+"PO-Revision-Date: 2019-10-11 05:58+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -38,6 +38,11 @@ msgstr "<span class=\"o_form_label\" attrs=\"{'invisible': ['|',('state','=','dr
 #: model:ir.module.category,name:aop_sale.module_aop_sale
 msgid "AOP"
 msgstr ""
+
+#. module: aop_sale
+#: model:ir.module.category,name:aop_sale.module_aop_sale_others
+msgid "AOP OTHERS"
+msgstr "AOP/其他"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_aop_contract
@@ -3634,6 +3639,11 @@ msgid "billable file"
 msgstr ""
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_change_stock_picking_wizard_button
+msgid "change stock picking wizard button"
+msgstr "物流网络任务中更改任务"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_change_stock_picking_line_wizard
 msgid "change.stock.picking.line.wizard"
 msgstr ""
@@ -3776,6 +3786,21 @@ msgstr "对于这个客户，你可以将它们分配为标记此发票已支付
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__found_department
 msgid "found department"
 msgstr "发现部门"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_generate_purchase_order_invoice_button
+msgid "generate purchase order invoice button"
+msgstr "采购订单生成结算清单"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_generate_sale_order_invoice_button
+msgid "generate sale order invoice button"
+msgstr "正式订单生成结算清单"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_generate_tax_invoice_button
+msgid "generate tax invoice button"
+msgstr "回款结算清单创建税务发票"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_handover_vin

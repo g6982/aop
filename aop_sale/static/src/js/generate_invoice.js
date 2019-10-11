@@ -5,17 +5,31 @@ odoo.define('aop_sale.sale_order_invoice', function (require) {
 
     ListController.include({
         renderButtons: function ($node) {
-            let $buttons = this._super.apply(this, arguments);
-            let tree_model = this.modelName;
-            let display_invoice = this.initialState.context['display_invoice'];
 
-            for (let i = 0; i < show_button_model.length; i++) {
-                if (tree_model == show_button_model[i] && display_invoice) {
-                    let button2 = $("<button type='button' class='btn btn-sm btn-primary btn-default'>生成结算清单</button>")
-                        .click(this.proxy('generate_sale_order_invoice'));
-                    this.$buttons.append(button2);
+            var self = this;
+
+            let $buttons = self._super.apply(self, arguments);
+
+            this.getSession().user_has_group('aop_sale.group_generate_sale_order_invoice_button').then(function(has_group) {
+
+                console.log("has_group: "+has_group);
+
+                if(has_group) {
+
+                    let tree_model = self.modelName;
+                    let display_invoice = self.initialState.context['display_invoice'];
+
+                    for (let i = 0; i < show_button_model.length; i++) {
+                        if (tree_model == show_button_model[i] && display_invoice) {
+                            let button2 = $("<button type='button' class='btn btn-sm btn-primary btn-default'>生成结算清单</button>")
+                                .click(self.proxy('generate_sale_order_invoice'));
+                            self.$buttons.append(button2);
+                        }
+                    }
                 }
-            }
+                return;
+            })
+
             return $buttons;
         },
         generate_sale_order_invoice: function () {
