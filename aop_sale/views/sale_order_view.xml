@@ -70,6 +70,10 @@
 
                 </xpath>
 
+                 <xpath expr="//field[@name='state']" position="attributes">
+                     <attribute name="statusbar_visible">draft,sale</attribute>
+                 </xpath>
+
                 <xpath expr="//field[@name='order_line']/form/field[@name='name']" position="after">
                     <label for="stock_picking_ids"/>
                     <field name="stock_picking_ids"/>
@@ -228,7 +232,7 @@
                 </xpath>
 
                 <xpath expr="//button[@name='action_cancel']" position="after">
-                    <button name="write_off_order_line" string="Write-off" type="object" class="oe_highlight" invisible="1"/>
+                    <button name="write_off_order_line"  string="Write-off" type="object" class="oe_highlight" invisible="1"/>
                 </xpath>
 
                 <!--    隐藏订购数量    -->
@@ -279,7 +283,42 @@
                 </xpath>
 
                 <xpath expr="//header/field[@name='state']" position="after">
-                    <field name="write_off_state" widget="statusbar" statusbar_visible="draft,done"/>
+                    <field name="write_off_state" widget="statusbar" statusbar_visible="draft,done" invisible="1"/>
+                </xpath>
+
+                <!-- 发送邮件按钮隐藏 -->
+                <xpath expr="//button[@name='action_quotation_send'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 发送邮件按钮隐藏 -->
+                <xpath expr="//button[@name='action_quotation_send'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 发送邮件按钮隐藏 -->
+                <xpath expr="//button[@name='action_quotation_send'][3]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 发送邮件按钮隐藏 -->
+                <xpath expr="//button[@name='action_quotation_send'][4]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 打印按钮隐藏 -->
+                <xpath expr="//button[@name='print_quotation'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 打印按钮隐藏 -->
+                <xpath expr="//button[@name='print_quotation'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 预览按钮隐藏 -->
+                <xpath expr="//button[@name='preview_sale_order']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
 
             </field>
