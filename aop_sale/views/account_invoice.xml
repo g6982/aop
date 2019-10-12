@@ -27,11 +27,18 @@
                             string="Verify"
                             class="oe_highlight"
                             type="object"
-                            attrs="{'invisible': [('state', 'not in', ['open', 'paid', 'reconciliation'])]}"/>
+                            attrs="{'invisible': [('state', 'not in', ['open', 'paid', 'reconciliation'])]}"
+                            groups="aop_sale.group_supplier_verify_reconciliation_button"
+
+                    />
                     <button name="cancel_verify_reconciliation" string="Cancel verify" class="oe_highlight"
-                            type="object" attrs="{'invisible': [('state', '!=', 'invoice')]}"/>
+                            type="object" attrs="{'invisible': [('state', '!=', 'invoice')]}"
+                            groups="aop_sale.group_supplier_cancel_verify_reconciliation_button"
+                    />
                     <button name="action_invoice_cancel" attrs="{'invisible': [('state', '=', 'cancel')]}"
-                            string="Cancel" type="object" class="oe_highlight"/>
+                            string="Cancel" type="object" class="oe_highlight"
+                            groups="aop_sale.group_supplier_action_invoice_cancel_button"
+                    />
                 </xpath>
 
                 <xpath expr="//header/field[@name='state']" position="attributes">
@@ -88,6 +95,11 @@
                 <!-- 验证按钮 -->
                 <xpath expr="//button[@name='action_invoice_open']" position="attributes">
                     <attribute name="groups">aop_sale.group_supplier_action_invoice_open_button</attribute>
+                </xpath>
+
+                <!-- 重置为草稿按钮 -->
+                <xpath expr="//button[@name='action_invoice_draft']" position="attributes">
+                    <attribute name="groups">aop_sale.group_supplier_action_invoice_draft_button</attribute>
                 </xpath>
 
 

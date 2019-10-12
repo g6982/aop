@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-12 08:51+0000\n"
-"PO-Revision-Date: 2019-10-12 08:51+0000\n"
+"POT-Creation-Date: 2019-10-12 09:08+0000\n"
+"PO-Revision-Date: 2019-10-12 09:08+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3837,9 +3837,29 @@ msgid "generate sale order invoice button"
 msgstr "正式订单生成结算清单"
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_supplier_action_invoice_cancel_button
+msgid "generate supplier action invoice cancel button"
+msgstr "付款结算清单取消"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_supplier_action_invoice_draft_button
+msgid "generate supplier action invoice draft button"
+msgstr "付款结算清单设为草稿"
+
+#. module: aop_sale
 #: model:res.groups,name:aop_sale.group_supplier_action_invoice_open_button
 msgid "generate supplier action invoice open button"
 msgstr "付款结算清单验证"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_supplier_cancel_verify_reconciliation_button
+msgid "generate supplier cancel verify reconciliation button"
+msgstr "付款结算清单取消审核"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_supplier_verify_reconciliation_button
+msgid "generate supplier verify reconciliation button"
+msgstr "付款结算清单审核"
 
 #. module: aop_sale
 #: model:res.groups,name:aop_sale.group_generate_tax_invoice_button

@@ -309,7 +309,7 @@
         <field name="category_id" ref="module_aop_sale_others"/>
     </record>
 
-     <!--    结算清单/客户/回款结算清单/取消    -->
+    <!--    结算清单/客户/回款结算清单/取消    -->
     <record id="group_action_invoice_cancel_button" model="res.groups">
         <field name="name">generate action invoice cancel button</field>
         <field name="category_id" ref="module_aop_sale_others"/>
@@ -333,6 +333,29 @@
         <field name="category_id" ref="module_aop_sale_others"/>
     </record>
 
+    <!--    结算清单/客户/付款结算清单/设为草稿    -->
+    <record id="group_supplier_action_invoice_draft_button" model="res.groups">
+        <field name="name">generate supplier action invoice draft button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    结算清单/客户/付款结算清单/取消    -->
+    <record id="group_supplier_action_invoice_cancel_button" model="res.groups">
+        <field name="name">generate supplier action invoice cancel button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    结算清单/客户/付款结算清单/审核    -->
+    <record id="group_supplier_verify_reconciliation_button" model="res.groups">
+        <field name="name">generate supplier verify reconciliation button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    结算清单/客户/付款结算清单/取消审核    -->
+    <record id="group_supplier_cancel_verify_reconciliation_button" model="res.groups">
+        <field name="name">generate supplier cancel verify reconciliation button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
 
 
 
