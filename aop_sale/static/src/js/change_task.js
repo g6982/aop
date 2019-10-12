@@ -5,15 +5,23 @@ odoo.define('aop_sale.change_stock_picking', function (require) {
 
     ListController.include({
         renderButtons: function ($node) {
+
+            var self = this;
+
             let $buttons = this._super.apply(this, arguments);
-            let tree_model = this.modelName;
-            for (let i = 0; i < show_button_model.length; i++) {
-                if (tree_model == show_button_model[i]) {
-                    let button2 = $("<button type='button' class='btn btn-sm btn-primary btn-default'>更改任务</button>")
-                        .click(this.proxy('change_stock_picking_wizard'));
-                    this.$buttons.append(button2);
+            this.getSession().user_has_group('aop_sale.group_change_stock_picking_wizard_button').then(function(has_group) {
+                if(has_group) {
+                    let tree_model = self.modelName;
+                    for (let i = 0; i < show_button_model.length; i++) {
+                        if (tree_model == show_button_model[i]) {
+                            let button2 = $("<button type='button' class='btn btn-sm btn-primary btn-default'>更改任务</button>")
+                                .click(self.proxy('change_stock_picking_wizard'));
+                            self.$buttons.append(button2);
+                        }
+                    }
                 }
-            }
+                return;
+            })
             return $buttons;
         },
         change_stock_picking_wizard: function () {

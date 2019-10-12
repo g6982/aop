@@ -70,7 +70,7 @@
                     <attribute name="class">o_form_sheet_full_width</attribute>
                 </xpath>
 
-                <xpath expr="//field[@name='account_period_id']" position="after">
+                <xpath expr="//field[@name='vendor_bill_id']" position="after">
                     <field name="tmp_estimate" string="cost estimate"/>
                     <field name="cost_passage"/>
                     <field name="advance_receipt"/>

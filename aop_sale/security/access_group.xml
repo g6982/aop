@@ -6,6 +6,11 @@
         <field name="sequence">1000</field>
     </record>
 
+    <record model="ir.module.category" id="module_aop_sale_others">
+        <field name="name">AOP / 其他</field>
+        <field name="sequence">1010</field>
+    </record>
+
     <!--
     <record id="group_aop_sale_customers" model="res.groups">
         <field name="name">Order</field>
@@ -33,12 +38,7 @@
 
     <!--                    信息管理部  Begin                     -->
 
-    <!--  信息管理部/总监  -->
-    <record id="group_information_management_majordomo" model="res.groups">
-        <field name="name">information management majordomo</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-    </record>
+
 
     <!--  信息管理部/副经理  -->
     <record id="group_information_management_assistant_manager" model="res.groups">
@@ -47,22 +47,31 @@
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
 
+    <!--  信息管理部/总监  -->
+    <record id="group_information_management_majordomo" model="res.groups">
+        <field name="name">information management majordomo</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('group_information_management_assistant_manager'))]"/>
+    </record>
+
     <!--                    信息管理部  End                     -->
 
     <!--                     调度中心  Begin                     -->
 
-    <!--  调度中心/OTD管理员兼材料管理员  -->
-    <record id="group_dispatch_otd_and_material_manager" model="res.groups">
-        <field name="name">dispatch otd and material manager</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-    </record>
+
 
     <!--  调度中心/值班员  -->
     <record id="group_dispatch_duty_staffer" model="res.groups">
         <field name="name">dispatch duty staffer</field>
         <field name="category_id" ref="module_aop_sale"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!--  调度中心/OTD管理员兼材料管理员  -->
+    <record id="group_dispatch_otd_and_material_manager" model="res.groups">
+        <field name="name">dispatch otd and material manager</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('group_dispatch_duty_staffer'))]"/>
     </record>
 
     <!--  调度中心/长安福特项目客服员  -->
@@ -163,11 +172,18 @@
     <record id="group_cq_base_kuguan_monitor" model="res.groups">
         <field name="name">cq base kuguan monitor</field>
         <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="implied_ids" eval="[(4, ref('group_cq_base_kuguan'))]"/>
     </record>
 
     <!--                    重庆基地  End                    -->
 
+
+    <!--  外部供应商  -->
+    <record id="group_external_supplier" model="res.groups">
+        <field name="name">external supplier</field>
+        <field name="category_id" ref="module_aop_sale"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
 
     <!--    创建隐藏菜单的用户组  -->
     <record id="group_hide_menus" model="res.groups">
@@ -178,97 +194,80 @@
     <!--    采购单回填VIN    -->
     <record id="group_purchase_fill_vin_product" model="res.groups">
         <field name="name">Purchase fill data</field>
-        <field name="category_id" ref="module_aop_sale"/>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
 
-    <!--  销售/订单/订单行  -->
-    <!--
-    <record id="group_sale_order_line_view" model="res.groups">
-        <field name="name">sale order line view</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    <!--   合同审核     -->
+    <record id="group_check_aop_contract" model="res.groups">
+        <field name="name">Check contract</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
-    -->
 
-    <!--  销售/订单/导入临时订单  -->
-    <!--
-    <record id="group_import_sale_order" model="res.groups">
-        <field name="name">import sale order</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-    </record>
-    -->
+    <!-- ************************** 按钮权限组 **************************  -->
 
-    <!--  销售/订单/交接单管理  -->
-    <!--
-    <record id="group_handover_vin_view" model="res.groups">
-        <field name="name">handover vin view</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    <!--    销售/订单/正式订单/生成结算清单    -->
+    <record id="group_generate_sale_order_invoice_button" model="res.groups">
+        <field name="name">generate sale order invoice button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
-    -->
 
-    <!--  结算清单/客户/可结算数据  -->
-    <!--
-    <record id="group_billable_file_view" model="res.groups">
-        <field name="name">billable file view</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    <!--    销售/订单/临时订单/确认    -->
+    <record id="group_sale_order_action_confirm_button" model="res.groups">
+        <field name="name">sale order action confirm button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
-    -->
 
-    <!--  结算清单/客户/对账数据  -->
-    <!--
-    <record id="group_reconciliation_file_view" model="res.groups">
-        <field name="name">reconciliation file view</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+     <!--    销售/订单/临时订单/取消    -->
+    <record id="group_sale_order_action_cancel_button" model="res.groups">
+        <field name="name">sale order action cancel button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
-    -->
 
-    <!--  物流网络/保险管理  -->
-    <!--
-    <record id="group_insurance_manager" model="res.groups">
-        <field name="name">insurance manager</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    <!--    销售/订单/临时订单/设为临时订单    -->
+    <record id="group_sale_order_action_draft_button" model="res.groups">
+        <field name="name">sale order action draft button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
-    -->
 
-    <!--  物流网络/质损管理  -->
-    <!--
-    <record id="group_mass_loss_manager" model="res.groups">
-        <field name="name">mass loss manager</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    <!--    采购/采购/采购订单/生成结算清单    -->
+    <record id="group_generate_purchase_order_invoice_button" model="res.groups">
+        <field name="name">generate purchase order invoice button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
-    -->
 
-    <!--  物流网络/基地办事处  -->
-    <!--
-    <record id="group_base_warehouse_view" model="res.groups">
-        <field name="name">base warehouse view</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    <!--    采购/采购/询价单/确认订单    -->
+    <record id="group_purchase_order_button_confirm_button" model="res.groups">
+        <field name="name">purchase order button confirm button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
-    -->
 
-    <!--  物流网络/配置/交货/合同条款行  -->
-    <!--
-    <record id="group_delivery_carrier_form" model="res.groups">
-        <field name="name">delivery carrier form</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    <!--    采购/采购/询价单/取消    -->
+    <record id="group_purchase_order_button_cancel_button" model="res.groups">
+        <field name="name">purchase order button cancel button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
-    -->
 
-    <!--  物流网络/配置/交货/合同版本号  -->
-    <!--
-    <record id="group_contract_version_view" model="res.groups">
-        <field name="name">contract version view</field>
-        <field name="category_id" ref="module_aop_sale"/>
-        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+
+
+    <!--    采购/采购/询价单/设为草稿    -->
+    <record id="group_purchase_order_button_draft_button" model="res.groups">
+        <field name="name">purchase order button draft button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
     </record>
-    -->
+
+    <!--    物流网络/作业/任务/更改任务    -->
+    <record id="group_change_stock_picking_wizard_button" model="res.groups">
+        <field name="name">change stock picking wizard button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    结算清单/客户/回款结算清单/创建税务发票    -->
+    <record id="group_generate_tax_invoice_button" model="res.groups">
+        <field name="name">generate tax invoice button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+
+
 
 </odoo>

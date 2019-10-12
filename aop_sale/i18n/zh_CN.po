@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-10 05:09+0000\n"
-"PO-Revision-Date: 2019-10-10 05:09+0000\n"
+"POT-Creation-Date: 2019-10-11 14:32+0000\n"
+"PO-Revision-Date: 2019-10-11 14:32+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -37,6 +37,11 @@ msgstr "<span class=\"o_form_label\" attrs=\"{'invisible': ['|',('state','=','dr
 #. module: aop_sale
 #: model:ir.module.category,name:aop_sale.module_aop_sale
 msgid "AOP"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.module.category,name:aop_sale.module_aop_sale_others
+msgid "AOP / 其他"
 msgstr ""
 
 #. module: aop_sale
@@ -3203,7 +3208,7 @@ msgstr "目的位置"
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__to_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__to_location_id
 msgid "To location"
-msgstr "目的位置"
+msgstr "送车点"
 
 #. module: aop_sale
 #: selection:account.tax.invoice,activity_state:0
@@ -3634,6 +3639,11 @@ msgid "billable file"
 msgstr ""
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_change_stock_picking_wizard_button
+msgid "change stock picking wizard button"
+msgstr "物流网络任务中更改任务"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_change_stock_picking_line_wizard
 msgid "change.stock.picking.line.wizard"
 msgstr ""
@@ -3742,6 +3752,11 @@ msgid "dispatch undersecretary"
 msgstr "调度中心/副部长"
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_external_supplier
+msgid "external supplier"
+msgstr "供应商"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__file_validate
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__file_validate
 msgid "file"
@@ -3771,6 +3786,21 @@ msgstr "对于这个客户，你可以将它们分配为标记此发票已支付
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__found_department
 msgid "found department"
 msgstr "发现部门"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_generate_purchase_order_invoice_button
+msgid "generate purchase order invoice button"
+msgstr "采购订单生成结算清单"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_generate_sale_order_invoice_button
+msgid "generate sale order invoice button"
+msgstr "正式订单生成结算清单"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_generate_tax_invoice_button
+msgid "generate tax invoice button"
+msgstr "回款结算清单创建税务发票"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_handover_vin
@@ -3901,6 +3931,21 @@ msgid "price_unit"
 msgstr ""
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_purchase_order_button_cancel_button
+msgid "purchase order button cancel button"
+msgstr "询价单取消"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_purchase_order_button_confirm_button
+msgid "purchase order button confirm button"
+msgstr "询价单确认"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_purchase_order_button_draft_button
+msgid "purchase order button draft button"
+msgstr "设为询价单"
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_purchase_invoice_batch_no
 msgid "purchase.invoice.batch.no"
 msgstr ""
@@ -3939,6 +3984,21 @@ msgstr "责任方"
 #: model:ir.model,name:aop_sale.model_rule_service_product
 msgid "rule.service.product"
 msgstr ""
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_sale_order_action_cancel_button
+msgid "sale order action cancel button"
+msgstr "销售订单取消"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_sale_order_action_confirm_button
+msgid "sale order action confirm button"
+msgstr "临时订单确认"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_sale_order_action_draft_button
+msgid "sale order action draft button"
+msgstr "设为临时订单"
 
 #. module: aop_sale
 #: model:ir.actions.report,name:aop_sale.standard_statement_report_xlsx

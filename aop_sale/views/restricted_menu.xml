@@ -181,4 +181,14 @@
         <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
     </record>
 
+    <!-- 对所有用户隐藏“结算清单->期末处理->关闭一个期间”菜单 -->
+    <record id="account_period.menu_action_account_period_close_tree" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“结算清单->报告”菜单 -->
+    <record id="account.menu_finance_reports" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
 </odoo>
