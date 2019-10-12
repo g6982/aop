@@ -64,3 +64,8 @@ class StockPicking(models.Model):
                     'lot_id': move_id.vin_id.id,
                     'qty_done': line.product_uom_qty
                 })
+
+    @api.model
+    def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
+        self.env['ir.rule'].clear_cache()
+        return super(StockPicking, self).search_read(domain, fields, offset, limit, order)
