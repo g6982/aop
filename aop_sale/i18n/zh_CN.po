@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 14:32+0000\n"
-"PO-Revision-Date: 2019-10-11 14:32+0000\n"
+"POT-Creation-Date: 2019-10-12 07:22+0000\n"
+"PO-Revision-Date: 2019-10-12 07:22+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -348,6 +348,7 @@ msgstr "已支付的发票将记录银行账号。如果这是客户发票或供
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_base_warehouse_view
+#: model:ir.model.fields,field_description:aop_sale.field_res_users__allow_base_warehouse_ids
 #: model:ir.ui.menu,name:aop_sale.base_warehouse_id
 #: model:ir.ui.menu,name:aop_sale.base_warehouse_manage
 msgid "Base"
@@ -588,6 +589,7 @@ msgstr "联系人"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_account__child_ids
+#: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__child_ids
 #: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__child_ids
 msgid "Contains"
 msgstr "包含"
@@ -2189,9 +2191,15 @@ msgstr "上级费目"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_account__parent_path
+#: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__parent_path
 #: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__parent_path
 msgid "Parent Path"
 msgstr "父级路径"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__parent_id
+msgid "Parent base warehouse"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__parent_id
@@ -3378,6 +3386,11 @@ msgid "User manage"
 msgstr "用户管理"
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_res_users
+msgid "Users"
+msgstr "用户"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__vin_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__vin_id
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__vin_code
@@ -3603,6 +3616,12 @@ msgid "You can not create recursive analytic accounts."
 msgstr ""
 
 #. module: aop_sale
+#: code:addons/aop_sale/models/base_warehouse.py:30
+#, python-format
+msgid "You can not create recursive base warehouse."
+msgstr ""
+
+#. module: aop_sale
 #: code:addons/aop_sale/wizard/account_tax_invoice_wizard.py:166
 #, python-format
 msgid "You can't create multi different invoice no tax invoice with same invoice"
@@ -3801,6 +3820,31 @@ msgstr "正式订单生成结算清单"
 #: model:res.groups,name:aop_sale.group_generate_tax_invoice_button
 msgid "generate tax invoice button"
 msgstr "回款结算清单创建税务发票"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_handover_vin_cancel_finance_verify_button
+msgid "handover vin cancel finance verify button"
+msgstr "交接单财务退回交接单"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_handover_vin_cancel_verify_handover_button
+msgid "handover vin cancel verify handover button"
+msgstr "交接单审核取消"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_handover_vin_finance_verify_handover_button
+msgid "handover vin finance verify handover button"
+msgstr "交接单财务核销"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_handover_vin_register_handover_button
+msgid "handover vin register handover button"
+msgstr "交接单登记"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_handover_vin_verify_handover_button
+msgid "handover vin verify handover button"
+msgstr "交接单审核"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_handover_vin

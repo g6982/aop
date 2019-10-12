@@ -5,7 +5,7 @@
             <field name="name">purchase.invoice.batch.no.form</field>
             <field name="model">purchase.invoice.batch.no</field>
             <field name="arch" type="xml">
-                <form string="Reconciliation batch no">
+                <form string="Reconciliation batch no" create="0">
                     <sheet>
                         <group>
                             <group>

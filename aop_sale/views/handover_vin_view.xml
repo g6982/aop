@@ -12,28 +12,38 @@
                                 string="Register"
                                 type="object"
                                 attrs="{'invisible': [('state', '!=', 'draft')]}"
-                                class="oe_highlight"/>
+                                class="oe_highlight"
+                                groups="aop_sale.group_handover_vin_register_handover_button"
+                        />
                         <button name="verify_handover"
                                 string="Verify"
                                 type="object"
                                 attrs="{'invisible': [('state', 'not in', ['register'])]}"
-                                class="oe_highlight"/>
+                                class="oe_highlight"
+                                groups="aop_sale.group_handover_vin_verify_handover_button"
+                        />
                         <button name="cancel_verify_handover"
                                 string="Cancel"
                                 attrs="{'invisible': [('state', 'in', ['draft', 'verify'])]}"
                                 type="object"
-                                class="oe_highlight"/>
+                                class="oe_highlight"
+                                groups="aop_sale.group_handover_vin_cancel_verify_handover_button"
+                        />
                         <button name="finance_verify_handover"
                                 string="Finance verify"
                                 attrs="{'invisible': [('state', 'not in', ['done'])]}"
                                 type="object"
-                                class="oe_highlight"/>
+                                class="oe_highlight"
+                                groups="aop_sale.group_handover_vin_finance_verify_handover_button"
+                        />
 
                         <button name="cancel_finance_verify"
                                 string="Finance cancel verify"
                                 attrs="{'invisible': [('state', '!=', 'verify')]}"
                                 type="object"
-                                class="oe_highlight"/>
+                                class="oe_highlight"
+                                groups="aop_sale.group_handover_vin_cancel_finance_verify_button"
+                        />
                         <field name="state" widget="statusbar" statusbar_visible="draft,register,done,verify"/>
                     </header>
                     <sheet>

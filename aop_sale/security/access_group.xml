@@ -229,6 +229,36 @@
         <field name="category_id" ref="module_aop_sale_others"/>
     </record>
 
+    <!--    销售/订单/交接单管理/登记    -->
+    <record id="group_handover_vin_register_handover_button" model="res.groups">
+        <field name="name">handover vin register handover button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    销售/订单/交接单管理/审核    -->
+    <record id="group_handover_vin_verify_handover_button" model="res.groups">
+        <field name="name">handover vin verify handover button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    销售/订单/交接单管理/审核取消    -->
+    <record id="group_handover_vin_cancel_verify_handover_button" model="res.groups">
+        <field name="name">handover vin cancel verify handover button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    销售/订单/交接单管理/财务核销    -->
+    <record id="group_handover_vin_finance_verify_handover_button" model="res.groups">
+        <field name="name">handover vin finance verify handover button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    销售/订单/交接单管理/财务核销退回交接单    -->
+    <record id="group_handover_vin_cancel_finance_verify_button" model="res.groups">
+        <field name="name">handover vin cancel finance verify button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
     <!--    采购/采购/采购订单/生成结算清单    -->
     <record id="group_generate_purchase_order_invoice_button" model="res.groups">
         <field name="name">generate purchase order invoice button</field>
