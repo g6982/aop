@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-12 07:22+0000\n"
-"PO-Revision-Date: 2019-10-12 07:22+0000\n"
+"POT-Creation-Date: 2019-10-12 08:51+0000\n"
+"PO-Revision-Date: 2019-10-12 08:51+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3807,6 +3807,26 @@ msgid "found department"
 msgstr "发现部门"
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_action_invoice_cancel_button
+msgid "generate action invoice cancel button"
+msgstr "回款结算清单取消"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_action_invoice_draft_button
+msgid "generate action invoice draft button"
+msgstr "回款结算清单重置为草稿"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_action_invoice_open_button
+msgid "generate action invoice open button"
+msgstr "回款结算清单验证"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_cancel_verify_reconciliation_button
+msgid "generate cancel verify reconciliation button"
+msgstr "回款结算清单取消审核"
+
+#. module: aop_sale
 #: model:res.groups,name:aop_sale.group_generate_purchase_order_invoice_button
 msgid "generate purchase order invoice button"
 msgstr "采购订单生成结算清单"
@@ -3817,9 +3837,19 @@ msgid "generate sale order invoice button"
 msgstr "正式订单生成结算清单"
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_supplier_action_invoice_open_button
+msgid "generate supplier action invoice open button"
+msgstr "付款结算清单验证"
+
+#. module: aop_sale
 #: model:res.groups,name:aop_sale.group_generate_tax_invoice_button
 msgid "generate tax invoice button"
 msgstr "回款结算清单创建税务发票"
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_verify_reconciliation_button
+msgid "generate verify reconciliation button"
+msgstr "回款结算清单审核"
 
 #. module: aop_sale
 #: model:res.groups,name:aop_sale.group_handover_vin_cancel_finance_verify_button

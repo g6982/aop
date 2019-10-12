@@ -9,6 +9,10 @@
             <field name="inherit_id" ref="account.invoice_supplier_form"/>
             <field name="arch" type="xml">
 
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">0</attribute>
+                </xpath>
+
                 <!--隐藏登记付款和取消-->
                 <button name="%(account.action_account_invoice_payment)d" position="attributes">
                     <attribute name="invisible">1</attribute>
@@ -81,6 +85,13 @@
                     <field name="verify_time" attrs="{'invisible': [('verify_time', '=', False)]}"/>
                 </xpath>
 
+                <!-- 验证按钮 -->
+                <xpath expr="//button[@name='action_invoice_open']" position="attributes">
+                    <attribute name="groups">aop_sale.group_supplier_action_invoice_open_button</attribute>
+                </xpath>
+
+
+
             </field>
         </record>
 
@@ -90,6 +101,10 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
+
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">0</attribute>
+                </xpath>
 
                 <!--隐藏登记付款和取消-->
                 <button name="%(account.action_account_invoice_payment)d" position="attributes">
@@ -108,11 +123,18 @@
                             string="Verify"
                             class="oe_highlight"
                             type="object"
-                            attrs="{'invisible': [('state', 'not in', ['open', 'paid'])]}"/>
+                            attrs="{'invisible': [('state', 'not in', ['open', 'paid'])]}"
+                            groups="aop_sale.group_verify_reconciliation_button"
+                    />
                     <button name="cancel_verify_reconciliation" string="Cancel verify" class="oe_highlight"
-                            type="object" attrs="{'invisible': [('state', '!=', 'reconciliation')]}"/>
+                            type="object" attrs="{'invisible': [('state', '!=', 'reconciliation')]}"
+                            groups="aop_sale.group_cancel_verify_reconciliation_button"
+
+                    />
                     <button name="action_invoice_cancel" attrs="{'invisible': [('state', '=', 'cancel')]}"
-                            string="Cancel" type="object" class="oe_highlight"/>
+                            string="Cancel" type="object" class="oe_highlight"
+                            groups="aop_sale.group_action_invoice_cancel_button"
+                    />
                 </xpath>
 
 
@@ -168,6 +190,20 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
 
+                <!-- 验证按钮 -->
+                <xpath expr="//button[@name='action_invoice_open']" position="attributes">
+                    <attribute name="groups">aop_sale.group_action_invoice_open_button</attribute>
+                </xpath>
+
+                <!-- 重置为草稿按钮 -->
+                <xpath expr="//button[@name='action_invoice_draft']" position="attributes">
+                    <attribute name="groups">aop_sale.group_action_invoice_draft_button</attribute>
+                </xpath>
+
+
+
+
+
             </field>
         </record>
 
@@ -178,6 +214,12 @@
             <field name="inherit_id" ref="account.invoice_tree_with_onboarding"/>
             <field name="mode">extension</field>
             <field name="arch" type="xml">
+
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="import">0</attribute>
+                </xpath>
+
                 <field name="partner_id" position="before">
                     <field name="reconciliation_batch_no"/>
                     <field name="account_period_id"/>
@@ -196,6 +238,12 @@
             <field name="inherit_id" ref="account.invoice_supplier_tree"/>
             <field name="mode">extension</field>
             <field name="arch" type="xml">
+
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="import">0</attribute>
+                </xpath>
+
                 <field name="vendor_display_name" position="before">
                     <field name="account_period_id"/>
                     <field name="reconciliation_batch_no"/>

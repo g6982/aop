@@ -297,6 +297,42 @@
         <field name="category_id" ref="module_aop_sale_others"/>
     </record>
 
+    <!--    结算清单/客户/回款结算清单/验证    -->
+    <record id="group_action_invoice_open_button" model="res.groups">
+        <field name="name">generate action invoice open button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    结算清单/客户/回款结算清单/重置为草稿    -->
+    <record id="group_action_invoice_draft_button" model="res.groups">
+        <field name="name">generate action invoice draft button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+     <!--    结算清单/客户/回款结算清单/取消    -->
+    <record id="group_action_invoice_cancel_button" model="res.groups">
+        <field name="name">generate action invoice cancel button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    结算清单/客户/回款结算清单/审核    -->
+    <record id="group_verify_reconciliation_button" model="res.groups">
+        <field name="name">generate verify reconciliation button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    结算清单/客户/回款结算清单/取消审核    -->
+    <record id="group_cancel_verify_reconciliation_button" model="res.groups">
+        <field name="name">generate cancel verify reconciliation button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!--    结算清单/供应商/付款结算清单/验证    -->
+    <record id="group_supplier_action_invoice_open_button" model="res.groups">
+        <field name="name">generate supplier action invoice open button</field>
+        <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
 
 
 
