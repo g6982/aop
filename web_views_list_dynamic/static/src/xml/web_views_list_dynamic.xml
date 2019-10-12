@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template>
+    <t t-extend="ListView.buttons">
+        <t t-jquery="button.o_list_button_save" t-operation="after">
+            <div class="mk_list_button_customize btn-group d-none d-lg-inline-flex d-xl-inline-flex" role="group">
+                <div class="btn-group mk_list_customize_fields" role="group">
+                    <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button"
+                            aria-expanded="false">
+                        <span class="fa fa-cog"></span>
+                        字段
+                    </button>
+                    <div class="dropdown-menu o_dropdown_menu ui-sortable" role="menu" x-placement="bottom-start"
+                         style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 30px, 0px);">
+                        <div class="dropdown-item-text mk_list_customize_fields_search" role="menuitem">
+                            <input class="o_input" placeholder="Search..." type="text"/>
+                            <div class="dropdown-item-text mk_list_customize_fields_reset" role="menuitem">
+                                <button class="btn btn-primary" role="menuitem" type="button">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </t>
+    <t t-name="FieldsDropdown">
+        <div class="o_menu_item ui-sortable-handle">
+            <a href="#" class="dropdown-item">
+            </a>
+        </div>
+    </t>
+</template>
+
+<!--<div class="mk_list_button_customize btn-group d-none d-lg-inline-flex d-xl-inline-flex" role="group">-->
+<!--<div class="btn-group mk_list_customize_fields" role="group">-->
+<!--    <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button" aria-expanded="false">-->
+<!--        <span class="fa fa-cog"></span>-->
+<!--        Fields-->
+<!--    </button>-->
+<!--    <div class="dropdown-menu o_dropdown_menu ui-sortable" role="menu" x-placement="bottom-start"-->
+<!--         style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 30px, 0px);">-->
+<!--        <div class="dropdown-item-text mk_list_customize_fields_search" role="menuitem">-->
+<!--            <input class="o_input" placeholder="Search..." type="text"/>-->
+<!--        </div>-->
+
+<!--        <div data-id="remaining_validity_days" class="o_menu_item ui-sortable-handle">-->
+<!--            <a href="#" class="dropdown-item">-->
+<!--                Remaining Validity Days-->
+<!--            </a>-->
+<!--        </div>-->
+
+<!--        <div data-id="amount_untaxed" class="o_menu_item ui-sortable-handle">-->
+<!--            <a href="#" class="dropdown-item">-->
+<!--                Untaxed Amount-->
+<!--            </a>-->
+<!--        </div>-->
+
+
+<!--        <div class="dropdown-item-text mk_list_customize_fields_reset" role="menuitem">-->
+<!--            <button class="btn btn-primary" role="menuitem" type="button">Reset</button>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</div>-->

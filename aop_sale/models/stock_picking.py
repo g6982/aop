@@ -17,6 +17,8 @@ class StockPicking(models.Model):
     vin_id = fields.Many2one('stock.production.lot', string='VIN')
     picking_incoming_number = fields.Integer('Picking incoming number')
 
+    warehouse_id = fields.Many2one('stock.warehouse', related='picking_type_id.warehouse_id', readonly=True, store=True)
+
     def match_sale_order(self):
         return self._match_sale_order()
 

@@ -43,6 +43,7 @@
         'views/stock_location_route.xml',
         'views/res_company.xml',
         'views/res_partner.xml',
+        'views/res_users.xml',
         'views/menu.xml',
         'views/restricted_menu.xml',
         'views/handover_vin_view.xml',
