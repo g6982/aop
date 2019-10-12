@@ -21,7 +21,7 @@
                 <xpath expr="//button[@name='action_toggle_is_locked']" position="after">
                     <field name="state" invisible="1"/>
                     <button name="match_sale_order" string="Match order" type="object" clas="oe_highlight"
-                            attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                            attrs="{'invisible': 1}"/>
                 </xpath>
 
                 <xpath expr="//field[@name='origin']" position="after">
@@ -48,6 +48,26 @@
                     <attribute name="attrs">
                         {'invisible': 0}
                     </attribute>
+                </xpath>
+
+                <!-- 报废按钮隐藏 -->
+                <xpath expr="//button[@name='button_scrap']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 解锁按钮隐藏 -->
+                <xpath expr="//button[@name='action_toggle_is_locked'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <!-- 解锁按钮隐藏 -->
+                <xpath expr="//button[@name='action_toggle_is_locked'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                 <!-- 退货按钮隐藏 -->
+                <xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
 
             </field>
