@@ -48,7 +48,12 @@
                     <page string="Dispatch">
                         <field name="picking_ids"
                                widget="many2many"
-                               domain="[('state', 'not in', ('done', 'cancel')), ('sale_order_line_id.picking_confirm_date', '=', False)]"
+                               domain="['&amp;',
+                               ('state', 'not in', ('done', 'cancel')),
+                               '|', 
+                               ('sale_order_line_id.picking_confirm_date', '=', False),
+                               ('sale_order_line_id', '=', False)
+                               ]"
                                options="{'not_delete': True}">
                             <tree>
                                 <field name="name"/>
