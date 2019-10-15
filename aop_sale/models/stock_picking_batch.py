@@ -115,7 +115,7 @@ class StockPickingBatch(models.Model):
                 # 'service_product_id': service_product_id.id if service_product_id else False,
                 'product_qty': line_id.product_uom_qty,
                 'sale_line_id': line_id.sale_order_line_id.id,
-                'name': line_id.name,
+                'name': picking.picking_type_id.display_name,
                 'date_planned': fields.Datetime.now(),
                 'price_unit': carrier_id.product_standard_price if carrier_id else 0,
                 'product_uom': service_product_id.uom_id.id if service_product_id else line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False,

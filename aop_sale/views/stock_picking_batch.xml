@@ -50,7 +50,7 @@
                                widget="many2many"
                                domain="['&amp;',
                                ('state', 'not in', ('done', 'cancel')),
-                               '|', 
+                               '|',
                                ('sale_order_line_id.picking_confirm_date', '=', False),
                                ('sale_order_line_id', '=', False)
                                ]"
