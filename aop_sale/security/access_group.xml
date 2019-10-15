@@ -6,6 +6,11 @@
         <field name="sequence">1000</field>
     </record>
 
+    <record model="ir.module.category" id="module_aop_sale_ir_rule">
+        <field name="name">AOP / 记录规则</field>
+        <field name="sequence">1005</field>
+    </record>
+
     <record model="ir.module.category" id="module_aop_sale_others">
         <field name="name">AOP / 其他</field>
         <field name="sequence">1010</field>
@@ -201,6 +206,26 @@
     <record id="group_check_aop_contract" model="res.groups">
         <field name="name">Check contract</field>
         <field name="category_id" ref="module_aop_sale_others"/>
+    </record>
+
+    <!-- ************************** 记录规则组 **************************  -->
+
+    <!--    过滤: 物流网络/作业/批量调度/只看自己的任务    -->
+    <record id="group_filter_ir_rule_stock_pick_batch_just_own_data" model="res.groups">
+        <field name="name">过滤: 物流网络/作业/批量调度/只看自己的任务</field>
+        <field name="category_id" ref="module_aop_sale_ir_rule"/>
+    </record>
+
+    <!--    过滤: 销售/订单/临时(正式)订单/只看自己的订单   -->
+    <record id="group_filter_ir_rule_sale_order_just_own_data" model="res.groups">
+        <field name="name">过滤: 销售/订单/临时(正式)订单/只看自己的订单</field>
+        <field name="category_id" ref="module_aop_sale_ir_rule"/>
+    </record>
+
+    <!--    过滤: 销售/订单/订单行/只看自己的订单   -->
+    <record id="group_filter_ir_rule_sale_order_line_just_own_data" model="res.groups">
+        <field name="name">过滤: 销售/订单/订单行/只看自己的订单</field>
+        <field name="category_id" ref="module_aop_sale_ir_rule"/>
     </record>
 
     <!-- ************************** 按钮权限组 **************************  -->
