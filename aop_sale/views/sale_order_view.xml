@@ -533,6 +533,28 @@
             </field>
         </record>
 
+        <record id="view_sales_order_line_filter_inherit_aop_sale" model="ir.ui.view">
+            <field name="name">view sales order line filter inherit aop sale</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter string="当天" name="today"
+                            domain="[('create_date','&gt;=', time.strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
+                    <filter string="本周" name="last_week"
+                            domain="[('create_date','&gt;', (context_today() - datetime.timedelta(weeks=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                    <filter string="本月" name="month"
+                            domain="[('create_date','&gt;=', time.strftime('%Y-%m-01 00:00:00')),('create_date','&lt;',  (context_today() + relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
+                    <filter string="上月" name="month2"
+                            domain="[('create_date','&lt;', time.strftime('%Y-%m-01 00:00:00')),('create_date','&gt;=',  (context_today() - relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
+                    <filter string="本年" name="year"
+                            domain="[('create_date','&lt;=', time.strftime('%Y-12-31 23:59:59')),('create_date','&gt;=', time.strftime('%Y-01-01 00:00:00'))]"/>
+
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
+
         <record id="action_sale_order_line_view" model="ir.actions.act_window">
             <field name="name">Order line</field>
             <field name="res_model">sale.order.line</field>
