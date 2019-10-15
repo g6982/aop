@@ -118,14 +118,11 @@ class StockPickingBatch(models.Model):
                 'name': line_id.name,
                 'date_planned': fields.Datetime.now(),
                 'price_unit': carrier_id.product_standard_price if carrier_id else 0,
-                'product_uom': line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False,
+                'product_uom': service_product_id.uom_id.id if service_product_id else line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False,
                 'batch_stock_picking_id': picking.id,
                 'vin_code': line_id.vin_id.name if line_id.vin_id else False
             }
             res.append((0, 0, data))
-            # if not data['product_id'] in product_ids:
-            #     product_ids.append(data['product_id'])
-            #     res.append((0, 0, data))
         if not picking.move_lines and service_product_id:
             data = {
                 'product_id': service_product_id.id,
