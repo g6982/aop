@@ -11,7 +11,7 @@ class StockPicking(models.Model):
 
     origin_purchase_id = fields.Many2one('purchase.order', 'Origin purchase order', copy=False)
     delivery_to_partner_id = fields.Many2one('res.partner', 'Delivery to partner', readonly=True)
-    sale_order_line_id = fields.Many2one('sale.order.line', 'Order line')
+    sale_order_line_id = fields.Many2one('sale.order.line', 'Order line', copy=False)
     handover_number = fields.Char('Handover number')
 
     vin_id = fields.Many2one('stock.production.lot', string='VIN')
