@@ -326,6 +326,9 @@ class ImportSaleOrder(models.TransientModel):
                 ('vin_code', '=', vin_code),
                 ('to_location_id', '=', to_location_id.id)
             ])
+
+            # 如果订单已经完成，则可以继续
+            res = res.filtered(lambda x: not x.picking_confirm_date)
             if res:
                 raise UserError(_('Already exist VIN: {}').format(vin_code))
 

@@ -46,7 +46,9 @@
             <xpath expr="//field[@name='picking_ids']" position="replace">
                 <notebook>
                     <page string="Dispatch">
-                        <field name="picking_ids" widget="many2many" domain="[('state', 'not in', ('done', 'cancel'))]"
+                        <field name="picking_ids"
+                               widget="many2many"
+                               domain="[('state', 'not in', ('done', 'cancel')), ('sale_order_line_id.picking_confirm_date', '=', False)]"
                                options="{'not_delete': True}">
                             <tree>
                                 <field name="name"/>
