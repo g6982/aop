@@ -51,6 +51,9 @@ class HandoverVin(models.Model):
             if not tmp:
                 continue
 
+            # 筛选没有交接单的
+            tmp = tmp.filtered(lambda x: not x.handover_number)
+
             if len(tmp) > 1:
                 raise UserError('More than one records!')
 
