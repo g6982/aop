@@ -329,6 +329,10 @@ class ImportSaleOrder(models.TransientModel):
 
             # 如果订单已经完成，则可以继续
             res = res.filtered(lambda x: not x.picking_confirm_date)
+
+            # TODO: 过滤交接单号也可以
+            # res = res.filtered(lambda x: not x.handover_number)
+
             if res:
                 raise UserError(_('Already exist VIN: {}').format(vin_code))
 
