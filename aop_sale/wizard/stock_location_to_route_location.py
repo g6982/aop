@@ -63,23 +63,24 @@ class StockLocationToRouteLocation(models.TransientModel):
             from_location_id = sale_order_id._transfer_district_to_location(line_id.from_location_id)
 
             # 取最后一条
-            stock_quant_ids = stock_quant_ids.sorted(lambda x: x.id)[-1] if len(stock_quant_ids) > 1 else stock_quant_ids
-            stock_location_id = stock_quant_ids.filtered(lambda x: x.lot_id.id == line_id.vin.id)
+            stock_quant_ids = stock_quant_ids.filtered(lambda x: x.lot_id.id == line_id.vin.id)
 
             route_location_ids = line_id.route_id.rule_ids.mapped('location_src_id').ids
 
-            if not stock_location_id:
+            if not stock_quant_ids:
                 continue
 
-            if from_location_id.id != stock_location_id.location_id.id and stock_location_id.location_id.id not in route_location_ids:
-                data.append((0, 0, {
-                    'sale_order_line_id': line_id.id,
-                    'vin_id': line_id.vin.id,
-                    'stock_location_id': stock_location_id.location_id.id,
-                    'route_id': line_id.route_id.id,
-                    'allowed_to_location_ids': [
-                        (6, 0, line_id.route_id.mapped('rule_ids').mapped('location_src_id').ids)]
-                }))
+            # FIXME: 遍历？ 还是筛选ID 呢
+            for stock_location_id in stock_quant_ids:
+                if from_location_id.id != stock_location_id.location_id.id and stock_location_id.location_id.id not in route_location_ids:
+                    data.append((0, 0, {
+                        'sale_order_line_id': line_id.id,
+                        'vin_id': line_id.vin.id,
+                        'stock_location_id': stock_location_id.location_id.id,
+                        'route_id': line_id.route_id.id,
+                        'allowed_to_location_ids': [
+                            (6, 0, line_id.route_id.mapped('rule_ids').mapped('location_src_id').ids)]
+                    }))
         return data
 
 
