@@ -700,7 +700,7 @@ class SaleOrder(models.Model):
                 stock_location_id = stock_quant_ids.filtered(lambda x: x.lot_id.id == line.vin.id)
 
                 if len(stock_location_id) > 1:
-                    return True
+                    return False
 
                 route_location_ids = line.route_id.rule_ids.mapped('location_src_id').ids
 
