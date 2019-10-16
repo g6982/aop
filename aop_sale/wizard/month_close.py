@@ -55,21 +55,18 @@ class MonthClose(models.TransientModel):
 
     # 筛选当前期间内的数据
     def find_sale_order_not_invoice(self):
-        res = self.env['sale.order.line'].search([
-            ('invoice_lines', '=', False),
-            ('write_date', '>=', self.period_id.date_start),
-            ('write_date', '<=', self.period_id.date_stop),
-            ('order_id.state', '!=', 'draft')
-        ])
+        # res = self.env['sale.order.line'].search([
+        #     ('invoice_lines', '=', False),
+        #     ('write_date', '>=', self.period_id.date_start),
+        #     ('write_date', '<=', self.period_id.date_stop),
+        #     ('order_id.state', '!=', 'draft')
+        # ])
         res = self.env['sale.order.line'].search([
             ('invoice_lines', '=', False),
             ('write_date', '>=', self.period_id.date_start),
             ('write_date', '<=', self.period_id.date_stop),
             ('picking_confirm_date', '!=', False)
         ])
-        _logger.info({
-            'res': res
-        })
         if not res:
             return False
         line_ids = []
