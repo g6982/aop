@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 class BillableFile(models.Model):
     _name = 'billable.file'
     _description = 'billable file'
-    _sql_constraints = [('unique_name_vin_code', 'unique(name, vin_code)', 'Handover and vin must be unique!')]
+    _sql_constraints = [('unique_name_vin_code', 'unique(name, vin_code, order_line_id)', 'Handover and vin must be unique!')]
 
     name = fields.Char('Name')
     vin_code = fields.Char('VIN code')

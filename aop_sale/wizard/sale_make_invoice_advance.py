@@ -27,6 +27,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     selected_order_lines = fields.One2many('make.invoice.sale.order.line', 'payment_inv_id', string='Order lines')
 
+    monthly_confirm_invoice = fields.Boolean('Monthly', default_get=False)
+
     @api.onchange('sale_order_ids', 'invoice_state')
     def parse_sale_order_line_ids(self):
         if not self.sale_order_ids:
@@ -53,12 +55,16 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
+        _logger.info({
+            'context': self._context
+        })
         if self._context.get('active_model', False) == 'sale.order.line':
             return []
         else:
             res = super(SaleAdvancePaymentInv, self).default_get(fields_list)
             ids = self._context.get('active_ids', [])
             res['sale_order_ids'] = [(6, 0, ids)]
+            res['monthly_confirm_invoice'] = self._context.get('monthly_confirm_invoice')
             return res
 
     @api.multi
@@ -285,8 +291,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
         for sale_id in legal_order_line_ids:
             invoice_data = self._invoice_data(sale_id.order_id, line_id=sale_id)
 
-            tmp_estimate = sale_id.delivery_carrier_id.fixed_price if self._context.get(
-                'monthly_confirm_invoice') else 0
+            # tmp_estimate = sale_id.delivery_carrier_id.fixed_price if self._context.get(
+            #     'monthly_confirm_invoice') else 0
+            tmp_estimate = sale_id.delivery_carrier_id.fixed_price if self.monthly_confirm_invoice else 0
             contract_price = self._get_contract_price(sale_id)
             for product_id in product_ids:
                 tmp = invoice_data
@@ -325,7 +332,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
             account_id = self._get_account_id(line_id.service_product_id, order=sale_order_id)
             contract_price = self._get_contract_price(line_id)
-            tmp_estimate = line_id.delivery_carrier_id.fixed_price if self._context.get('monthly_confirm_invoice') else 0
+            # tmp_estimate = line_id.delivery_carrier_id.fixed_price if self._context.get('monthly_confirm_invoice') else 0
+            tmp_estimate = line_id.delivery_carrier_id.fixed_price if self.monthly_confirm_invoice else 0
             line_data.append((0, 0, {
                 'name': str(time.time()),
                 'origin': sale_order_id.name,
