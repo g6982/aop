@@ -62,6 +62,7 @@ class StockLocationToRouteLocation(models.TransientModel):
                 continue
             from_location_id = sale_order_id._transfer_district_to_location(line_id.from_location_id)
 
+            stock_quant_ids = stock_quant_ids.sorted(lambda x: x.id)[-1]
             stock_location_id = stock_quant_ids.filtered(lambda x: x.lot_id.id == line_id.vin.id)
 
             route_location_ids = line_id.route_id.rule_ids.mapped('location_src_id').ids
