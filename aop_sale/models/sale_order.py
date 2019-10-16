@@ -699,8 +699,7 @@ class SaleOrder(models.Model):
                 from_location_id = self._transfer_district_to_location(line.from_location_id)
                 stock_location_id = stock_quant_ids.filtered(lambda x: x.lot_id.id == line.vin.id)
 
-                if len(stock_location_id) > 1:
-                    return False
+                stock_location_id = stock_location_id.sorted(lambda x: x.id)[-1] if stock_location_id else stock_location_id
 
                 route_location_ids = line.route_id.rule_ids.mapped('location_src_id').ids
 

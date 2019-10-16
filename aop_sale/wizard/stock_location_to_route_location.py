@@ -65,6 +65,7 @@ class StockLocationToRouteLocation(models.TransientModel):
             # 取最后一条
             stock_location_id = stock_quant_ids.filtered(lambda x: x.lot_id.id == line_id.vin.id)
 
+            stock_location_id = stock_location_id.sorted(lambda x: x.id)[-1] if len(stock_location_id) > 1 else stock_location_id
             route_location_ids = line_id.route_id.rule_ids.mapped('location_src_id').ids
 
             if not stock_location_id:
