@@ -28,6 +28,12 @@ def convert_to_column(self, value, record, values=None, validate=True):
     # only to system users.
     if value[:1] == b'P':  # Fast detection of first 6 bits of '<' (0x3C)
         decoded_value = base64.b64decode(value)
+        # _logger.info({
+        #     'decoded_value': decoded_value,
+        #     'self': self,
+        #     'guess': guess_mimetype(decoded_value).startswith('image/svg'),
+        #     'guess_mimetype(decoded_value)': guess_mimetype(decoded_value)
+        # })
         # Full mimetype detection
         # if (guess_mimetype(decoded_value).startswith('image/svg') and
         #         not record.env.user._is_system()):
