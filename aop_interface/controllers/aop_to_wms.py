@@ -45,3 +45,22 @@ class AopToWms(http.Controller):
                 'warehouse_id': picking_id.picking_type_id.warehouse_id.name
             })
         return data
+
+    @http.route('/api/barcode/<string:barcode>', type='http', auth="none", csrf=False)
+    def test_api(self, barcode=None, **post):
+        msg = {
+            'code': 200,
+        }
+        _logger.info({
+            'post': post,
+            'barcode': barcode
+        })
+        return json.dumps(msg)
+
+    @http.route('/api/warehouse/list', type='http', auth="none", csrf=False)
+    def get_warehouse_list(self, **post):
+        res = request.env['stock.warehouse'].sudo().search([])
+        data = {}
+        for index_w, data_w in enumerate(res):
+            data[index_w] = data_w.name
+        return json.dumps(data)
