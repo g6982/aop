@@ -86,6 +86,8 @@ class SaleOrderLine(models.Model):
                                readonly=True
                                )
 
+    write_date = fields.Datetime('Last Updated on', index=True, readonly=False)
+
     @api.multi
     @api.depends('stock_picking_ids', 'stock_picking_ids.state', 'stock_picking_ids.date_done')
     def _compute_current_picking_id(self):
