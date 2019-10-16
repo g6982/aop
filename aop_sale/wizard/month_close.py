@@ -27,8 +27,7 @@ class MonthClose(models.TransientModel):
             # 月结操作的时候，需要生成收入确认的值
             context = {
                 'active_ids': [x.mapped('order_id').id for x in sale_order_line_ids],
-                'period_id': self.period_id.id,
-                'monthly_confirm_invoice': True
+                'period_id': self.period_id.id
             }
             return {
                 'name': _('Make invoice'),
