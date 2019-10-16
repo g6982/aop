@@ -4,7 +4,7 @@ import logging
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_compare
 from odoo.exceptions import UserError
 import time
-
+from datetime import datetime, timedelta
 
 _logger = logging.getLogger(__name__)
 
@@ -220,18 +220,24 @@ class SaleOrderLine(models.Model):
                 else:
                     line.stock_picking_state = False
 
-
-
     # 新增 服务产品
     @api.multi
     def _prepare_procurement_values(self, group_id=False):
         res = super(SaleOrderLine, self)._prepare_procurement_values(group_id)
+
+        # date_planned = 订单的确认日期 + 订单行的交货提前时间 - 路由标准实效 + 公司的security_lead + 规则的 delay
+        date_planned = self.order_id.confirmation_date \
+            + timedelta(days=self.customer_lead or 0.0) \
+            - timedelta(self.route_id.sum_delay) \
+            + timedelta(days=self.order_id.company_id.security_lead)
+
         res.update({
             'service_product_id': self.service_product_id.id,
             'vin_id': self.vin.id,
             'delivery_carrier_id': self.delivery_carrier_id.id,
             'delivery_to_partner_id': self.to_location_id.id,
-            'sale_order_line_id': self.id
+            'sale_order_line_id': self.id,
+            'date_planned': date_planned
         })
         return res
 

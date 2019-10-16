@@ -22,6 +22,8 @@ class StockLocationRoute(models.Model):
              "It will take priority over the Warehouse route. ")
     sale_selectable = fields.Boolean("Selectable on Sales Order Line", default=True)
 
+    sum_delay = fields.Integer('Delay', compute='_compute_sum_delay', store=True)
+
     @api.model
     def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
         partner_id = self._context.get('sale_filter_route_id_by_partner')
@@ -47,3 +49,9 @@ class StockLocationRoute(models.Model):
 
         return super(StockLocationRoute, self)._name_search(name, args=args, operator=operator, limit=limit,
                                                             name_get_uid=name_get_uid)
+
+    @api.multi
+    @api.depends('rule_ids.delay')
+    def _compute_sum_delay(self):
+        for line in self:
+            line.sum_delay = sum(x.delay for x in line.rule_ids)

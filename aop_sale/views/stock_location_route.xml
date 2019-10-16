@@ -29,6 +29,10 @@
                      <field name="picking_type_id" />
                 </xpath>
 
+                <xpath expr="//field[@name='rule_ids']/tree/field[@name='location_id']" position="after">
+                     <field name="delay" />
+                </xpath>
+
                 <xpath expr="//field[@name='rule_ids']/tree/field[@name='action']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>

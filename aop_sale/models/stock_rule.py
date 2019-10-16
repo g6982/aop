@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import api, fields, models, _
 import logging
+from dateutil.relativedelta import relativedelta
 
 _logger = logging.getLogger(__name__)
 
@@ -53,3 +54,23 @@ class StockRule(models.Model):
         res = super(StockRule, self)._run_pull(product_id, product_qty, product_uom, location_id, name, origin, values)
         return res
 
+    def _get_stock_move_values(self, product_id, product_qty, product_uom, location_id, name, origin, values, group_id):
+        res = super(StockRule, self)._get_stock_move_values(
+            product_id,
+            product_qty,
+            product_uom,
+            location_id,
+            name,
+            origin,
+            values,
+            group_id
+        )
+        # date_planned = 订单的确认日期 + 订单行的交货提前时间 - 路由标准实效 + 公司的security_lead + 规则的 delay
+        date_expected = fields.Datetime.to_string(
+            fields.Datetime.from_string(values['date_planned']) + relativedelta(days=self.delay or 0)
+        )
+        res.update({
+            'date': date_expected,
+            'date_expected': date_expected
+        })
+        return res
