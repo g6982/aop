@@ -10,6 +10,7 @@ _logger = logging.getLogger(__name__)
 class BillableFile(models.Model):
     _name = 'billable.file'
     _description = 'billable file'
+    _sql_constraints = [('unique_name_vin_code', 'unique(name, vin_code)', 'Handover and vin must be unique!')]
 
     name = fields.Char('Name')
     vin_code = fields.Char('VIN code')
@@ -44,6 +45,7 @@ class BillableFile(models.Model):
     # 查找销售订单行，将交接单相同且没有生成回款结算清单的数据，生成回款结算清单
     @api.multi
     def order_line_to_invoice(self):
+        # self._null_invoice_order_line_data()
         child_order_line_ids = []
         main_order_line_ids = []
         order_line_amount = {}
@@ -55,7 +57,13 @@ class BillableFile(models.Model):
                 ('vin_code', '=', line.vin_code),
                 ('invoice_lines', '=', False)
             ])
+
             if not order_line or len(order_line) != 1:
+                done_order_line = self.env['sale.order.line'].search([
+                    ('handover_number', '=', line.name),
+                    ('vin_code', '=', line.vin_code),
+                ])
+                line.order_line_id = done_order_line.id if done_order_line else False
                 continue
             # 如果导入的不存在按照产品类型，就按照主产品
             if line.invoice_product_type == 'child_product':
@@ -81,6 +89,13 @@ class BillableFile(models.Model):
                 'invoice_product_type': 'main_product',
                 'reconciliation_batch_no': reconciliation_batch_no
             }).create_account_invoice(order_line_amount=order_line_amount)
+
+    def _null_invoice_order_line_data(self):
+        sql_delete = '''
+            delete from sale_order_line_invoice_rel where invoice_line_id not in (select id from account_invoice_line)
+        '''
+        self.env.cr.execute(sql_delete)
+        self.env.cr.commit()
 
 
 class BaseImport(models.TransientModel):

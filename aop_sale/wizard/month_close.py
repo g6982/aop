@@ -61,6 +61,12 @@ class MonthClose(models.TransientModel):
             ('write_date', '<=', self.period_id.date_stop),
             ('order_id.state', '!=', 'draft')
         ])
+        res = self.env['sale.order.line'].search([
+            ('invoice_lines', '=', False),
+            ('write_date', '>=', self.period_id.date_start),
+            ('write_date', '<=', self.period_id.date_stop),
+            ('picking_confirm_date', '!=', False)
+        ])
         _logger.info({
             'res': res
         })
