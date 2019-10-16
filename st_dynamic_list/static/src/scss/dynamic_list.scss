@@ -1,0 +1,13 @@
+
+#show-menu {
+    > li > a {
+        display: flex;
+    }
+}
+#show-menu {
+    li > a {
+        .o_checkbox {
+            margin-right: 5px;
+        }
+    }
+}
