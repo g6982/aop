@@ -182,7 +182,8 @@ class MonthClose(models.TransientModel):
             'tmp_estimate': contract_price,
             'contract_price': contract_price,
             'location_id': line.batch_stock_picking_id.location_id.id,
-            'location_dest_id': line.batch_stock_picking_id.location_dest_id.id
+            'location_dest_id': line.batch_stock_picking_id.location_dest_id.id,
+            'sale_order_line_id': line.sale_line_id.id if line.sale_line_id else False,
         }
         account = invoice_line.get_invoice_line_account('in_invoice', line.product_id, line.order_id.fiscal_position_id, self.env.user.company_id)
         if account:
