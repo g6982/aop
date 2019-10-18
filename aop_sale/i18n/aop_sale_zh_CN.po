@@ -237,7 +237,7 @@ msgstr "状态"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_invoice_batch_no_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_invoice_batch_no_tree
 msgid "Reconciliation batch no"
-msgstr "对账批次号"
+msgstr "结算单号"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
@@ -254,4 +254,9 @@ msgstr "设为临时订单"
 #: model_terms:ir.ui.view,arch_db:sale.view_sales_order_line_filter
 msgid "Salesperson"
 msgstr "负责人"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_location_route__sum_delay
+msgid "Delay"
+msgstr "标准时效"
 
