@@ -17,7 +17,7 @@ odoo.define('aop_sale.purchase_order_invoice', function (require) {
 
                     for (let i = 0; i < show_button_model.length; i++) {
                         if (tree_model == show_button_model[i] && display_invoice) {
-                            let button2 = $("<button type='button' class='btn btn-sm btn-primary btn-default'>生成结算清单</button>")
+                            let button2 = $("<button type='button' class='btn btn-primary btn-default'>生成结算清单</button>")
                                 .click(self.proxy('generate_purchase_order_invoice'));
                             self.$buttons.append(button2);
                         }

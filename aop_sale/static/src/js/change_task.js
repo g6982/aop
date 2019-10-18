@@ -14,7 +14,7 @@ odoo.define('aop_sale.change_stock_picking', function (require) {
                     let tree_model = self.modelName;
                     for (let i = 0; i < show_button_model.length; i++) {
                         if (tree_model == show_button_model[i]) {
-                            let button2 = $("<button type='button' class='btn btn-sm btn-primary btn-default'>更改任务</button>")
+                            let button2 = $("<button type='button' class='btn btn-primary btn-default'>更改任务</button>")
                                 .click(self.proxy('change_stock_picking_wizard'));
                             self.$buttons.append(button2);
                         }
