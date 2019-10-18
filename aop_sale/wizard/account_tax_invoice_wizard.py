@@ -26,11 +26,16 @@ class AccountTaxInvoiceWizard(models.TransientModel):
     def default_get(self, fields_list):
         res = super(AccountTaxInvoiceWizard, self).default_get(fields_list)
         if self.env.context.get('active_ids'):
-            try:
-                invoice_ids = self.env['account.invoice'].browse(self.env.context.get('active_ids'))
-                invoice_line_ids = invoice_ids.mapped('invoice_line_ids')
-            except Exception as e:
-                invoice_line_ids = self.env['account.invoice.line'].browse(self.env.context.get('active_ids'))
+            current_model_name = self.env.context.get('current_model_name')
+            if not current_model_name:
+                try:
+                    invoice_ids = self.env['account.invoice'].browse(self.env.context.get('active_ids'))
+                    invoice_line_ids = invoice_ids.mapped('invoice_line_ids')
+                except Exception as e:
+                    invoice_line_ids = self.env['account.invoice.line'].browse(self.env.context.get('active_ids'))
+            if current_model_name and current_model_name == 'verify.batch.reconciliation':
+                ve_batch_re_ids = self.env['verify.batch.reconciliation'].browse(self.env.context.get('active_ids'))
+                invoice_line_ids = ve_batch_re_ids.mapped('invoice_line_ids')
 
             partner_id = invoice_line_ids.mapped('partner_id')
             invoice_line_ids = invoice_line_ids.filtered(lambda x: x.tax_invoice_amount != x.price_unit)

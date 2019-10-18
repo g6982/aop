@@ -490,5 +490,33 @@
                   action="action_reconciliation_file_view"
                   parent="account.menu_finance_receivables"/>
 
+        <!-- 对帐批次号 -->
+        <record id="action_batch_reconciliation_number" model="ir.actions.act_window">
+            <field name="name">Reconciliation batch</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">batch.reconciliation.number</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="batch_reconciliation_number_id"
+                  name="Reconciliation batch"
+                  action="action_batch_reconciliation_number"
+                  parent="account.menu_finance_receivables"/>
+
+<!--      审核批次号 -->
+        <record id="action_verify_batch_reconciliation" model="ir.actions.act_window">
+            <field name="name">Verify batch</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">verify.batch.reconciliation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="verify_batch_reconciliation_id"
+                  name="Verify batch"
+                  action="action_verify_batch_reconciliation"
+                  parent="account.menu_finance_receivables"/>
+
     </data>
 </odoo>

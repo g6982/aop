@@ -192,6 +192,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
         try:
             inv_obj = self.env['account.invoice']
             res = inv_obj.create(invoice_res)
+
+            self.fetch_reconciliation_data(res)
+
             # if not res:
             #     raise UserError('Error!')
             view_id = self.env.ref('account.invoice_tree_with_onboarding').id
@@ -356,6 +359,27 @@ class SaleAdvancePaymentInv(models.TransientModel):
     # 合同价格
     def _get_contract_price(self, line_id):
         return line_id.delivery_carrier_id.fixed_price
+
+    # 生成结算清单的时候。去匹配一次对帐数据
+    def fetch_reconciliation_data(self, invoice_ids):
+        '''
+        :param invoice_ids: 生成的结算清单
+        :return:
+        '''
+        invoice_line_ids = invoice_ids.mapped('invoice_line_ids')
+        if not invoice_line_ids:
+            return True
+
+        re_file_obj = self.env['reconciliation.file']
+        handover_number = invoice_line_ids.mapped('sale_order_line_id').mapped('handover_number')
+        product_ids = invoice_line_ids.mapped('sale_order_line_id').mapped('product_id')
+
+        res = re_file_obj.search([
+            ('name', 'in', handover_number),
+            ('product_id', 'in', product_ids.ids)
+        ])
+        if res:
+            res.reconciliation_account_invoice()
 
 
 class InvoiceOrderLine(models.TransientModel):

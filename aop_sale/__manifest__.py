@@ -49,6 +49,8 @@
         'views/base.xml',
         'views/billable_file.xml',
         'views/reconciliation_file.xml',
+        'views/batch_reconciliation_number.xml',
+        'views/verify_batch_reconciliation.xml',
         'views/dispatch_order.xml',
         'wizard/account_tax_invoice_wizard.xml',
         'wizard/change_stock_picking.xml',
@@ -60,6 +62,7 @@
         'wizard/month_close.xml',
         'wizard/purchase_wizard.xml',
         'wizard/stock_location_to_route_location.xml',
+        'wizard/package_reconciliation.xml',
         'report/report_statement.xml',
     ],
 }

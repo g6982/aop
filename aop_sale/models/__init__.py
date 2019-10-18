@@ -32,5 +32,6 @@ from . import purchase_invoice_batch_no
 from . import billable_file
 from . import reconciliation_file
 from . import res_user
-
+from . import verify_batch_reconciliation   # 审核批次号
+from . import batch_reconciliation_number   # 打包生成同一对帐批次号
 

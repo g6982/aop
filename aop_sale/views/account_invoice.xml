@@ -21,7 +21,7 @@
                 <button name="%(account.action_account_invoice_refund)d" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </button>
-                
+
                 <xpath expr="//header" position="inside">
                     <button name="verify_reconciliation"
                             string="Verify"
@@ -55,8 +55,8 @@
                     <field name="vin_id"/>
                     <field name="location_id"/>
                     <field name="location_dest_id"/>
-<!--                    <field name="from_location_id"/>-->
-<!--                    <field name="to_location_id"/>-->
+                    <!--                    <field name="from_location_id"/>-->
+                    <!--                    <field name="to_location_id"/>-->
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='product_id']" position="attributes">
@@ -101,8 +101,6 @@
                 <xpath expr="//button[@name='action_invoice_draft']" position="attributes">
                     <attribute name="groups">aop_sale.group_supplier_action_invoice_draft_button</attribute>
                 </xpath>
-
-
 
             </field>
         </record>
@@ -154,7 +152,6 @@
                     <attribute name="statusbar_visible">draft,open,reconciliation</attribute>
 
 
-
                 </xpath>
 
 
@@ -172,8 +169,8 @@
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='name']" position="replace">
                     <field name="sale_order_line_id"/>
                     <field name="vin_id"/>
-<!--                    <field name="location_id"/>-->
-<!--                    <field name="location_dest_id"/>-->
+                    <!--                    <field name="location_id"/>-->
+                    <!--                    <field name="location_dest_id"/>-->
                     <field name="from_location_id"/>
                     <field name="to_location_id"/>
                 </xpath>
@@ -212,9 +209,16 @@
                     <attribute name="groups">aop_sale.group_action_invoice_draft_button</attribute>
                 </xpath>
 
-
-
-
+                <xpath expr="//notebook" position="before">
+                    <group>
+                        <group>
+                            <field name="reconciliation_batch_no"/>
+                        </group>
+                        <group>
+                            <field name="verify_batch_id"/>
+                        </group>
+                    </group>
+                </xpath>
 
             </field>
         </record>
@@ -234,6 +238,7 @@
 
                 <field name="partner_id" position="before">
                     <field name="reconciliation_batch_no"/>
+                    <field name="verify_batch_id"/>
                     <field name="account_period_id"/>
                 </field>
                 <field name="amount_untaxed" position="before">

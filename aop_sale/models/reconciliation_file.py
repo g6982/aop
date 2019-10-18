@@ -21,33 +21,49 @@ class ReconciliationFile(models.Model):
 
     re_line_ids = fields.One2many('reconciliation.file.line', 're_file_id')
 
-    # @api.multi
-    # def reconciliation_account_invoice(self):
-    #     for line in self:
-    #         invoice_line_id = self.env['account.invoice.line'].search([
-    #             ('sale_order_line_id.handover_number', '=', line.name),
-    #             ('sale_order_line_id.product_id', '=', line.product_id.id),
-    #             ('invoice_id.state', '=', 'draft')
-    #         ])
-    #
-    #         if not invoice_line_id:
-    #             continue
-    #
-    #         # FIXME: 筛选数量？
-    #         selected_ids = invoice_line_id.mapped('invoice_id').ids[:line.number]
-    #         invoice_line_id = invoice_line_id.filtered(lambda x: x.invoice_id.id in selected_ids)
-    #
-    #         line.invoice_line_ids = [(6, 0, invoice_line_id.ids)]
-    #
-    #         # 对账：需要将单车价格写入确认价格
-    #         for account_invoice_line_id in invoice_line_id:
-    #             account_invoice_line_id.price_unit = line.price_unit
-    #
-    #         # TODO: 如果 单车价格和合同价格相同，则对账 ?
-    #         # invoice_line_id = invoice_line_id.filtered(lambda x: x.price_unit == x.contract_price)
-    #
-    #         for invoice_id in invoice_line_id.mapped('invoice_id'):
-    #             invoice_id.action_invoice_open()
+    reconciliation_state = fields.Selection(
+        [('order_invoice', 'order_invoice'),
+         ('order_only', 'order_only'),
+         ('failed', 'failed')
+         ],
+        'Reconciliation state',
+        compute='_compute_reconciliation_state',
+        store=True)
+
+    @api.multi
+    def confirm_account_invoice(self):
+        for line in self:
+
+            invoice_line_ids = line.re_line_ids.mapped('invoice_line_id')
+
+            # 对账：需要将单车价格写入确认价格
+            for account_invoice_line_id in invoice_line_ids:
+                account_invoice_line_id.price_unit = line.price_unit
+
+            # TODO: 如果 单车价格和合同价格相同，则对账 ?
+            # invoice_line_id = invoice_line_id.filtered(lambda x: x.price_unit == x.contract_price)
+
+            invoice_ids = invoice_line_ids.mapped('invoice_id')
+            ids = list(set(invoice_ids.ids))
+            invoice_ids = self.env['account.invoice'].browse(ids)
+
+            for invoice_id in invoice_ids:
+                invoice_id.action_invoice_open()
+
+    @api.multi
+    @api.depends('re_line_ids', 're_line_ids.invoice_line_id', 're_line_ids.sale_order_line_id')
+    def _compute_reconciliation_state(self):
+        for line in self:
+            if not line.re_line_ids:
+                line.reconciliation_state = 'failed'
+            else:
+                _logger.info({
+                    'any(x.invoice_line_id is False for x in line.re_line_ids)': any(x.invoice_line_id is False for x in line.re_line_ids)
+                })
+                if any(getattr(x.invoice_line_id, 'id') is False for x in line.re_line_ids):
+                    line.reconciliation_state = 'order_only'
+                else:
+                    line.reconciliation_state = 'order_invoice'
 
     @api.multi
     def reconciliation_account_invoice(self):
@@ -67,12 +83,14 @@ class ReconciliationFile(models.Model):
                     'sale_order_line_id': invoice_id.sale_order_line_id.id,
                     'invoice_line_id': invoice_id
                 }))
-            data.append((0, 0, {
-                'invoice_line_id': x.id,
-                'sale_order_line_id': False
-            }) for x in not_invoice_line)
-
-            line.re_line_ids = data
+            for line_id in not_invoice_line:
+                data.append((0, 0, {
+                    'invoice_line_id': False,
+                    'sale_order_line_id': line_id.id
+                }))
+            if data:
+                line.re_line_ids = False
+                line.re_line_ids = data
 
 
 class ReconciliationFileLine(models.Model):
