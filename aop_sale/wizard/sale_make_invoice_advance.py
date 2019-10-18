@@ -39,7 +39,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 'sale_order_line_id': line_id.id
             }))
         res['selected_order_lines'] = data
-        
+
         res['period_id'] = self._context.get('period_id')
         return res
 

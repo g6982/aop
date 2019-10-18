@@ -37,7 +37,13 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
 
-
+                <xpath expr="//field[@name='rule_ids']" position="before">
+                     <group>
+                         <group>
+                             <field name="sum_delay"/>
+                         </group>
+                     </group>
+                </xpath>
 
             </field>
         </record>
