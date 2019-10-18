@@ -203,3 +203,8 @@ msgstr ""
 #: model:ir.ui.menu,name:stock.menu_action_production_lot_form
 msgid "Lots/Serial Numbers"
 msgstr "VIN"
+
+#. module: stock
+#: model:ir.model.fields,field_description:stock.field_stock_rule__delay
+msgid "Delay"
+msgstr "标准时效"
