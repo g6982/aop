@@ -33,13 +33,17 @@
                                 <field name="price_total"/>
                             </group>
                         </group>
-                        <group>
-                            <group>
-                                <field name="invoice_line_ids"
-                                       widget="many2many_tags"
-                                       attrs="{'invisible': [('invoice_line_ids', '=', False)]}"/>
-                            </group>
-                        </group>
+
+                        <notebook>
+                            <page string="Reconciliation">
+                                <field name="re_line_ids">
+                                    <tree create="0" delete="0">
+                                        <field name="invoice_line_id"/>
+                                        <field name="sale_order_line_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
@@ -49,7 +53,7 @@
             <field name="name">reconciliation.file.tree</field>
             <field name="model">reconciliation.file</field>
             <field name="arch" type="xml">
-                <tree decoration-warning="invoice_line_ids == False">
+                <tree decoration-warning="re_line_ids == False">
                     <field name="name"/>
                     <field name="batch_no"/>
                     <field name="apply_no"/>
@@ -58,7 +62,7 @@
                     <field name="transfer_way"/>
                     <field name="price_unit"/>
                     <field name="price_total"/>
-                    <field name="invoice_line_ids" invisible="1"/>
+                    <field name="re_line_ids" invisible="1"/>
                 </tree>
             </field>
         </record>

@@ -27,3 +27,4 @@ access_invoice_no_tax_invoice,access_invoice_no_tax_invoice,model_invoice_no_tax
 access_purchase_invoice_batch_no,access_purchase_invoice_batch_no,model_purchase_invoice_batch_no,base.group_user,1,1,1,1
 access_billable_file,access_billable_file,model_billable_file,base.group_user,1,1,1,1
 access_reconciliation_file,access_reconciliation_file,model_reconciliation_file,base.group_user,1,1,1,1
+access_reconciliation_file_line,access_reconciliation_file_line,model_reconciliation_file_line,base.group_user,1,1,1,1
