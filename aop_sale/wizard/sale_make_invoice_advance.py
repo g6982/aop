@@ -15,6 +15,17 @@ _logger = logging.getLogger(__name__)
 class SaleAdvancePaymentInv(models.TransientModel):
     _inherit = "sale.advance.payment.inv"
 
+    @api.model
+    def _get_advance_payment_method(self):
+        return 'all'
+
+    advance_payment_method = fields.Selection([
+        ('delivered', 'Invoiceable lines'),
+        ('all', 'Invoiceable lines (deduct down payments)'),
+        ('percentage', 'Down payment (percentage)'),
+        ('fixed', 'Down payment (fixed amount)')
+    ], string='What do you want to invoice?', default=_get_advance_payment_method, required=True)
+
     reconciliation_batch_no = fields.Char('Reconciliation batch no')
     invoice_product_type = fields.Selection([
         ('main_product', 'Main product'),
@@ -38,7 +49,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
             data.append((0, 0, {
                 'sale_order_line_id': line_id.id
             }))
-        res['selected_order_lines'] = data
+        if data:
+            res['selected_order_lines'] = data
 
         res['period_id'] = self._context.get('period_id')
         return res

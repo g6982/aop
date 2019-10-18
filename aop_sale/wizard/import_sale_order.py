@@ -201,7 +201,7 @@ class ImportSaleOrder(models.TransientModel):
                 product_id = self._find_product_id(sheet_data.cell_value(x, 10), product_data)
                 from_location_id = from_location_id
                 to_location_id = self._find_from_to_location(sheet_data.cell_value(x, 6), partner_data)
-                
+
                 if not product_id:
                     continue
                 vin_id = self._find_vin_id(sheet_data.cell_value(x, 9), product_id, to_location_id=to_location_id)

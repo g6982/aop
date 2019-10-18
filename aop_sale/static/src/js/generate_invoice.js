@@ -34,6 +34,7 @@ odoo.define('aop_sale.sale_order_invoice', function (require) {
         },
         generate_sale_order_invoice: function () {
             let selected_ids = this.getSelectedIds();
+            console.log('selected_ids: ', selected_ids);
             this.do_action({
                 type: 'ir.actions.act_window',
                 res_model: 'sale.advance.payment.inv',
