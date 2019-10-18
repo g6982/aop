@@ -259,3 +259,4 @@ msgstr "负责人"
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_route__sum_delay
 msgid "Delay"
 msgstr "标准时效"
+
