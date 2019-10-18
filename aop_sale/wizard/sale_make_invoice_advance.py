@@ -23,46 +23,25 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     invoice_state = fields.Boolean('Advance receipt')
 
-    sale_order_ids = fields.Many2many('sale.order', string='Orders')
-
     selected_order_lines = fields.One2many('make.invoice.sale.order.line', 'payment_inv_id', string='Order lines')
 
     period_id = fields.Many2one('account.period', 'Period')
 
-    @api.onchange('sale_order_ids', 'invoice_state')
-    def parse_sale_order_line_ids(self):
-        if not self.sale_order_ids:
-            self.selected_order_lines = False
-            return False
+    @api.model
+    def default_get(self, fields_list):
+        res = super(SaleAdvancePaymentInv, self).default_get(fields_list)
 
-        line_ids = self.sale_order_ids.mapped('order_line')
-
-        # if not self.invoice_state:
-        #     line_ids = self.sale_order_ids.mapped('order_line').filtered(
-        #         lambda x: x.handover_number is not False or x.state == 'sale')
-        # else:
-        #     line_ids = self.sale_order_ids.mapped('order_line').filtered(
-        #         lambda x: x.handover_number is False or x.state != 'sale')
-
-        self.selected_order_lines = False
-
+        ids = self._context.get('active_ids', [])
+        line_ids = self.env['sale.order.line'].browse(ids)
         data = []
         for line_id in line_ids:
             data.append((0, 0, {
-                    'sale_order_line_id': line_id.id
-                }))
-        self.selected_order_lines = data
-
-    @api.model
-    def default_get(self, fields_list):
-        if self._context.get('active_model', False) == 'sale.order.line':
-            return []
-        else:
-            res = super(SaleAdvancePaymentInv, self).default_get(fields_list)
-            ids = self._context.get('active_ids', [])
-            res['sale_order_ids'] = [(6, 0, ids)]
-            res['period_id'] = self._context.get('period_id')
-            return res
+                'sale_order_line_id': line_id.id
+            }))
+        res['selected_order_lines'] = data
+        
+        res['period_id'] = self._context.get('period_id')
+        return res
 
     @api.multi
     def create_invoices(self):

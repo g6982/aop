@@ -1,6 +1,6 @@
 odoo.define('aop_sale.sale_order_invoice', function (require) {
     "use strict";
-    let show_button_model = ['sale.order'];
+    let show_button_model = ['sale.order.line'];
     let ListController = require('web.ListController');
 
     ListController.include({

@@ -6,12 +6,10 @@
         <field name="inherit_id" ref="sale.view_sale_advance_payment_inv"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='advance_payment_method']" position="before">
-                <field name="sale_order_ids" widget="many2many_tags"
-                       options="{'no_quick_create': True, 'no_create_edit': True}"/>
                 <field name="invoice_state" invisible="1"/>
                 <field name="selected_order_lines">
                     <tree editable="bottom">
-                        <field name="sale_order_line_id"/>
+                        <field name="sale_order_line_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                         <field name="price_subtotal"/>
                         <field name="receipt_amount" invisible="1"/>
                     </tree>
