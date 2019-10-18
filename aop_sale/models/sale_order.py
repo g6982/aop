@@ -439,7 +439,7 @@ class SaleOrder(models.Model):
         ])
         return res[0] if res else False
 
-    def _transfer_district_to_location(self, partner_id):
+    def _transfer_district_to_location(self, partner_id, patch=False):
         location_obj = self.env['stock.location']
         filter_domain = []
         if partner_id.district_id:
@@ -451,39 +451,42 @@ class SaleOrder(models.Model):
         if filter_domain:
             location_id = location_obj.search(filter_domain)
 
+        # 搜索到不是想要的值
         if not location_id:
             # 保留取上级的默认客户位置
             location_id = partner_id.parent_id.property_stock_customer
-        _logger.info({
-            'location_id': location_id
-        })
+        if patch:
+            location_id = partner_id.parent_id.property_stock_customer
         return location_id
 
-    # 查找 条款
-    def _find_contract_line(self, contract_id, order_line):
+    # 尝试获取条款
+    def _get_contract_line(self, contract_id, from_location_id, to_location_id):
         contract_line_ids = contract_id.mapped('delivery_carrier_ids')
-
-        order_from_location_id = self._transfer_district_to_location(order_line.from_location_id)
-        order_to_location_id = self._transfer_district_to_location(order_line.to_location_id)
-        # 使用 product.template
-        # product_template_id.product_variant_ids
-        # TODO: 待定， 是否需要递归查询呢？
-        # 暂定： 获取上级
-        # delivery_ids = [line_id for line_id in contract_line_ids if
-        #                 order_from_location_id.id == line_id.from_location_id.id and
-        #                 order_to_location_id.id == line_id.to_location_id.id]
 
         delivery_ids = []
 
         for line_id in contract_line_ids:
-            if order_from_location_id.id == line_id.from_location_id.id and    \
-                    order_to_location_id.id == line_id.to_location_id.id:
-
+            if from_location_id.id == line_id.from_location_id.id and \
+                    to_location_id.id == line_id.to_location_id.id:
                 # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
                 line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
                 delivery_ids.append(line_id)
 
         delivery_ids = list(set(delivery_ids))
+
+        return delivery_ids
+
+    # 查找 条款
+    def _find_contract_line(self, contract_id, order_line):
+
+        order_from_location_id = self._transfer_district_to_location(order_line.from_location_id)
+        order_to_location_id = self._transfer_district_to_location(order_line.to_location_id)
+
+        delivery_ids = self._get_contract_line(contract_id, order_from_location_id, order_to_location_id)
+
+        if not delivery_ids:
+            order_from_location_id = self._transfer_district_to_location(order_line.from_location_id, patch=True)
+            delivery_ids = self._get_contract_line(contract_id, order_from_location_id, order_to_location_id)
 
         return delivery_ids
 
