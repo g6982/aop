@@ -18,7 +18,8 @@ CQ_COL = {
     'product_id': 6,
     'to_location_id': 9,
     'start_index': 0,
-    'file_planned_date': 14
+    'file_planned_date': 14,
+    'to_station_name': 2
 }
 
 CT_COL = {
@@ -27,8 +28,10 @@ CT_COL = {
     'product_id': 6,
     'to_location_id': 10,
     'start_index': 6,
-    'file_planned_date': 0
+    'file_planned_date': 0,
+    'to_station_name': 1
 }
+TWICE_JUMP_TO_NAME_INDEX = 1
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 DATE_FORMAT_YMD = '%Y/%m/%d'
 
@@ -73,6 +76,7 @@ class ImportSaleOrder(models.TransientModel):
                 to_partner_index = CQ_COL.get('to_location_id')
                 vin_index = CQ_COL.get('vin_code')
                 file_planned_date_index = CQ_COL.get('file_planned_date')
+                to_station_name_index = CQ_COL.get('to_station_name')
             else:
                 product_index = CT_COL.get('product_id')
                 start_index = CT_COL.get('start_index')
@@ -80,6 +84,7 @@ class ImportSaleOrder(models.TransientModel):
                 to_partner_index = CT_COL.get('to_location_id')
                 vin_index = CT_COL.get('vin_code')
                 file_planned_date_index = CT_COL.get('file_planned_date')
+                to_station_name_index = CT_COL.get('to_station_name')
 
             # 选了 from_location_id 就是二次起跳
             partner_data = self._parse_partner_id(sheet_data, from_location_id=self.from_location_id,
@@ -95,7 +100,8 @@ class ImportSaleOrder(models.TransientModel):
                                                     product_index=product_index,
                                                     start_index=start_index,
                                                     vin_index=vin_index,
-                                                    file_planned_date_index=file_planned_date_index
+                                                    file_planned_date_index=file_planned_date_index,
+                                                    to_station_name_index=to_station_name_index
                                                     )
             order_data.update({
                 'order_line': line_data,
@@ -149,7 +155,7 @@ class ImportSaleOrder(models.TransientModel):
     # 订单行的数据
     def _parse_order_line_data(self, sheet_data, product_data, partner_data, from_location_id=False,
                                from_partner_index=None, to_partner_index=None, product_index=None, start_index=None,
-                               vin_index=None, file_planned_date_index=None):
+                               vin_index=None, file_planned_date_index=None, to_station_name_index=None):
         line_values = []
 
         # 选择了 from_location_id, 二次起跳
@@ -184,26 +190,18 @@ class ImportSaleOrder(models.TransientModel):
                     'product_uom_qty': 1,
                     'product_uom': product_id.uom_id.id,
                     'price_unit': 1,
-                    'file_planned_date': file_planned_date
+                    'file_planned_date': file_planned_date,
+                    'to_station_name': sheet_data.cell_value(x, to_station_name_index),
+                    'from_station_name': from_location_id.city_id.name
                 })
                 line_values.append(line_data)
-            # _logger.info({
-            #     'line_data': line_data
-            # })
-            # print(line_values)
         else:
             for x in range(1, sheet_data.nrows):
 
                 product_id = self._find_product_id(sheet_data.cell_value(x, 10), product_data)
                 from_location_id = from_location_id
                 to_location_id = self._find_from_to_location(sheet_data.cell_value(x, 6), partner_data)
-                # _logger.info({
-                #     'product_id': product_id,
-                #     'from_location_id': from_location_id,
-                #     'to_location_id': to_location_id,
-                #     'from': sheet_data.cell_value(x, 2),
-                #     'to': sheet_data.cell_value(x, 11)
-                # })
+                
                 if not product_id:
                     continue
                 vin_id = self._find_vin_id(sheet_data.cell_value(x, 9), product_id, to_location_id=to_location_id)
@@ -211,6 +209,7 @@ class ImportSaleOrder(models.TransientModel):
                 file_planned_date_index = 23
                 file_planned_date = datetime.strptime(sheet_data.cell_value(x, file_planned_date_index), DATE_FORMAT).date()
 
+                to_station_name = sheet_data.cell_value(x, TWICE_JUMP_TO_NAME_INDEX)
                 line_data = (0, 0, {
                     'product_id': product_id.id,
                     # 'service_product_id': False,
@@ -222,7 +221,9 @@ class ImportSaleOrder(models.TransientModel):
                     'product_uom_qty': 1,
                     'product_uom': product_id.uom_id.id,
                     'price_unit': 1,
-                    'file_planned_date': file_planned_date
+                    'file_planned_date': file_planned_date,
+                    'from_station_name': from_location_id.city_id.name,
+                    'to_station_name': to_station_name
                 })
                 line_values.append(line_data)
         return line_values
