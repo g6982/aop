@@ -24,8 +24,9 @@ class BatchReconciliationNumber(models.Model):
         ('done', 'Done')
     ], default='draft')
 
-    def verify_account_invoice(self):
+    # 对帐
+    def confirm_account_invoice(self):
         for line in self:
             ids = list(set(line.invoice_line_ids.mapped('invoice_id').ids))
-            self.env['account.invoice'].browse(ids).verify_reconciliation()
+            self.env['account.invoice'].browse(ids).action_invoice_open()
             line.state = 'done'

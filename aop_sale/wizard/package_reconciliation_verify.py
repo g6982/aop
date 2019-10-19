@@ -46,10 +46,6 @@ class PackageReconciliation(models.TransientModel):
     def package_reconciliation_list(self):
         re_line_ids = self.reconciliation_ids.mapped('re_line_ids')
 
-        _logger.info({
-            're_line_ids': re_line_ids,
-            'invoice_line_ids': re_line_ids.mapped('invoice_line_id')
-        })
         if any(getattr(x.invoice_line_id, 'id') is False for x in re_line_ids):
             raise UserError('Forbidden: You can not operate un-match records')
 
@@ -93,4 +89,3 @@ class PackageReconciliation(models.TransientModel):
         batch_reconciliation_ids.write({
             'verify_batch_id': res.id
         })
-        batch_reconciliation_ids.verify_account_invoice()

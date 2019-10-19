@@ -6,6 +6,13 @@
             <field name="model">verify.batch.reconciliation</field>
             <field name="arch" type="xml">
                 <form create="0">
+                    <header>
+                        <button name="verify_account_invoice"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}"
+                                string="Verify"
+                                class="oe_highlight" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done" readonly="1"/>
+                    </header>
                     <sheet>
                         <group>
                             <field name="name"/>
