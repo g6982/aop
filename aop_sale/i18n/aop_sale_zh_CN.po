@@ -277,6 +277,7 @@ msgstr "生成对账批次"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__invoice_line_ids
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__invoice_line_ids
 msgid "Invoice Line"
 msgstr "结算清单行"
 
