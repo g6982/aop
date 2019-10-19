@@ -109,3 +109,8 @@ msgstr "结算清单行"
 #: model_terms:ir.ui.view,arch_db:account.view_account_invoice_filter
 msgid "Open"
 msgstr "对账"
+
+#. module: account
+#: code:addons/account/models/account_invoice.py:893
+msgid "Invoice must be in draft state in order to validate it."
+msgstr "结算清单必须在草稿状态，以便验证."
