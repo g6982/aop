@@ -29,23 +29,26 @@ class PurchaseOrder(models.Model):
         try:
             # 服务产品
             res = super(PurchaseOrder, self).button_confirm()
-            if 'service' in self.mapped('order_line').mapped('product_id').mapped('type'):
-                for order_id in self:
-
-                    order_id._create_stock_move_by_purchase()
-
-                    for picking_id in order_id.mapped('stock_picking_batch_id').sudo().picking_ids.sorted(lambda x: x.id):
-                        self.sudo()._fill_serial_no(picking_id)
-                        picking_id.sudo().action_assign()
-                        picking_id.sudo().button_validate()
-                    order_id.mapped('stock_picking_batch_id').done()
             return res
         except Exception as e:
             import traceback
             self._cr.rollback()
             raise UserError(traceback.format_exc())
-            res = super(PurchaseOrder, self).button_confirm()
-            return res
+
+    @api.multi
+    def button_approve(self, force=False):
+        res = super(PurchaseOrder, self).button_approve(force)
+        if 'service' in self.mapped('order_line').mapped('product_id').mapped('type'):
+            for order_id in self:
+
+                order_id._create_stock_move_by_purchase()
+
+                for picking_id in order_id.mapped('stock_picking_batch_id').sudo().picking_ids.sorted(lambda x: x.id):
+                    self.sudo()._fill_serial_no(picking_id)
+                    picking_id.sudo().action_assign()
+                    picking_id.sudo().button_validate()
+                order_id.mapped('stock_picking_batch_id').done()
+        return res
 
     # 生成 stock.move
     def _create_stock_move_by_purchase(self):

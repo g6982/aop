@@ -361,6 +361,19 @@ class SaleOrderLine(models.Model):
         for line in self:
             line.vin = line.get_vin_id_in_stock()
 
+    @api.multi
+    def name_get(self):
+        result = []
+        for so_line in self.sudo():
+            name = '%s/%s - %s' % (
+                so_line.order_id.name,
+                so_line.id,
+                so_line.name.split('\n')[0] or so_line.product_id.name)
+            if so_line.order_partner_id.ref:
+                name = '%s (%s)' % (name, so_line.order_partner_id.ref)
+            result.append((so_line.id, name))
+        return result
+
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
