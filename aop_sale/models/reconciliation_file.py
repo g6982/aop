@@ -30,6 +30,8 @@ class ReconciliationFile(models.Model):
         compute='_compute_reconciliation_state',
         store=True)
 
+    batch_reconciliation_id = fields.Many2one('batch.reconciliation.number', 'Batch reconciliation', index=True)
+
     @api.multi
     def confirm_account_invoice(self):
         for line in self:

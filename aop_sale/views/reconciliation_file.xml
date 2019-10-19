@@ -11,6 +11,8 @@
                             <group>
                                 <field name="name"/>
                                 <field name="transfer_way"/>
+                                <field name="batch_reconciliation_id"
+                                       options="{'no_quick_create': True, 'no_create_edit': True}"/>
                             </group>
                             <group>
                                 <field name="batch_no"/>
@@ -65,6 +67,8 @@
                     <field name="transfer_way"/>
                     <field name="price_unit"/>
                     <field name="price_total"/>
+                    <field name="batch_reconciliation_id"/>
+<!--                    <field name="reconciliation_state" invisible="1"/>-->
                     <field name="reconciliation_state" invisible="0"/>
                 </tree>
             </field>
