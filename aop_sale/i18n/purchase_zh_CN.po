@@ -58,3 +58,13 @@ msgstr "确认"
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Approve Order"
 msgstr "完成任务"
+
+#. module: purchase
+#: selection:purchase.order,invoice_status:0
+msgid "Nothing to Bill"
+msgstr "未申请结算"
+
+#. module: purchase
+#: selection:purchase.order,invoice_status:0
+msgid "No Bill to Receive"
+msgstr "已申请结算"

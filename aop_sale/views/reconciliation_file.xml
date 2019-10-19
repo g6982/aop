@@ -65,7 +65,7 @@
                     <field name="transfer_way"/>
                     <field name="price_unit"/>
                     <field name="price_total"/>
-                    <field name="reconciliation_state" invisible="1"/>
+                    <field name="reconciliation_state" invisible="0"/>
                 </tree>
             </field>
         </record>

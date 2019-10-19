@@ -2728,7 +2728,7 @@ msgstr ""
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__reconciliation_state
 msgid "Reconciliation state"
-msgstr ""
+msgstr "状态"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__origin
@@ -3946,7 +3946,7 @@ msgstr "供应商"
 #. module: aop_sale
 #: selection:reconciliation.file,reconciliation_state:0
 msgid "failed"
-msgstr ""
+msgstr "失败"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__file_validate
@@ -4175,12 +4175,12 @@ msgstr "合同名称"
 #. module: aop_sale
 #: selection:reconciliation.file,reconciliation_state:0
 msgid "order_invoice"
-msgstr ""
+msgstr "成功"
 
 #. module: aop_sale
 #: selection:reconciliation.file,reconciliation_state:0
 msgid "order_only"
-msgstr ""
+msgstr "无结算清单"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__originator
