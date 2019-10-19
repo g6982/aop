@@ -5,7 +5,7 @@
             <field name="name">batch.reconciliation.form</field>
             <field name="model">batch.reconciliation.number</field>
             <field name="arch" type="xml">
-                <form>
+                <form create="0">
                     <sheet>
                         <group>
                             <field name="name"/>
@@ -33,7 +33,7 @@
             <field name="name">batch.reconciliation.number.tree</field>
             <field name="model">batch.reconciliation.number</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree create="0" import="0">
                     <field name="name"/>
                 </tree>
             </field>
