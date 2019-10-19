@@ -225,6 +225,8 @@ msgstr "交接单总价格"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__state
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__state
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_search
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__state
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__state
 msgid "State"
 msgstr "状态"
 
@@ -294,4 +296,10 @@ msgstr "生成审核批次"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__name
 msgid "Name"
+msgstr "审核批次号"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__verify_batch_id
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_verify_batch_reconciliation_form
+msgid "Verify"
 msgstr "审核批次号"

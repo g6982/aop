@@ -48,6 +48,9 @@
                 <tree create="0" import="0">
                     <field name="name"/>
                     <field name="verify_batch_id"/>
+                    <field name="state"/>
+                    <field name="create_date"/>
+                    <field name="write_date"/>
                 </tree>
             </field>
         </record>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-19 09:41+0000\n"
-"PO-Revision-Date: 2019-10-19 09:41+0000\n"
+"POT-Creation-Date: 2019-10-19 14:15+0000\n"
+"PO-Revision-Date: 2019-10-19 14:15+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -406,6 +406,11 @@ msgid "Batch number"
 msgstr "对账批次号"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__batch_reconciliation_id
+msgid "Batch reconciliation"
+msgstr "对账批次号"
+
+#. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_billable_file_view
 #: model:ir.ui.menu,name:aop_sale.billable_file_id
 msgid "Billable"
@@ -574,6 +579,7 @@ msgid "Company Currency"
 msgstr "公司货币"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_batch_reconciliation_number_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
 msgid "Confirm"
 msgstr "确认"
@@ -1077,12 +1083,14 @@ msgstr "单据关注者"
 
 #. module: aop_sale
 #: selection:aop.contract,state:0
+#: selection:batch.reconciliation.number,state:0
 #: selection:customer.aop.contract,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 #: selection:mass.loss.order,state:0
 #: selection:sale.order,write_off_state:0
 #: selection:supplier.aop.contract,state:0
+#: selection:verify.batch.reconciliation,state:0
 msgid "Done"
 msgstr "完成"
 
@@ -1112,12 +1120,14 @@ msgstr ""
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
 #: selection:aop.contract,state:0
+#: selection:batch.reconciliation.number,state:0
 #: selection:customer.aop.contract,state:0
 #: selection:handover.vin,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 #: selection:mass.loss.order,state:0
 #: selection:sale.order,write_off_state:0
 #: selection:supplier.aop.contract,state:0
+#: selection:verify.batch.reconciliation,state:0
 msgid "Draft"
 msgstr "草稿"
 
@@ -1347,7 +1357,7 @@ msgid "Has Outstanding"
 msgstr "有未清项"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/account_invoice.py:126
+#: code:addons/aop_sale/models/account_invoice.py:136
 #: code:addons/aop_sale/models/sale_order.py:412
 #, python-format
 msgid "Has been monthly!"
@@ -2700,6 +2710,7 @@ msgstr "确认"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_batch_reconciliation_number
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__batch_reconciliation_ids
 #: model:ir.ui.menu,name:aop_sale.batch_reconciliation_number_id
 msgid "Reconciliation batch"
 msgstr "对账批次"
@@ -3053,13 +3064,15 @@ msgstr "合同开始时间"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__state
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__state
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__state
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__state
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__state
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__state
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__state
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_search
 msgid "State"
-msgstr "省/ 州"
+msgstr "状态"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_invoice_order_statement
@@ -3631,6 +3644,7 @@ msgstr "供应商"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_package_reconciliation_list_wizard
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_verify_batch_reconciliation_form
 msgid "Verify"
 msgstr "审核"
 
