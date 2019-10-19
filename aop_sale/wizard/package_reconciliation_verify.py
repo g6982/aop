@@ -60,7 +60,7 @@ class PackageReconciliation(models.TransientModel):
             })
 
             # 对帐数据关联批次
-            re_line_ids.write({
+            re_line_ids.mapped('re_file_id').write({
                 'batch_reconciliation_id': res.id
             })
 

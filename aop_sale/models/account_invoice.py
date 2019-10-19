@@ -44,8 +44,6 @@ class AccountInvoice(models.Model):
              " * The 'Paid' status is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled.\n"
              " * The 'Cancelled' status is used when user cancel invoice.")
 
-    verify_batch_id = fields.Many2one('batch.reconciliation.number', string='Batch number', index=True)
-
     ###################################################################################################################
     ###################################################################################################################
     # 取消生成凭证
@@ -304,6 +302,8 @@ class AccountInvoiceLine(models.Model):
                                    store=True)
 
     cost_passage = fields.Float('Cost Passage', compute='_compute_cost_passage', store=True)
+
+    verify_batch_id = fields.Many2one('batch.reconciliation.number', string='Batch number', index=True)
 
     @api.multi
     @api.depends('sale_order_line_id.stock_picking_ids', 'sale_order_line_id.stock_picking_ids.state')

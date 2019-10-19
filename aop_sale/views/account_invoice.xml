@@ -196,6 +196,7 @@
                     <field name="contract_price"/>
                     <field name="tmp_estimate" readonly="1"/>
                     <field name="pre_billing"/>
+                    <field name="verify_batch_id"/>
                 </xpath>
 
                 <xpath expr="//field[@name='invoice_line_ids']/tree" position="attributes">
@@ -225,9 +226,6 @@
                         <group>
                             <field name="reconciliation_batch_no"/>
                         </group>
-                        <group>
-                            <field name="verify_batch_id"/>
-                        </group>
                     </group>
                 </xpath>
 
@@ -249,7 +247,6 @@
 
                 <field name="partner_id" position="before">
                     <field name="reconciliation_batch_no"/>
-                    <field name="verify_batch_id"/>
                     <field name="account_period_id"/>
                 </field>
                 <field name="amount_untaxed" position="before">
