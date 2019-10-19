@@ -260,3 +260,7 @@ msgstr "负责人"
 msgid "Delay"
 msgstr "标准时效"
 
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
+msgid "Delivery"
+msgstr "任务"
