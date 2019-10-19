@@ -43,6 +43,9 @@ class AccountTaxInvoiceWizard(models.TransientModel):
                 'invoice_line_ids': [(6, 0, invoice_line_ids.ids)],
                 'partner_id': partner_id[0].id
             })
+        _logger.info({
+            'res': res
+        })
         return res
 
     # 解析数据
@@ -81,7 +84,7 @@ class AccountTaxInvoiceWizard(models.TransientModel):
             'tax_invoice_amount': line_id.price_unit,
             # 'tax_invoice_state': tax_invoice_state
         })
-        # return round(float(left_amount) * 1000, -1) / 1000
+        return round(float(left_amount) * 1000, -1) / 1000
 
     # 部分-金额
     def _compute_invoice_amount_part_amount(self, line_id, tax_invoice_number, invoice_line_ids):
