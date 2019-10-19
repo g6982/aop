@@ -161,6 +161,11 @@
         <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
     </record>
 
+    <!-- 对所有用户隐藏“结算清单->客户->付款”菜单 -->
+    <record id="account.menu_action_account_payments_receivable" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
     <!-- 对所有用户隐藏“结算清单->供应商->退款”菜单 -->
     <record id="account.menu_action_invoice_in_refund" model="ir.ui.menu">
         <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
@@ -173,6 +178,11 @@
 
     <!-- 对所有用户隐藏“结算清单->供应商->供应商”菜单 -->
     <record id="account.menu_account_supplier" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+     <!-- 对所有用户隐藏“结算清单->供应商->付款”菜单 -->
+    <record id="account.menu_action_account_payments_payable" model="ir.ui.menu">
         <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
     </record>
 

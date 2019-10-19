@@ -2585,7 +2585,7 @@ msgstr "采购回填数据"
 #: model:ir.actions.act_window,name:aop_sale.action_purchase_account_invoice_view
 #: model:ir.ui.menu,name:aop_sale.purchase_account_invoice_id
 msgid "Purchase invoice line"
-msgstr ""
+msgstr "付款结算清单行"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_invoice_wizard_form
