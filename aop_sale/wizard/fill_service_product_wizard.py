@@ -74,8 +74,8 @@ class FillServiceProductWizard(models.TransientModel):
                 'name': line_id.name,
                 'sale_line_id': line_id.sale_order_line_id.id,
                 'date_planned': fields.Datetime.now(),
-                # 'price_unit': line_id.service_product_id.lst_price,
-                'price_unit': amount,
+                'price_unit': 0,
+                'service_contract_price': amount,
                 'product_uom': service_product_id.uom_id.id,
                 'batch_stock_picking_id': picking.id
             }
@@ -92,7 +92,8 @@ class FillServiceProductWizard(models.TransientModel):
                 'name': service_product_id.name,
                 'product_uom': service_product_id.uom_id.id,
                 'batch_stock_picking_id': picking.id,
-                'price_unit': amount,
+                'service_contract_price': amount,
+                'price_unit': 0,
                 'date_planned': fields.Datetime.now(),
             }
             res.append((0, 0, data))

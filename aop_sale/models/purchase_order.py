@@ -123,4 +123,6 @@ class PurchaseOrderLine(models.Model):
 
     batch_stock_picking_id = fields.Many2one('stock.picking')
 
+    service_contract_price = fields.Float('Service contract price')
+
 

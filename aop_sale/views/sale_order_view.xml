@@ -491,24 +491,6 @@
                                attrs="{'invisible': [('display_type', '!=', 'line_section')]}"/>
                         <label for="name" string="Note" attrs="{'invisible': [('display_type', '!=', 'line_note')]}"/>
                         <field name="name"/>
-                        <!--                        <div groups="base.group_no_one" attrs="{'invisible': [('display_type', '!=', False)]}">-->
-                        <!--                            <label for="invoice_lines"/>-->
-                        <!--                            <field name="invoice_lines"/>-->
-                        <!--                        </div>-->
-
-                        <!--
-                         <div groups="base.group_no_one">
-                             <label for="picking_confirm_date" />
-                             <field name="picking_confirm_date"/>
-
-                         </div>
-
-                        <div groups="base.group_no_one">
-
-                             <label for="write_date" />
-                             <field name="write_date"/>
-                         </div>
-                         -->
                     </sheet>
                 </form>
             </field>

@@ -108,7 +108,6 @@ class SaleOrderLine(models.Model):
             if current_picking_id.state == 'done' and current_picking_id.id == line.stock_picking_ids.sorted('id')[-1].id:
                 line.picking_confirm_date = current_picking_id.date_done
 
-
     def _set_picking_confirm_date(self):
         pass
 

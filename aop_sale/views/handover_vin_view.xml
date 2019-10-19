@@ -124,7 +124,7 @@
             <field name="name">handover.vin.tree</field>
             <field name="model">handover.vin</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree default_order="verify_datetime">
                     <field name="name"/>
                     <field name="vin_code"/>
                     <field name="write_user_id"/>
@@ -132,6 +132,7 @@
                     <field name="file_planned_date"/>
                     <field name="to_location_id"/>
                     <field name="state"/>
+                    <field name="verify_datetime"/>
                 </tree>
             </field>
         </record>

@@ -117,7 +117,8 @@ class StockPickingBatch(models.Model):
                 'sale_line_id': line_id.sale_order_line_id.id,
                 'name': picking.picking_type_id.display_name,
                 'date_planned': fields.Datetime.now(),
-                'price_unit': carrier_id.product_standard_price if carrier_id else 0,
+                'service_contract_price': carrier_id.product_standard_price if carrier_id else 0,
+                'price_unit': 0,
                 'product_uom': service_product_id.uom_id.id if service_product_id else line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False,
                 'batch_stock_picking_id': picking.id,
                 'vin_code': line_id.vin_id.name if line_id.vin_id else False
@@ -130,7 +131,8 @@ class StockPickingBatch(models.Model):
                 'name': service_product_id.name,
                 'product_uom': service_product_id.uom_id.id,
                 'batch_stock_picking_id': picking.id,
-                'price_unit': carrier_id.product_standard_price,
+                'carrier_id.product_standard_price if carrier_id else ': carrier_id.product_standard_price,
+                'price_unit': 0,
                 'date_planned': fields.Datetime.now(),
             }
             res.append((0, 0, data))
