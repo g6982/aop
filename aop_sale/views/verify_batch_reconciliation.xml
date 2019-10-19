@@ -12,6 +12,9 @@
                         </group>
 
                         <group>
+                            <field name="batch_reconciliation_ids" options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                        </group>
+                        <group>
                             <field name="reconciliation_file_ids" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                         </group>
 

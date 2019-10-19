@@ -16,3 +16,4 @@ class VerifyBatchReconciliation(models.Model):
 
     invoice_line_ids = fields.Many2many('account.invoice.line')
     reconciliation_file_ids = fields.Many2many('reconciliation.file', string='Reconciliation list')
+    batch_reconciliation_ids = fields.Many2many('batch.reconciliation.number', string='Reconciliation batch')

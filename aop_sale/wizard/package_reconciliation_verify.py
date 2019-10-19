@@ -42,6 +42,7 @@ class PackageReconciliation(models.TransientModel):
                 })
         return res
 
+    # 打包批次号
     def package_reconciliation_list(self):
         re_line_ids = self.reconciliation_ids.mapped('re_line_ids')
 
@@ -62,6 +63,11 @@ class PackageReconciliation(models.TransientModel):
                 'reconciliation_file_ids': [(6, 0, self.reconciliation_ids.ids)]
             })
 
+            # 对帐数据关联批次
+            re_line_ids.write({
+                'batch_reconciliation_id': res.id
+            })
+
             invoice_line_ids.write({
                 'verify_batch_id': res.id
             })
@@ -69,6 +75,7 @@ class PackageReconciliation(models.TransientModel):
             # 草稿 -> 对账
             self.reconciliation_ids.confirm_account_invoice()
 
+    # 审核
     def verify_reconciliation_list(self):
         # 对帐批次号
         batch_reconciliation_ids = self.batch_reconciliation_ids
@@ -80,10 +87,13 @@ class PackageReconciliation(models.TransientModel):
         data = {
             'name': self.name,
             'reconciliation_file_ids': [(6, 0, reconciliation_file_ids.ids)],
-            'invoice_line_ids': [(6, 0, invoice_line_ids.ids)]
+            'invoice_line_ids': [(6, 0, invoice_line_ids.ids)],
+            'batch_reconciliation_ids': [(6, 0, batch_reconciliation_ids.ids)]
         }
         res = self.env['verify.batch.reconciliation'].create(data)
-        reconciliation_file_ids.write({
+
+        # 批次里面关联审核
+        batch_reconciliation_ids.write({
             'verify_batch_id': res.id
         })
         batch_reconciliation_ids.verify_account_invoice()
