@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-18 12:37+0000\n"
-"PO-Revision-Date: 2019-10-18 12:37+0000\n"
+"POT-Creation-Date: 2019-10-19 05:31+0000\n"
+"PO-Revision-Date: 2019-10-19 05:31+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -173,7 +173,7 @@ msgid "Advance receipt"
 msgstr "预收票"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:88
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:100
 #, python-format
 msgid "Advance: %s"
 msgstr ""
@@ -212,7 +212,7 @@ msgid "Allowed warehouse"
 msgstr "适用仓库"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/import_sale_order.py:337
+#: code:addons/aop_sale/wizard/import_sale_order.py:338
 #, python-format
 msgid "Already exist VIN: {}"
 msgstr "VIN码已存在: {}"
@@ -385,6 +385,11 @@ msgid "Batch Picking"
 msgstr "批量调度"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__batch_reconciliation_ids
+msgid "Batch Reconciliation"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__batch_stock_picking_id
 msgid "Batch Stock Picking"
 msgstr ""
@@ -393,6 +398,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__batch_no
 msgid "Batch no"
 msgstr "批次号"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice__verify_batch_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__verify_batch_id
+msgid "Batch number"
+msgstr "对账批次号"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_billable_file_view
@@ -734,6 +745,7 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_line_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__create_uid
@@ -757,16 +769,19 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__create_uid
 msgid "Created by"
@@ -780,6 +795,7 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_line_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__create_date
@@ -803,16 +819,19 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__create_date
 msgid "Created on"
@@ -845,7 +864,7 @@ msgstr "客户合同管理"
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
 #: selection:sale.order,order_type:0
 msgid "Customer"
-msgstr "客户"
+msgstr "收入结算单位"
 
 #. module: aop_sale
 #: selection:account.tax.invoice,type:0
@@ -971,7 +990,7 @@ msgid "Discount (%)"
 msgstr "折扣 (%)"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:682
+#: code:addons/aop_sale/models/sale_order.py:684
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order__dispatch_order
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_picking_batch_form_inherit_create_purchase
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_location_to_route_location_wizard_form
@@ -1003,6 +1022,7 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_line_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__display_name
@@ -1026,10 +1046,12 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__display_name
@@ -1037,6 +1059,7 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__display_name
 msgid "Display Name"
@@ -1064,13 +1087,23 @@ msgid "Done"
 msgstr "完成"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:130
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:142
 #, python-format
 msgid "Down Payment"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:127
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Down payment (fixed amount)"
+msgstr "预付定金(固定总额)"
+
+#. module: aop_sale
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Down payment (percentage)"
+msgstr "预付定金(百分比)"
+
+#. module: aop_sale
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:139
 #, python-format
 msgid "Down payment of %s%%"
 msgstr ""
@@ -1230,6 +1263,11 @@ msgid "Followers (Partners)"
 msgstr "关注者(业务伙伴)"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__from_station_name
+msgid "From"
+msgstr "发站城市"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_line_wizard__from_location
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__from_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_import_sale_order_wizard__from_location_id
@@ -1309,8 +1347,8 @@ msgid "Has Outstanding"
 msgstr "有未清项"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/account_invoice.py:124
-#: code:addons/aop_sale/models/sale_order.py:397
+#: code:addons/aop_sale/models/account_invoice.py:126
+#: code:addons/aop_sale/models/sale_order.py:399
 #, python-format
 msgid "Has been monthly!"
 msgstr "已月结!"
@@ -1323,6 +1361,7 @@ msgstr "已月结!"
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__id
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__id
 #: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__id
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__id
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__id
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_line_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__id
@@ -1346,10 +1385,12 @@ msgstr "已月结!"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__id
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__id
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__id
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__id
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__id
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__id
 #: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx__id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__id
@@ -1357,6 +1398,7 @@ msgstr "已月结!"
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__id
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__id
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__id
 msgid "ID"
@@ -1516,7 +1558,7 @@ msgstr "库存路线"
 #. module: aop_sale
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:215
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:230
 #: model:ir.model,name:aop_sale.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
@@ -1539,8 +1581,10 @@ msgstr "发票标示"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_account_invoice_line
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__invoice_line_ids
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__invoice_line_ids
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__invoice_line_ids
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__invoice_line_ids
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_line_tree
 msgid "Invoice Line"
 msgstr "发票行"
@@ -1574,7 +1618,7 @@ msgstr "此发票为信用票的发票"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__invoice_line_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__invoice_line_ids
-#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__invoice_line_ids
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__invoice_line_id
 msgid "Invoice line"
 msgstr "结算清单明细行"
 
@@ -1592,6 +1636,16 @@ msgstr "发票批次"
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__invoice_product_type
 msgid "Invoice product type"
 msgstr "结算产品类型"
+
+#. module: aop_sale
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Invoiceable lines"
+msgstr "可开票的明细行"
+
+#. module: aop_sale
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Invoiceable lines (deduct down payments)"
+msgstr "可开具发票明细 ( 扣除预付定金 )"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
@@ -1666,6 +1720,7 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_base_warehouse____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_line_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard____last_update
@@ -1689,10 +1744,12 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product____last_update
@@ -1700,6 +1757,7 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line____last_update
 msgid "Last Modified on"
@@ -1713,6 +1771,7 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_line_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__write_uid
@@ -1736,16 +1795,19 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__write_uid
 msgid "Last Updated by"
@@ -1759,6 +1821,7 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_line_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__write_date
@@ -1782,10 +1845,12 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_type__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__write_date
@@ -1793,6 +1858,7 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_line_wizard_line__write_date
 msgid "Last Updated on"
@@ -1957,7 +2023,7 @@ msgid "Model"
 msgstr "模型"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:205
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:220
 #: model:ir.actions.act_window,name:aop_sale.action_month_close_wizard_view
 #: model:ir.ui.menu,name:aop_sale.month_close_wizard_id
 #: model:ir.ui.menu,name:aop_sale.month_close_wizard_menu_id
@@ -1991,15 +2057,18 @@ msgstr "我的发票"
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__name
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__name
 #: model:ir.model.fields,field_description:aop_sale.field_base_warehouse__name
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__name
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__name
 #: model:ir.model.fields,field_description:aop_sale.field_contract_stock_rule_line__name
 #: model:ir.model.fields,field_description:aop_sale.field_customer_contract_stock_rule_line__name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__name
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management_type__name
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_attachment_template__name
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__name
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__name
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__name
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__name
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__name
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 msgid "Name"
@@ -2132,6 +2201,7 @@ msgstr "调度/客户 订单类型"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_sale_order_line_view
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__sale_order_line_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking__sale_order_line_id
 #: model:ir.ui.menu,name:aop_sale.sale_order_line_id
 msgid "Order line"
@@ -2182,6 +2252,11 @@ msgstr "逾期"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Overdue invoices, maturity date passed"
 msgstr "逾期发票，超过付款日期"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_package_reconciliation_list_wizard
+msgid "Package"
+msgstr "会计制度选择"
 
 #. module: aop_sale
 #: selection:account.invoice,state:0
@@ -2346,7 +2421,7 @@ msgid "Planned date"
 msgstr "计划日期"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:625
+#: code:addons/aop_sale/models/sale_order.py:627
 #, python-format
 msgid "Please wait until the VIN in stock. Any question, Contact administrator. "
 msgstr "请等待VIN码入库。任何问题，联系管理员。"
@@ -2598,12 +2673,29 @@ msgid "Quotations"
 msgstr "临时订单"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__re_file_id
+msgid "Re File"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__re_line_ids
+msgid "Re Line"
+msgstr ""
+
+#. module: aop_sale
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
 #: model:ir.actions.act_window,name:aop_sale.action_reconciliation_file_view
 #: model:ir.ui.menu,name:aop_sale.reconciliation_file_id
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_reconciliation_file_form
 msgid "Reconciliation"
 msgstr "确认"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_batch_reconciliation_number
+#: model:ir.ui.menu,name:aop_sale.batch_reconciliation_number_id
+msgid "Reconciliation batch"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.account_purchase_invoice_batch_no_action
@@ -2618,6 +2710,18 @@ msgstr "确认"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_invoice_batch_no_tree
 msgid "Reconciliation batch no"
 msgstr "供应商发票登记"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__reconciliation_file_ids
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__reconciliation_ids
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__reconciliation_file_ids
+msgid "Reconciliation list"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__reconciliation_state
+msgid "Reconciliation state"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__origin
@@ -3188,32 +3292,32 @@ msgid "The payment communication that will be automatically populated once the i
 msgstr "一旦发票被验证，付款通知会被自动发出。你应另发通告。"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:75
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:87
 #, python-format
 msgid "The product used to invoice a down payment should be of type 'Service'. Please use another product or update this product."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:72
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:84
 #, python-format
 msgid "The product used to invoice a down payment should have an invoice policy set to \"Ordered quantities\". Please update your deposit product to be able to create a deposit invoice."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:123
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:135
 #, python-format
 msgid "The value of the down payment amount must be positive."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/account_tax_invoice_wizard.py:169
+#: code:addons/aop_sale/wizard/account_tax_invoice_wizard.py:174
 #, python-format
 msgid "There are already exist tax invoice, you must use the same tax invoice no!"
 msgstr "已经存在税务发票了，您必须使用相同的税务发票编号！"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:118
-#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:350
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:130
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:365
 #, python-format
 msgid "There is no income account defined for this product: \"%s\". You may have to install a chart of account from Accounting app, settings menu."
 msgstr ""
@@ -3224,6 +3328,11 @@ msgstr ""
 #: model:ir.model.fields,help:aop_sale.field_supplier_contract_stock_rule_line__name
 msgid "This field will fill the packing origin and the name of its moves"
 msgstr "此字段将填写分拣源和其移动的名称"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__to_station_name
+msgid "To"
+msgstr "到站城市"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_line_wizard__to_location
@@ -3331,6 +3440,7 @@ msgstr "触发其他规则"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__type
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__invoice_type
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_type_id
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__package_type
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__type
 msgid "Type"
 msgstr "类型"
@@ -3504,9 +3614,11 @@ msgid "Vendors"
 msgstr "供应商"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__verify_batch_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_package_reconciliation_list_wizard
 msgid "Verify"
 msgstr "审核"
 
@@ -3514,6 +3626,12 @@ msgstr "审核"
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__verify_user_id
 msgid "Verify User"
 msgstr "审核人"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_verify_batch_reconciliation
+#: model:ir.ui.menu,name:aop_sale.verify_batch_reconciliation_id
+msgid "Verify batch"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__verify_time
@@ -3593,6 +3711,11 @@ msgid "Weight * Volume"
 msgstr "重量* 体积"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__advance_payment_method
+msgid "What do you want to invoice?"
+msgstr "你要开什么发票？"
+
+#. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_stock_location_route__product_selectable
 msgid "When checked, the route will be selectable in the Inventory tab of the Product form.  It will take priority over the Warehouse route. "
 msgstr "一旦勾选了，此路径在产品表格中的库存页面将会显示为可选的。这将会比仓库路径的优先级更高。"
@@ -3618,7 +3741,7 @@ msgid "Write time"
 msgstr "更新时间"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:417
+#: code:addons/aop_sale/models/sale_order.py:419
 #: model:ir.actions.act_window,name:aop_sale.action_write_off_line_order_wizard
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_write_off_order_line_wizard_form
@@ -3645,7 +3768,7 @@ msgid "You can not create recursive base warehouse."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/account_tax_invoice_wizard.py:166
+#: code:addons/aop_sale/wizard/account_tax_invoice_wizard.py:171
 #, python-format
 msgid "You can't create multi different invoice no tax invoice with same invoice"
 msgstr "同一结算清单您不能创建多个不同的发票批次号"
@@ -3673,6 +3796,16 @@ msgstr ""
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_aop_route_line
 msgid "aop.route.line"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_batch_reconciliation_number
+msgid "batch.reconciliation.number"
+msgstr ""
+
+#. module: aop_sale
+#: selection:package.reconciliation.wizard,package_type:0
+msgid "batch_re"
 msgstr ""
 
 #. module: aop_sale
@@ -3797,6 +3930,11 @@ msgstr "调度中心/副部长"
 #: model:res.groups,name:aop_sale.group_external_supplier
 msgid "external supplier"
 msgstr "供应商"
+
+#. module: aop_sale
+#: selection:reconciliation.file,reconciliation_state:0
+msgid "failed"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__file_validate
@@ -4023,6 +4161,16 @@ msgid "name"
 msgstr "合同名称"
 
 #. module: aop_sale
+#: selection:reconciliation.file,reconciliation_state:0
+msgid "order_invoice"
+msgstr ""
+
+#. module: aop_sale
+#: selection:reconciliation.file,reconciliation_state:0
+msgid "order_only"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__originator
 msgid "originator"
 msgstr "发站"
@@ -4031,6 +4179,11 @@ msgstr "发站"
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 msgid "outstanding payments"
 msgstr "待支付款项"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_package_reconciliation_wizard
+msgid "package.reconciliation.wizard"
+msgstr ""
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_change_stock_picking_form
@@ -4073,8 +4226,18 @@ msgid "purchase.order.invoice.wizard"
 msgstr ""
 
 #. module: aop_sale
+#: selection:package.reconciliation.wizard,package_type:0
+msgid "re_file"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_reconciliation_file
 msgid "reconciliation.file"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_reconciliation_file_line
+msgid "reconciliation.file.line"
 msgstr ""
 
 #. module: aop_sale
@@ -4186,6 +4349,11 @@ msgstr "铁路调度"
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__amount_by_group
 msgid "type: [(name, amount, base, formated amount, formated base)]"
 msgstr "类型: [(name, amount, base, formated amount, formated base)]"
+
+#. module: aop_sale
+#: model:ir.model,name:aop_sale.model_verify_batch_reconciliation
+msgid "verify.batch.reconciliation"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_write_off_line_wizard
