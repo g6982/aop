@@ -72,9 +72,6 @@ class PackageReconciliation(models.TransientModel):
                 'verify_batch_id': res.id
             })
 
-            # 草稿 -> 对账
-            self.reconciliation_ids.confirm_account_invoice()
-
     # 审核
     def verify_reconciliation_list(self):
         # 对帐批次号
