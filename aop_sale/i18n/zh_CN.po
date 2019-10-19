@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-19 05:31+0000\n"
-"PO-Revision-Date: 2019-10-19 05:31+0000\n"
+"POT-Creation-Date: 2019-10-19 09:10+0000\n"
+"PO-Revision-Date: 2019-10-19 09:10+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -387,7 +387,7 @@ msgstr "批量调度"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__batch_reconciliation_ids
 msgid "Batch Reconciliation"
-msgstr ""
+msgstr "对账批次"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__batch_stock_picking_id
@@ -921,7 +921,7 @@ msgstr "已交货数量"
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
 msgid "Delivery"
-msgstr "交货"
+msgstr "任务"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__partner_shipping_id
@@ -990,7 +990,7 @@ msgid "Discount (%)"
 msgstr "折扣 (%)"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:684
+#: code:addons/aop_sale/models/sale_order.py:697
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order__dispatch_order
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_picking_batch_form_inherit_create_purchase
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_location_to_route_location_wizard_form
@@ -1348,7 +1348,7 @@ msgstr "有未清项"
 
 #. module: aop_sale
 #: code:addons/aop_sale/models/account_invoice.py:126
-#: code:addons/aop_sale/models/sale_order.py:399
+#: code:addons/aop_sale/models/sale_order.py:412
 #, python-format
 msgid "Has been monthly!"
 msgstr "已月结!"
@@ -1585,6 +1585,7 @@ msgstr "发票标示"
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__invoice_line_ids
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__invoice_line_ids
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__invoice_line_ids
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_line_tree
 msgid "Invoice Line"
 msgstr "发票行"
@@ -2256,7 +2257,7 @@ msgstr "逾期发票，超过付款日期"
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_package_reconciliation_list_wizard
 msgid "Package"
-msgstr "会计制度选择"
+msgstr "生成"
 
 #. module: aop_sale
 #: selection:account.invoice,state:0
@@ -2421,7 +2422,7 @@ msgid "Planned date"
 msgstr "计划日期"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:627
+#: code:addons/aop_sale/models/sale_order.py:640
 #, python-format
 msgid "Please wait until the VIN in stock. Any question, Contact administrator. "
 msgstr "请等待VIN码入库。任何问题，联系管理员。"
@@ -2581,6 +2582,12 @@ msgid "Purchase fill data"
 msgstr "采购回填数据"
 
 #. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_purchase_account_invoice_view
+#: model:ir.ui.menu,name:aop_sale.purchase_account_invoice_id
+msgid "Purchase invoice line"
+msgstr ""
+
+#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_invoice_wizard_form
 msgid "Purchase orders"
 msgstr "采购订单"
@@ -2695,7 +2702,7 @@ msgstr "确认"
 #: model:ir.actions.act_window,name:aop_sale.action_batch_reconciliation_number
 #: model:ir.ui.menu,name:aop_sale.batch_reconciliation_number_id
 msgid "Reconciliation batch"
-msgstr ""
+msgstr "对账批次"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.account_purchase_invoice_batch_no_action
@@ -2716,12 +2723,12 @@ msgstr "供应商发票登记"
 #: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__reconciliation_ids
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__reconciliation_file_ids
 msgid "Reconciliation list"
-msgstr ""
+msgstr "对账数据"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__reconciliation_state
 msgid "Reconciliation state"
-msgstr ""
+msgstr "状态"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__origin
@@ -2953,6 +2960,11 @@ msgstr "序号"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_picking_form_inherit
 msgid "Service Product"
 msgstr "服务产品"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__service_contract_price
+msgid "Service contract price"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route__product_id
@@ -3631,7 +3643,7 @@ msgstr "审核人"
 #: model:ir.actions.act_window,name:aop_sale.action_verify_batch_reconciliation
 #: model:ir.ui.menu,name:aop_sale.verify_batch_reconciliation_id
 msgid "Verify batch"
-msgstr ""
+msgstr "审核批次"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__verify_time
@@ -3741,7 +3753,7 @@ msgid "Write time"
 msgstr "更新时间"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:419
+#: code:addons/aop_sale/models/sale_order.py:432
 #: model:ir.actions.act_window,name:aop_sale.action_write_off_line_order_wizard
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_write_off_order_line_wizard_form
@@ -3888,6 +3900,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.account_invoice_supplier_form__inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_batch_reconciliation_number_form
 msgid "customer price"
 msgstr "确认价"
 
@@ -3934,7 +3947,7 @@ msgstr "供应商"
 #. module: aop_sale
 #: selection:reconciliation.file,reconciliation_state:0
 msgid "failed"
-msgstr ""
+msgstr "失败"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__file_validate
@@ -4163,12 +4176,12 @@ msgstr "合同名称"
 #. module: aop_sale
 #: selection:reconciliation.file,reconciliation_state:0
 msgid "order_invoice"
-msgstr ""
+msgstr "成功"
 
 #. module: aop_sale
 #: selection:reconciliation.file,reconciliation_state:0
 msgid "order_only"
-msgstr ""
+msgstr "无结算清单"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__originator
@@ -4199,6 +4212,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_form
 msgid "price_unit"
 msgstr ""
+
+#. module: aop_sale
+#: model:res.groups,name:aop_sale.group_purchase_button_approve_button
+msgid "purchase approve button"
+msgstr "询价单完成任务"
 
 #. module: aop_sale
 #: model:res.groups,name:aop_sale.group_purchase_order_button_cancel_button

@@ -474,7 +474,7 @@
         <menuitem id="billable_file_id"
                   name="Billable"
                   action="action_billable_file_view"
-                  parent="account.menu_finance_receivables"/>
+                  parent="sale.sale_order_menu"/>
 
 <!--        对账-->
         <record id="action_reconciliation_file_view" model="ir.actions.act_window">

@@ -308,11 +308,20 @@
             <field name="category_id" ref="module_aop_sale_others"/>
         </record>
 
+        <!--    采购/采购/询价单/完成任务    -->
+        <record id="group_purchase_button_approve_button" model="res.groups">
+            <field name="name">purchase approve button</field>
+            <field name="category_id" ref="module_aop_sale_others"/>
+        </record>
+
         <!--    物流网络/作业/任务/更改任务    -->
         <record id="group_change_stock_picking_wizard_button" model="res.groups">
             <field name="name">change stock picking wizard button</field>
             <field name="category_id" ref="module_aop_sale_others"/>
         </record>
+
+
+
 
         <!--    结算清单/客户/回款结算清单/创建税务发票    -->
         <record id="group_generate_tax_invoice_button" model="res.groups">
