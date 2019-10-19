@@ -264,3 +264,20 @@ msgstr "标准时效"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
 msgid "Delivery"
 msgstr "任务"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__name
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__name
+msgid "Name"
+msgstr "对账批次号"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_package_reconciliation_list_wizard
+msgid "Package"
+msgstr "生成"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__invoice_line_ids
+msgid "Invoice Line"
+msgstr "结算清单行"
+
