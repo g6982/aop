@@ -518,5 +518,20 @@
                   action="action_verify_batch_reconciliation"
                   parent="account.menu_finance_receivables"/>
 
+<!--        供应商账单明细行-->
+        <record id="action_purchase_account_invoice_view" model="ir.actions.act_window">
+            <field name="name">Purchase invoice line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.invoice.line</field>
+            <field name="domain">[('invoice_id.type', '=', 'in_invoice')]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="purchase_account_invoice_id"
+                  name="Purchase invoice line"
+                  action="action_purchase_account_invoice_view"
+                  parent="account.menu_finance_payables"/>
+
     </data>
 </odoo>

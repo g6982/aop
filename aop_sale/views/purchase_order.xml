@@ -17,6 +17,10 @@
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
 
+                <xpath expr="//header/field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,to approve,purchase" readonly="1"/>
+                </xpath>
+
                 <xpath expr="//field[@name='partner_id']" position="attributes">
                     <attribute name="options">{'no_quick_create': True, 'no_create_edit': True}</attribute>
                 </xpath>
@@ -44,9 +48,13 @@
                     <field name="train_type"/>
                     <field name="cargo_line"/>
                     <field name="box_number"/>
+                    <field name="service_contract_price" invisible="1"/>
                     <field name="sale_line_id" readonly="1"/>
                 </xpath>
 
+                <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                    <attribute name="decoration-danger">service_contract_price != price_unit</attribute>
+                </xpath>
                 <!-- 通过Email发送按钮隐藏 -->
                 <xpath expr="//button[@name='action_rfq_send'][1]" position="attributes">
                     <attribute name="invisible">1</attribute>
