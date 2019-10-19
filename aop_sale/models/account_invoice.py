@@ -44,7 +44,7 @@ class AccountInvoice(models.Model):
              " * The 'Paid' status is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled.\n"
              " * The 'Cancelled' status is used when user cancel invoice.")
 
-    verify_batch_id = fields.Many2one('batch.reconciliation.number', string='Batch number')
+    verify_batch_id = fields.Many2one('batch.reconciliation.number', string='Batch number', index=True)
 
     ###################################################################################################################
     ###################################################################################################################
