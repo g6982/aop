@@ -69,11 +69,21 @@ class AccountInvoice(models.Model):
             # invoice.move_id.ref = invoice.reference
         self._check_duplicate_supplier_reference()
 
-        if self.type == 'in_invoice':
-            return self.write({
+        self.filtered(lambda item: item.type == 'in_invoice').write({
                 'state': 'reconciliation'
             })
-        return self.write({'state': 'open'})
+
+        self.filtered(lambda item: item.type != 'in_invoice').write({
+            'state': 'open'
+        })
+
+        return
+
+        # if self.type == 'in_invoice':
+        #     return self.write({
+        #         'state': 'reconciliation'
+        #     })
+        # return self.write({'state': 'open'})
 
     # 取消支付
     @api.one
