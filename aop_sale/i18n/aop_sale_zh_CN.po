@@ -266,7 +266,6 @@ msgid "Delivery"
 msgstr "任务"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__name
 #: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__name
 msgid "Name"
 msgstr "对账批次号"
@@ -274,10 +273,24 @@ msgstr "对账批次号"
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_package_reconciliation_list_wizard
 msgid "Package"
-msgstr "生成"
+msgstr "生成对账批次"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__invoice_line_ids
 msgid "Invoice Line"
 msgstr "结算清单行"
 
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__name
+msgid "Name"
+msgstr "批次号"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_package_reconciliation_list_wizard
+msgid "Verify"
+msgstr "生成审核批次"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__name
+msgid "Name"
+msgstr "审核批次号"

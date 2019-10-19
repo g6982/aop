@@ -20,6 +20,7 @@
                     <group>
                         <field name="batch_reconciliation_ids"
                                attrs="{'invisible': [('package_type', '=', 're_file')]}"
+                               options="{'no_quick_create': True, 'no_create_edit': True}"
                                widget="many2many_tags"/>
                     </group>
                 </sheet>

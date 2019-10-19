@@ -17,7 +17,7 @@ odoo.define('aop_sale.verify_batch', function (require) {
 
                     for (let i = 0; i < show_button_model.length; i++) {
                         if (tree_model == show_button_model[i]) {
-                            let button2 = $("<button type='button' class='btn btn-primary btn-default'>审核批次</button>")
+                            let button2 = $("<button type='button' class='btn btn-primary btn-default'>生成审核批次</button>")
                                 .click(self.proxy('verify_reconciliation_file'));
                             self.$buttons.append(button2);
                         }
