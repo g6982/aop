@@ -47,3 +47,14 @@ msgstr "创建付款结算清单"
 #: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
 msgid "Vendor Bills"
 msgstr "付款结算清单"
+
+#. module: purchase
+#: model_terms:ir.ui.view,arch_db:purchase.view_purchase_order_filter
+#: selection:purchase.order,state:0 selection:purchase.report,state:0
+msgid "To Approve"
+msgstr "确认"
+
+#. module: purchase
+#: model_terms:ir.ui.view,arch_db:purchase.purchase_order_form
+msgid "Approve Order"
+msgstr "完成任务"

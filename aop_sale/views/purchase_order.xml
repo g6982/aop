@@ -100,6 +100,11 @@
                     <attribute name="groups">aop_sale.group_purchase_order_button_draft_button</attribute>
                 </xpath>
 
+                <!-- 完成任务按钮 -->
+                <xpath expr="//button[@name='button_approve']" position="attributes">
+                    <attribute name="groups">aop_sale.group_purchase_button_approve_button</attribute>
+                </xpath>
+
 
             </field>
         </record>
