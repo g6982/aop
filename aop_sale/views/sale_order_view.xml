@@ -501,6 +501,7 @@
             <field name="model">sale.order.line</field>
             <field name="arch" type="xml">
                 <tree>
+                    <field name="display_name"/>
                     <field name="order_id"/>
                     <field name="product_id"/>
                     <field name="from_location_id"/>
@@ -528,6 +529,7 @@
             <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
             <field name="arch" type="xml">
                 <xpath expr="//search" position="inside">
+                    <field name="id"/>
                     <filter string="Quotations" name="draft" domain="[('state','in',('draft', 'sent'))]"/>
                     <filter string="Sales Orders" name="sales" domain="[('state','in',('sale','done'))]"/>
                     <separator/>
