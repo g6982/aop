@@ -471,7 +471,7 @@
         <menuitem id="write_off_batch_menu_id"
                   name="Write-off batch"
                   action="action_write_off_batch_view"
-                  parent="aop_sale.handover_vin_menu_id"
+                  parent="handover_vin_menu_id"
                   sequence="20"
         />
 
