@@ -327,7 +327,8 @@
             <field name="model">account.invoice.line</field>
             <field name="arch" type="xml">
                 <tree string="Invoice Line" create="0" import="0" delete="0">
-                    <field name="product_id"/>
+                    <field name="partner_id" string="Supplier"/>
+                    <field name="product_id" string="Service Product"/>
                     <field name="name"/>
                     <field name="purchase_line_id"/>
                     <field name="sale_order_line_id"/>
@@ -335,12 +336,17 @@
                     <field name="location_id"/>
                     <field name="location_dest_id"/>
                     <field name="account_id" groups="account.group_account_user"/>
-                    <field name="quantity"/>
-                    <field name="uom_id" groups="uom.group_uom"/>
-                    <field name="price_unit"/>
-                    <field name="discount" groups="base.group_no_one"/>
-                    <field name="price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
-                    <field name="price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                    <field name="quantity" invisible="1"/>
+                    <field name="uom_id" invisible="1" groups="uom.group_uom"/>
+                    <field name="line_price_unit"/>
+                    <field name="contract_price"/>
+                    <field name="purchase_line_price" string="Purchase price"/>
+                    <field name="tmp_estimate" string="cost estimate"/>
+                    <field name="cost_passage"/>
+                    <field name="price_unit" string="customer price"/>
+                    <field name="discount" invisible="1" groups="base.group_no_one"/>
+                    <field name="price_subtotal" invisible="1" groups="account.group_show_line_subtotals_tax_excluded"/>
+                    <field name="price_total" invisible="1" groups="account.group_show_line_subtotals_tax_included"/>
                     <field name="currency_id" invisible="1"/>
                 </tree>
             </field>
