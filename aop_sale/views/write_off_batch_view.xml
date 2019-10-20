@@ -10,7 +10,9 @@
                         <button name="generate_account_invoice"
                                 string="Create invoice"
                                 type="object"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}"
                                 class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done" readonly="1"/>
                     </header>
                     <sheet>
                         <group>
