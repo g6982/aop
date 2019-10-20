@@ -37,6 +37,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
     selected_order_lines = fields.One2many('make.invoice.sale.order.line', 'payment_inv_id', string='Order lines')
 
     period_id = fields.Many2one('account.period', 'Period')
+    write_off_batch_number_id = fields.Many2one('write.off.batch.number', 'Write-off batch')
 
     @api.model
     def default_get(self, fields_list):
@@ -53,6 +54,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
             res['selected_order_lines'] = data
 
         res['period_id'] = self._context.get('period_id')
+        res['write_off_batch_number_id'] = self._context.get('write_off_batch_number_id')
         return res
 
     @api.multi
@@ -225,6 +227,11 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     'context': context,
                     'target': 'new',
                 }
+
+            if self.write_off_batch_number_id:
+                self.write_off_batch_number_id.write({
+                    'invoice_line_ids': [(6, 0, res.mapped('invoice_line_ids').ids)]
+                })
 
             return {
                 'name': _('Invoice'),

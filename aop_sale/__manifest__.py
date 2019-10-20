@@ -51,6 +51,7 @@
         'views/reconciliation_file.xml',
         'views/batch_reconciliation_number.xml',
         'views/verify_batch_reconciliation.xml',
+        'views/write_off_batch_view.xml',
         'views/dispatch_order.xml',
         'wizard/account_tax_invoice_wizard.xml',
         'wizard/change_stock_picking.xml',

@@ -524,5 +524,16 @@
                   action="action_purchase_account_invoice_view"
                   parent="account.menu_finance_payables"/>
 
+        <record id="action_write_off_batch_view" model="ir.actions.act_window">
+            <field name="name">Write-off batch</field>
+            <field name="res_model">write.off.batch.number</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="write_off_batch_menu_id"
+                  name="Write-off batch"
+                  action="action_write_off_batch_view"
+                  parent="sale.sale_order_menu"/>
     </data>
 </odoo>

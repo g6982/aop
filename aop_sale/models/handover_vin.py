@@ -42,6 +42,8 @@ class HandoverVin(models.Model):
     file_planned_date = fields.Date('Planned date', related='order_line_id.file_planned_date', readonly=True)
     to_location_id = fields.Many2one('res.partner', related='order_line_id.to_location_id', readonly=True)
 
+    write_off_batch_id = fields.Many2one('write.off.batch.number', 'Write-off batch')
+
     @api.multi
     @api.depends('name')
     def _compute_sale_order_line(self):
