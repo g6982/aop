@@ -54,6 +54,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
             res['selected_order_lines'] = data
 
         res['period_id'] = self._context.get('period_id')
+        res['write_off_batch_number_id'] = self._context.get('write_off_batch_number_id')
         return res
 
     @api.multi
