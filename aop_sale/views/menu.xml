@@ -459,9 +459,21 @@
 
         <menuitem id="handover_vin_menu_id"
                   name="Handover VIN"
-                  action="action_handover_vin_view"
                   parent="sale.sale_order_menu"/>
 
+        <menuitem id="handover_vin_sub_menu_id"
+                  name="Handover VIN"
+                  action="action_handover_vin_view"
+                  parent="handover_vin_menu_id"
+                  sequence="10"
+        />
+
+        <menuitem id="write_off_batch_menu_id"
+                  name="Write-off batch"
+                  action="action_write_off_batch_view"
+                  parent="aop_sale.handover_vin_menu_id"
+                  sequence="20"
+        />
 
         <record id="action_billable_file_view" model="ir.actions.act_window">
             <field name="name">Billable</field>
@@ -531,9 +543,6 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem id="write_off_batch_menu_id"
-                  name="Write-off batch"
-                  action="action_write_off_batch_view"
-                  parent="sale.sale_order_menu"/>
+
     </data>
 </odoo>
