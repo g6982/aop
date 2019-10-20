@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <data noupdate="1">
+    <data noupdate="0">
         <record model="ir.module.category" id="module_aop_sale">
             <field name="name">AOP</field>
             <field name="sequence">1000</field>
@@ -283,6 +283,12 @@
             <field name="category_id" ref="module_aop_sale_others"/>
         </record>
 
+        <!--    销售/订单/交接单管理/生成核销批次    -->
+        <record id="group_create_write_off_batch_button" model="res.groups">
+            <field name="name">create write off batch button</field>
+            <field name="category_id" ref="module_aop_sale_others"/>
+        </record>
+
         <!--    采购/采购/采购订单/生成结算清单    -->
         <record id="group_generate_purchase_order_invoice_button" model="res.groups">
             <field name="name">generate purchase order invoice button</field>
@@ -323,11 +329,7 @@
 
 
 
-        <!--    结算清单/客户/回款结算清单/创建税务发票    -->
-        <record id="group_generate_tax_invoice_button" model="res.groups">
-            <field name="name">generate tax invoice button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
-        </record>
+
 
         <!--    结算清单/客户/回款结算清单/验证    -->
         <record id="group_action_invoice_open_button" model="res.groups">
