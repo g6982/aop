@@ -6,18 +6,30 @@
             <field name="model">write.off.line.wizard</field>
             <field name="arch" type="xml">
                 <form>
-                    <field name="write_off_line_ids">
-                        <tree editable="bottom">
-                            <field name="sale_order_line_id"/>
-                            <field name="handover_number"/>
-                            <field name="file_validate" filename="file_name"/>
-                            <field name="file_name" invisible="1"/>
-                        </tree>
-                    </field>
+<!--                    <field name="write_off_line_ids">-->
+<!--                        <tree editable="bottom">-->
+<!--                            <field name="sale_order_line_id"/>-->
+<!--                            <field name="handover_number"/>-->
+<!--                            <field name="file_validate" filename="file_name"/>-->
+<!--                            <field name="file_name" invisible="1"/>-->
+<!--                        </tree>-->
+<!--                    </field>-->
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="handover_vin_ids"/>
+                    </group>
 
                     <footer>
-                        <button name="start_write_off" string="Write-off" class="oe_highlight"
-                                type="object"/>
+<!--                        <button name="start_write_off"-->
+<!--                                attrs="{'invisible': [('write_off_line_ids', '=', False)]}"-->
+<!--                                string="Write-off" class="oe_highlight"-->
+<!--                                type="object"/>-->
+
+                        <button name="batch_write_off" string="Batch" type="object" class="oe_highlight"/>
                     </footer>
                 </form>
             </field>

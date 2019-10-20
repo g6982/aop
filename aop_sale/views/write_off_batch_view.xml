@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_write_off_batch_number_form" model="ir.ui.view">
+            <field name="name">write.off.batch.number.form</field>
+            <field name="model">write.off.batch.number</field>
+            <field name="arch" type="xml">
+                <form create="0">
+                    <header>
+                        <button name="generate_account_invoice"
+                                string="Create invoice"
+                                type="object"
+                                class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+
+                        <group>
+                            <field name="handover_ids"/>
+                        </group>
+
+                        <group>
+                            <field name="invoice_line_ids"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_write_off_batch_number_tree" model="ir.ui.view">
+            <field name="name">write.off.batch.number.tree</field>
+            <field name="model">write.off.batch.number</field>
+            <field name="arch" type="xml">
+                <tree create="0" import="0">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>
