@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-20 08:49+0000\n"
-"PO-Revision-Date: 2019-10-20 08:49+0000\n"
+"POT-Creation-Date: 2019-10-20 11:34+0000\n"
+"PO-Revision-Date: 2019-10-20 11:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3801,10 +3801,12 @@ msgid "Write-off"
 msgstr "核销"
 
 #. module: aop_sale
+#: code:addons/aop_sale/wizard/write_off_order_line.py:66
 #: model:ir.actions.act_window,name:aop_sale.action_write_off_batch_view
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__write_off_batch_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__write_off_batch_number_id
 #: model:ir.ui.menu,name:aop_sale.write_off_batch_menu_id
+#, python-format
 msgid "Write-off batch"
 msgstr "审核批次"
 
