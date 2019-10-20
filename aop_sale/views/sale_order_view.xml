@@ -508,6 +508,7 @@
             <field name="arch" type="xml">
                 <tree create="0" import="0" edit="0" delete="0">
                     <field name="display_name"/>
+                    <field name="order_partner_id"/>
                     <field name="order_id" invisible="1"/>
                     <field name="id" invisible="1"/>
                     <field name="product_id"/>
@@ -517,14 +518,14 @@
                     <field name="to_station_name"/>
                     <field name="handover_number"/>
                     <field name="vin"/>
-                    <field name="order_partner_id"/>
                     <field name="current_picking_type_id"/>
                     <field name="picking_confirm_date"/>
                     <field name="name" invisible="1"/>
-                    <field name="salesman_id"/>
+                    <field name="salesman_id" invisible="1"/>
                     <field name="product_uom_qty" string="Qty" invisible="1"/>
                     <field name="product_uom" string="Unit of Measure" invisible="1" groups="uom.group_uom"/>
                     <field name="price_unit" string="Sale line price" sum="Total" widget="monetary"/>
+                    <field name="invoice_lines" string="Invoice Lines"/>
                     <field name="create_date"/>
 
                 </tree>
