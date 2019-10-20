@@ -46,6 +46,13 @@ class AccountTaxInvoice(models.Model):
                 line_id.invoice_line_id.tax_invoice_amount -= line_id.price_unit
         return super(AccountInvoice, self).unlink()
 
+    @api.multi
+    def name_get(self):
+        TAX_NAME = _('Tax invoices')
+        result = []
+        for inv in self:
+            result.append((inv.id, "%s %s" % (inv.number or TAX_NAME, inv.name or '')))
+        return result
 
 class AccountTaxInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
