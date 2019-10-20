@@ -37,6 +37,9 @@
             <field name="arch" type="xml">
                 <tree create="0" import="0">
                     <field name="name"/>
+                    <field name="state"/>
+                     <field name="create_date"/>
+                     <field name="write_date"/>
                 </tree>
             </field>
         </record>

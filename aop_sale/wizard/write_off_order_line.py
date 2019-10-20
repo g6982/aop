@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 import logging
 from odoo.exceptions import UserError
 
@@ -45,9 +45,9 @@ class WriteOffLineWizard(models.TransientModel):
 
     def batch_write_off(self):
         if not self.handover_vin_ids:
-            raise UserError('You have not select records!')
+            raise UserError(_('You have not select records!'))
         if self.handover_vin_ids.filtered(lambda x: x.write_off_batch_id):
-            raise UserError('You can not select the records that have write-off')
+            raise UserError(_('You can not select the records that have write-off'))
 
         data = {
             'name': self.name,
@@ -63,7 +63,7 @@ class WriteOffLineWizard(models.TransientModel):
 
         # 跳转到导入成功后的tree界面
         return {
-            'name': 'Write-off batch',
+            'name': _('Write-off batch'),
             'view_type': 'form',
             'view_id': False,
             'views': [(view_id, 'tree'), (form_id, 'form')],

@@ -232,6 +232,7 @@ msgstr "交接单总价格"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_search
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__state
 #: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__state
+#: model:ir.model.fields,field_description:aop_sale.field_write_off_batch_number__state
 msgid "State"
 msgstr "状态"
 
@@ -318,3 +319,8 @@ msgstr "供应商"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_write_off_order_line_wizard_form
 msgid "Batch"
 msgstr "生成审核批次"
+
+#. module: aop_sale
+#: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:238
+msgid "Invoice"
+msgstr "回款结算清单"

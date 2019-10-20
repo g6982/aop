@@ -193,7 +193,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
     # 根据订单行生成
     def create_account_invoice(self, order_line_amount=False):
         if not self.selected_order_lines:
-            raise UserError('You must select more than one record.')
+            raise UserError(_('You must select more than one record.'))
 
         invoice_res = []
         if self.invoice_product_type == 'main_product':
