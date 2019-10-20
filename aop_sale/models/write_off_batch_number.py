@@ -14,6 +14,10 @@ class WriteOffBatchNUmber(models.Model):
     handover_ids = fields.Many2many('handover.vin', string='Handover')
 
     invoice_line_ids = fields.Many2many('account.invoice.line', string='Invoice lines')
+    state = fields.Selection([
+        ('draft', 'draft'),
+        ('done', 'Done')
+    ], default='draft')
 
     @api.multi
     def generate_account_invoice(self):

@@ -230,7 +230,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
             if self.write_off_batch_number_id:
                 self.write_off_batch_number_id.write({
-                    'invoice_line_ids': [(6, 0, res.mapped('invoice_line_ids').ids)]
+                    'invoice_line_ids': [(6, 0, res.mapped('invoice_line_ids').ids)],
+                    'state': 'done'
                 })
 
             return {
