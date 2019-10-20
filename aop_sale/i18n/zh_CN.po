@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-19 14:15+0000\n"
-"PO-Revision-Date: 2019-10-19 14:15+0000\n"
+"POT-Creation-Date: 2019-10-20 06:29+0000\n"
+"PO-Revision-Date: 2019-10-20 06:29+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -400,8 +400,8 @@ msgid "Batch no"
 msgstr "批次号"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_account_invoice__verify_batch_id
-#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__verify_batch_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__verify_batch_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__verify_batch_id
 msgid "Batch number"
 msgstr "对账批次号"
 
@@ -1357,7 +1357,7 @@ msgid "Has Outstanding"
 msgstr "有未清项"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/account_invoice.py:136
+#: code:addons/aop_sale/models/account_invoice.py:134
 #: code:addons/aop_sale/models/sale_order.py:412
 #, python-format
 msgid "Has been monthly!"
@@ -2604,6 +2604,7 @@ msgstr "采购订单"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 msgid "Purchase price"
 msgstr "采购价"
 
@@ -2967,6 +2968,7 @@ msgstr "序号"
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__service_product_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__service_product_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_picking_form_inherit
 msgid "Service Product"
@@ -3072,7 +3074,7 @@ msgstr "合同开始时间"
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__state
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_search
 msgid "State"
-msgstr "状态"
+msgstr "省/ 州"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_invoice_order_statement
@@ -3140,6 +3142,7 @@ msgstr "小计"
 #: selection:aop.contract,type:0
 #: selection:customer.aop.contract,type:0
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__partner_id
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: selection:supplier.aop.contract,type:0
 msgid "Supplier"
 msgstr "供应商管理"
@@ -3335,7 +3338,7 @@ msgid "The value of the down payment amount must be positive."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/account_tax_invoice_wizard.py:174
+#: code:addons/aop_sale/wizard/account_tax_invoice_wizard.py:177
 #, python-format
 msgid "There are already exist tax invoice, you must use the same tax invoice no!"
 msgstr "已经存在税务发票了，您必须使用相同的税务发票编号！"
@@ -3646,7 +3649,7 @@ msgstr "供应商"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_package_reconciliation_list_wizard
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_verify_batch_reconciliation_form
 msgid "Verify"
-msgstr "审核"
+msgstr "审核批次号"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__verify_user_id
@@ -3794,7 +3797,7 @@ msgid "You can not create recursive base warehouse."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/account_tax_invoice_wizard.py:171
+#: code:addons/aop_sale/wizard/account_tax_invoice_wizard.py:174
 #, python-format
 msgid "You can't create multi different invoice no tax invoice with same invoice"
 msgstr "同一结算清单您不能创建多个不同的发票批次号"
@@ -3882,6 +3885,7 @@ msgstr ""
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_supplier_tree_inherit_aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 msgid "cost estimate"
 msgstr "成本确认"
 
@@ -3914,6 +3918,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.account_invoice_supplier_form__inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_batch_reconciliation_number_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_verify_batch_reconciliation_form
 msgid "customer price"
