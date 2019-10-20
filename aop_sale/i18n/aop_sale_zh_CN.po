@@ -314,3 +314,7 @@ msgstr "审核批次号"
 msgid "Supplier"
 msgstr "供应商"
 
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_write_off_order_line_wizard_form
+msgid "Batch"
+msgstr "生成审核批次"
