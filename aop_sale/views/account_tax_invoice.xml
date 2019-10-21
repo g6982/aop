@@ -78,27 +78,29 @@
             <field name="name">account.tax.invoice.tree</field>
             <field name="model">account.tax.invoice</field>
             <field name="arch" type="xml">
-                <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" string="Invoice">
+                <tree create="0" import="0" decoration-info="state == 'draft'" decoration-muted="state == 'cancel'" string="Invoice">
                     <field name="tax_invoice_no"/>
                     <field name="partner_id" groups="base.group_user" string="Customer"/>
                     <field name="date_invoice"/>
-                    <field name="number"/>
+                    <field name="number" invisible="1"/>
                     <field name="commercial_partner_id" invisible="1"/>
                     <field name="reference" invisible="1"/>
                     <field name="name" invisible="1"/>
                     <field name="journal_id" invisible="1"/>
                     <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
-                    <field name="user_id"/>
-                    <field name="date_due"/>
-                    <field name="origin"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="date_due" invisible="1"/>
+                    <field name="origin" invisible="1"/>
                     <field name="amount_untaxed" string="Tax Excluded" sum="Total"/>
                     <field name="amount_tax" sum="Total"/>
                     <field name="amount_total_signed" string="Total" sum="Total"/>
-                    <field name="residual_signed" string="Amount Due" sum="Amount Due"/>
+                    <field name="residual_signed" string="Amount Due" sum="Amount Due" invisible="1"/>
                     <field name="currency_id" invisible="1"/>
                     <field name="company_currency_id" invisible="1"/>
-                    <field name="state"/>
+                    <field name="state" invisible="1"/>
                     <field name="type" invisible="context.get('type',True)"/>
+                    <field name="create_date"/>
+                    <field name="write_date"/>
                 </tree>
             </field>
         </record>
@@ -119,15 +121,20 @@
             <field name="name">account.tax.invoice.form</field>
             <field name="model">account.tax.invoice</field>
             <field name="arch" type="xml">
-                <form string="Invoice" class="o_invoice_form">
+                <form create="0" string="Invoice" class="o_invoice_form">
+
                 <header>
+                    <!--
                     <button name="action_invoice_sent" string="Send &amp; Print" type="object" attrs="{'invisible':['|',('sent','=',True), ('state', 'not in', ('open','in_payment','paid'))]}" class="oe_highlight" groups="base.group_user"/>
                     <button name="action_invoice_sent" string="Send &amp; Print" type="object" attrs="{'invisible':['|',('sent','=',False), ('state', 'not in', ('open','in_payment','paid'))]}" groups="base.group_user"/>
                     <button name="action_invoice_open" type="object" states="draft" string="Validate" class="oe_highlight o_invoice_validate" groups="account.group_account_invoice"/>
                     <button name="preview_invoice" type="object" string="Preview"/>
                     <button name="action_invoice_draft" states="cancel" string="Reset to Draft" type="object" groups="account.group_account_invoice"/>
-                    <field name="state" widget="statusbar" nolabel="1" statusbar_visible="draft,open,paid"/>
+                    -->
+                    <field name="state" invisible="1" widget="statusbar" nolabel="1" statusbar_visible="draft,open,paid"/>
+
                 </header>
+
                 <div groups="account.group_account_invoice" class="alert alert-info" role="alert" style="margin-bottom:0px;" attrs="{'invisible': [('has_outstanding','=',False)]}">
                     You have <bold><a class="alert-link" href="#outstanding" role="button">outstanding payments</a></bold> for this customer. You can allocate them to mark this invoice as paid.
                 </div>
@@ -156,14 +163,14 @@
                                 context="{'search_default_customer':1, 'show_address': 1, 'default_is_company': True, 'show_vat': True}"
                                 options='{"always_reload": True, "no_quick_create": True}'
                                 domain="[('customer', '=', True)]" required="1"/>
-                            <field name="payment_term_id"/>
-                            <field name="cash_rounding_id" groups="account.group_cash_rounding"/>
+                            <field name="payment_term_id" invisible="1"/>
+                            <field name="cash_rounding_id"  groups="account.group_cash_rounding"/>
                         </group>
                         <group>
                             <field name="date_invoice" options="{'datepicker': {'warn_future': true}}"/>
-                            <field name="date_due" attrs="{'readonly': ['|',('payment_term_id','!=',False), ('state', 'in', ['open', 'in_payment', 'paid'])]}" force_save="1"/>
+                            <field name="date_due" attrs="{'invisible': 1,'readonly': ['|',('payment_term_id','!=',False), ('state', 'in', ['open', 'in_payment', 'paid'])]}" force_save="1"/>
                             <field name="move_name" invisible="1"/>
-                            <field name="user_id" groups="base.group_user"/>
+                            <field name="user_id" invisible="1" groups="base.group_user"/>
                             <label for="currency_id" groups="base.group_multi_currency"/>
                             <div groups="base.group_multi_currency">
                                 <field name="currency_id" options="{'no_create': True, 'no_open': True}" class="oe_inline"/>
