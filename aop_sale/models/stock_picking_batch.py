@@ -231,7 +231,7 @@ class StockPickingBatch(models.Model):
             carrier_set_data = self._parse_from_to_picking_type_ids(carrier_id=carrier_id)
 
             if picking_set_data - carrier_set_data:
-                return False
+                continue
 
             data.append(carrier_id.partner_id.id)
 
