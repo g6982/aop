@@ -327,7 +327,11 @@
         </record>
 
 
-
+        <!--    结算清单/客户/回款结算清单/创建税务发票    -->
+        <record id="group_generate_tax_invoice_button" model="res.groups">
+            <field name="name">generate tax invoice button</field>
+            <field name="category_id" ref="module_aop_sale_others"/>
+        </record>
 
 
 
