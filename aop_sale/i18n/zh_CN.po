@@ -3843,7 +3843,7 @@ msgstr "你有"
 #: code:addons/aop_sale/models/account_tax_invoice.py:51
 #, python-format
 msgid "Tax invoices"
-msgstr "税务发票"
+msgstr "发票"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_account_tax_invoice
