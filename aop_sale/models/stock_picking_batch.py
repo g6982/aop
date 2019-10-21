@@ -178,11 +178,19 @@ class StockPickingBatch(models.Model):
     def _compute_allow_partner_ids(self):
         # self.ensure_one()
         for line in self:
-            sale_order_line_ids = line.mapped('picking_ids').mapped('sale_order_line_id') if line.mapped('picking_ids') else False
+            picking_ids = line.mapped('picking_ids')
+            sale_order_line_ids = line.mapped('picking_ids').mapped('sale_order_line_id') \
+                if line.mapped('picking_ids') else False
 
             if not sale_order_line_ids:
-                line.allow_partner_ids = False
-                line.limit_state = 'un_limit'
+                # 判断是否是接车任务
+                partner_ids = self.find_supplier_contract_partner(picking_ids)
+                if not partner_ids:
+                    line.allow_partner_ids = False
+                    line.limit_state = 'un_limit'
+                else:
+                    line.allow_partner_ids = [(6, 0, partner_ids)]
+                    line.limit_state = 'limit'
             else:
                 customer_contract_ids = sale_order_line_ids.mapped('customer_contract_id')
                 if not customer_contract_ids:
@@ -191,16 +199,57 @@ class StockPickingBatch(models.Model):
                 res = line.env['supplier.aop.contract'].search([
                     ('allow_customer_contract_ids', 'in', customer_contract_ids.ids)
                 ])
-                _logger.info({
-                    'res': res,
-                    'partner_ids': res.mapped('partner_id').ids
-                })
                 if not res:
-                    line.allow_partner_ids = False
-                    line.limit_state = 'un_limit'
+                    partner_ids = self.find_supplier_contract_partner(picking_ids)
+                    if not partner_ids:
+                        line.allow_partner_ids = False
+                        line.limit_state = 'un_limit'
+                    else:
+                        line.allow_partner_ids = [(6, 0, partner_ids)]
+                        line.limit_state = 'limit'
                 else:
                     line.allow_partner_ids = [(6, 0, res.mapped('partner_id').ids)]
                     line.limit_state = 'limit'
+
+    # 接车任务？
+    # 判断 来源和目的地 以及步骤
+    def find_supplier_contract_partner(self, picking_ids):
+        data = []
+        location_ids = picking_ids.mapped('location_id')
+        location_dest_ids = picking_ids.mapped('location_dest_id')
+        picking_type_ids = picking_ids.mapped('picking_type_id')
+
+        carrier_ids = self.env['delivery.carrier'].search([
+            ('from_location_id', 'in', location_ids.ids),
+            ('to_location_id', 'in', location_dest_ids.ids),
+            ('picking_type_id', 'in', picking_type_ids.ids),
+        ])
+        picking_set_data = self._parse_from_to_picking_type_ids(picking_ids=picking_ids)
+
+        # 行的判断： 判断来源、目的、步骤
+        for carrier_id in carrier_ids:
+            carrier_set_data = self._parse_from_to_picking_type_ids(carrier_id=carrier_id)
+
+            if picking_set_data - carrier_set_data:
+                return False
+
+            data.append(carrier_id.partner_id.id)
+
+        return data
+
+    # 组成集合
+    def _parse_from_to_picking_type_ids(self, picking_ids=False, carrier_id=False):
+        data = []
+        if carrier_id:
+            data.apped(
+                (carrier_id.from_location_id.id, carrier_id.to_location_id.id, carrier_id.picking_type_id.id)
+            )
+        elif picking_ids:
+            for picking_id in picking_ids:
+                data.append(
+                    (picking_id.location_id.id, picking_id.location_dest_id.id, picking_id.picking_type_id.id)
+                )
+        return set(data)
 
 
 class MountCarPlan(models.Model):
