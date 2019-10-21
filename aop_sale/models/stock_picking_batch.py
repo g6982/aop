@@ -176,30 +176,31 @@ class StockPickingBatch(models.Model):
     @api.multi
     @api.depends('picking_ids')
     def _compute_allow_partner_ids(self):
-        self.ensure_one()
-        sale_order_line_ids = self.mapped('picking_ids').mapped('sale_order_line_id') if self.mapped('picking_ids') else False
+        # self.ensure_one()
+        for line in self:
+            sale_order_line_ids = line.mapped('picking_ids').mapped('sale_order_line_id') if line.mapped('picking_ids') else False
 
-        if not sale_order_line_ids:
-            self.allow_partner_ids = False
-            self.limit_state = 'un_limit'
-        else:
-            customer_contract_ids = sale_order_line_ids.mapped('customer_contract_id')
-            if not customer_contract_ids:
-                self.allow_partner_ids = False
-                self.limit_state = 'un_limit'
-            res = self.env['supplier.aop.contract'].search([
-                ('allow_customer_contract_ids', 'in', customer_contract_ids.ids)
-            ])
-            _logger.info({
-                'res': res,
-                'partner_ids': res.mapped('partner_id').ids
-            })
-            if not res:
-                self.allow_partner_ids = False
-                self.limit_state = 'un_limit'
+            if not sale_order_line_ids:
+                line.allow_partner_ids = False
+                line.limit_state = 'un_limit'
             else:
-                self.allow_partner_ids = [(6, 0, res.mapped('partner_id').ids)]
-                self.limit_state = 'limit'
+                customer_contract_ids = sale_order_line_ids.mapped('customer_contract_id')
+                if not customer_contract_ids:
+                    line.allow_partner_ids = False
+                    line.limit_state = 'un_limit'
+                res = line.env['supplier.aop.contract'].search([
+                    ('allow_customer_contract_ids', 'in', customer_contract_ids.ids)
+                ])
+                _logger.info({
+                    'res': res,
+                    'partner_ids': res.mapped('partner_id').ids
+                })
+                if not res:
+                    line.allow_partner_ids = False
+                    line.limit_state = 'un_limit'
+                else:
+                    line.allow_partner_ids = [(6, 0, res.mapped('partner_id').ids)]
+                    line.limit_state = 'limit'
 
 
 class MountCarPlan(models.Model):
