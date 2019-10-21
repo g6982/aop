@@ -91,8 +91,8 @@
                     <field name="user_id" invisible="1"/>
                     <field name="date_due" invisible="1"/>
                     <field name="origin" invisible="1"/>
-                    <field name="amount_untaxed" string="Tax Excluded" sum="Total"/>
-                    <field name="amount_tax" sum="Total"/>
+                    <field name="amount_untaxed" invisible="1" string="Tax Excluded" sum="Total"/>
+                    <field name="amount_tax" invisible="1" sum="Total"/>
                     <field name="amount_total_signed" string="Total" sum="Total"/>
                     <field name="residual_signed" string="Amount Due" sum="Amount Due" invisible="1"/>
                     <field name="currency_id" invisible="1"/>
