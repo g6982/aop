@@ -295,7 +295,7 @@
                             </group>
                             <field name="comment" placeholder="Terms and conditions..."/>
                         </page>
-                        <page string="Other Info" name="other_info">
+                        <page invisible="1" string="Other Info" name="other_info">
                             <group>
                                 <group>
                                     <field name="journal_id" groups="account.group_account_user"
