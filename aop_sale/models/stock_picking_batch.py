@@ -233,8 +233,7 @@ class StockPickingBatch(models.Model):
             if picking_set_data - carrier_set_data:
                 continue
 
-            data.append(carrier_id.supplier_contract_id.partner_id.id)
-
+            data.append(carrier_id.partner_id.id)
 
         return data
 
@@ -242,7 +241,7 @@ class StockPickingBatch(models.Model):
     def _parse_from_to_picking_type_ids(self, picking_ids=False, carrier_id=False):
         data = []
         if carrier_id:
-            data.append(
+            data.apped(
                 (carrier_id.from_location_id.id, carrier_id.to_location_id.id, carrier_id.picking_type_id.id)
             )
         elif picking_ids:
