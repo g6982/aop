@@ -13,7 +13,17 @@ class StockPickingBatch(models.Model):
 
     # car_no_ids = fields.Many2many('stock.quant.package', string='Loading number')
 
+    un_limit_partner_id = fields.Many2one('res.partner', string='Vendor')
     partner_id = fields.Many2one('res.partner', string='Vendor')
+    allow_partner_ids = fields.Many2many('res.partner',
+                                         string='Allow partners',
+                                         store=True,
+                                         compute='_compute_allow_partner_ids')
+    limit_state = fields.Selection([
+        ('limit', 'Limit'),
+        ('un_limit', 'Un-limit')
+    ], dafault='un_limit')
+
     picking_purchase_id = fields.Many2one('purchase.order', 'Purchase', copy=False)
     dispatch_type = fields.Selection([('center_type', 'Center'),
                                       ('train_type', 'train'),
@@ -54,9 +64,19 @@ class StockPickingBatch(models.Model):
             import traceback
             raise UserError(traceback.format_exc())
 
+    # 根据条件。获取值
+    def get_vendor_id(self):
+        if self.limit_state == 'limit' and self.allow_partner_ids:
+            return self.partner_id.id
+        else:
+            return self.un_limit_partner_id.id
+
     # 跨公司生成采购订单，对应的客户，即是对应公司的客户
     def _get_purchase_data(self):
-        vendor = self.partner_id.id
+        vendor = self.get_vendor_id()
+        if not vendor:
+            raise UserError('You must check selection records.')
+
         res = {
             'name': str(time.time()),
             'partner_id': vendor,
@@ -152,6 +172,34 @@ class StockPickingBatch(models.Model):
     def _match_company_id(self, partner_id):
         res = self.env['res.company'].sudo().search([('code', '=', partner_id.ref)])
         return res.id if res else False
+
+    @api.multi
+    @api.depends('picking_ids')
+    def _compute_allow_partner_ids(self):
+        self.ensure_one()
+        sale_order_line_ids = self.mapped('picking_ids').mapped('sale_order_line_id') if self.mapped('picking_ids') else False
+
+        if not sale_order_line_ids:
+            self.allow_partner_ids = False
+            self.limit_state = 'un_limit'
+        else:
+            customer_contract_ids = sale_order_line_ids.mapped('customer_contract_id')
+            if not customer_contract_ids:
+                self.allow_partner_ids = False
+                self.limit_state = 'un_limit'
+            res = self.env['supplier.aop.contract'].search([
+                ('allow_customer_contract_ids', 'in', customer_contract_ids.ids)
+            ])
+            _logger.info({
+                'res': res,
+                'partner_ids': res.mapped('partner_id').ids
+            })
+            if not res:
+                self.allow_partner_ids = False
+                self.limit_state = 'un_limit'
+            else:
+                self.allow_partner_ids = [(6, 0, res.mapped('partner_id').ids)]
+                self.limit_state = 'limit'
 
 
 class MountCarPlan(models.Model):

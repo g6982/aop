@@ -20,6 +20,7 @@ class SupplierAopContract(models.Model):
         domain="[('type', 'in', ['service'])]"
     )
 
+    allow_customer_contract_ids = fields.Many2many('customer.aop.contract', string='Allow customer contract')
     # @api.onchange('partner_id')
     # def onchange_domain_rule_ids(self):
     #     for line in self:

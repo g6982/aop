@@ -8,6 +8,9 @@
         <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
         <field name="arch" type="xml">
 
+            <field name="user_id" position="attributes">
+                <attribute name="options">{'no_quick_create': True, 'no_create_edit': True}</attribute>
+            </field>
             <field name="user_id" position="after">
 
                 <field name="dispatch_type"/>
@@ -16,13 +19,20 @@
 
                 <field name="vehicle_number" attrs='{"invisible": 1}'/>
 
-
+                <field name="allow_partner_ids" invisible="1"/>
+                <field name="limit_state" invisible="1"/>
+                <field name="un_limit_partner_id"
+                       options="{'no_quick_create': True, 'no_create_edit': True}"
+                       attrs="{'invisible': [('limit_state', '=', 'limit')]}"/>
                 <field name="partner_id"
-                       widget="res_partner_many2one"
-                       domain="[('supplier','=',True)]"/>
+                       attrs="{'invisible': [('limit_state', '=', 'un_limit')]}"
+                       options="{'no_quick_create': True, 'no_create_edit': True}"
+                       domain="['&amp;', ('supplier','=',True), '&amp;', ('supplier','=',True), ('id', 'in', allow_partner_ids)]"
+                />
 
                 <field name="picking_purchase_id"
                        string="采购订单"
+                       options="{'no_quick_create': True, 'no_create_edit': True}"
                        attrs="{'invisible': [('picking_purchase_id', '=', False)]}"
                 />
 
