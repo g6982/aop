@@ -23,8 +23,19 @@ class FillServiceProductWizard(models.TransientModel):
             'picking_purchase_id': res.id
         })
 
+    # 根据条件。获取值
+    def get_vendor_id(self, stock_picking_batch_id):
+        if stock_picking_batch_id.limit_state == 'limit' and stock_picking_batch_id.allow_partner_ids:
+            partner_id = stock_picking_batch_id.partner_id.id
+        else:
+            partner_id = stock_picking_batch_id.un_limit_partner_id.id
+        return partner_id
+
     def _get_purchase_data(self):
-        vendor = self.stock_picking_batch_id.get_vendor_id()
+        vendor = self.get_vendor_id(self.stock_picking_batch_id)
+        # 必定存在供应商的值才对
+        if not vendor:
+            raise UserError('You must check selection records.')
         res = {
             'name': str(time.time()),
             'partner_id': vendor,
