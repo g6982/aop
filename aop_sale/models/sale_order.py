@@ -235,8 +235,8 @@ class SaleOrderLine(models.Model):
             ('location_id', 'in', all_src_location_ids.ids),
             ('quantity', '=', 1)
         ])
-
-        return sum(x.delay for x in all_rules[all_src_location_ids.ids.index(res[0].location_id.id):]) if res else self.route_id.sum_delay
+        res = res.sorted(lambda x: x.id)
+        return sum(x.delay for x in all_rules[all_src_location_ids.ids.index(res[-1].location_id.id):]) if res else self.route_id.sum_delay
 
     # 新增 服务产品
     @api.multi
