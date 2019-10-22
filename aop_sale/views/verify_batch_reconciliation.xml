@@ -10,7 +10,9 @@
                         <button name="verify_account_invoice"
                                 attrs="{'invisible': [('state', '!=', 'draft')]}"
                                 string="Verify"
-                                class="oe_highlight" type="object"/>
+                                class="oe_highlight" type="object"
+                                groups="aop_sale.group_verify_account_invoice_button"
+                        />
                         <field name="state" widget="statusbar" statusbar_visible="draft,done" readonly="1"/>
                     </header>
                     <sheet>

@@ -365,35 +365,70 @@
             <field name="category_id" ref="module_aop_sale_others"/>
         </record>
 
+        <!--    结算清单/客户/对账数据/生成对账批次号    -->
+        <record id="group_package_reconciliation_file_button" model="res.groups">
+            <field name="name">package reconciliation file button</field>
+            <field name="category_id" ref="module_aop_sale_others"/>
+        </record>
+
+        <!--    结算清单/客户/对账批次/生成审核批次    -->
+        <record id="group_verify_reconciliation_file_button" model="res.groups">
+            <field name="name">verify reconciliation file button</field>
+            <field name="category_id" ref="module_aop_sale_others"/>
+        </record>
+
+        <!--    结算清单/客户/对账批次/确认    -->
+        <record id="group_confirm_account_invoice_button" model="res.groups">
+            <field name="name">confirm_account_invoice button</field>
+            <field name="category_id" ref="module_aop_sale_others"/>
+        </record>
+
+        <!--    结算清单/客户/审核批次/创建税务发票    -->
+        <record id="group_verify_generate_tax_invoice_button" model="res.groups">
+            <field name="name">verify generate tax invoice button</field>
+            <field name="category_id" ref="module_aop_sale_others"/>
+        </record>
+
+        <!--    结算清单/客户/审核批次/审核批次    -->
+        <record id="group_verify_account_invoice_button" model="res.groups">
+            <field name="name">verify account invoice button</field>
+            <field name="category_id" ref="module_aop_sale_others"/>
+        </record>
+
+
+
+
         <!--    结算清单/供应商/付款结算清单/验证    -->
         <record id="group_supplier_action_invoice_open_button" model="res.groups">
             <field name="name">generate supplier action invoice open button</field>
             <field name="category_id" ref="module_aop_sale_others"/>
         </record>
 
-        <!--    结算清单/客户/付款结算清单/设为草稿    -->
+        <!--    结算清单/供应商/付款结算清单/设为草稿    -->
         <record id="group_supplier_action_invoice_draft_button" model="res.groups">
             <field name="name">generate supplier action invoice draft button</field>
             <field name="category_id" ref="module_aop_sale_others"/>
         </record>
 
-        <!--    结算清单/客户/付款结算清单/取消    -->
+        <!--    结算清单/供应商/付款结算清单/取消    -->
         <record id="group_supplier_action_invoice_cancel_button" model="res.groups">
             <field name="name">generate supplier action invoice cancel button</field>
             <field name="category_id" ref="module_aop_sale_others"/>
         </record>
 
-        <!--    结算清单/客户/付款结算清单/审核    -->
+        <!--    结算清单/供应商/付款结算清单/审核    -->
         <record id="group_supplier_verify_reconciliation_button" model="res.groups">
             <field name="name">generate supplier verify reconciliation button</field>
             <field name="category_id" ref="module_aop_sale_others"/>
         </record>
 
-        <!--    结算清单/客户/付款结算清单/取消审核    -->
+        <!--    结算清单/供应商/付款结算清单/取消审核    -->
         <record id="group_supplier_cancel_verify_reconciliation_button" model="res.groups">
             <field name="name">generate supplier cancel verify reconciliation button</field>
             <field name="category_id" ref="module_aop_sale_others"/>
         </record>
+
+
 
     </data>
 

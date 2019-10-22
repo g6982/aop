@@ -9,7 +9,7 @@ odoo.define('aop_sale.verify_tax_invoice', function (require) {
 
             let $buttons = this._super.apply(this, arguments);
 
-            this.getSession().user_has_group('aop_sale.group_generate_tax_invoice_button').then(function(has_group) {
+            this.getSession().user_has_group('aop_sale.group_verify_generate_tax_invoice_button').then(function(has_group) {
 
                 if(has_group) {
                     let tree_model = self.modelName;

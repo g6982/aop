@@ -10,7 +10,9 @@
                         <button name="confirm_account_invoice"
                                 class="oe_highlight"
                                 attrs="{'invisible': [('state', '!=', 'draft')]}"
-                                type="object" string="Confirm"/>
+                                type="object" string="Confirm"
+                                groups="aop_sale.group_confirm_account_invoice_button"
+                        />
                         <field name="state" widget="statusbar" statusbar_visible="draft,done" readonly="1"/>
                     </header>
                     <sheet>
