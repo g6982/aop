@@ -183,6 +183,9 @@ class StockPickingBatch(models.Model):
             sale_order_line_ids = line.mapped('picking_ids').mapped('sale_order_line_id') \
                 if line.mapped('picking_ids') else False
 
+            # 是否是销售订单行的任务
+            # 如果不是，接车任务
+            # 如果是，则有客户合同
             if not sale_order_line_ids:
                 # 判断是否是接车任务
                 partner_ids = self.find_supplier_contract_partner(picking_ids)
@@ -215,6 +218,10 @@ class StockPickingBatch(models.Model):
     # 接车任务？
     # 判断 来源和目的地 以及步骤
     def find_supplier_contract_partner(self, picking_ids):
+        '''
+        :param picking_ids: 任务集
+        :return: 允许的供应商
+        '''
         data = []
         location_ids = picking_ids.mapped('location_id')
         location_dest_ids = picking_ids.mapped('location_dest_id')
@@ -227,6 +234,7 @@ class StockPickingBatch(models.Model):
         ])
         picking_set_data = self._parse_from_to_picking_type_ids(picking_ids=picking_ids)
 
+        # 对合同交款，按照供应商合同进行分组， 然后组成条件的集合
         for supplier_contract_id, delivery_carrier_ids in groupby(carrier_ids, lambda x: x.supplier_contract_id):
             carrier_set_data = self._parse_from_to_picking_type_ids(carrier_ids=delivery_carrier_ids)
 
@@ -239,6 +247,11 @@ class StockPickingBatch(models.Model):
 
     # 组成集合
     def _parse_from_to_picking_type_ids(self, picking_ids=False, carrier_ids=False):
+        '''
+        :param picking_ids: 批量调度选择的任务
+        :param carrier_ids: 合同交款
+        :return: 条件的集合{(x1,x2,x3), (x4,x5,x6)}
+        '''
         data = []
         if carrier_ids:
             for carrier_id in carrier_ids:
