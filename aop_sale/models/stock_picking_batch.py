@@ -68,9 +68,9 @@ class StockPickingBatch(models.Model):
     # 根据条件。获取值
     def get_vendor_id(self):
         if self.limit_state == 'limit' and self.allow_partner_ids:
-            return self.partner_id.id
+            return self.partner_id.id if self.partner_id else self.un_limit_partner_id.id
         else:
-            return self.un_limit_partner_id.id
+            return self.un_limit_partner_id.id if self.un_limit_partner_id else self.partner_id.id
 
     # 跨公司生成采购订单，对应的客户，即是对应公司的客户
     def _get_purchase_data(self):

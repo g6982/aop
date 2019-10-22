@@ -228,11 +228,11 @@ class SaleOrderLine(models.Model):
         res = super(SaleOrderLine, self)._prepare_procurement_values(group_id)
 
         # date_planned = 订单的确认日期 + 订单行的交货提前时间 - 路由标准实效 + 公司的security_lead + 规则的 delay
-        date_planned = self.order_id.confirmation_date \
+        date_planned = self.order_id.date_order \
             + timedelta(days=self.customer_lead or 0.0) \
-            - timedelta(self.route_id.sum_delay) \
+            + timedelta(self.route_id.sum_delay) \
             + timedelta(days=self.order_id.company_id.security_lead)
-
+        
         res.update({
             'service_product_id': self.service_product_id.id,
             'vin_id': self.vin.id,

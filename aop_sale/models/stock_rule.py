@@ -67,7 +67,7 @@ class StockRule(models.Model):
         )
         # date_planned = 订单的确认日期 + 订单行的交货提前时间 - 路由标准实效 + 公司的security_lead + 规则的 delay
         date_expected = fields.Datetime.to_string(
-            fields.Datetime.from_string(values['date_planned']) + relativedelta(days=self.delay or 0)
+            fields.Datetime.from_string(values['date_planned']) - relativedelta(days=self.delay or 0)
         )
         res.update({
             'date': date_expected,
