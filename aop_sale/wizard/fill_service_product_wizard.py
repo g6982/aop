@@ -23,18 +23,8 @@ class FillServiceProductWizard(models.TransientModel):
             'picking_purchase_id': res.id
         })
 
-    def get_vendor_id(self, stock_picking_batch_id):
-
-        stock_picking_batch = self.env['stock.picking.batch'].sudo().search([('id', '=', stock_picking_batch_id)], limit=1)
-
-        if stock_picking_batch.limit_state == 'limit' and stock_picking_batch.allow_partner_ids:
-            return stock_picking_batch.partner_id.id
-        else:
-            return stock_picking_batch.un_limit_partner_id.id
-
     def _get_purchase_data(self):
-        # vendor = self.stock_picking_batch_id.partner_id.id
-        vendor = self.get_vendor_id(self.stock_picking_batch_id.id)
+        vendor = self.stock_picking_batch_id.get_vendor_id()
         res = {
             'name': str(time.time()),
             'partner_id': vendor,
