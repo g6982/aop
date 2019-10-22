@@ -180,46 +180,27 @@ class StockPickingBatch(models.Model):
         # self.ensure_one()
         for line in self:
             picking_ids = line.mapped('picking_ids')
-            sale_order_line_ids = line.mapped('picking_ids').mapped('sale_order_line_id') \
-                if line.mapped('picking_ids') else False
 
-            # 是否是销售订单行的任务
-            # 如果不是，接车任务
-            # 如果是，则有客户合同
-            if not sale_order_line_ids:
-                # 判断是否是接车任务
-                partner_ids = self.find_supplier_contract_partner(picking_ids)
-                if not partner_ids:
-                    line.allow_partner_ids = False
-                    line.limit_state = 'un_limit'
-                else:
-                    line.allow_partner_ids = [(6, 0, partner_ids)]
-                    line.limit_state = 'limit'
+            # 搜索客户合同
+            customer_contract_id = self.env['customer.aop.contract'].search([
+                ('partner_id', 'in', list(set(picking_ids.mapped('partner_id').ids)))
+            ])
+
+            # 根据任务和客户和同，过滤供应商合同
+            partner_ids = self.find_supplier_contract_partner(picking_ids, customer_contract_id=customer_contract_id)
+            if not partner_ids:
+                line.allow_partner_ids = False
+                line.limit_state = 'un_limit'
             else:
-                customer_contract_ids = sale_order_line_ids.mapped('customer_contract_id')
-                if not customer_contract_ids:
-                    line.allow_partner_ids = False
-                    line.limit_state = 'un_limit'
-                res = line.env['supplier.aop.contract'].search([
-                    ('allow_customer_contract_ids', 'in', customer_contract_ids.ids)
-                ])
-                if not res:
-                    partner_ids = self.find_supplier_contract_partner(picking_ids)
-                    if not partner_ids:
-                        line.allow_partner_ids = False
-                        line.limit_state = 'un_limit'
-                    else:
-                        line.allow_partner_ids = [(6, 0, partner_ids)]
-                        line.limit_state = 'limit'
-                else:
-                    line.allow_partner_ids = [(6, 0, res.mapped('partner_id').ids)]
-                    line.limit_state = 'limit'
+                line.allow_partner_ids = [(6, 0, partner_ids)]
+                line.limit_state = 'limit'
 
-    # 接车任务？
+    # 任务
     # 判断 来源和目的地 以及步骤
-    def find_supplier_contract_partner(self, picking_ids):
+    def find_supplier_contract_partner(self, picking_ids, customer_contract_id=False):
         '''
         :param picking_ids: 任务集
+        :param customer_contract_id: 客户合同
         :return: 允许的供应商
         '''
         data = []
@@ -241,6 +222,11 @@ class StockPickingBatch(models.Model):
             if picking_set_data - carrier_set_data:
                 continue
 
+            # 如果勾选了允许的客户合同，做一次过滤
+            if customer_contract_id and supplier_contract_id.mapped('allow_customer_contract_ids'):
+                # 交集
+                if not set(customer_contract_id.ids) & set(supplier_contract_id.mapped('allow_customer_contract_ids').ids):
+                    continue
             data.append(supplier_contract_id.partner_id.id)
 
         return data
