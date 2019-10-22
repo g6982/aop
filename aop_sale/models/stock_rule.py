@@ -50,7 +50,11 @@ class StockRule(models.Model):
     def _run_pull(self, product_id, product_qty, product_uom, location_id, name, origin, values):
         product_stock_id = self._get_product_stock_location(product_id, values.get('vin_id', False))
         if location_id.id == product_stock_id if product_stock_id else False:
+            _logger.info({
+                'date_plannedvalues': values.get('date_planned')
+            })
             return True
+
         res = super(StockRule, self)._run_pull(product_id, product_qty, product_uom, location_id, name, origin, values)
         return res
 
@@ -65,12 +69,26 @@ class StockRule(models.Model):
             values,
             group_id
         )
-        # date_planned = 订单的确认日期 + 订单行的交货提前时间 - 路由标准实效 + 公司的security_lead + 规则的 delay
-        date_expected = fields.Datetime.to_string(
-            fields.Datetime.from_string(values['date_planned']) - relativedelta(days=self.delay or 0)
-        )
+
+        date_expected = self._get_date_expected_rule(self.route_id, values)
+
         res.update({
             'date': date_expected,
             'date_expected': date_expected
         })
         return res
+
+    # date_planned = 订单的确认日期 + 订单行的交货提前时间 + 路由标准实效 + 公司的security_lead - 规则的 delay
+    def _get_date_expected_rule(self, route_id, values):
+        all_rule_ids = route_id.rule_ids.sorted(lambda x: x.id)
+        # 如果是第一条，则不做处理？
+        # 第二条，减去第一条的delay, 依次
+        if all_rule_ids.ids[-1] == self.id:
+            date_expected = values['date_planned']
+        else:
+            current_record_index = all_rule_ids.ids.index(self.id)
+            previous_record_id = all_rule_ids[current_record_index + 1]
+            date_expected = fields.Datetime.to_string(
+                fields.Datetime.from_string(values['date_planned']) - relativedelta(days=previous_record_id.delay or 0)
+            )
+        return date_expected

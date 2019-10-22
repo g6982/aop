@@ -222,17 +222,34 @@ class SaleOrderLine(models.Model):
                 else:
                     line.stock_picking_state = False
 
+    # 获取截断？或者全量的时延
+    def _get_current_stock_route_delay(self):
+        all_rules = self.route_id.mapped('rule_ids')
+        if not all_rules:
+            return self.route_id.sum_delay
+        all_src_location_ids = all_rules.mapped('location_src_id')
+
+        # 找到库存的位置
+        res = self.env['stock.quant'].search([
+            ('lot_id', '=', self.vin.id),
+            ('location_id', 'in', all_src_location_ids.ids),
+            ('quantity', '=', 1)
+        ])
+
+        return sum(x.delay for x in all_rules[all_src_location_ids.ids.index(res[0].location_id.id):]) if res else self.route_id.sum_delay
+
     # 新增 服务产品
     @api.multi
     def _prepare_procurement_values(self, group_id=False):
         res = super(SaleOrderLine, self)._prepare_procurement_values(group_id)
 
+        sum_delay = self._get_current_stock_route_delay()
         # date_planned = 订单的确认日期 + 订单行的交货提前时间 - 路由标准实效 + 公司的security_lead + 规则的 delay
-        date_planned = self.order_id.date_order \
+        date_planned = self.order_id.confirmation_date \
             + timedelta(days=self.customer_lead or 0.0) \
-            + timedelta(self.route_id.sum_delay) \
+            + timedelta(sum_delay) \
             + timedelta(days=self.order_id.company_id.security_lead)
-        
+
         res.update({
             'service_product_id': self.service_product_id.id,
             'vin_id': self.vin.id,
@@ -660,13 +677,13 @@ class SaleOrder(models.Model):
                 })
         return res
 
-    # # 取消的同时。删除
-    # @api.multi
-    # def action_cancel(self):
-    #     res = super(SaleOrder, self).action_cancel()
-    #
-    #     self.mapped('picking_ids').unlink()
-    #     return res
+    # 取消的同时。删除
+    @api.multi
+    def action_cancel(self):
+        res = super(SaleOrder, self).action_cancel()
+
+        self.mapped('picking_ids').unlink()
+        return res
 
     @api.multi
     def action_done(self):
