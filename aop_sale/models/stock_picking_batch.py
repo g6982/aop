@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from odoo import api, fields, models, _
 import logging
 import time
+from itertools import groupby
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -226,24 +227,24 @@ class StockPickingBatch(models.Model):
         ])
         picking_set_data = self._parse_from_to_picking_type_ids(picking_ids=picking_ids)
 
-        # 行的判断： 判断来源、目的、步骤
-        for carrier_id in carrier_ids:
-            carrier_set_data = self._parse_from_to_picking_type_ids(carrier_id=carrier_id)
+        for supplier_contract_id, delivery_carrier_ids in groupby(carrier_ids, lambda x: x.supplier_contract_id):
+            carrier_set_data = self._parse_from_to_picking_type_ids(carrier_ids=delivery_carrier_ids)
 
             if picking_set_data - carrier_set_data:
                 continue
 
-            data.append(carrier_id.partner_id.id)
+            data.append(supplier_contract_id.partner_id.id)
 
         return data
 
     # 组成集合
-    def _parse_from_to_picking_type_ids(self, picking_ids=False, carrier_id=False):
+    def _parse_from_to_picking_type_ids(self, picking_ids=False, carrier_ids=False):
         data = []
-        if carrier_id:
-            data.apped(
-                (carrier_id.from_location_id.id, carrier_id.to_location_id.id, carrier_id.picking_type_id.id)
-            )
+        if carrier_ids:
+            for carrier_id in carrier_ids:
+                data.apped(
+                    (carrier_id.from_location_id.id, carrier_id.to_location_id.id, carrier_id.picking_type_id.id)
+                )
         elif picking_ids:
             for picking_id in picking_ids:
                 data.append(
