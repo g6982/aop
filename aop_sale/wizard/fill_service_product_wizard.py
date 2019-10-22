@@ -33,9 +33,9 @@ class FillServiceProductWizard(models.TransientModel):
 
     def _get_purchase_data(self):
         vendor = self.get_vendor_id(self.stock_picking_batch_id)
+        # 必定存在供应商的值才对
         if not vendor:
-            raise UserError('You must select correct records!')
-
+            raise UserError('You must check selection records.')
         res = {
             'name': str(time.time()),
             'partner_id': vendor,
