@@ -241,7 +241,7 @@ class StockPickingBatch(models.Model):
         data = []
         if carrier_ids:
             for carrier_id in carrier_ids:
-                data.apped(
+                data.append(
                     (carrier_id.from_location_id.id, carrier_id.to_location_id.id, carrier_id.picking_type_id.id)
                 )
         elif picking_ids:
