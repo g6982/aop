@@ -193,7 +193,7 @@ msgstr "所有"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__allow_customer_contract_ids
 msgid "Allow customer contract"
-msgstr ""
+msgstr "允许作业的客户合同"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__allow_partner_ids
