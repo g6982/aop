@@ -5,19 +5,12 @@ from odoo.http import content_disposition, dispatch_rpc, request, \
 from .tools import validate_token, valid_response, invalid_response, extract_arguments
 import logging
 import json
+import time
 
 _logger = logging.getLogger(__name__)
 
 
-class AopToWms(http.Controller):
-
-    @validate_token
-    @http.route('/api/get_token_value', type='json', auth="none", methods=['POST'], csrf=False)
-    def get_token_value(self, **kwargs):
-        _logger.info({
-            'kwargs': kwargs,
-        })
-        return valid_response('Success')
+class ApiInterface(http.Controller):
 
     @validate_token
     @http.route('/<string:model>/test_api', type='json', auth="none", methods=['POST'], csrf=False)
@@ -46,21 +39,44 @@ class AopToWms(http.Controller):
             })
         return data
 
-    @http.route('/api/barcode/<string:barcode>', type='http', auth="none", csrf=False)
-    def test_api(self, barcode=None, **post):
+    # @http.route('/api/barcode/<string:barcode>', type='http', auth="none", csrf=False)
+    # def test_api(self, barcode=None, **post):
+    #     msg = {
+    #         'code': 200,
+    #     }
+    #     _logger.info({
+    #         'post': post,
+    #         'barcode': barcode
+    #     })
+    #     return json.dumps(msg)
+
+    @validate_token
+    @http.route('/api/sale_order/check_stock_picking', methods=["POST"], type='json', auth='none', csrf=False)
+    def check_stock_picking(self, **post):
         msg = {
             'code': 200,
+            'method': '/api/sale_order/check_stock_picking',
+            'time': time.time()
         }
-        _logger.info({
-            'post': post,
-            'barcode': barcode
-        })
+
+        self._check_stock_picking(post)
         return json.dumps(msg)
 
-    @http.route('/api/warehouse/list', type='http', auth="none", csrf=False)
-    def get_warehouse_list(self, **post):
-        res = request.env['stock.warehouse'].sudo().search([])
-        data = {}
-        for index_w, data_w in enumerate(res):
-            data[index_w] = data_w.name
-        return json.dumps(data)
+    @validate_token
+    @http.route('/api/stock_picking/done_picking', methods=["POST"], type='json', auth='none', csrf=False)
+    def done_picking(self, **post):
+        msg = {
+            'code': 200,
+            'method': '/api/stock_picking/done_picking',
+            'time': time.time(),
+        }
+        self._done_picking(post)
+        return json.dumps(msg)
+
+    def _check_stock_picking(self, data):
+        res = request.env['check.stock.picking.log'].sudo().create(data)
+        return res
+
+    def _done_picking(self, data):
+        res = request.env['done.picking.log'].sudo().create(data)
+        return res
