@@ -14,7 +14,8 @@
         "views/ir_model.xml",
         "views/res_users.xml",
         "views/menu.xml",
-],
-"installable": True,
-"auto_install": False,
+        "views/interface_config_setting.xml",
+    ],
+    "installable": True,
+    "auto_install": False,
 }
