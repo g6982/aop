@@ -18,8 +18,10 @@ class AccessToken(http.Controller):
 
     def __init__(self):
 
-        self._token = request.env["api.access_token"]
-        self._expires_in = request.env.ref(expires_in).sudo().value
+        self._token = False
+        # self._expires_in = request.env.ref(expires_in).sudo().value
+        self._expires_in = False
+        self._db = False
 
     @http.route("/api/auth/token", methods=["POST"], type="json", auth="none", csrf=False)
     def token(self, **post):
@@ -56,6 +58,12 @@ class AccessToken(http.Controller):
             })
 
         """
+        _logger.info({
+            'post': post
+        })
+        self._db = post.get('db')
+        self._expires_in = request.env.ref(expires_in).sudo().value
+        request.session.db = post.get('db')
         _token = request.env["api.access_token"]
         params = ["db", "login", "password"]
         params = {key: post.get(key) for key in params if post.get(key)}
@@ -103,6 +111,7 @@ class AccessToken(http.Controller):
         # Generate tokens
         access_token = _token.find_one_or_create_token(user_id=uid, create=True)
 
+        self._token = access_token
         # Successful response:
         return json.dumps(
                 {

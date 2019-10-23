@@ -7,7 +7,7 @@ import werkzeug.wrappers
 from odoo.http import request
 
 _logger = logging.getLogger(__name__)
-
+DB_NAME = 'aop_interface_test_db'
 try:
     import simplejson as json
     from simplejson.errors import JSONDecodeError
@@ -70,6 +70,8 @@ def validate_token(func):
 
     @functools.wraps(func)
     def wrap(self, *args, **kwargs):
+        request.session.db = DB_NAME
+
         """."""
         _logger.info({
             'args': args,

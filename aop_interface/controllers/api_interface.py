@@ -7,6 +7,7 @@ import logging
 import json
 import time
 
+DB_NAME = 'aop_interface_test_db'
 _logger = logging.getLogger(__name__)
 
 
@@ -23,6 +24,8 @@ class ApiInterface(http.Controller):
         return json.dumps(msg)
 
     def format_stock_picking_data(self):
+        request.session.db = DB_NAME
+
         picking_ids = request.env['stock.picking'].sudo().search([])
         data = []
         for picking_id in picking_ids:
@@ -53,6 +56,7 @@ class ApiInterface(http.Controller):
     @validate_token
     @http.route('/api/sale_order/check_stock_picking', methods=["POST"], type='json', auth='none', csrf=False)
     def check_stock_picking(self, **post):
+        request.session.db = DB_NAME
         msg = {
             'code': 200,
             'method': '/api/sale_order/check_stock_picking',
@@ -65,6 +69,7 @@ class ApiInterface(http.Controller):
     @validate_token
     @http.route('/api/stock_picking/done_picking', methods=["POST"], type='json', auth='none', csrf=False)
     def done_picking(self, **post):
+        request.session.db = DB_NAME
         msg = {
             'code': 200,
             'method': '/api/stock_picking/done_picking',
@@ -74,9 +79,11 @@ class ApiInterface(http.Controller):
         return json.dumps(msg)
 
     def _check_stock_picking(self, data):
+        request.session.db = DB_NAME
         res = request.env['check.stock.picking.log'].sudo().create(data)
         return res
 
     def _done_picking(self, data):
+        request.session.db = DB_NAME
         res = request.env['done.picking.log'].sudo().create(data)
         return res
