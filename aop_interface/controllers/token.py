@@ -62,7 +62,7 @@ class AccessToken(http.Controller):
             'post': post
         })
         self._db = post.get('db')
-        self._expires_in = request.env.ref(expires_in).sudo().value
+
         request.session.db = post.get('db')
         _token = request.env["api.access_token"]
         params = ["db", "login", "password"]
@@ -112,6 +112,7 @@ class AccessToken(http.Controller):
         access_token = _token.find_one_or_create_token(user_id=uid, create=True)
 
         self._token = access_token
+        self._expires_in = request.env.ref(expires_in).sudo().value
         # Successful response:
         return json.dumps(
                 {
