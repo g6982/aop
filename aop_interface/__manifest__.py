@@ -13,6 +13,7 @@
         "data/ir_config_param.xml",
         "views/ir_model.xml",
         "views/res_users.xml",
+        "views/menu.xml",
 ],
 "installable": True,
 "auto_install": False,
