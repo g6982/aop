@@ -18,6 +18,7 @@
                   action="action_check_stock_picking_view"
                   name="Check picking" parent="interface_check_stock_picking"/>
 
+
         <menuitem id="interface_done_picking" name="Done picking" parent="interface_menu_root"/>
 
         <record id="action_done_picking_view" model="ir.actions.act_window">
@@ -31,5 +32,20 @@
                   action="action_done_picking_view"
                   name="Done picking" parent="interface_done_picking"/>
 
+
+        <menuitem id="interface_config_setting" name="Settings" parent="interface_menu_root"/>
+        <record id="action_interface_config_setting_view" model="ir.actions.act_window">
+            <field name="name">Done picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_type">form</field>
+            <field name="target">inline</field>
+            <field name="context">{'module' : 'aop_interface'}</field>
+            <field name="view_mode">form</field>
+        </record>
+        <menuitem id="interface_config_setting_id"
+                  web_icon="aop_interface,static/description/api_icon.png"
+                  action="action_interface_config_setting_view"
+                  name="Settings" parent="interface_config_setting"/>
     </data>
 </odoo>
