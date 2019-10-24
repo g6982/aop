@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-24 03:16+0000\n"
-"PO-Revision-Date: 2019-10-24 03:16+0000\n"
+"POT-Creation-Date: 2019-10-24 06:02+0000\n"
+"PO-Revision-Date: 2019-10-24 06:02+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2159,6 +2159,11 @@ msgstr "下一个号码前缀"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
 msgid "Note"
 msgstr "备注"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.purchase_order_search_inherit_aop_sale
+msgid "Nothing to Bill"
+msgstr "未申请结算"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__number
