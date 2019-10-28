@@ -537,7 +537,14 @@
             <field name="model">sale.order.line</field>
             <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
             <field name="arch" type="xml">
+
+                <xpath expr="//filter[@name='to_invoice']" position="replace">
+                    <filter string="no qty invoiced" name="no_qty_invoiced" domain="[('qty_invoiced','=',0)]"/>
+                    <filter string="has qty invoiced" name="has_qty_invoiced" domain="[('qty_invoiced','!=',0)]"/>
+                </xpath>
+
                 <xpath expr="//search" position="inside">
+
                     <field name="id"/>
                     <filter string="Quotations" name="draft" domain="[('state','in',('draft', 'sent'))]"/>
                     <filter string="Sales Orders" name="sales" domain="[('state','in',('sale','done'))]"/>
@@ -565,6 +572,36 @@
             <field name="view_mode">tree,form</field>
             <field name="context">{'display_invoice': True, 'search_default_sales': 1}</field>
             <field name="view_id" ref="view_order_line_tree_inherit_tree"/>
+        </record>
+
+        <!--    临时订单筛选    -->
+        <record id="sale_order_view_search_inherit_aop_sale" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit.aop.sale</field>
+            <field name="model">sale.order</field>
+            <field name="mode">extension</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='activities_my']" position="replace"></xpath>
+                <xpath expr="//filter[@name='activities_overdue']" position="replace"></xpath>
+                <xpath expr="//filter[@name='activities_today']" position="replace"></xpath>
+                <xpath expr="//filter[@name='activities_upcoming_all']" position="replace"></xpath>
+            </field>
+        </record>
+
+        <!--    正式订单订单筛选    -->
+        <record id="sale_order_view_search_inherit_sale_aop_sale" model="ir.ui.view">
+            <field name="name">sale.order.search.inherit.sale.aop.sale</field>
+            <field name="model">sale.order</field>
+            <field name="mode">extension</field>
+            <field name="inherit_id" ref="sale.sale_order_view_search_inherit_sale"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='to_invoice']" position="replace"></xpath>
+                <xpath expr="//filter[@name='upselling']" position="replace"></xpath>
+                <xpath expr="//filter[@name='activities_my']" position="replace"></xpath>
+                <xpath expr="//filter[@name='activities_overdue']" position="replace"></xpath>
+                <xpath expr="//filter[@name='activities_today']" position="replace"></xpath>
+                <xpath expr="//filter[@name='activities_upcoming_all']" position="replace"></xpath>
+            </field>
         </record>
 
     </data>

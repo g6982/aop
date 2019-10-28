@@ -120,6 +120,26 @@
             </field>
         </record>
 
-        invoice_status
+        <record model="ir.ui.view" id="purchase_order_search_inherit_aop_sale">
+            <field name="name">purchase.order.list.select.inherit.aop.sale</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//filter[@name='not_invoiced']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//filter[@name='not_invoiced']" position="after">
+                     <filter name="no_invoiced" string="Nothing to Bill" domain="[('invoice_status','=', 'no')]" />
+                </xpath>
+
+                <xpath expr="//filter[@name='activities_my']" position="replace"></xpath>
+                <xpath expr="//filter[@name='activities_overdue']" position="replace"></xpath>
+                <xpath expr="//filter[@name='activities_today']" position="replace"></xpath>
+                <xpath expr="//filter[@name='activities_upcoming_all']" position="replace"></xpath>
+            </field>
+        </record>
+
     </data>
 </odoo>

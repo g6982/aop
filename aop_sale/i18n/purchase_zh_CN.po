@@ -68,3 +68,8 @@ msgstr "未申请结算"
 #: selection:purchase.order,invoice_status:0
 msgid "No Bill to Receive"
 msgstr "已申请结算"
+
+#. module: purchase
+#: model_terms:ir.ui.view,arch_db:purchase.view_purchase_order_filter
+msgid "Bills Received"
+msgstr "已申请结算"
