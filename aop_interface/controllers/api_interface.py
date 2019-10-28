@@ -42,21 +42,69 @@ class ApiInterface(http.Controller):
             })
         return data
 
-    # @http.route('/api/barcode/<string:barcode>', type='http', auth="none", csrf=False)
-    # def test_api(self, barcode=None, **post):
-    #     msg = {
-    #         'code': 200,
-    #     }
-    #     _logger.info({
-    #         'post': post,
-    #         'barcode': barcode
-    #     })
-    #     return json.dumps(msg)
+    @http.route('/api/barcode/<string:barcode>', type='http', auth="none", csrf=False)
+    def test_api(self, barcode=None, **post):
+        msg = {
+            'code': 200,
+        }
+        _logger.info({
+            'post': post,
+            'barcode': barcode
+        })
+        return json.dumps(msg)
+
+    @http.route('/api/warehouse/list', methods=["POST"], type='json', auth='none', csrf=False)
+    def get_warehouse_list(self, **post):
+        _logger.info({
+            'post': post
+        })
+        request.session.db = config.get('interface_db_name')
+        res = request.env['stock.warehouse'].sudo().search([])
+        data = {}
+        for index_w, warehouse_id in enumerate(res):
+            data.update({
+                index_w: warehouse_id.name
+            })
+        return json.dumps(data)
+
+    @http.route('/api/stock_picking_type/list/<string:barcode>', methods=["POST"], type='json', auth='none', csrf=False)
+    def get_stock_picking_type(self, barcode=None, **post):
+        _logger.info({
+            'post': post,
+            'barcode': barcode
+        })
+        request.session.db = config.get('interface_db_name')
+        res = request.env['stock.picking.type'].sudo().search([
+            ('warehouse_id.name', '=', post.get('warehouse_name', False))
+        ])
+        data = {}
+        for index_p, picking_type_id in enumerate(res):
+            data.update({
+                index_p: picking_type_id.name
+            })
+        return json.dumps(data)
+
+    @http.route('/api/stock_picking/list', methods=["POST"], type='json', auth='none', csrf=False)
+    def get_stock_picking_ids(self, barcode=None, **post):
+        _logger.info({
+            'post': post,
+            'barcode': barcode
+        })
+        request.session.db = config.get('interface_db_name')
+        res = request.env['stock.picking'].sudo().search([
+            ('state', '=', 'draft'),
+            ('picking_type_id.name', '=', post.get('picking_type_name', False))
+        ])
+        data = {}
+        for index_p, picking_type_id in enumerate(res):
+            data.update({
+                index_p: picking_type_id.name
+            })
+        return json.dumps(data)
 
     @validate_token
     @http.route('/api/sale_order/check_stock_picking', methods=["POST"], type='json', auth='none', csrf=False)
     def check_stock_picking(self, **post):
-        request.session.db = config.get('interface_db_name')
         msg = {
             'code': 200,
             'method': '/api/sale_order/check_stock_picking',
@@ -69,7 +117,6 @@ class ApiInterface(http.Controller):
     @validate_token
     @http.route('/api/stock_picking/done_picking', methods=["POST"], type='json', auth='none', csrf=False)
     def done_picking(self, **post):
-        request.session.db = config.get('interface_db_name')
         msg = {
             'code': 200,
             'method': '/api/stock_picking/done_picking',

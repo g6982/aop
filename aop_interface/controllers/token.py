@@ -7,6 +7,7 @@ import werkzeug.wrappers
 from odoo import http
 from .tools import validate_token, valid_response, invalid_response, extract_arguments
 from odoo.http import request
+from odoo.tools import config
 
 _logger = logging.getLogger(__name__)
 
@@ -61,9 +62,9 @@ class AccessToken(http.Controller):
         _logger.info({
             'post': post
         })
+        request.session.db = config['interface_db_name']
         self._db = post.get('db')
 
-        request.session.db = post.get('db')
         _token = request.env["api.access_token"]
         params = ["db", "login", "password"]
         params = {key: post.get(key) for key in params if post.get(key)}
