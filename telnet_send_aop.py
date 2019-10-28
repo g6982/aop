@@ -38,6 +38,8 @@ class BarcodeWMS:
         self._warehouse_id = False
         self._picking_type_id = False
         self._picking_id = False
+        self._reader = False
+        self._writer = False
 
         self.run()
 
@@ -172,13 +174,15 @@ class BarcodeWMS:
             writer.write(u'{}: {}\r\n'.format(int(p_key) + 1, picking_data.get(p_key)))
 
     # 接收输入
+    # writer._transport._sock_fd 可以获取到 客户端的ID
     @asyncio.coroutine
     def shell(self, reader, writer):
 
+        # FIXME: 初始化界面，显示仓库？
         self._warehouse_ui(writer)
+
         barcode_value = ''
         while True:
-            print('self: ', self)
             # read stream until '?' mark is found
             outp = yield from reader.read(4096)
 
@@ -195,9 +199,9 @@ class BarcodeWMS:
                 data = {
                     'barcode_value': barcode_value
                 }
-                print('data: ', data)
-                res = requests.post(BARCODE_URL + barcode_value, data)
-                writer.write('barcode_value: {}, return: {}\r\n'.format(barcode_value, res.content))
+                # print('data: ', data)
+                # res = requests.post(BARCODE_URL + barcode_value, data)
+                # writer.write('barcode_value: {}, return: {}\r\n'.format(barcode_value, res.content))
 
                 # 没有选择仓库
                 if not self._warehouse_id:
@@ -219,26 +223,6 @@ class BarcodeWMS:
             # display all server output
         # EOF
         print()
-
-    @asyncio.coroutine
-    def get_input_barcode(self, reader, writer):
-        barcode_value = ''
-        while True:
-            # read stream until '?' mark is found
-            outp = yield from reader.read(4096)
-
-            if not outp:
-                # End of File
-                break
-            elif '?' in outp:
-                # reply all questions with 'y'.
-                writer.write('y')
-            if '\r' != outp:
-                barcode_value += outp
-
-            else:
-                print('loop ? barcode: ', barcode_value)
-        return barcode_value
 
     def run(self):
         loop = asyncio.get_event_loop()
