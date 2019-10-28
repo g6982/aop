@@ -6,9 +6,9 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//div[hasclass('o_address_format')]" position = "inside">
-                    <field options='{"no_open": True}' name="state_id" placeholder="State Select" class="o_address_city"/>
-                    <field options='{"no_open": True}' name="city_id" placeholder="City Select" class="o_address_city"/>
-                    <field options='{"no_open": True}' name="district_id" placeholder="District Select" class="o_address_city"/>
+                    <field options="{'no_quick_create': True, 'no_create_edit': True}" name="state_id" placeholder="State Select" class="o_address_city"/>
+                    <field options="{'no_quick_create': True, 'no_create_edit': True}" name="city_id" placeholder="City Select" class="o_address_city"/>
+                    <field options="{'no_quick_create': True, 'no_create_edit': True}" name="district_id" placeholder="District Select" class="o_address_city"/>
                 </xpath>
             </field>
         </record>

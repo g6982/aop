@@ -84,6 +84,37 @@ class ApiInterface(http.Controller):
             })
         return json.dumps(data)
 
+    @http.route('/api/stock_picking_type/list_value', methods=["POST"], type='json', auth='none', csrf=False)
+    def get_stock_picking_type_value(self, **post):
+        request.session.db = config.get('interface_db_name')
+
+        res = request.env['stock.picking.type'].sudo().search([
+            ('warehouse_id', '!=', False)
+        ])
+        data = {}
+        for index_p, picking_type_id in enumerate(res):
+            stock_picking_ids = request.env['stock.picking'].sudo().search([
+                ('picking_type_id', '=', picking_type_id.id),
+            ])
+            data.update({
+                index_p: picking_type_id.name + '/' + picking_type_id.warehouse_id.name + '/'
+            })
+        return json.dumps(data)
+
+    @http.route('/api/stock_picking/list_value', methods=["POST"], type='json', auth='none', csrf=False)
+    def get_stock_picking_ids_value(self, **post):
+        request.session.db = config.get('interface_db_name')
+        res = request.env['stock.picking'].sudo().search([
+            ('state', '=', 'draft'),
+        ])
+        data = {}
+        for index_p, picking_id in enumerate(res):
+            value = picking_id.vin_id.name if picking_id.vin_id else str(time.time())
+            data.update({
+                index_p: picking_id.name + '|' + value
+            })
+        return json.dumps(data)
+
     @http.route('/api/stock_picking/list', methods=["POST"], type='json', auth='none', csrf=False)
     def get_stock_picking_ids(self, barcode=None, **post):
         _logger.info({
