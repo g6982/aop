@@ -11,7 +11,8 @@ class ReconciliationFile(models.Model):
     _name = 'reconciliation.file'
 
     name = fields.Char('Name')
-    batch_no = fields.Char('Batch no')
+    # batch_no = fields.Char('Batch no')
+    batch_no = fields.Many2one('reconciliation.file.lot', string='Batch no')
     apply_no = fields.Char('Apply')
     transfer_way = fields.Char('Transfer')
     number = fields.Integer('Number')
@@ -59,9 +60,6 @@ class ReconciliationFile(models.Model):
             if not line.re_line_ids:
                 line.reconciliation_state = 'failed'
             else:
-                _logger.info({
-                    'any(x.invoice_line_id is False for x in line.re_line_ids)': any(x.invoice_line_id is False for x in line.re_line_ids)
-                })
                 if any(getattr(x.invoice_line_id, 'id') is False for x in line.re_line_ids):
                     line.reconciliation_state = 'order_only'
                 else:
@@ -79,8 +77,10 @@ class ReconciliationFile(models.Model):
                 continue
 
             not_invoice_line = sale_order_line_ids.filtered(lambda x: not x.invoice_lines)
+            # 筛选过滤
+            invoice_line_ids = list(set(sale_order_line_ids.mapped('invoice_lines')) - set(line.batch_no.mapped('invoice_line_id'))) if line.batch_no else sale_order_line_ids.mapped('invoice_lines')
             data = []
-            for invoice_id in sale_order_line_ids.mapped('invoice_lines'):
+            for invoice_id in invoice_line_ids:
                 data.append((0, 0, {
                     'sale_order_line_id': invoice_id.sale_order_line_id.id,
                     'invoice_line_id': invoice_id
@@ -94,12 +94,18 @@ class ReconciliationFile(models.Model):
                 line.re_line_ids = False
                 line.re_line_ids = data
 
+    def fill_reconciliation_lot(self):
+        for line in self:
+            line.batch_no.write({
+                'reconciliation_ids': [(4, line.id)]
+            })
+
 
 class ReconciliationFileLine(models.Model):
     _name = 'reconciliation.file.line'
 
     re_file_id = fields.Many2one('reconciliation.file')
-    invoice_line_id = fields.Many2one('account.invoice.line', string='Invoice line')
+    invoice_line_id = fields.Many2one('account.invoice.line', string='Invoice line', domain=[('type', '=', 'out_invoice')])
     sale_order_line_id = fields.Many2one('sale.order.line', string='Order line')
 
 
@@ -112,5 +118,33 @@ class BaseImport(models.TransientModel):
 
         if not dryrun and self.res_model == 'reconciliation.file':
             records = self.env['reconciliation.file'].browse(res.get('ids'))
+            records.fill_reconciliation_lot()
             records.reconciliation_account_invoice()
         return res
+
+
+class ReconciliationFileLot(models.Model):
+    _name = 'reconciliation.file.lot'
+    _sql_constraints = [
+        ('unique_name', 'unique(name)', 'the name must be unique!')
+    ]
+
+    name = fields.Char('Name')
+    # lot_line_ids = fields.One2many('reconciliation.file.lot.line', 'file_lot_id', string='Invoice lines')
+    invoice_line_ids = fields.Many2many('account.invoice.line', string='Invoice lines')
+    reconciliation_ids = fields.Many2many('reconciliation.file', string='Reconciliation ids')
+
+    def reconciliation_account_invoice(self):
+        self.mapped('reconciliation_ids').reconciliation_account_invoice()
+
+
+# class ReconciliationFileLotLine(models.Model):
+#     _name = 'reconciliation.file.lot.line'
+#     _sql_constraints = [
+#         ('unique_name', 'unique(name)', 'the name must be unique!')
+#     ]
+#
+#     name = fields.Char('Name')
+#     file_lot_id = fields.Many2one('reconciliation.file.lot')
+#     invoice_line_ids = fields.Many2one('account.invoice.line', string='Invoice lines')
+#     # reconciliation_state = fields.Boolean('Reconciliation state')

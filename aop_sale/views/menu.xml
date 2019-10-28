@@ -492,9 +492,23 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+<!--        批次号-->
         <menuitem id="reconciliation_file_id"
                   name="Reconciliation"
                   action="action_reconciliation_file_view"
+                  parent="account.menu_finance_receivables"/>
+
+        <record id="action_reconciliation_file_lot_view" model="ir.actions.act_window">
+            <field name="name">Reconciliation lot</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">reconciliation.file.lot</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="reconciliation_file_lot_id"
+                  name="Reconciliation lot"
+                  action="action_reconciliation_file_lot_view"
                   parent="account.menu_finance_receivables"/>
 
         <!-- 对帐批次号 -->
