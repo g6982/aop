@@ -132,7 +132,7 @@ class ReconciliationFileLine(models.Model):
     sale_order_line_id = fields.Many2one('sale.order.line', string='Order line')
 
     state = fields.Selection(
-        [('none', 'none'),
+        [('success', 'Success'),
          ('price_error', 'Price Error')
          ],
         'state',
