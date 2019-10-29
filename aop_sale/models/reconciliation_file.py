@@ -63,7 +63,10 @@ class ReconciliationFile(models.Model):
                 if any(getattr(x.invoice_line_id, 'id') is False for x in line.re_line_ids):
                     line.reconciliation_state = 'order_only'
                 else:
-                    line.reconciliation_state = 'order_invoice'
+                    if len(set(line.re_line_ids.mapped('sale_order_line_id'))) != line.number:
+                        line.reconciliation_state = 'order_only'
+                    else:
+                        line.reconciliation_state = 'order_invoice'
 
     @api.multi
     def reconciliation_account_invoice(self):
@@ -77,8 +80,13 @@ class ReconciliationFile(models.Model):
                 continue
 
             not_invoice_line = sale_order_line_ids.filtered(lambda x: not x.invoice_lines)
+
             # 筛选过滤
-            invoice_line_ids = list(set(sale_order_line_ids.mapped('invoice_lines')) - set(line.batch_no.mapped('invoice_line_ids'))) if line.batch_no else sale_order_line_ids.mapped('invoice_lines')
+            if line.batch_no.mapped('invoice_line_ids') if line.batch_no else False:
+                invoice_line_ids = list(set(sale_order_line_ids.mapped('invoice_lines')) & set(line.batch_no.mapped('invoice_line_ids')))
+            else:
+                invoice_line_ids = sale_order_line_ids.mapped('invoice_lines')
+
             data = []
             for invoice_id in invoice_line_ids:
                 data.append((0, 0, {
@@ -93,6 +101,20 @@ class ReconciliationFile(models.Model):
             if data:
                 line.re_line_ids = False
                 line.re_line_ids = data
+
+        for batch_id in list(set(self.mapped('batch_no'))):
+            if batch_id.mapped('reconciliation_ids').mapped('re_line_ids') if batch_id.mapped('reconciliation_ids') else False:
+                un_invoice_line_ids = list(set(batch_id.mapped('invoice_line_ids')) - set(
+                    batch_id.mapped('reconciliation_ids').mapped('re_line_ids').mapped('invoice_line_id')))
+                _logger.info({
+                    'un_invoice_line_ids': un_invoice_line_ids
+                })
+            else:
+                un_invoice_line_ids = batch_id.mapped('invoice_line_ids')
+            if un_invoice_line_ids:
+                batch_id.un_invoice_line_ids = [(6, 0, [x.id for x in un_invoice_line_ids])]
+            else:
+                batch_id.un_invoice_line_ids = False
 
     def fill_reconciliation_lot(self):
         for line in self:
@@ -130,8 +152,18 @@ class ReconciliationFileLot(models.Model):
     ]
 
     name = fields.Char('Name')
-    # lot_line_ids = fields.One2many('reconciliation.file.lot.line', 'file_lot_id', string='Invoice lines')
-    invoice_line_ids = fields.Many2many('account.invoice.line', string='Invoice lines', domain=[('invoice_type', '=', 'out_invoice')])
+    invoice_line_ids = fields.Many2many(
+        'account.invoice.line',
+        'reconciliation_file_lot_invoice_line_ids',
+        string='Invoice lines',
+        domain=[('invoice_type', '=', 'out_invoice')]
+    )
+    un_invoice_line_ids = fields.Many2many(
+        'account.invoice.line',
+        'reconciliation_file_lot_not_invoice_line_ids',
+        string='Invoice lines(NO)',
+        domain=[('invoice_type', '=', 'out_invoice')]
+    )
     reconciliation_ids = fields.Many2many('reconciliation.file', string='Reconciliation ids')
 
     def reconciliation_account_invoice(self):
