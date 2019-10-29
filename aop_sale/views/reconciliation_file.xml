@@ -98,6 +98,9 @@
 
                             </field>
                         </group>
+                        <group>
+                            <field name="un_invoice_line_ids" readonly="1" options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                        </group>
 
                     </sheet>
                 </form>
