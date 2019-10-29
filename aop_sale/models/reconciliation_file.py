@@ -136,7 +136,7 @@ class ReconciliationFileLine(models.Model):
          ('price_error', 'Price Error')
          ],
         'state',
-        default='none',
+        default='success',
         compute='_compute_state',
         store=True)
 
