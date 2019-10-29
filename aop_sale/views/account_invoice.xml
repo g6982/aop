@@ -428,5 +428,20 @@
             <field name="act_window_id" ref="action_purchase_account_invoice_view"/>
         </record>
 
+        <!--   付款结算清单航     -->
+        <record id="view_account_invoice_line_out_invoice_tree" model="ir.ui.view">
+            <field name="name">account.invoice.line.out.invoice.tree</field>
+            <field name="model">account.invoice.line</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice Line" >
+                    <field name="partner_id" string="Customer"/>
+                    <field name="sale_order_line_id"/>
+                    <field name="vin_id"/>
+                    <field name="contract_price"/>
+                    <field name="price_unit" string="customer price"/>
+                </tree>
+            </field>
+        </record>
+
     </data>
 </odoo>
