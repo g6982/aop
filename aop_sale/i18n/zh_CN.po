@@ -4489,7 +4489,7 @@ msgstr "设为临时订单"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__state
 msgid "state"
-msgstr ""
+msgstr "状态"
 
 #. module: aop_sale
 #: model:ir.actions.report,name:aop_sale.standard_statement_report_xlsx
