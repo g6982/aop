@@ -4,7 +4,11 @@ import asyncio
 import telnetlib3
 import requests
 import json
-import os
+import functools
+import traceback
+from redis_cache import get_redis_client
+from tools import validate_user_password
+
 
 HOST_IP = '172.16.107.109'
 HOST_IP = '127.0.0.1'
@@ -23,6 +27,9 @@ HEADERS = {
     'charset': 'utf-8',
 }
 
+REDIS_CLIENT_1 = get_redis_client(1)
+REDIS_CLIENT_USER = get_redis_client(2)
+
 
 class BarcodeWMS:
     def __init__(self, host_ip, host_port):
@@ -30,27 +37,18 @@ class BarcodeWMS:
         :param host_ip: telnet IP
         :param host_port: telnet 端口
         '''
-        self.warehouse_data = False
-        self.picking_type_data = False
-        self.picking_data = False
         self._host = host_ip
         self._port = host_port
-        self._warehouse_id = False
-        self._picking_type_id = False
-        self._picking_id = False
         self._reader = False
         self._writer = False
-        self._root_menu_index = False
 
+        self.initial_redis_data()
         self.run()
 
-    @property
-    def warehouse_id(self):
-        return self._warehouse_id
-
-    @warehouse_id.setter
-    def warehouse_id(self, value):
-        self._warehouse_id = value
+    # 删除所有缓存
+    def initial_redis_data(self):
+        REDIS_CLIENT_1.flushdb()
+        REDIS_CLIENT_USER.flushdb()
 
     # 仓库数据
     @staticmethod
@@ -111,8 +109,9 @@ class BarcodeWMS:
 
         picking_type_data = self._get_picking_type_data(option, writer)
 
+        self.save_to_redis(writer, 'picking_type_data', json.dumps(picking_type_data))
         self.picking_type_data = picking_type_data
-        writer.write(u'\r步骤信息\n'.center(80))
+        writer.write(u'\r步骤信息\n')
         for p_key in picking_type_data.keys():
             writer.write(u'{}: {}\r\n'.format(int(p_key) + 1, picking_type_data.get(p_key)))
 
@@ -137,8 +136,9 @@ class BarcodeWMS:
         print('options: ', option)
         picking_data = self._get_picking_data(option, writer)
 
+        self.save_to_redis(writer, 'picking_data', json.dumps(picking_data))
         self.picking_data = picking_data
-        writer.write(u'\r任务信息\n'.center(80))
+        writer.write(u'\r任务信息\n')
         for p_key in picking_data.keys():
             writer.write(u'{}: {}\r\n'.format(int(p_key) + 1, picking_data.get(p_key)))
 
@@ -149,6 +149,23 @@ class BarcodeWMS:
         writer.write(u'\r2: 仓库信息\n')
         writer.write(u'\r3: 步骤信息\n')
         writer.write(u'\r4: 我的信息\n')
+
+    # 保存 fd
+    def save_socket_fd(self, socket_fd):
+        if not REDIS_CLIENT_1.hgetall(socket_fd):
+            REDIS_CLIENT_1.hset(socket_fd, 'active', 'Y')
+
+    # 保存 hash 到 fd
+    def save_to_redis(self, writer, name, value):
+        socket_fd = writer._transport._sock_fd
+        REDIS_CLIENT_1.hset(socket_fd, name, value)
+
+    def delete_fd_redis_key(self, writer, key_value):
+        socket_fd = writer._transport._sock_fd
+        REDIS_CLIENT_1.hdel(socket_fd, key_value)
+
+    def get_from_redis(self, socket_fd, name):
+        return REDIS_CLIENT_1.hget(socket_fd, name)
 
     # 接收输入
     # writer._transport._sock_fd 可以获取到 客户端的ID
@@ -173,12 +190,14 @@ class BarcodeWMS:
                 barcode_value += outp
 
             else:
-                data = {
-                    'barcode_value': barcode_value
-                }
+                # 首先保存 fd
+                socket_fd = writer._transport._sock_fd
+                self.save_socket_fd(socket_fd)
+
                 try:
-                    self.draw_wms_ui(barcode_value, writer, reader)
+                    self.draw_wms_ui(barcode_value, writer, socket_fd=socket_fd)
                 except Exception as e:
+                    raise traceback.format_exc()
                     self._root_menu_ui(writer)
                     barcode_value = ''
                 barcode_value = ''
@@ -186,70 +205,96 @@ class BarcodeWMS:
         # EOF
         print()
 
-    def draw_wms_ui(self, barcode_value, writer, reader):
+    def draw_login_ui(self, writer):
+        writer.write('用户名: ')
+
+    def login_telnet(self, writer, user_password, socket_fd=False):
+        if not REDIS_CLIENT_USER.get(socket_fd, 'username'):
+            REDIS_CLIENT_USER.set(socket_fd, user_password, ex=3600)
+
+    def draw_wms_ui(self, barcode_value, writer, socket_fd=False):
+        # 如果没有输入，返回到主菜单
         if not barcode_value:
-            return
+            self._root_menu_ui(writer)
 
+        # 快捷键的返回
+        self._reset_key_shortcuts(barcode_value, writer)
+
+        # 获取当前所在位置的索引
+        root_menu_index = self.get_from_redis(socket_fd, '_root_menu_index')
+        picking_type_index = self.get_from_redis(socket_fd, '_picking_type_index')
+        picking_index = self.get_from_redis(socket_fd, '_picking_index')
+
+        if barcode_value in ['r', 't', 'p']:
+            self._reset_key_shortcuts(barcode_value, writer)
         # 主菜单
-        if not self._root_menu_index:
-            if barcode_value == 'r':
-                self._root_menu_index = False
-                self._root_menu_ui(writer)
-            elif barcode_value == 'p':
-                self._picking_type_id = 'p'
-                self._root_menu_index = 'r'
-                self._stock_picking_type_ui(writer, option=barcode_value)
-
-            elif int(barcode_value) != 1:
+        elif not root_menu_index:
+            print('*****: ', barcode_value)
+            if int(barcode_value) != 1:
                 print('barcode_value: ', barcode_value)
                 writer.write('To be continued!\r\n')
                 self._root_menu_ui(writer)
             else:
-                self._root_menu_index = barcode_value
+                self.save_to_redis(writer, '_root_menu_index', barcode_value)
                 self._stock_picking_type_ui(writer, option=barcode_value)
                 barcode_value = False
 
         # 已经指定了主菜单ID, 没有指定作业类型,，指定作业类型后，选择任务
-        elif self._root_menu_index and not self._picking_type_id and barcode_value:
+        elif root_menu_index and not picking_type_index and barcode_value:
             self._reset_key_shortcuts(barcode_value, writer=writer)
-            self._picking_type_id = barcode_value
+            self.save_to_redis(writer, '_picking_type_index', barcode_value)
             self._stock_picking_ui(writer)
             barcode_value = False
 
         # 完成任务
-        elif self._root_menu_index and self._picking_type_id and not self._picking_id and barcode_value:
+        elif root_menu_index and picking_type_index and not picking_index and barcode_value:
             self._reset_key_shortcuts(barcode_value, writer=writer)
 
-            if not self.picking_data:
-                self.picking_data = self._get_picking_data(barcode_value, writer)
+            picking_data = self.get_from_redis(socket_fd, 'picking_data')
 
-            print('barcode_value: ', barcode_value, self.picking_data, int(barcode_value) - 1)
-            vin_value = self.picking_data.get(int(barcode_value) - 1)
+            picking_data = json.loads(picking_data)
+
+            vin_value = picking_data.get(str(int(barcode_value) - 1))
+            print('vin_value: ', vin_value)
             if not vin_value:
                 vin_value = '-1'
             vin_value = vin_value.split('|')[-1]
+
             writer.write(u'\r\n{barcode_value}: VIN码: {vin_code}\n\n'.format(
                 barcode_value=barcode_value,
                 vin_code=vin_value
             ))
-            writer.write(u'\n返回主菜单 r, 返回任务 p\r\n')
-            self._picking_id = barcode_value
+            writer.write(u'\n返回主菜单: r, 返回步骤: t, 返回任务: p\r\n')
+
+            self.save_to_redis(writer, '_picking_index', barcode_value)
             barcode_value = False
-        elif self._picking_id and barcode_value:
+        elif picking_index and barcode_value:
             self._reset_key_shortcuts(barcode_value, writer=writer)
+
             writer.write('\rdone: [{barcode_value}]\n'.format(barcode_value=barcode_value))
-            self._picking_id = False
+            writer.write(u'\n返回主菜单: r, 返回步骤: t, 返回任务: p\r\n')
+
+            self.save_to_redis(writer, '_picking_index', '')
             self._stock_picking_ui(writer, option=barcode_value)
             barcode_value = False
 
+    # 快捷键的处理
     def _reset_key_shortcuts(self, barcode_value, writer=False):
         if barcode_value == 'r':
-            self._root_menu_index = False
+            self.delete_fd_redis_key(writer, '_root_menu_index')
+            self.delete_fd_redis_key(writer, '_picking_type_index')
+            self.delete_fd_redis_key(writer, '_picking_index')
             self._root_menu_ui(writer)
-        elif barcode_value == 'p':
-            self._root_menu_index = 'r'
-            self._picking_type_id = False
+        elif barcode_value == 't':
+            self.save_to_redis(writer, '_root_menu_index', 'r')
+            self.delete_fd_redis_key(writer, '_picking_type_index')
+            self.delete_fd_redis_key(writer, '_picking_index')
             self._stock_picking_type_ui(writer, option=barcode_value)
+        elif barcode_value == 'p':
+            self.save_to_redis(writer, '_root_menu_index', 'r')
+            self.save_to_redis(writer, '_picking_type_index', 't')
+            self.delete_fd_redis_key(writer, '_picking_index')
+            self._stock_picking_ui(writer, option=barcode_value)
 
     def run(self):
         loop = asyncio.get_event_loop()
