@@ -2752,7 +2752,7 @@ msgstr "临时订单"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__re_file_id
 msgid "Re File"
-msgstr ""
+msgstr "关联对账数据"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__re_line_ids
