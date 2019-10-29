@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-24 06:02+0000\n"
-"PO-Revision-Date: 2019-10-24 06:02+0000\n"
+"POT-Creation-Date: 2019-10-29 06:44+0000\n"
+"PO-Revision-Date: 2019-10-29 06:44+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -793,6 +793,7 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__create_uid
@@ -844,6 +845,7 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__create_date
@@ -882,6 +884,7 @@ msgstr "客户合同管理"
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree
 #: selection:sale.order,order_type:0
 msgid "Customer"
 msgstr "收入结算单位"
@@ -1072,6 +1075,7 @@ msgstr "调度类型"
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__display_name
@@ -1420,6 +1424,7 @@ msgstr "已月结!"
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__id
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__id
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__id
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot__id
 #: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx__id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__id
@@ -1615,6 +1620,7 @@ msgstr "发票标示"
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__invoice_line_ids
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__invoice_line_ids
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__invoice_line_ids
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_line_tree
 msgid "Invoice Line"
@@ -1655,9 +1661,15 @@ msgid "Invoice line"
 msgstr "结算清单明细行"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot__invoice_line_ids
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_batch_number__invoice_line_ids
 msgid "Invoice lines"
 msgstr "结算清单行"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot__un_invoice_line_ids
+msgid "Invoice lines(NO)"
+msgstr "差异明细行"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.account_invoice_no_tax_invoice_action
@@ -1787,6 +1799,7 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_report_aop_sale_standard_statement_report_xlsx____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product____last_update
@@ -1839,6 +1852,7 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__write_uid
@@ -1890,6 +1904,7 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__write_date
@@ -2118,6 +2133,7 @@ msgstr "我的发票"
 #: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__name
 #: model:ir.model.fields,field_description:aop_sale.field_product_vehicle_type__name
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__name
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot__name
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__name
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__name
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_batch_number__name
@@ -2748,6 +2764,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:aop_sale.action_reconciliation_file_view
 #: model:ir.ui.menu,name:aop_sale.reconciliation_file_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_reconciliation_file_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_reconciliation_file_lot_form
 msgid "Reconciliation"
 msgstr "确认"
 
@@ -2773,11 +2790,22 @@ msgid "Reconciliation batch no"
 msgstr "供应商发票登记"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot__reconciliation_ids
+msgid "Reconciliation ids"
+msgstr "对账数据"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__reconciliation_file_ids
 #: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__reconciliation_ids
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__reconciliation_file_ids
 msgid "Reconciliation list"
 msgstr "对账数据"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_reconciliation_file_lot_view
+#: model:ir.ui.menu,name:aop_sale.reconciliation_file_lot_id
+msgid "Reconciliation lot"
+msgstr "校验对账数据"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__reconciliation_state
@@ -3995,6 +4023,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.account_invoice_supplier_form__inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_batch_reconciliation_number_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_verify_batch_reconciliation_form
@@ -4376,6 +4405,11 @@ msgid "reconciliation.file.line"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_reconciliation_file_lot
+msgid "reconciliation.file.lot"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__register_datetime
 msgid "register time"
 msgstr "登记时间"
@@ -4459,6 +4493,7 @@ msgstr ""
 #: sql_constraint:delivery.carrier:0
 #: sql_constraint:invoice.no.tax.invoice:0
 #: sql_constraint:purchase.invoice.batch.no:0
+#: sql_constraint:reconciliation.file.lot:0
 #: sql_constraint:stock.location:0
 #: sql_constraint:stock.location.route:0
 #: sql_constraint:stock.warehouse:0
