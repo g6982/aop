@@ -119,7 +119,7 @@ class BaseImport(models.TransientModel):
         if not dryrun and self.res_model == 'reconciliation.file':
             records = self.env['reconciliation.file'].browse(res.get('ids'))
             records.fill_reconciliation_lot()
-            records.reconciliation_account_invoice()
+            # records.reconciliation_account_invoice()
         return res
 
 
