@@ -25,6 +25,8 @@ class AccountTaxInvoice(models.Model):
 
     tax_invoice_no = fields.Char('Tax invoice no')
 
+    picking_purchase_id = fields.Many2one('purchase.order', 'Purchase', copy=False)
+
     @api.onchange('invoice_line_ids')
     def _onchange_invoice_line_ids(self):
         pass

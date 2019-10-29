@@ -48,6 +48,7 @@
                     <field name="train_type"/>
                     <field name="cargo_line"/>
                     <field name="box_number"/>
+                    <field name="picking_id"/>
                     <field name="service_contract_price" invisible="1"/>
                     <field name="sale_line_id" readonly="1"/>
                 </xpath>
