@@ -78,7 +78,7 @@ class ReconciliationFile(models.Model):
 
             not_invoice_line = sale_order_line_ids.filtered(lambda x: not x.invoice_lines)
             # 筛选过滤
-            invoice_line_ids = list(set(sale_order_line_ids.mapped('invoice_lines')) - set(line.batch_no.mapped('invoice_line_id'))) if line.batch_no else sale_order_line_ids.mapped('invoice_lines')
+            invoice_line_ids = list(set(sale_order_line_ids.mapped('invoice_lines')) - set(line.batch_no.mapped('invoice_line_ids'))) if line.batch_no else sale_order_line_ids.mapped('invoice_lines')
             data = []
             for invoice_id in invoice_line_ids:
                 data.append((0, 0, {
