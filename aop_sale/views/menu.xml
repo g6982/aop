@@ -539,6 +539,10 @@
                   action="action_verify_batch_reconciliation"
                   parent="account.menu_finance_receivables"/>
 
+        <menuitem id="customer_account_invoice_line_id"
+                  name="Customer invoice line"
+                  action="action_customer_account_invoice_line_view"
+                  parent="account.menu_finance_receivables"/>
 
         <menuitem id="purchase_account_invoice_id"
                   name="Purchase invoice line"

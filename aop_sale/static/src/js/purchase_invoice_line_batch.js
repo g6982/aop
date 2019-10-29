@@ -11,9 +11,10 @@ odoo.define('aop_sale.purchase_invoice_line', function (require) {
             let $buttons = self._super.apply(self, arguments);
 
             let tree_model = self.modelName;
+            let display_invoice = self.initialState.context['batch_invoice'];
 
             for (let i = 0; i < show_button_model.length; i++) {
-                if (tree_model == show_button_model[i]) {
+                if (tree_model == show_button_model[i] && display_invoice) {
                     let button2 = $("<button type='button' class='btn btn-primary btn-default'>打包付款结算清单行</button>")
                         .click(self.proxy('batch_purchase_invoice_line'));
                     self.$buttons.append(button2);
