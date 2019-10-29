@@ -9,6 +9,7 @@
             <script type="text/javascript" src="/aop_sale/static/src/js/purchase_invoice.js"/>
             <script type="text/javascript" src="/aop_sale/static/src/js/package_reconciliation.js"/>
             <script type="text/javascript" src="/aop_sale/static/src/js/verify_batch.js"/>
+            <script type="text/javascript" src="/aop_sale/static/src/js/purchase_invoice_line_batch.js"/>
         </xpath>
     </template>
 

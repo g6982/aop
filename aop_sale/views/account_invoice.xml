@@ -428,7 +428,7 @@
             <field name="act_window_id" ref="action_purchase_account_invoice_view"/>
         </record>
 
-        <!--   付款结算清单航     -->
+        <!--   付款结算清单行     -->
         <record id="view_account_invoice_line_out_invoice_tree" model="ir.ui.view">
             <field name="name">account.invoice.line.out.invoice.tree</field>
             <field name="model">account.invoice.line</field>
