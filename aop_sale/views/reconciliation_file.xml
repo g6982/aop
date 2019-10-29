@@ -117,8 +117,8 @@
                 >
                     <field name="re_file_id"/>
                     <field name="invoice_line_id"/>
-                    <field name="price_unit"/>
-                    <field name="reconciliation_price_unit"/>
+                    <field name="price_unit" string="customer price"/>
+                    <field name="reconciliation_price_unit" string="Price unit"/>
                     <field name="sale_order_line_id"/>
                 </tree>
             </field>
