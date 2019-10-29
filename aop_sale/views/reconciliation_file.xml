@@ -41,6 +41,7 @@
                                 <field name="re_line_ids">
                                     <tree create="0" delete="0">
                                         <field name="invoice_line_id"/>
+                                        <field name="price_unit"/>
                                         <field name="sale_order_line_id"/>
                                     </tree>
                                 </field>
@@ -104,6 +105,22 @@
 
                     </sheet>
                 </form>
+            </field>
+        </record>
+
+        <record id="view_reconciliation_file_line_tree" model="ir.ui.view">
+            <field name="name">reconciliation.file.line.tree</field>
+            <field name="model">reconciliation.file.line</field>
+            <field name="arch" type="xml">
+                <tree decoration-warning="price_unit != reconciliation_price_unit"
+                      decoration-success="price_unit == reconciliation_price_unit"
+                >
+                    <field name="re_file_id"/>
+                    <field name="invoice_line_id"/>
+                    <field name="price_unit"/>
+                    <field name="reconciliation_price_unit"/>
+                    <field name="sale_order_line_id"/>
+                </tree>
             </field>
         </record>
     </data>

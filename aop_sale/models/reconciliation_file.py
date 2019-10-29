@@ -20,7 +20,7 @@ class ReconciliationFile(models.Model):
     price_total = fields.Float('Price total')
     product_id = fields.Many2one('product.product', 'Product')
 
-    re_line_ids = fields.One2many('reconciliation.file.line', 're_file_id')
+    re_line_ids = fields.One2many('reconciliation.file.line', 're_file_id', ondelete='cascade')
 
     reconciliation_state = fields.Selection(
         [('order_invoice', 'order_invoice'),
@@ -125,8 +125,10 @@ class ReconciliationFile(models.Model):
 class ReconciliationFileLine(models.Model):
     _name = 'reconciliation.file.line'
 
-    re_file_id = fields.Many2one('reconciliation.file')
+    re_file_id = fields.Many2one('reconciliation.file', required=True, ondelete='cascade')
     invoice_line_id = fields.Many2one('account.invoice.line', string='Invoice line', domain=[('type', '=', 'out_invoice')])
+    price_unit = fields.Float(related='invoice_line_id.price_unit')
+    reconciliation_price_unit = fields.Float(related='re_file_id.price_unit')
     sale_order_line_id = fields.Many2one('sale.order.line', string='Order line')
 
 
@@ -163,7 +165,7 @@ class ReconciliationFileLot(models.Model):
         string='Invoice lines(NO)',
         domain=[('invoice_type', '=', 'out_invoice')]
     )
-    reconciliation_ids = fields.Many2many('reconciliation.file', string='Reconciliation ids')
+    reconciliation_ids = fields.Many2many('reconciliation.file', string='Reconciliation ids', ondelete='cascade')
 
     def reconciliation_account_invoice(self):
         self.mapped('reconciliation_ids').reconciliation_account_invoice()
