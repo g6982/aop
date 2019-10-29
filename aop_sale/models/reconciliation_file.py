@@ -99,6 +99,7 @@ class ReconciliationFile(models.Model):
                     'sale_order_line_id': line_id.id
                 }))
             if data:
+                line.re_line_ids = False
                 line.re_line_ids = data
             else:
                 line.re_line_ids = False
