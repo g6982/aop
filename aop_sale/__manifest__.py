@@ -44,6 +44,7 @@
         'views/res_partner.xml',
         'views/res_users.xml',
         'views/menu.xml',
+        'views/purchase_batch_invoice.xml',
         'views/restricted_menu.xml',
         'views/handover_vin_view.xml',
         'views/base.xml',
@@ -64,6 +65,7 @@
         'wizard/purchase_wizard.xml',
         'wizard/stock_location_to_route_location.xml',
         'wizard/package_reconciliation.xml',
+        'wizard/batch_purchase_invoice_line.xml',
         'report/report_statement.xml',
     ],
 }
