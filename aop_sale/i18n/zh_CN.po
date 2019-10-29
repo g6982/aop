@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-29 07:34+0000\n"
-"PO-Revision-Date: 2019-10-29 07:34+0000\n"
+"POT-Creation-Date: 2019-10-29 07:38+0000\n"
+"PO-Revision-Date: 2019-10-29 07:38+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2544,6 +2544,7 @@ msgstr "交接单总价格"
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__price_unit
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__price_unit
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__reconciliation_price_unit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_reconciliation_file_line_tree
 msgid "Price unit"
 msgstr "单车价格"
 
@@ -4034,6 +4035,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_batch_reconciliation_number_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_reconciliation_file_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_verify_batch_reconciliation_form
 msgid "customer price"
 msgstr "确认价"
