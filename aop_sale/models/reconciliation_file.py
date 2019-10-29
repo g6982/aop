@@ -131,7 +131,7 @@ class ReconciliationFileLot(models.Model):
 
     name = fields.Char('Name')
     # lot_line_ids = fields.One2many('reconciliation.file.lot.line', 'file_lot_id', string='Invoice lines')
-    invoice_line_ids = fields.Many2many('account.invoice.line', string='Invoice lines')
+    invoice_line_ids = fields.Many2many('account.invoice.line', string='Invoice lines', domain=[('invoice_type', '=', 'out_invoice')])
     reconciliation_ids = fields.Many2many('reconciliation.file', string='Reconciliation ids')
 
     def reconciliation_account_invoice(self):
