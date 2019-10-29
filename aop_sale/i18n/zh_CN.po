@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-29 08:48+0000\n"
-"PO-Revision-Date: 2019-10-29 08:48+0000\n"
+"POT-Creation-Date: 2019-10-29 09:14+0000\n"
+"PO-Revision-Date: 2019-10-29 09:14+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -647,6 +647,11 @@ msgid "Contract"
 msgstr "合同"
 
 #. module: aop_sale
+#: selection:reconciliation.file.line,error_type:0
+msgid "Contract Price Error"
+msgstr "合同价格错误"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__serial_no
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__serial_no
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__serial_no
@@ -903,6 +908,11 @@ msgstr ""
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__access_url
 msgid "Customer Portal URL"
 msgstr "客户门户 URL"
+
+#. module: aop_sale
+#: selection:reconciliation.file.line,error_type:0
+msgid "Customer Price Error"
+msgstr "客户结算价格错误"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_customer_aop_contract_view
@@ -1183,6 +1193,11 @@ msgstr "结束日期"
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__date_end
 msgid "End date"
 msgstr "合同结束时间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__error_type
+msgid "Error Type"
+msgstr "错误类型"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__excluding_deductible
@@ -2452,7 +2467,7 @@ msgstr "会计期间"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__picking_id
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__picking_id
 msgid "Picking"
-msgstr "分拣"
+msgstr "扣款关联任务"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_stock_picking_type
@@ -2522,6 +2537,11 @@ msgstr "预开票"
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 msgid "Price"
 msgstr "价格"
+
+#. module: aop_sale
+#: selection:reconciliation.file.line,state:0
+msgid "Price Error"
+msgstr "价格错误"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__price_rule_ids
@@ -2633,7 +2653,7 @@ msgstr "拉"
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__purchase_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__picking_purchase_id
 msgid "Purchase"
-msgstr "购买方"
+msgstr "采购订单"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_purchase_order
@@ -3208,6 +3228,11 @@ msgstr "批量调度"
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 msgid "Subtotal"
 msgstr "小计"
+
+#. module: aop_sale
+#: selection:reconciliation.file.line,state:0
+msgid "Success"
+msgstr ""
 
 #. module: aop_sale
 #: selection:aop.contract,type:0
@@ -4460,6 +4485,11 @@ msgstr "临时订单确认"
 #: model:res.groups,name:aop_sale.group_sale_order_action_draft_button
 msgid "sale order action draft button"
 msgstr "设为临时订单"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__state
+msgid "state"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.actions.report,name:aop_sale.standard_statement_report_xlsx

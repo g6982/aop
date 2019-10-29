@@ -114,12 +114,13 @@
             <field name="arch" type="xml">
                 <tree decoration-warning="price_unit != reconciliation_price_unit"
                       decoration-success="price_unit == reconciliation_price_unit"
+                      editable="bottom"
                 >
-                    <field name="re_file_id"/>
-                    <field name="invoice_line_id"/>
+                    <field name="re_file_id" attrs="{'readonly': 1}"/>
+                    <field name="invoice_line_id" attrs="{'readonly': 1}"/>
                     <field name="price_unit" string="customer price"/>
                     <field name="reconciliation_price_unit" string="Price unit"/>
-                    <field name="sale_order_line_id"/>
+                    <field name="sale_order_line_id" attrs="{'readonly': 1}"/>
                     <field name="state"/>
                     <field name="error_type"/>
                 </tree>
