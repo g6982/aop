@@ -559,6 +559,19 @@
                   sequence="20"
         />
 
+        <record id="action_reconciliation_file_line_view" model="ir.actions.act_window">
+            <field name="name">Reconciliation line</field>
+            <field name="res_model">reconciliation.file.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="reconciliation_file_line_id"
+                  name="Reconciliation line"
+                  action="action_reconciliation_file_line_view"
+                  parent="account.menu_finance_receivables"
+                  sequence="20"
+        />
 
     </data>
 </odoo>
