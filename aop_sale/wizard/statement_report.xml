@@ -33,10 +33,12 @@
             <field name="view_mode">form</field>
         </record>
 
+        <!--
         <menuitem id="invoice_order_statement_wizard"
                   name="Statement"
                   action="action_invoice_order_statement"
                   parent="account.menu_finance_receivables"/>
+        -->
 
     </data>
 </odoo>

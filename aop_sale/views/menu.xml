@@ -542,7 +542,9 @@
         <menuitem id="customer_account_invoice_line_id"
                   name="Customer invoice line"
                   action="action_customer_account_invoice_line_view"
-                  parent="account.menu_finance_receivables"/>
+                  parent="account.menu_finance_receivables"
+                  sequence="5"
+        />
 
         <menuitem id="purchase_account_invoice_id"
                   name="Purchase invoice line"
