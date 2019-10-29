@@ -99,16 +99,14 @@ class ReconciliationFile(models.Model):
                     'sale_order_line_id': line_id.id
                 }))
             if data:
-                line.re_line_ids = False
                 line.re_line_ids = data
+            else:
+                line.re_line_ids = False
 
         for batch_id in list(set(self.mapped('batch_no'))):
             if batch_id.mapped('reconciliation_ids').mapped('re_line_ids') if batch_id.mapped('reconciliation_ids') else False:
                 un_invoice_line_ids = list(set(batch_id.mapped('invoice_line_ids')) - set(
                     batch_id.mapped('reconciliation_ids').mapped('re_line_ids').mapped('invoice_line_id')))
-                _logger.info({
-                    'un_invoice_line_ids': un_invoice_line_ids
-                })
             else:
                 un_invoice_line_ids = batch_id.mapped('invoice_line_ids')
             if un_invoice_line_ids:
