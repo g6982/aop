@@ -131,6 +131,28 @@ class ReconciliationFileLine(models.Model):
     reconciliation_price_unit = fields.Float(related='re_file_id.price_unit')
     sale_order_line_id = fields.Many2one('sale.order.line', string='Order line')
 
+    state = fields.Selection(
+        [('none', 'none'),
+         ('price_error', 'Price Error')
+         ],
+        'state',
+        default='none',
+        compute='_compute_state',
+        store=True)
+
+    error_type = fields.Selection(
+        [('contract_price_error', 'Contract Price Error'),
+         ('customer_price_error', 'Customer Price Error')
+         ],
+        'Error Type')
+
+    @api.multi
+    @api.depends('price_unit', 'reconciliation_price_unit')
+    def _compute_state(self):
+        for line in self:
+            if line.price_unit != line.reconciliation_price_unit:
+                line.state = 'price_error'
+
 
 class BaseImport(models.TransientModel):
     _inherit = 'base_import.import'

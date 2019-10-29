@@ -120,6 +120,8 @@
                     <field name="price_unit" string="customer price"/>
                     <field name="reconciliation_price_unit" string="Price unit"/>
                     <field name="sale_order_line_id"/>
+                    <field name="state"/>
+                    <field name="error_type"/>
                 </tree>
             </field>
         </record>
