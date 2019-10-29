@@ -324,3 +324,13 @@ msgstr "生成审核批次"
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:238
 msgid "Invoice"
 msgstr "回款结算清单"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__picking_purchase_id
+msgid "Purchase"
+msgstr "采购订单"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__picking_id
+msgid "Picking"
+msgstr "扣款关联任务"
