@@ -496,7 +496,9 @@
         <menuitem id="reconciliation_file_id"
                   name="Reconciliation"
                   action="action_reconciliation_file_view"
-                  parent="account.menu_finance_receivables"/>
+                  parent="account.menu_finance_receivables"
+                  sequence="20"
+        />
 
         <record id="action_reconciliation_file_lot_view" model="ir.actions.act_window">
             <field name="name">Reconciliation lot</field>
@@ -509,7 +511,9 @@
         <menuitem id="reconciliation_file_lot_id"
                   name="Reconciliation lot"
                   action="action_reconciliation_file_lot_view"
-                  parent="account.menu_finance_receivables"/>
+                  parent="account.menu_finance_receivables"
+                  sequence="30"
+        />
 
         <!-- 对帐批次号 -->
         <record id="action_batch_reconciliation_number" model="ir.actions.act_window">
@@ -523,7 +527,9 @@
         <menuitem id="batch_reconciliation_number_id"
                   name="Reconciliation batch"
                   action="action_batch_reconciliation_number"
-                  parent="account.menu_finance_receivables"/>
+                  parent="account.menu_finance_receivables"
+                  sequence="50"
+        />
 
 <!--      审核批次号 -->
         <record id="action_verify_batch_reconciliation" model="ir.actions.act_window">
@@ -537,7 +543,9 @@
         <menuitem id="verify_batch_reconciliation_id"
                   name="Verify batch"
                   action="action_verify_batch_reconciliation"
-                  parent="account.menu_finance_receivables"/>
+                  parent="account.menu_finance_receivables"
+                  sequence="60"
+        />
 
         <menuitem id="customer_account_invoice_line_id"
                   name="Customer invoice line"
@@ -576,7 +584,7 @@
                   name="Reconciliation line"
                   action="action_reconciliation_file_line_view"
                   parent="account.menu_finance_receivables"
-                  sequence="20"
+                  sequence="40"
         />
 
     </data>
