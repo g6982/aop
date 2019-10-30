@@ -58,6 +58,7 @@
                                 <field name="effective_date"/>
                                 <field name="expiry_date"/>
                                 <field name="source"/>
+                                <field name="period_month"/>
                                 <field name="service_product_id"
                                        options="{'no_quick_create': True, 'no_create_edit': True}"/>
                             </group>

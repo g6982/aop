@@ -265,6 +265,7 @@
                 <field name="amount_untaxed" position="before">
                     <field name="tmp_estimate"/>
                     <field name="advance_receipt"/>
+                    <field name="period_month"/>
                 </field>
             </field>
         </record>
@@ -372,7 +373,7 @@
             <field name="model">account.invoice.line</field>
             <field name="arch" type="xml">
                 <tree string="Invoice Line" create="0" import="0" delete="0" editable="bottom"
-                      decoration-danger="purchase_line_price != 'price_unit'"
+                      decoration-danger="purchase_line_price != price_unit"
                 >
                     <field name="partner_id" string="Supplier"/>
                     <field name="product_id" string="Service Product" invisible="1"/>
