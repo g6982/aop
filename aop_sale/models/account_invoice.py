@@ -291,7 +291,7 @@ class AccountInvoiceLine(models.Model):
 
     vin_id = fields.Many2one('stock.production.lot', 'VIN', related='sale_order_line_id.vin', readonly=True)
     contract_price = fields.Float('Contract price')
-    purchase_line_price = fields.Monetary(related='purchase_line_id.price_subtotal', store=True)
+    purchase_line_price = fields.Monetary(related='purchase_line_id.price_subtotal', store=True, readonly=False)
 
     tmp_estimate = fields.Float('Temporary estimate')
 

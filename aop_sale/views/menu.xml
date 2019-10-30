@@ -561,7 +561,7 @@
 
          <!--        供应商清单单明细行-->
         <record id="action_supplier_account_invoice_view" model="ir.actions.act_window">
-            <field name="name">Purchase invoice line</field>
+            <field name="name">Supplier invoice line</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">account.invoice.line</field>
             <field name="context"></field>

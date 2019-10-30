@@ -371,7 +371,9 @@
             <field name="name">supplier.account.invoice.line.tree</field>
             <field name="model">account.invoice.line</field>
             <field name="arch" type="xml">
-                <tree string="Invoice Line" create="0" import="0" delete="0" editable="bottom">
+                <tree string="Invoice Line" create="0" import="0" delete="0" editable="bottom"
+                      decoration-danger="purchase_line_price != 'price_unit'"
+                >
                     <field name="partner_id" string="Supplier"/>
                     <field name="product_id" string="Service Product" invisible="1"/>
                     <field name="name" invisible="1"/>
@@ -388,7 +390,7 @@
                     <field name="purchase_line_price" string="Purchase price"/>
                     <field name="tmp_estimate" string="cost estimate" invisible="1"/>
                     <field name="cost_passage" invisible="1"/>
-                    <field name="price_unit" string="customer price" invisible="1"/>
+                    <field name="price_unit" string="customer price" invisible="0"/>
                     <field name="discount" invisible="1" groups="base.group_no_one"/>
                     <field name="price_subtotal" invisible="1" groups="account.group_show_line_subtotals_tax_excluded"/>
                     <field name="price_total" invisible="1" groups="account.group_show_line_subtotals_tax_included"/>
