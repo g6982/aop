@@ -276,6 +276,15 @@ class AccountInvoice(models.Model):
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 
+    # @api.model
+    # def fields_get(self, allfields=None, attributes=None):
+    #     res = super(AccountInvoiceLine, self).fields_get(allfields, attributes=attributes)
+    #     # add reified groups fields
+    #     # for app, kind, gs in self.env['res.groups'].sudo().get_groups_by_application():
+    #     #    pass
+    #     res["purchase_line_price"]["type"] = 'float'
+    #     return res
+
     tax_invoice_amount = fields.Float('Tax invoice amount')
     tax_invoice_state = fields.Boolean('Tax invoice state', default=False)
 
