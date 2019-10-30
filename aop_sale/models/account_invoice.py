@@ -50,6 +50,9 @@ class AccountInvoice(models.Model):
     @api.multi
     def _compute_contract_period(self):
         for line_id in self:
+            if line_id.period_month:
+                continue
+
             period_domain = [
                 ('partner_id', '=', line_id.partner_id.id)
             ]
