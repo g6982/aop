@@ -351,9 +351,9 @@
                     <field name="account_id" groups="account.group_account_user"/>
                     <field name="quantity" invisible="1"/>
                     <field name="uom_id" invisible="1" groups="uom.group_uom"/>
-                    <field name="line_price_unit"/>
+                    <field name="line_price_unit" string='Sale line price'/>
                     <field name="contract_price"/>
-                    <field name="purchase_line_price" string="Purchase price"/>
+                    <field name="purchase_line_price" string="Purchase price" invisible="1"/>
                     <field name="tmp_estimate" string="cost estimate" invisible="1"/>
                     <field name="cost_passage" invisible="1"/>
                     <field name="price_unit" string="customer price"/>
