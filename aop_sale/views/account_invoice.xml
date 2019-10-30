@@ -387,7 +387,7 @@
                     <field name="uom_id" invisible="1" groups="uom.group_uom"/>
                     <field name="line_price_unit" invisible="1"/>
                     <field name="contract_price" invisible="1"/>
-                    <field name="purchase_line_price" string="Purchase price"/>
+                    <field name="purchase_line_price" string="Purchase price" attrs="{'readonly': [('state','!=','draft')]}"/>
                     <field name="tmp_estimate" string="cost estimate" invisible="1"/>
                     <field name="cost_passage" invisible="1"/>
                     <field name="price_unit" string="customer price" invisible="0"/>
