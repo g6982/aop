@@ -291,7 +291,7 @@ class AccountInvoiceLine(models.Model):
 
     vin_id = fields.Many2one('stock.production.lot', 'VIN', related='sale_order_line_id.vin', readonly=True)
     contract_price = fields.Float('Contract price')
-    purchase_line_price = fields.Monetary(related='purchase_line_id.price_subtotal')
+    purchase_line_price = fields.Monetary(related='purchase_line_id.price_subtotal', store=True)
 
     tmp_estimate = fields.Float('Temporary estimate')
 
@@ -304,6 +304,8 @@ class AccountInvoiceLine(models.Model):
     cost_passage = fields.Float('Cost Passage', compute='_compute_cost_passage', store=True)
 
     verify_batch_id = fields.Many2one('batch.reconciliation.number', string='Batch number', index=True)
+
+    state = fields.Selection(related='invoice_id.state', readonly=True)
 
     @api.multi
     @api.depends('sale_order_line_id.stock_picking_ids', 'sale_order_line_id.stock_picking_ids.state')

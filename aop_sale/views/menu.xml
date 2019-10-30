@@ -559,6 +559,23 @@
                   action="action_purchase_account_invoice_view"
                   parent="account.menu_finance_payables"/>
 
+         <!--        供应商清单单明细行-->
+        <record id="action_supplier_account_invoice_view" model="ir.actions.act_window">
+            <field name="name">Purchase invoice line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.invoice.line</field>
+            <field name="context"></field>
+            <field name="domain">[('invoice_id.type', '=', 'in_invoice')]</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_supplier_account_invoice_line_tree"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="supplier_account_invoice_id"
+                  name="Supplier invoice line"
+                  action="action_supplier_account_invoice_view"
+                  parent="account.menu_finance_payables"/>
+
         <record id="action_write_off_batch_view" model="ir.actions.act_window">
             <field name="name">Write-off batch</field>
             <field name="res_model">write.off.batch.number</field>
