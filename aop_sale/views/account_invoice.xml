@@ -14,6 +14,37 @@
         </record>
 
 
+        <record id="view_account_invoice_line_out_invoice_tree1" model="ir.ui.view">
+            <field name="name">account.invoice.line.out.invoice.tree1</field>
+            <field name="model">account.invoice.line</field>
+            <field name="arch" type="xml">
+                <tree string="Invoice Line" create="0" import="0" delete="0">
+                    <field name="partner_id" string="Customer"/>
+                    <field name="product_id" string="Service Product"/>
+                    <field name="name" invisible="1"/>
+                    <field name="purchase_line_id" invisible="1"/>
+                    <field name="sale_order_line_id"/>
+                    <field name="vin_id"/>
+                    <field name="location_id"/>
+                    <field name="location_dest_id"/>
+                    <field name="account_id" groups="account.group_account_user"/>
+                    <field name="quantity" invisible="1"/>
+                    <field name="uom_id" invisible="1" groups="uom.group_uom"/>
+                    <field name="line_price_unit" string='Sale line price'/>
+                    <field name="contract_price"/>
+                    <field name="purchase_line_price" string="Purchase price" invisible="1"/>
+                    <field name="tmp_estimate" string="cost estimate" invisible="1"/>
+                    <field name="cost_passage" invisible="1"/>
+                    <field name="price_unit" string="customer price"/>
+                    <field name="discount" invisible="1" groups="base.group_no_one"/>
+                    <field name="price_subtotal" invisible="1" groups="account.group_show_line_subtotals_tax_excluded"/>
+                    <field name="price_total" invisible="1" groups="account.group_show_line_subtotals_tax_included"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="state" />
+
+                </tree>
+            </field>
+        </record>
 
         <!--        客户发票明细行-->
         <record id="action_customer_account_invoice_line_view" model="ir.actions.act_window">
@@ -22,7 +53,7 @@
             <field name="res_model">account.invoice.line</field>
             <field name="domain">[('invoice_id.type', '=', 'out_invoice')]</field>
             <field name="view_type">form</field>
-            <field name="view_id" ref="view_account_invoice_line_tree"/>
+            <field name="view_id" ref="view_account_invoice_line_out_invoice_tree1"/>
             <field name="view_mode">tree,form</field>
         </record>
 
@@ -339,7 +370,9 @@
             <field name="name">account.invoice.line.tree</field>
             <field name="model">account.invoice.line</field>
             <field name="arch" type="xml">
-                <tree string="Invoice Line" create="0" import="0" delete="0">
+                <tree string="Invoice Line" create="0" import="0" delete="0"
+                      decoration-danger="purchase_line_price != price_unit"
+                >
                     <field name="partner_id" string="Supplier"/>
                     <field name="product_id" string="Service Product"/>
                     <field name="name"/>
@@ -353,7 +386,7 @@
                     <field name="uom_id" invisible="1" groups="uom.group_uom"/>
                     <field name="line_price_unit" string='Sale line price'/>
                     <field name="contract_price"/>
-                    <field name="purchase_line_price" string="Purchase price" invisible="1"/>
+                    <field name="purchase_line_price" string="Purchase price" invisible="0"/>
                     <field name="tmp_estimate" string="cost estimate" invisible="1"/>
                     <field name="cost_passage" invisible="1"/>
                     <field name="price_unit" string="customer price"/>
@@ -366,6 +399,8 @@
                 </tree>
             </field>
         </record>
+
+
 
         <record id="view_supplier_account_invoice_line_tree" model="ir.ui.view">
             <field name="name">supplier.account.invoice.line.tree</field>
