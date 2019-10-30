@@ -10,7 +10,7 @@
             <field name="context">{'batch_invoice': True}</field>
             <field name="domain">[('invoice_id.type', '=', 'in_invoice')]</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,pivot</field>
         </record>
 
 
@@ -53,9 +53,13 @@
             <field name="res_model">account.invoice.line</field>
             <field name="domain">[('invoice_id.type', '=', 'out_invoice')]</field>
             <field name="view_type">form</field>
+
             <field name="view_id" ref="view_account_invoice_line_out_invoice_tree1"/>
-            <field name="view_mode">tree,form</field>
+
+            <field name="view_mode">tree,form,pivot</field>
         </record>
+
+
 
         <!-- 成本台账form   -->
         <record id="form_view_invoice_supplier_form_inherit" model="ir.ui.view">
