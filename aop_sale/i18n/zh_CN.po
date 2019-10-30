@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-29 14:17+0000\n"
-"PO-Revision-Date: 2019-10-29 14:17+0000\n"
+"POT-Creation-Date: 2019-10-30 07:50+0000\n"
+"PO-Revision-Date: 2019-10-30 07:50+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,9 @@ msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_invoice__state
+#: model:ir.model.fields,help:aop_sale.field_account_invoice_line__state
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__state
+#: model:ir.model.fields,help:aop_sale.field_account_tax_invoice_line__state
 msgid " * The 'Draft' status is used when a user is encoding a new and unconfirmed Invoice.\n"
 " * The 'Open' status is used when user creates invoice, an invoice number is generated. It stays in the open status till the user pays the invoice.\n"
 " * The 'In Payment' status is used when payments have been registered for the entirety of the invoice in a journal configured to post entries at bank reconciliation only, and some of them haven't been reconciled with a bank statement line yet.\n"
@@ -915,6 +917,7 @@ msgstr "客户合同管理"
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree1
 #: selection:sale.order,order_type:0
 msgid "Customer"
 msgstr "收入结算单位"
@@ -1677,8 +1680,10 @@ msgstr "发票标示"
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__invoice_line_ids
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__invoice_line_ids
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree1
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_line_tree
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_account_invoice_line_tree
 msgid "Invoice Line"
 msgstr "结算清单行"
 
@@ -2743,7 +2748,9 @@ msgstr "采购订单"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree1
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_account_invoice_line_tree
 msgid "Purchase price"
 msgstr "采购价"
 
@@ -3028,6 +3035,8 @@ msgstr "销售订单行"
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree1
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_tree_inherit_tree
 msgid "Sale line price"
 msgstr "订单价"
@@ -3115,9 +3124,11 @@ msgstr "序号"
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__service_product_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__service_product_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree1
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_picking_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_account_invoice_line_tree
 msgid "Service Product"
 msgstr "服务产品"
 
@@ -3233,7 +3244,9 @@ msgstr "报告"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__state
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__state
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__state
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__state
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order__state
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Status"
@@ -3296,6 +3309,7 @@ msgstr ""
 #: selection:customer.aop.contract,type:0
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__partner_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_account_invoice_line_tree
 #: selection:supplier.aop.contract,type:0
 msgid "Supplier"
 msgstr "供应商管理"
@@ -3310,6 +3324,12 @@ msgstr "供应商合同"
 #: model:ir.ui.menu,name:aop_sale.supplier_contract_manager_menu
 msgid "Supplier contract manage"
 msgstr "供应商合同管理"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_supplier_account_invoice_view
+#: model:ir.ui.menu,name:aop_sale.supplier_account_invoice_id
+msgid "Supplier invoice line"
+msgstr "供应商结算清单"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.supplier_rate_manager_menu
@@ -4088,7 +4108,9 @@ msgstr ""
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_supplier_tree_inherit_aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree1
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_account_invoice_line_tree
 msgid "cost estimate"
 msgstr "成本确认"
 
@@ -4127,9 +4149,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree1
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_batch_reconciliation_number_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_reconciliation_file_line_tree
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_verify_batch_reconciliation_form
 msgid "customer price"
 msgstr "确认价"
