@@ -43,6 +43,8 @@ class AopContract(models.Model):
         string='State',
         track_visibility='always')
 
+    period_month = fields.Integer('Period month')
+
     @api.onchange('delivery_carrier_ids')
     def onchange_rule_line(self):
         data = []

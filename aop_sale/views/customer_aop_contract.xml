@@ -81,6 +81,7 @@
                                 <field name="effective_date"/>
                                 <field name="expiry_date"/>
                                 <field name="source"/>
+                                <field name="period_month"/>
                                 <!--
                                 <field name="type" widget="radio"/>
                                 -->

@@ -300,6 +300,7 @@
                 <field name="amount_untaxed" position="before">
                     <field name="tmp_estimate"/>
                     <field name="advance_receipt"/>
+                    <field name="period_month"/>
                 </field>
             </field>
         </record>
