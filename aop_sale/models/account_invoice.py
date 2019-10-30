@@ -49,7 +49,7 @@ class AccountInvoice(models.Model):
     # 根据合同的账期计算期间
     @api.multi
     def _compute_contract_period(self):
-        for line_id in self:
+        for line_id in self.sorted(lambda x: x.date_invoice):
             if line_id.period_month:
                 continue
 
