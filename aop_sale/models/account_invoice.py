@@ -62,8 +62,14 @@ class AccountInvoice(models.Model):
 
             contract_period_month = self.get_contract_period_month(line_id)
 
+            _logger.info({
+                'contract_period_month': contract_period_month
+            })
             # 一个都没有。初始日期
             if not res_period:
+                _logger.info({
+                    'res_period': res_period
+                })
                 line_id.period_month = str(line_id.date_invoice.year) + '-' + str(line_id.date_invoice.month).zfill(2)
             else:
                 # 已经存在，根据账期，判断是否在当前期间内，如果不在，计算为新的账期
@@ -71,6 +77,9 @@ class AccountInvoice(models.Model):
                 res_period_month = sorted(list(set(res_period_month)))
 
                 new_period_month = self.get_new_period_month(res_period_month, contract_period_month, line_id.date_invoice)
+                _logger.info({
+                    'new_period_month': new_period_month
+                })
                 line_id.period_month = new_period_month
 
     # 客户合同 / 供应商合同， 账期
@@ -91,6 +100,11 @@ class AccountInvoice(models.Model):
         if invoice_month_period < all_period_month[0]:
             raise UserError('Error. {} {}'.format(invoice_month_period, all_period_month[0]))
 
+        _logger.info({
+            'invoice_month_period': invoice_month_period,
+            'all_period_month': all_period_month,
+            'all_period_month[-1]': all_period_month[-1]
+        })
         # 大于最后一条，大了多少？
         if invoice_month_period > all_period_month[-1]:
             last_all_period_month = all_period_month[-1]
@@ -109,15 +123,35 @@ class AccountInvoice(models.Model):
                 diff_period = month_differ / contract_month
 
                 next_period_month = self.next_year_month(last_all_period_month, math.ceil(diff_period) * contract_month)
+
+                _logger.info({
+                    'next_period_month': next_period_month
+                })
                 return next_period_month
         else:
+            # 所有all_period_month 填满
+            all_period_month = self.fill_all_period_month(all_period_month, contract_month)
             # 介于两者之间
             for index_p, period_value in enumerate(all_period_month):
                 if index_p + 1 == len(all_period_month):
                     break
                 if period_value <= invoice_month_period < all_period_month[index_p + 1]:
+                    _logger.info({
+                        'period_value': period_value
+                    })
                     return period_value
             return all_period_month[-1]
+
+    def fill_all_period_month(self, all_period_month, contract_month):
+        data = [all_period_month[0]]
+        last_record = all_period_month[-1]
+        current_record = all_period_month[0]
+        while True:
+            current_record = self.next_year_month(current_record, contract_month)
+            if current_record > last_record:
+                break
+            data.append(current_record)
+        return data
 
     # 比较月份
     def month_differ(self, date1, date2):
@@ -137,6 +171,7 @@ class AccountInvoice(models.Model):
             month_period_year += diff_number_year
         if month_period_month + diff_number_month > 12:
             month_period_year += 1
+            month_period_month = (month_period_month + diff_number_month) % 12
         else:
             month_period_month += diff_number_month
         return str(month_period_year) + '-' + str(month_period_month).zfill(2)
