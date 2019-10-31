@@ -30,6 +30,8 @@ class AccountTaxInvoice(models.Model):
 
     period_month = fields.Char('Period', compute='_compute_contract_period', store=True)
 
+    tax_invoice_number = fields.Char('Tax invoice number')
+
     # 根据合同的账期计算期间
     @api.multi
     @api.depends('create_date')

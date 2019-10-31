@@ -157,6 +157,7 @@
                             <field name="cash_rounding_id"  groups="account.group_cash_rounding"/>
                         </group>
                         <group>
+                            <field name="tax_invoice_number" />
                             <field name="date_invoice" options="{'datepicker': {'warn_future': true}}"/>
                             <field name="period_month" readonly="1"/>
                             <field name="date_due" attrs="{'invisible': 1,'readonly': ['|',('payment_term_id','!=',False), ('state', 'in', ['open', 'in_payment', 'paid'])]}" force_save="1"/>

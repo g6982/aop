@@ -43,8 +43,8 @@
                                     <field name="quantity" readonly="1"/>
                                     <field name="price_unit" readonly="1" sum="price_unit"/>
                                     <field name="price_subtotal" readonly="1" sum="price_subtotal"/>
-                                    <field name="invoice_line_tax_ids" readonly="1" widget="many2many_tags"/>
-                                    <field name="tax_invoice_number"/>
+                                    <field name="invoice_line_tax_ids" readonly="1" widget="many2many_tags" invisible="1"/>
+                                    <field name="tax_invoice_number" invisible="1"/>
                                 </tree>
                             </field>
                         </group>

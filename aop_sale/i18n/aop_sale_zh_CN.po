@@ -92,6 +92,7 @@ msgstr "结算清单行"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__tax_invoice_number
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__tax_invoice_number
 msgid "Tax invoice number"
 msgstr "税务发票号"
 
@@ -334,3 +335,11 @@ msgstr "采购订单"
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__picking_id
 msgid "Picking"
 msgstr "扣款关联任务"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__account_period_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__period_month
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
+msgid "Period"
+msgstr "账期月"
+

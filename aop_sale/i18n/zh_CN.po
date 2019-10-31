@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-31 05:55+0000\n"
-"PO-Revision-Date: 2019-10-31 05:55+0000\n"
+"POT-Creation-Date: 2019-10-31 13:09+0000\n"
+"PO-Revision-Date: 2019-10-31 13:09+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1437,7 +1437,7 @@ msgid "Has Outstanding"
 msgstr "有未清项"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/account_invoice.py:266
+#: code:addons/aop_sale/models/account_invoice.py:179
 #: code:addons/aop_sale/models/sale_order.py:429
 #, python-format
 msgid "Has been monthly!"
@@ -2503,6 +2503,11 @@ msgid "Payment Terms"
 msgstr "付款条款"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice__period_month
+msgid "Payment period"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__payment_ids
 msgid "Payments"
 msgstr "付款"
@@ -2514,7 +2519,6 @@ msgstr "支付挂件"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__account_period_id
-#: model:ir.model.fields,field_description:aop_sale.field_account_invoice__period_month
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__account_period_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__period_month
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__period_id
@@ -2529,7 +2533,7 @@ msgstr "会计期间"
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__period_month
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__period_month
 msgid "Period month"
-msgstr ""
+msgstr "延迟(账期)月"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__picking_id
@@ -3381,11 +3385,6 @@ msgid "Tax Amount"
 msgstr "税率金额"
 
 #. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
-msgid "Tax Excluded"
-msgstr "不含税"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__tax_invoice_id
 msgid "Tax Invoice"
 msgstr ""
@@ -3436,6 +3435,7 @@ msgid "Tax invoice no"
 msgstr "发票批次号"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__tax_invoice_number
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__tax_invoice_number
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_number
 msgid "Tax invoice number"
@@ -3448,7 +3448,7 @@ msgid "Tax invoice state"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/account_tax_invoice.py:53
+#: code:addons/aop_sale/models/account_tax_invoice.py:100
 #, python-format
 msgid "Tax invoices"
 msgstr "发票"
