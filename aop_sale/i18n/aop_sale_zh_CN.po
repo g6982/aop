@@ -234,6 +234,7 @@ msgstr "交接单总价格"
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__state
 #: model:ir.model.fields,field_description:aop_sale.field_batch_reconciliation_number__state
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_batch_number__state
+#: model:ir.model.fields,field_description:aop_sale.field_purchase_batch_invoice__state
 msgid "State"
 msgstr "状态"
 

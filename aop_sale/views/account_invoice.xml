@@ -65,7 +65,7 @@
                     <separator/>
 
                     <group expand="0" string="Group By">
-                        <filter name="group_by_partner_id" string="Customer"
+                        <filter name="group_by_partner_id" string="Supplier"
                                 context="{'group_by':'partner_id'}"/>
 
                     </group>
