@@ -361,6 +361,8 @@ class AccountInvoiceLine(models.Model):
 
     state = fields.Selection(related='invoice_id.state', readonly=True)
 
+    period_month = fields.Char(related='invoice_id.period_month', readonly=True)
+
     @api.multi
     @api.depends('sale_order_line_id.stock_picking_ids', 'sale_order_line_id.stock_picking_ids.state')
     def _compute_pre_billing(self):

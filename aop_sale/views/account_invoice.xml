@@ -54,7 +54,7 @@
 
                     <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
                     <filter name="reconciliation" string="reconciliation" domain="[('state', '=', 'reconciliation')]"/>
-                     <filter name="invoice" string="invoice" domain="[('state', '=', 'invoice')]"/>
+                     <filter name="invoice" string="Invoice" domain="[('state', '=', 'invoice')]"/>
                     <separator/>
 
                     <filter string="当天" name="today" domain="[('create_date','&gt;=', time.strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
@@ -208,7 +208,7 @@
                 <xpath expr="//field[@name='partner_bank_id']" position="after">
                     <field name="verify_user" attrs="{'invisible': [('verify_user', '=', False)]}"/>
                     <field name="verify_time" attrs="{'invisible': [('verify_time', '=', False)]}"/>
-                    <field name="period_month" attrs="{'invisible': [('period_month', '=', False)]}"/>
+                    <field name="period_month" string="Payment period" attrs="{'invisible': [('period_month', '=', False)]}"/>
                 </xpath>
 
                 <!-- 验证按钮 -->
@@ -462,6 +462,7 @@
                     <field name="price_subtotal" invisible="1" groups="account.group_show_line_subtotals_tax_excluded"/>
                     <field name="price_total" invisible="1" groups="account.group_show_line_subtotals_tax_included"/>
                     <field name="currency_id" invisible="1"/>
+                    <field name="period_month" />
                     <field name="state" />
 
                 </tree>
