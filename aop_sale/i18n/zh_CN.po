@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-30 07:50+0000\n"
-"PO-Revision-Date: 2019-10-30 07:50+0000\n"
+"POT-Creation-Date: 2019-10-31 05:43+0000\n"
+"PO-Revision-Date: 2019-10-31 05:43+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -918,6 +918,7 @@ msgstr "客户合同管理"
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree1
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: selection:sale.order,order_type:0
 msgid "Customer"
 msgstr "收入结算单位"
@@ -1388,6 +1389,7 @@ msgid "Goto Contract Terms"
 msgstr "跳转到条款"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Group By"
 msgstr "分组"
@@ -1434,7 +1436,7 @@ msgid "Has Outstanding"
 msgstr "有未清项"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/account_invoice.py:134
+#: code:addons/aop_sale/models/account_invoice.py:266
 #: code:addons/aop_sale/models/sale_order.py:429
 #, python-format
 msgid "Has been monthly!"
@@ -2510,13 +2512,22 @@ msgstr "支付挂件"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__account_period_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice__period_month
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__account_period_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__period_month
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__period_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__period_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_filter_inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Period"
 msgstr "会计期间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_aop_contract__period_month
+#: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__period_month
+#: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__period_month
+msgid "Period month"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__picking_id
@@ -3084,6 +3095,7 @@ msgid "Salesperson"
 msgstr "负责人"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Search Invoice"
 msgstr "搜索发票"
@@ -4340,6 +4352,11 @@ msgid "has qty invoiced"
 msgstr "已结算"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
+msgid "has tax"
+msgstr "已开票"
+
+#. module: aop_sale
 #: selection:stock.picking.batch,dispatch_type:0
 msgid "highway"
 msgstr "公路调度"
@@ -4446,6 +4463,11 @@ msgstr "合同名称"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_sales_order_line_filter_inherit_aop_sale
 msgid "no qty invoiced"
 msgstr "待结算"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
+msgid "no tax"
+msgstr "未开票"
 
 #. module: aop_sale
 #: selection:reconciliation.file,reconciliation_state:0
@@ -4714,6 +4736,7 @@ msgid "xian office safety officer"
 msgstr "西安办事处/安全员"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_sales_order_line_filter_inherit_aop_sale
 msgid "上月"
 msgstr ""
@@ -4724,6 +4747,7 @@ msgid "保险管理"
 msgstr ""
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_sales_order_line_filter_inherit_aop_sale
 msgid "当天"
 msgstr ""
@@ -4734,16 +4758,19 @@ msgid "服务产品"
 msgstr ""
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_sales_order_line_filter_inherit_aop_sale
 msgid "本周"
 msgstr ""
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_sales_order_line_filter_inherit_aop_sale
 msgid "本年"
 msgstr ""
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_sales_order_line_filter_inherit_aop_sale
 msgid "本月"
 msgstr ""
