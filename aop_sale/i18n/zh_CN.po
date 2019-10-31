@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-31 13:09+0000\n"
-"PO-Revision-Date: 2019-10-31 13:09+0000\n"
+"POT-Creation-Date: 2019-10-31 13:39+0000\n"
+"PO-Revision-Date: 2019-10-31 13:39+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -919,6 +919,7 @@ msgstr "客户合同管理"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree1
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 #: selection:sale.order,order_type:0
 msgid "Customer"
 msgstr "收入结算单位"
@@ -1193,7 +1194,6 @@ msgstr ""
 #: selection:customer.aop.contract,state:0
 #: selection:handover.vin,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 #: selection:mass.loss.order,state:0
 #: selection:purchase.batch.invoice,state:0
 #: selection:sale.order,write_off_state:0
@@ -1214,7 +1214,6 @@ msgstr "草稿发票"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__date_due
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Due Date"
 msgstr "到期时间"
 
@@ -1368,11 +1367,6 @@ msgstr "源位置"
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__from_location_id
 msgid "From location"
 msgstr "源位置"
-
-#. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
-msgid "Future Activities"
-msgstr "未来活动"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice_line__sequence
@@ -1567,7 +1561,6 @@ msgstr ""
 #. module: aop_sale
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "In Payment"
 msgstr "在付款"
 
@@ -1993,11 +1986,6 @@ msgid "Last Updated on"
 msgstr "最后更新时间"
 
 #. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
-msgid "Late Activities"
-msgstr "逾期活动"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__layer_option
 msgid "Layer"
 msgstr "上/下层"
@@ -2184,11 +2172,6 @@ msgstr "移动供应方法"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
-msgid "My Activities"
-msgstr "我的活动"
-
-#. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "My Invoices"
 msgstr "我的发票"
 
@@ -2317,7 +2300,6 @@ msgstr "未读消息数量"
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Open"
 msgstr "对账"
 
@@ -2394,14 +2376,8 @@ msgstr "未到期贷项"
 
 #. module: aop_sale
 #: selection:account.tax.invoice,activity_state:0
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Overdue"
 msgstr "逾期"
-
-#. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
-msgid "Overdue invoices, maturity date passed"
-msgstr "逾期发票，超过付款日期"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_package_reconciliation_list_wizard
@@ -2411,7 +2387,6 @@ msgstr "生成对账批次"
 #. module: aop_sale
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Paid"
 msgstr "已支付"
 
@@ -2473,7 +2448,6 @@ msgstr "部分-比率"
 #: model:ir.model.fields,field_description:aop_sale.field_invoice_no_tax_invoice__partner_id
 #: model:ir.model.fields,field_description:aop_sale.field_rule_child_location_price__partner_id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__partner_id
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Partner"
 msgstr "业务伙伴"
 
@@ -2526,7 +2500,7 @@ msgstr "支付挂件"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_filter_inherit_aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Period"
-msgstr "会计期间"
+msgstr "账期月"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__period_month
@@ -3196,11 +3170,6 @@ msgid "Short name used to identify your warehouse"
 msgstr "利用简称来标识你的仓库"
 
 #. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
-msgid "Show all records which has next action date is before today"
-msgstr "显示在今天之前的下一个行动日期的所有记录"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__source
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__source
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__source
@@ -3439,7 +3408,7 @@ msgstr "发票批次号"
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__tax_invoice_number
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_wizard__tax_invoice_number
 msgid "Tax invoice number"
-msgstr "比率/金额"
+msgstr "税务发票号"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__tax_invoice_state
@@ -3580,11 +3549,6 @@ msgstr "送车点"
 #: selection:account.tax.invoice,activity_state:0
 msgid "Today"
 msgstr "今天"
-
-#. module: aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
-msgid "Today Activities"
-msgstr "今天的活动"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__amount_total
@@ -4500,6 +4464,11 @@ msgstr "结算清单对账数据生成对账批次号"
 #: model:ir.model,name:aop_sale.model_package_reconciliation_wizard
 msgid "package.reconciliation.wizard"
 msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
+msgid "period month"
+msgstr "账期月"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_change_stock_picking_form
