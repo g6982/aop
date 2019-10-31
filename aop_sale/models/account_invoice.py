@@ -44,6 +44,51 @@ class AccountInvoice(models.Model):
              " * The 'Paid' status is set automatically when the invoice is paid. Its related journal entries may or may not be reconciled.\n"
              " * The 'Cancelled' status is used when user cancel invoice.")
 
+    period_month = fields.Char('Payment period', compute='_compute_contract_period', store=True)
+
+    # 根据合同的账期计算期间
+    @api.multi
+    @api.depends('verify_time')
+    def _compute_contract_period(self):
+        for line_id in self:
+            # 供应商账单才计算
+            if line_id.period_month or line_id.type != 'in_invoice' or not line_id.verify_time:
+                continue
+
+            # 找到合同的月份
+            contract_period_month = self.get_contract_period_month(line_id)
+
+            current_period_value = str(line_id.verify_time.year) + '-' + str(line_id.verify_time.month).zfill(2)
+
+            period_code = self.next_year_month(current_period_value, contract_period_month)
+
+            line_id.period_month = period_code
+
+    # 客户合同 / 供应商合同， 账期
+    def get_contract_period_month(self, invoice_id):
+        search_domain = [('partner_id', '=', invoice_id.partner_id.id)]
+        if invoice_id.type == 'out_invoice':
+            res = self.env['customer.aop.contract'].search(search_domain)
+        elif invoice_id.type == 'in_invoice':
+            res = self.env['supplier.aop.contract'].search(search_domain)
+        return res[0].period_month if res else 0
+
+    # 获取下一个值
+    def next_year_month(self, month_period, diff_number):
+        diff_number_year = math.floor(diff_number / 12)
+        diff_number_month = diff_number % 12
+        month_period_month = int(month_period.split('-')[-1])
+        month_period_year = int(month_period.split('-')[0])
+        # 超出12个月的加，直接加年
+        if diff_number_year >= 1:
+            month_period_year += diff_number_year
+        if month_period_month + diff_number_month > 12:
+            month_period_year += 1
+            month_period_month = (month_period_month + diff_number_month) % 12
+        else:
+            month_period_month += diff_number_month
+        return str(month_period_year) + '-' + str(month_period_month).zfill(2)
+
     ###################################################################################################################
     ###################################################################################################################
     # 取消生成凭证

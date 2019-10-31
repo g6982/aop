@@ -72,7 +72,6 @@
                     <field name="currency_id" invisible="1"/>
                     <field name="state" />
                     <field name="tax_invoice_amount" />
-
                 </tree>
             </field>
         </record>
@@ -180,6 +179,7 @@
                 <xpath expr="//field[@name='partner_bank_id']" position="after">
                     <field name="verify_user" attrs="{'invisible': [('verify_user', '=', False)]}"/>
                     <field name="verify_time" attrs="{'invisible': [('verify_time', '=', False)]}"/>
+                    <field name="period_month" attrs="{'invisible': [('period_month', '=', False)]}"/>
                 </xpath>
 
                 <!-- 验证按钮 -->
@@ -355,6 +355,10 @@
                 <field name="amount_untaxed" position="before">
                     <field name="tmp_estimate" string="cost estimate"/>
                     <field name="pre_billing"/>
+                </field>
+
+                <field name="state" position="before">
+                    <field name="period_month"/>
                 </field>
             </field>
         </record>

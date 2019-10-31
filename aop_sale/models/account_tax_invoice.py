@@ -34,7 +34,7 @@ class AccountTaxInvoice(models.Model):
     @api.multi
     @api.depends('create_date')
     def _compute_contract_period(self):
-        for line_id in self.sorted(lambda x: x.create_date):
+        for line_id in self:
             if line_id.period_month:
                 continue
 
