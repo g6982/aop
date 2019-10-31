@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-31 14:35+0000\n"
-"PO-Revision-Date: 2019-10-31 14:35+0000\n"
+"POT-Creation-Date: 2019-10-31 15:14+0000\n"
+"PO-Revision-Date: 2019-10-31 15:14+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2482,6 +2482,8 @@ msgstr "付款条款"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__period_month
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__period_month
+#: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 msgid "Payment period"
 msgstr "账期月"
 
@@ -2499,6 +2501,7 @@ msgstr "支付挂件"
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__account_period_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__account_period_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__period_month
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__period_month
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__period_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__period_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_filter_inherit_aop_sale
