@@ -82,25 +82,14 @@
                     <field name="tax_invoice_no"/>
                     <field name="partner_id" groups="base.group_user" string="Customer"/>
                     <field name="date_invoice"/>
-                    <field name="number" invisible="1"/>
-                    <field name="commercial_partner_id" invisible="1"/>
-                    <field name="reference" invisible="1"/>
-                    <field name="name" invisible="1"/>
-                    <field name="journal_id" invisible="1"/>
                     <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
-                    <field name="user_id" invisible="1"/>
-                    <field name="date_due" invisible="1"/>
-                    <field name="origin" invisible="1"/>
-                    <field name="amount_untaxed" invisible="1" string="Tax Excluded" sum="Total"/>
-                    <field name="amount_tax" invisible="1" sum="Total"/>
                     <field name="amount_total_signed" string="Total" sum="Total"/>
                     <field name="residual_signed" string="Amount Due" sum="Amount Due" invisible="1"/>
-                    <field name="currency_id" invisible="1"/>
-                    <field name="company_currency_id" invisible="1"/>
                     <field name="state" invisible="1"/>
                     <field name="type" invisible="context.get('type',True)"/>
                     <field name="create_date"/>
                     <field name="write_date"/>
+                    <field name="period_month"/>
                 </tree>
             </field>
         </record>
@@ -169,6 +158,7 @@
                         </group>
                         <group>
                             <field name="date_invoice" options="{'datepicker': {'warn_future': true}}"/>
+                            <field name="period_month" readonly="1"/>
                             <field name="date_due" attrs="{'invisible': 1,'readonly': ['|',('payment_term_id','!=',False), ('state', 'in', ['open', 'in_payment', 'paid'])]}" force_save="1"/>
                             <field name="move_name" invisible="1"/>
                             <field name="user_id" invisible="1" groups="base.group_user"/>
