@@ -3,6 +3,7 @@ from odoo import api, exceptions, fields, models, _
 from odoo.exceptions import AccessError, UserError, RedirectWarning, ValidationError, Warning
 from odoo.addons.account.models.account_invoice import AccountInvoice
 import logging
+import math
 
 _logger = logging.getLogger(__name__)
 TYPE2JOURNAL = {
@@ -26,6 +27,50 @@ class AccountTaxInvoice(models.Model):
     tax_invoice_no = fields.Char('Tax invoice no')
 
     picking_purchase_id = fields.Many2one('purchase.order', 'Purchase', copy=False)
+
+    period_month = fields.Char('Period', compute='_compute_contract_period', store=True)
+
+    # 根据合同的账期计算期间
+    @api.multi
+    @api.depends('create_date')
+    def _compute_contract_period(self):
+        for line_id in self.sorted(lambda x: x.create_date):
+            if line_id.period_month:
+                continue
+
+            # 找到合同的月份
+            contract_period_month = self.get_contract_period_month(line_id)
+
+            current_period_value = str(line_id.create_date.year) + '-' + str(line_id.create_date.month).zfill(2)
+
+            period_code = self.next_year_month(current_period_value, contract_period_month)
+
+            line_id.period_month = period_code
+
+    # 客户合同 / 供应商合同， 账期
+    def get_contract_period_month(self, invoice_id):
+        search_domain = [('partner_id', '=', invoice_id.partner_id.id)]
+        if invoice_id.type == 'out_invoice':
+            res = self.env['customer.aop.contract'].search(search_domain)
+        elif invoice_id.type == 'in_invoice':
+            res = self.env['supplier.aop.contract'].search(search_domain)
+        return res[0].period_month if res else 0
+
+    # 获取下一个值
+    def next_year_month(self, month_period, diff_number):
+        diff_number_year = math.floor(diff_number / 12)
+        diff_number_month = diff_number % 12
+        month_period_month = int(month_period.split('-')[-1])
+        month_period_year = int(month_period.split('-')[0])
+        # 超出12个月的加，直接加年
+        if diff_number_year >= 1:
+            month_period_year += diff_number_year
+        if month_period_month + diff_number_month > 12:
+            month_period_year += 1
+            month_period_month = (month_period_month + diff_number_month) % 12
+        else:
+            month_period_month += diff_number_month
+        return str(month_period_year) + '-' + str(month_period_month).zfill(2)
 
     @api.onchange('invoice_line_ids')
     def _onchange_invoice_line_ids(self):
