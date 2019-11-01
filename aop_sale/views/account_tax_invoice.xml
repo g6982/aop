@@ -348,6 +348,10 @@
             <field name="model">account.tax.invoice</field>
             <field name="arch" type="xml">
                 <search string="Search Invoice">
+
+                    <filter string="下月账期" name="nextmonth" domain="[('period_month','=',  (context_today() + relativedelta(months=1)).strftime('%Y-%m'))]"/>
+                    <separator/>
+
                     <field name="number" string="Invoice" filter_domain="['|','|','|', ('number','ilike',self), ('origin','ilike',self), ('reference', 'ilike', self), ('partner_id', 'child_of', self)]"/>
                     <filter domain="[('user_id','=',uid)]" name="myinvoices" help="My Invoices"/>
                     <separator/>

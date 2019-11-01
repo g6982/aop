@@ -52,7 +52,8 @@
             <field name="model">account.invoice.line</field>
             <field name="arch" type="xml">
                 <search string="Search Invoice">
-                    <filter name="notax" string="no tax" domain="[('tax_invoice_amount','=', 0)]"/>
+
+                    <filter name="notax" string="no tax" domain="[('tax_invoice_amount','=', False)]"/>
                     <filter name="hastax" string="has tax" domain="[('tax_invoice_amount', '&gt;', 0)]"/>
                     <separator/>
 
