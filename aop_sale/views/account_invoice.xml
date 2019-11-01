@@ -51,6 +51,8 @@
             <field name="model">account.invoice.line</field>
             <field name="arch" type="xml">
                 <search string="Search Invoice">
+                    <filter string="下月账期" name="nextmonth" domain="[('period_month','=',  (context_today() + relativedelta(months=1)).strftime('%Y-%m'))]"/>
+                    <separator/>
                     <filter name="noinvoice" string="supplier invoice no invoice" domain="[('supplier_invoice_state','=', 'no')]"/>
                     <filter name="hasinvoice" string="supplier invoice has invoice" domain="[('supplier_invoice_state', '=', 'yes')]"/>
                     <separator/>
