@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-01 03:59+0000\n"
-"PO-Revision-Date: 2019-11-01 03:59+0000\n"
+"POT-Creation-Date: 2019-11-01 06:23+0000\n"
+"PO-Revision-Date: 2019-11-01 06:23+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -922,7 +922,7 @@ msgstr "客户合同管理"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 #: selection:sale.order,order_type:0
 msgid "Customer"
-msgstr "收入结算单位"
+msgstr "客户"
 
 #. module: aop_sale
 #: selection:account.tax.invoice,type:0
@@ -2597,6 +2597,14 @@ msgstr "预开票"
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 msgid "Price"
 msgstr "价格"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__price_diff
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__price_diff
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_in_invoice_filter
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
+msgid "Price Diff"
+msgstr "价格有差异"
 
 #. module: aop_sale
 #: selection:reconciliation.file.line,state:0
@@ -4766,6 +4774,12 @@ msgstr "西安办事处/安全员"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_sales_order_line_filter_inherit_aop_sale
 msgid "上月"
+msgstr ""
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_in_invoice_filter
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
+msgid "下月账期"
 msgstr ""
 
 #. module: aop_sale

@@ -17,6 +17,9 @@
                      <filter name="invoice" string="Invoice" domain="[('state', '=', 'invoice')]"/>
                     <separator/>
 
+                    <filter name="price_diff" string="Price Diff" domain="[('price_diff', '=', True)]"/>
+                    <separator/>
+
                     <filter string="当天" name="today" domain="[('create_date','&gt;=', time.strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
                     <filter string="本周" name="last_week" domain="[('create_date','&gt;', (context_today() - datetime.timedelta(weeks=1)).strftime('%Y-%m-%d 00:00:00'))]"/>
                     <filter string="本月" name="month" domain="[('create_date','&gt;=', time.strftime('%Y-%m-01 00:00:00')),('create_date','&lt;',  (context_today() + relativedelta(months=1)).strftime('%Y-%m-01 00:00:00'))]"/>
@@ -51,6 +54,7 @@
             <field name="name">account.invoice.out.invoice.filter</field>
             <field name="model">account.invoice.line</field>
             <field name="arch" type="xml">
+
                 <search string="Search Invoice">
 
                     <filter name="notax" string="no tax" domain="[('tax_invoice_amount','=', False)]"/>
@@ -60,6 +64,9 @@
                     <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
                     <filter name="Open" string="Open" domain="[('state', '=', 'open')]"/>
                     <filter name="reconciliation" string="reconciliation" domain="[('state', '=', 'reconciliation')]"/>
+                    <separator/>
+
+                    <filter name="price_diff" string="Price Diff" domain="[('price_diff', '=', True)]"/>
                     <separator/>
 
                     <filter string="当天" name="today" domain="[('create_date','&gt;=', time.strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
@@ -84,7 +91,9 @@
             <field name="name">account.invoice.line.out.invoice.tree1</field>
             <field name="model">account.invoice.line</field>
             <field name="arch" type="xml">
-                <tree string="Invoice Line" create="0" import="0" delete="0">
+                <tree string="Invoice Line" create="0" import="0" delete="0"
+                      decoration-danger="contract_price != price_unit"
+                >
                     <field name="partner_id" string="Customer"/>
                     <field name="product_id" string="Service Product"/>
                     <field name="name" invisible="1"/>
@@ -108,6 +117,7 @@
                     <field name="currency_id" invisible="1"/>
                     <field name="state" />
                     <field name="tax_invoice_amount" />
+
                 </tree>
             </field>
         </record>

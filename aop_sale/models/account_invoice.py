@@ -376,6 +376,17 @@ class AccountInvoiceLine(models.Model):
 
     supplier_invoice_state = fields.Selection(related='invoice_id.supplier_invoice_state', readonly=True)
 
+    price_diff = fields.Boolean('Price Diff', compute='_compute_price_diff', store=True, default=False)
+
+    @api.multi
+    @api.depends('price_unit', 'contract_price', 'purchase_line_price')
+    def _compute_price_diff(self):
+        for line in self:
+            if line.invoice_id.type == 'out_invoice':
+                line.price_diff = line.contract_price != line.price_unit
+            else:
+                line.price_diff = line.purchase_line_price != line.price_unit
+
     @api.multi
     @api.depends('sale_order_line_id.stock_picking_ids', 'sale_order_line_id.stock_picking_ids.state')
     def _compute_pre_billing(self):
