@@ -51,7 +51,9 @@
             <field name="model">account.invoice.line</field>
             <field name="arch" type="xml">
                 <search string="Search Invoice">
-
+                    <filter name="noinvoice" string="supplier invoice no invoice" domain="[('supplier_invoice_state','=', 'no')]"/>
+                    <filter name="hasinvoice" string="supplier invoice has invoice" domain="[('supplier_invoice_state', '=', 'yes')]"/>
+                    <separator/>
                     <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
                     <filter name="reconciliation" string="reconciliation" domain="[('state', '=', 'reconciliation')]"/>
                      <filter name="invoice" string="Invoice" domain="[('state', '=', 'invoice')]"/>
