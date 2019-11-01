@@ -322,6 +322,12 @@ class AccountInvoice(models.Model):
             })
         return res
 
+    # 供应商发票登记
+    @api.multi
+    def action_supplier_invoice_yes(self):
+        if self.filtered(lambda inv: inv.supplier_invoice_state == 'yes'):
+            raise UserError(_('Supplier invoice state must be no.'))
+        return self.write({'supplier_invoice_state': 'yes'})
 
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'

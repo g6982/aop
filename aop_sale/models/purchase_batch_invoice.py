@@ -32,7 +32,7 @@ class PurchaseBatchInvoice(models.Model):
     def register_supplier_invoice(self):
         for line in self:
             ids = list(set(line.batch_line_ids.mapped('invoice_line_id').mapped('invoice_id').ids))
-            self.env['account.invoice'].browse(ids).action_invoice_open()
+            self.env['account.invoice'].browse(ids).action_supplier_invoice_yes()
             line.state = 'invoice'
 
 
