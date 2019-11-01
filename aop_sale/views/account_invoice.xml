@@ -108,7 +108,7 @@
                     <field name="line_price_unit" string='Sale line price'/>
                     <field name="contract_price"/>
                     <field name="purchase_line_price" string="Purchase price" invisible="1"/>
-                    <field name="tmp_estimate" string="cost estimate" invisible="1"/>
+                    <field name="tmp_estimate"/>
                     <field name="cost_passage" invisible="1"/>
                     <field name="price_unit" string="customer price"/>
                     <field name="discount" invisible="1" groups="base.group_no_one"/>
@@ -129,9 +129,8 @@
             <field name="res_model">account.invoice.line</field>
             <field name="domain">[('invoice_id.type', '=', 'out_invoice')]</field>
             <field name="view_type">form</field>
-
             <field name="view_id" ref="view_account_invoice_line_out_invoice_tree1"/>
-
+            <field name="search_view_id" ref="view_account_invoice_out_invoice_filter"/>
             <field name="view_mode">tree,form,pivot</field>
         </record>
 
