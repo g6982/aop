@@ -14,7 +14,14 @@
                                 type="object" string="Confirm"
                                 groups="aop_sale.group_confirm_account_invoice_button"
                         />
-                        <field name="state" widget="statusbar" statusbar_visible="draft,done" readonly="1"/>
+                        <button name="register_supplier_invoice"
+                                class="oe_highlight"
+                                attrs="{'invisible': [('state', '!=', 'done')]}"
+                                type="object" string="Register Supplier Invoice"
+                                groups="aop_sale.group_confirm_account_invoice_button"
+
+                        />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done,invoice" readonly="1"/>
                     </header>
                     <sheet>
                         <group>

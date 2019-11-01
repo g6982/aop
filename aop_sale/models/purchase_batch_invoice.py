@@ -17,7 +17,8 @@ class PurchaseBatchInvoice(models.Model):
 
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('done', 'Done')
+        ('done', 'Done'),
+        ('invoice', 'Supplier Invoice')
     ], default='draft')
 
     # 确认
@@ -26,6 +27,13 @@ class PurchaseBatchInvoice(models.Model):
             ids = list(set(line.batch_line_ids.mapped('invoice_line_id').mapped('invoice_id').ids))
             self.env['account.invoice'].browse(ids).action_invoice_open()
             line.state = 'done'
+
+    # 供应商发票登记
+    def register_supplier_invoice(self):
+        for line in self:
+            ids = list(set(line.batch_line_ids.mapped('invoice_line_id').mapped('invoice_id').ids))
+            self.env['account.invoice'].browse(ids).action_invoice_open()
+            line.state = 'invoice'
 
 
 class PurchaseBatchInvoiceLine(models.Model):

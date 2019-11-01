@@ -46,6 +46,11 @@ class AccountInvoice(models.Model):
 
     period_month = fields.Char('Payment period', compute='_compute_contract_period', store=True)
 
+    supplier_invoice_state = fields.Selection([
+        ('no', 'No'),
+        ('yes', 'Yes')
+    ], string="Supplier Invoice", default='no', copy=False, track_visibility='onchange')
+
     # 根据合同的账期计算期间
     @api.multi
     @api.depends('verify_time')
@@ -362,6 +367,8 @@ class AccountInvoiceLine(models.Model):
     state = fields.Selection(related='invoice_id.state', readonly=True)
 
     period_month = fields.Char(related='invoice_id.period_month', readonly=True)
+
+    supplier_invoice_state = fields.Selection(related='invoice_id.supplier_invoice_state', readonly=True)
 
     @api.multi
     @api.depends('sale_order_line_id.stock_picking_ids', 'sale_order_line_id.stock_picking_ids.state')

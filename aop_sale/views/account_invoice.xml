@@ -463,6 +463,7 @@
                     <field name="price_total" invisible="1" groups="account.group_show_line_subtotals_tax_included"/>
                     <field name="currency_id" invisible="1"/>
                     <field name="period_month" />
+                    <field name="supplier_invoice_state" />
                     <field name="state" />
 
                 </tree>
