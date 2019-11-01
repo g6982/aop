@@ -34,7 +34,7 @@ class AccountTaxInvoice(models.Model):
 
     # 根据合同的账期计算期间
     @api.multi
-    @api.depends('create_date')
+    @api.depends('date_invoice')
     def _compute_contract_period(self):
         for line_id in self:
             if line_id.period_month:
@@ -43,7 +43,7 @@ class AccountTaxInvoice(models.Model):
             # 找到合同的月份
             contract_period_month = self.get_contract_period_month(line_id)
 
-            current_period_value = str(line_id.create_date.year) + '-' + str(line_id.create_date.month).zfill(2)
+            current_period_value = str(line_id.date_invoice.year) + '-' + str(line_id.date_invoice.month).zfill(2)
 
             period_code = self.next_year_month(current_period_value, contract_period_month)
 
