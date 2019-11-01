@@ -57,8 +57,8 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             }
             line_data = []
             for line_id in line.order_line:
-                # 如果已经生成了。不需要继续生成
-                if line_id.invoice_lines:
+                # 如果已经生成了。不需要继续生成, 如果金额为0，也不需要生成
+                if line_id.invoice_lines or line_id.price_unit == 0:
                     continue
                 tmp = self._prepare_invoice_line_from_po_line(line_id)
                 line_data.append((0, 0, tmp))
