@@ -354,24 +354,25 @@ class SaleOrderLine(models.Model):
         return True
 
     def _transfer_district_to_location(self, partner_id):
-        location_obj = self.env['stock.location']
-        filter_domain = []
-        if partner_id.district_id if hasattr(partner_id, 'district_id') else False:
-            filter_domain = [('name', '=', partner_id.district_id.name)]
-        elif partner_id.city_id if hasattr(partner_id, 'city_id') else False:
-            filter_domain = [('name', '=', partner_id.city_id.name)]
-
-        if not filter_domain:
-            filter_domain = [('name', '=', partner_id.name)]
-
-        location_id = None
-        if filter_domain:
-            location_id = location_obj.search(filter_domain)
-
-        if not location_id:
-            # 保留取上级的默认客户位置
-            location_id = partner_id.parent_id.property_stock_customer
-        return location_id
+        # location_obj = self.env['stock.location']
+        # filter_domain = []
+        # if partner_id.district_id if hasattr(partner_id, 'district_id') else False:
+        #     filter_domain = [('name', '=', partner_id.district_id.name)]
+        # elif partner_id.city_id if hasattr(partner_id, 'city_id') else False:
+        #     filter_domain = [('name', '=', partner_id.city_id.name)]
+        #
+        # if not filter_domain:
+        #     filter_domain = [('name', '=', partner_id.name)]
+        #
+        # location_id = None
+        # if filter_domain:
+        #     location_id = location_obj.search(filter_domain)
+        #
+        # if not location_id:
+        #     # 保留取上级的默认客户位置
+        #     location_id = partner_id.parent_id.property_stock_customer
+        # return location_id
+        return partner_id.property_stock_customer
 
     # 先把订单的vin 填写
     def _fill_order_line_vin_id(self):
@@ -472,24 +473,25 @@ class SaleOrder(models.Model):
         return res[0] if res else False
 
     def _transfer_district_to_location(self, partner_id, patch=False):
-        location_obj = self.env['stock.location']
-        filter_domain = []
-        if partner_id.district_id:
-            filter_domain = [('name', '=', partner_id.district_id.name)]
-        elif partner_id.city_id:
-            filter_domain = [('name', '=', partner_id.city_id.name)]
-
-        location_id = False
-        if filter_domain:
-            location_id = location_obj.search(filter_domain)
-
-        # 搜索到不是想要的值
-        if not location_id:
-            # 保留取上级的默认客户位置
-            location_id = partner_id.parent_id.property_stock_customer
-        if patch:
-            location_id = partner_id.parent_id.property_stock_customer
-        return location_id
+        # location_obj = self.env['stock.location']
+        # filter_domain = []
+        # if partner_id.district_id:
+        #     filter_domain = [('name', '=', partner_id.district_id.name)]
+        # elif partner_id.city_id:
+        #     filter_domain = [('name', '=', partner_id.city_id.name)]
+        #
+        # location_id = False
+        # if filter_domain:
+        #     location_id = location_obj.search(filter_domain)
+        #
+        # # 搜索到不是想要的值
+        # if not location_id:
+        #     # 保留取上级的默认客户位置
+        #     location_id = partner_id.parent_id.property_stock_customer
+        # if patch:
+        #     location_id = partner_id.parent_id.property_stock_customer
+        # return location_id
+        return partner_id.property_stock_customer
 
     # 尝试获取条款
     def _get_contract_line(self, contract_id, from_location_id, to_location_id):
