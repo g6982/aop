@@ -192,7 +192,7 @@ class ImportSaleOrder(models.TransientModel):
                     'price_unit': 1,
                     'file_planned_date': file_planned_date,
                     'to_station_name': sheet_data.cell_value(x, to_station_name_index),
-                    'from_station_name': from_location_id.city
+                    'from_station_name': getattr(from_location_id.city_id, 'name')
                 })
                 line_values.append(line_data)
         else:
@@ -222,7 +222,7 @@ class ImportSaleOrder(models.TransientModel):
                     'product_uom': product_id.uom_id.id,
                     'price_unit': 1,
                     'file_planned_date': file_planned_date,
-                    'from_station_name': from_location_id.city,
+                    'from_station_name': getattr(from_location_id.city_id, 'name'),
                     'to_station_name': to_station_name
                 })
                 line_values.append(line_data)
