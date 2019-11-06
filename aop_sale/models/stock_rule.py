@@ -27,6 +27,8 @@ class StockRule(models.Model):
         help="""Create Procurement: A procurement will be created in the source location and the system will try to find a rule to resolve it. The available stock will be ignored.
                  Take from Stock: The products will be taken from the available stock.""")
 
+    is_station_line = fields.Boolean('Is station', default=False)
+
     # 添加服务产品到stock.picking
     def _get_custom_move_fields(self):
         res = super(StockRule, self)._get_custom_move_fields()

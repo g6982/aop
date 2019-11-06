@@ -408,6 +408,8 @@ class SaleOrder(models.Model):
         ('done', 'Done')
     ], default='draft', string='Write off state')
 
+    delivery_company_id = fields.Many2one('res.company', 'Delivery company')
+
     # 检查月结
     @api.constrains('partner_id')
     def _check_monthly_state(self):
@@ -636,6 +638,111 @@ class SaleOrder(models.Model):
         if len(res) > 1:
             raise UserError('More than one record.')
         return res.id if res else False
+
+    # 拆分订单，如果定义了 delivery_company_id 才需要进行？或者在公司上进行配置
+    # 中集可能只需要做一段任务，不需要做两端，需要根据合同？来判断，哪一段需要做
+    # 特货公司？ 很对路由 A -> X -> Y -> B( -> M -> N -> C)
+    # A-X
+    # X-Y
+    # Y-B
+    # 假定只有三段的情况，这里允许多段
+    # X-Y 段，由特货执行，保存订单即可
+    # A-X / Y-B 由中集执行
+    def split_sale_order_to_delivery_company(self):
+        res = []
+        for line in self:
+            for order_line_id in line.order_line:
+                # 对于订单，针对每一行
+                if not order_line_id.route_id:
+                    continue
+                # 判断是否存在站点
+                if any(order_line_id.route_id.mapped('rule_ids').mapped('is_station_line')):
+                    # 去除是站点的，剩下的都是正常的线段
+                    rule_area = order_line_id.route_id.mapped('rule_ids').filtered(lambda x: not x.is_station_line)
+                    rule_area = self.split_filter_rule_area(rule_area, order_line_id)
+
+                    # 站点不需要中集做，但是需要体现出来
+                    disallow_area = order_line_id.route_id.mapped('rule_ids').filtered(lambda x: x.is_station_line)
+                    disallow_data = self.split_to_create_order_value(disallow_area, line.company_id)
+                    res.append(disallow_data)
+
+                    # FIXME: 订单需要关联么？
+                    tmp = self.split_to_create_order_value(rule_area, order_line_id, line.delivery_company_id)
+                    res.append(tmp)
+        if res:
+            self.env['sale.order'].sudo().create(res)
+
+    # 根据合同，筛选出需要运送的线段
+    def split_filter_rule_area(self, rule_area, order_line_id):
+        allow_area = []
+        for rule_id in rule_area:
+            contract_state = self.split_filter_rule_contract(rule_id, order_line_id)
+            if not contract_state:
+                allow_area.append(rule_id)
+        return allow_area
+
+    # 针对订单里面的客户
+    # 找到该规则是否存在合同
+    def split_filter_rule_contract(self, rule, order_line_id):
+        res = self.env['delivery.carrier'].search([
+            ('from_location_id', '=', rule.location_src_id.id),
+            ('to_location_id', '=', rule.location_id.id),
+            ('customer_contract_id.partner_id', '=', order_line_id.order_id.partner_id.id)
+        ])
+        return True if res else False
+
+    # 返回订单头
+    def split_order_header(self, order_line_id, company_id):
+        order_value = {
+            'partner_id': order_line_id.order_id.partner_id.id,
+            'partner_invoice_id': order_line_id.order_id.partner_id.id,
+            'partner_shipping_id': order_line_id.order_id.partner_id.id,
+            'company_id': company_id.id
+        }
+        return order_value
+
+    # 订单行
+    def split_order_line_value(self, order_line_id):
+        res = {
+            'product_id': order_line_id.product_id.id,
+            'vin': order_line_id.vin_id.id if order_line_id.vin_id else False,
+            'vin_code': order_line_id.vin_code,
+            'name': order_line_id.product_id.name,
+            'product_uom_qty': 1,
+            'product_uom': order_line_id.product_id.uom_id.id,
+            'price_unit': 1,
+            'file_planned_date': order_line_id.file_planned_date,
+            'to_station_name': order_line_id.to_station_name,
+            'from_station_name': order_line_id.from_station_name
+        }
+        return res
+
+    def split_order_line_location_partner(self, rule):
+        from_location_id = rule.location_src_id
+        to_location_id = rule.location_id
+        partner_obj = self.env['res.partner']
+        from_location_partner = partner_obj.search([
+            ('property_stock_customer', '=', from_location_id.id)
+        ])
+        to_location_partner = partner_obj.search([
+            ('property_stock_customer', '=', to_location_id.id)
+        ])
+        return from_location_partner, to_location_partner
+
+    # 根据规则创建订单
+    def split_to_create_order_value(self, rule, order_line_id, company_id):
+        order_value = self.split_order_header(order_line_id, company_id)
+        order_line_value = self.split_order_line_value(order_line_id)
+
+        from_partner_id, to_partner_id = self.split_order_line_location_partner(rule)
+        order_line_value.update({
+            'from_location_id': from_partner_id.id,
+            'to_location_id': to_partner_id.id
+        })
+        order_value.update({
+            'order_line': [(0, 0, order_value)]
+        })
+        return order_value
 
     @api.multi
     def action_confirm(self):
