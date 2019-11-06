@@ -663,7 +663,7 @@ class SaleOrder(models.Model):
 
                     # 站点不需要中集做，但是需要体现出来
                     disallow_area = order_line_id.route_id.mapped('rule_ids').filtered(lambda x: x.is_station_line)
-                    disallow_data = self.split_to_create_order_value(disallow_area, line.company_id)
+                    disallow_data = self.split_to_create_order_value(disallow_area, line.company_id, lock=True)
                     res.append(disallow_data)
 
                     # FIXME: 订单需要关联么？
@@ -692,13 +692,19 @@ class SaleOrder(models.Model):
         return True if res else False
 
     # 返回订单头
-    def split_order_header(self, order_line_id, company_id):
+    def split_order_header(self, order_line_id, company_id, lock=False):
         order_value = {
             'partner_id': order_line_id.order_id.partner_id.id,
             'partner_invoice_id': order_line_id.order_id.partner_id.id,
             'partner_shipping_id': order_line_id.order_id.partner_id.id,
             'company_id': company_id.id
         }
+
+        # 特货公司创建的订单，需要锁定
+        if lock:
+            order_value.update({
+                'state': 'done'
+            })
         return order_value
 
     # 订单行
@@ -730,8 +736,8 @@ class SaleOrder(models.Model):
         return from_location_partner, to_location_partner
 
     # 根据规则创建订单
-    def split_to_create_order_value(self, rule, order_line_id, company_id):
-        order_value = self.split_order_header(order_line_id, company_id)
+    def split_to_create_order_value(self, rule, order_line_id, company_id, lock=False):
+        order_value = self.split_order_header(order_line_id, company_id, lock=lock)
         order_line_value = self.split_order_line_value(order_line_id)
 
         from_partner_id, to_partner_id = self.split_order_line_location_partner(rule)
@@ -746,6 +752,10 @@ class SaleOrder(models.Model):
 
     @api.multi
     def action_confirm(self):
+        # 如果指定了，就需要去执行
+        if any(self.mapped('delivery_company_id')):
+            return self.split_sale_order_to_delivery_company()
+
         # # 先去填充一次VIN
         for order in self:
             order_line_ids = order.order_line
