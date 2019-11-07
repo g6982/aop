@@ -38,6 +38,22 @@ class StockPickingBatch(models.Model):
 
     mount_car_plan_ids = fields.One2many('mount.car.plan', 'stock_picking_batch_id', string='Mount plan')
 
+    # 接口。创建采购单后，发送任务数据到WMS
+    def send_to_wms_data(self):
+        data = []
+        for picking_id in self.picking_ids:
+            data.append({
+                'task_id': picking_id.id,
+                'partner_id': picking_id.partner_id.name,
+                'vin': picking_id.vin_id.code,
+                'product_id': picking_id.product_id.name,
+                'from_location_id': picking_id.location_id.name,
+                'to_location_id': picking_id.location_dest_id.name,
+                'picking_type_name': picking_id.picking_type_id.name,
+                'quantity_done': 1,
+                'warehouse_code': picking_id.picking_type_id.warehouse_id.code
+            })
+
     # 生成采购订单，采购：服务产品
     def create_purchase_order(self):
         try:
@@ -56,6 +72,9 @@ class StockPickingBatch(models.Model):
 
             # 跨公司创建
             res = self.env['purchase.order'].sudo().create(data)
+
+            # 接口数据
+            self.send_to_wms_data()
 
             self.write({
                 'picking_purchase_id': res.id
