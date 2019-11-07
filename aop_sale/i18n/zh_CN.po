@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-01 06:23+0000\n"
-"PO-Revision-Date: 2019-11-01 06:23+0000\n"
+"POT-Creation-Date: 2019-11-07 06:04+0000\n"
+"PO-Revision-Date: 2019-11-07 06:04+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1026,6 +1026,11 @@ msgid "Delivery carrier"
 msgstr "合同条款"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order__delivery_company_id
+msgid "Delivery company"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__delivery_to_partner_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking__delivery_to_partner_id
 msgid "Delivery to partner"
@@ -1059,7 +1064,7 @@ msgid "Discount (%)"
 msgstr "折扣 (%)"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:714
+#: code:addons/aop_sale/models/sale_order.py:833
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order__dispatch_order
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_picking_batch_form_inherit_create_purchase
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_location_to_route_location_wizard_form
@@ -1434,7 +1439,7 @@ msgstr "有未清项"
 
 #. module: aop_sale
 #: code:addons/aop_sale/models/account_invoice.py:184
-#: code:addons/aop_sale/models/sale_order.py:429
+#: code:addons/aop_sale/models/sale_order.py:432
 #, python-format
 msgid "Has been monthly!"
 msgstr "已月结!"
@@ -1775,6 +1780,11 @@ msgstr "关注者"
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice_line__is_rounding_line
 msgid "Is a rounding line in case of cash rounding."
 msgstr "是现金舍入的舍入明细"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_rule__is_station_line
+msgid "Is station"
+msgstr "外部任务"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__reconciled
@@ -2571,7 +2581,7 @@ msgid "Planned date"
 msgstr "计划日期"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:657
+#: code:addons/aop_sale/models/sale_order.py:776
 #, python-format
 msgid "Please wait until the VIN in stock. Any question, Contact administrator. "
 msgstr "请等待VIN码入库。任何问题，联系管理员。"
@@ -3975,7 +3985,7 @@ msgid "Write time"
 msgstr "更新时间"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:449
+#: code:addons/aop_sale/models/sale_order.py:452
 #: model:ir.actions.act_window,name:aop_sale.action_write_off_line_order_wizard
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #, python-format
@@ -4133,7 +4143,6 @@ msgstr ""
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_supplier_tree_inherit_aop_sale
-#: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree1
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_account_invoice_line_tree
 msgid "cost estimate"
@@ -4821,7 +4830,7 @@ msgid "本月"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:48
+#: code:addons/aop_sale/models/stock_picking_batch.py:64
 #, python-format
 msgid "测试"
 msgstr "向导"
