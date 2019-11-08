@@ -1029,7 +1029,7 @@ msgstr "合同条款"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order__delivery_company_id
 msgid "Delivery company"
-msgstr ""
+msgstr "承包商"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_move__delivery_to_partner_id
