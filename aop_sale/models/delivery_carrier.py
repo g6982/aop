@@ -57,6 +57,8 @@ class DeliveryCarrier(models.Model):
     goto_delivery_carrier_id = fields.Many2one(
         'delivery.carrier', 'Goto Contract Terms')
 
+    brand_id = fields.Many2one('fleet.vehicle.model.brand', 'Brand')
+
     @api.onchange('from_location_id', 'to_location_id')
     def domain_route_ids(self):
         if self.from_location_id and self.to_location_id:

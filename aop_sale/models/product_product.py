@@ -8,3 +8,5 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     vehicle_type_id = fields.Many2one('product.vehicle.type', 'Vehicle type')
+
+    brand_id = fields.Many2one('fleet.vehicle.model.brand', 'Brand')
