@@ -1,6 +1,23 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+import dict2xml
+import requests
+import logging
+_logger = logging.getLogger(__name__)
+import json
+import time
+from ..tools.zeep_client import zeep_supplier_client
+
+SUPPLIER_FIELD_DICT = {
+    'name': 'name',
+    'ref': 'code',
+    'country_id': 'country_name',
+    'state_id': 'state_name',
+    'city_id': 'city_name',
+    'district_id': 'district_name',
+    'street': 'street_name'
+}
 
 
 class ResPartner(models.Model):
@@ -20,15 +37,16 @@ class ResPartner(models.Model):
     def send_res_partner_to_wms(self):
         data = []
         for line_id in self:
-            data.append({
-                'name': line_id.name,
-                'code': line_id.ref,
-                'country_name': line_id.country_id.name,
-                'state_name': line_id.state_id.name,
-                'city_name': line_id.city_id.name,
-                'district_name': line_id.district_id.name,
-                'street_name': line_id.street
-            })
+            tmp = {}
+            for key_id in SUPPLIER_FIELD_DICT.keys():
+                if getattr(line_id, key_id):
+                    key_value = getattr(line_id, key_id)
+                    tmp.update({
+                        SUPPLIER_FIELD_DICT.get(key_id): getattr(key_value, 'name') if hasattr(key_value, 'name') else key_value
+                    })
+            if tmp:
+                data.append(tmp)
+        zeep_supplier_client.service.supplier(str(data))
 
     @api.model
     def create(self, vals):
