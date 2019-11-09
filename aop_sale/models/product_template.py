@@ -27,7 +27,7 @@ class ProductVehicleType(models.Model):
 
     name = fields.Char('Name')
 
-    type = fields.Char('Type')
-    brand = fields.Char('Brand')
-    model_name = fields.Char('Model')
+    # type = fields.Char('Type')
+    # brand = fields.Char('Brand')
+    # model_name = fields.Char('Model')
 
