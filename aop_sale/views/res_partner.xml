@@ -21,8 +21,8 @@
                 <xpath expr="//group[@name='container_row_stock']" position="replace">
                     <group name="container_row_stock" priority="6">
                         <group string="Warehouse" name="warehouse">
-                            <field name="property_stock_customer" domain="[('usage','=','customer')]"/>
-                            <field name="property_stock_supplier" domain="[('usage','=','supplier')]"/>
+                            <field name="property_stock_customer" domain="[('usage','in',['customer', 'internal'])]"/>
+                            <field name="property_stock_supplier" domain="[('usage','in',['supplier', 'internal'])]"/>
                         </group>
                     </group>
                 </xpath>

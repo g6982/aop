@@ -14,6 +14,8 @@ class AccountAccount(models.Model):
     child_ids = fields.One2many('account.account', 'parent_id', 'Contains')
     parent_path = fields.Char(index=True)
 
+    company_id = fields.Many2one(required=False)
+
     @api.multi
     @api.constrains('parent_id')
     def check_recursion(self):
