@@ -129,7 +129,8 @@ class StockPickingBatch(models.Model):
             'invoice_status': 'no',
             'date_order': fields.Datetime.now(),
             'stock_picking_batch_id': self.id,
-            'company_id': self._match_company_id(self.partner_id)
+            # 'company_id': self._match_company_id(self.partner_id)
+            'company_id': self.env.user.company_id.id
         }
 
         data = self._get_purchase_line_data()
