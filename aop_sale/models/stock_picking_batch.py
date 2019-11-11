@@ -5,8 +5,19 @@ import logging
 import time
 from itertools import groupby
 from odoo.exceptions import UserError
-
+from ..tools.zeep_client import zeep_task_client
 _logger = logging.getLogger(__name__)
+
+PICKING_FIELD_DICT = {
+    'id': 'task_id',
+    'partner_id': 'partner_name',
+    'vin_id': 'vin',
+    'product_id': 'product_id',
+    'location_id': 'from_location_id',
+    'location_dest_id': 'to_location_id',
+    'picking_type_id': 'picking_type_name',
+    'warehouse_id': 'warehouse_name'
+}
 
 
 class StockPickingBatch(models.Model):
@@ -42,17 +53,31 @@ class StockPickingBatch(models.Model):
     def send_to_wms_data(self):
         data = []
         for picking_id in self.picking_ids:
-            data.append({
-                'task_id': picking_id.id,
-                'partner_id': picking_id.partner_id.name,
-                'vin': picking_id.vin_id.code,
-                'product_id': picking_id.product_id.name,
-                'from_location_id': picking_id.location_id.name,
-                'to_location_id': picking_id.location_dest_id.name,
-                'picking_type_name': picking_id.picking_type_id.name,
-                'quantity_done': 1,
-                'warehouse_code': picking_id.picking_type_id.warehouse_id.code
-            })
+            tmp = {}
+            for key_id in PICKING_FIELD_DICT.keys():
+                if getattr(picking_id, key_id) if hasattr(picking_id, key_id) else False:
+                    key_value = getattr(picking_id, key_id)
+                    tmp.update({
+                        PICKING_FIELD_DICT.get(key_id): getattr(key_value, 'name') if hasattr(key_value,
+                                                                                            'name') else key_value
+                    })
+                if key_id == 'warehouse_id':
+                    key_value = picking_id.picking_type_id.warehouse_id if getattr(picking_id,
+                                                                                   'picking_type_id') else False
+                    if key_value:
+                        tmp.update({
+                            PICKING_FIELD_DICT.get(key_id): getattr(key_value, 'name') if hasattr(key_value,
+                                                                                                'name') else key_value
+                        })
+            if tmp:
+                tmp.update({
+                    'quantity_done': 1
+                })
+                data.append(tmp)
+        _logger.info({
+            'data': data
+        })
+        zeep_task_client.service.sendToTask(str(data))
 
     # 生成采购订单，采购：服务产品
     def create_purchase_order(self):
