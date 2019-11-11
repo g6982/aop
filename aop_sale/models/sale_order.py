@@ -656,21 +656,26 @@ class SaleOrder(models.Model):
                 if not order_line_id.route_id:
                     continue
                 # 判断是否存在站点
-                if any(order_line_id.route_id.mapped('rule_ids').mapped('is_station_line')):
+                if any(order_line_id.route_id.sudo().mapped('rule_ids').mapped('is_station_line')):
                     # 去除是站点的，剩下的都是正常的线段
-                    rule_area = order_line_id.route_id.mapped('rule_ids').filtered(lambda x: not x.is_station_line)
+                    rule_area = order_line_id.route_id.sudo().mapped('rule_ids').filtered(lambda x: not x.is_station_line)
                     rule_area = self.split_filter_rule_area(rule_area, order_line_id)
 
                     # 站点不需要中集做，但是需要体现出来
-                    disallow_area = order_line_id.route_id.mapped('rule_ids').filtered(lambda x: x.is_station_line)
-                    disallow_data = self.split_to_create_order_value(disallow_area, line.company_id, lock=True)
-                    res.append(disallow_data)
+                    disallow_area = order_line_id.route_id.sudo().mapped('rule_ids').filtered(lambda x: x.is_station_line)
 
+                    for disallow_id in disallow_area:
+                        disallow_data = self.split_to_create_order_value(disallow_id, order_line_id,
+                                                                         line.company_id, lock=False)
+                        res.append(disallow_data)
+
+                    # 规则分段的时候
                     # FIXME: 订单需要关联么？
-                    tmp = self.split_to_create_order_value(rule_area, order_line_id, line.delivery_company_id)
-                    res.append(tmp)
+                    for rule_id in rule_area:
+                        tmp = self.split_to_create_order_value(rule_id, order_line_id, line.delivery_company_id)
+                        res.append(tmp)
         if res:
-            self.env['sale.order'].sudo().create(res)
+            result = self.env['sale.order'].sudo().create(res)
 
     # 根据合同，筛选出需要运送的线段
     def split_filter_rule_area(self, rule_area, order_line_id):
@@ -711,7 +716,7 @@ class SaleOrder(models.Model):
     def split_order_line_value(self, order_line_id):
         res = {
             'product_id': order_line_id.product_id.id,
-            'vin': order_line_id.vin_id.id if order_line_id.vin_id else False,
+            'vin': order_line_id.vin.id if order_line_id.vin else False,
             'vin_code': order_line_id.vin_code,
             'name': order_line_id.product_id.name,
             'product_uom_qty': 1,
@@ -726,27 +731,30 @@ class SaleOrder(models.Model):
     def split_order_line_location_partner(self, rule):
         from_location_id = rule.location_src_id
         to_location_id = rule.location_id
-        partner_obj = self.env['res.partner']
+        partner_obj = self.env['res.partner'].sudo()
         from_location_partner = partner_obj.search([
             ('property_stock_customer', '=', from_location_id.id)
         ])
         to_location_partner = partner_obj.search([
             ('property_stock_customer', '=', to_location_id.id)
         ])
-        return from_location_partner, to_location_partner
+
+        return from_location_partner[0], to_location_partner[0]
 
     # 根据规则创建订单
-    def split_to_create_order_value(self, rule, order_line_id, company_id, lock=False):
+    # 针对一段规则
+    def split_to_create_order_value(self, rule_id, order_line_id, company_id, lock=False):
         order_value = self.split_order_header(order_line_id, company_id, lock=lock)
         order_line_value = self.split_order_line_value(order_line_id)
 
-        from_partner_id, to_partner_id = self.split_order_line_location_partner(rule)
+        from_partner_id, to_partner_id = self.split_order_line_location_partner(rule_id)
+
         order_line_value.update({
             'from_location_id': from_partner_id.id,
             'to_location_id': to_partner_id.id
         })
         order_value.update({
-            'order_line': [(0, 0, order_value)]
+            'order_line': [(0, 0, order_line_value)]
         })
         return order_value
 
