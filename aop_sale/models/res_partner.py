@@ -33,6 +33,13 @@ class ResPartner(models.Model):
     kilometer_number = fields.Float('Kilometer')
     allow_warehouse_ids = fields.Many2many('stock.warehouse', string='Allowed warehouse')
 
+    property_stock_customer = fields.Many2one(
+        'stock.location', string="Customer Location", company_dependent=False,
+        help="The stock location used as destination when sending goods to this contact.")
+    property_stock_supplier = fields.Many2one(
+        'stock.location', string="Vendor Location", company_dependent=False,
+        help="The stock location used as source when receiving goods from this contact.")
+
     # 发送客户供应商的信息
     def send_res_partner_to_wms(self):
         data = []
