@@ -676,24 +676,28 @@ class SaleOrder(models.Model):
                         res.append(tmp)
         if res:
             result = self.env['sale.order'].sudo().create(res)
+            _logger.info({
+                'result': result
+            })
 
     # 根据合同，筛选出需要运送的线段
     def split_filter_rule_area(self, rule_area, order_line_id):
         allow_area = []
         for rule_id in rule_area:
             contract_state = self.split_filter_rule_contract(rule_id, order_line_id)
-            if not contract_state:
+            if contract_state:
                 allow_area.append(rule_id)
         return allow_area
 
     # 针对订单里面的客户
     # 找到该规则是否存在合同
     def split_filter_rule_contract(self, rule, order_line_id):
-        res = self.env['delivery.carrier'].search([
+        domain_filter = [
             ('from_location_id', '=', rule.location_src_id.id),
             ('to_location_id', '=', rule.location_id.id),
             ('customer_contract_id.partner_id', '=', order_line_id.order_id.partner_id.id)
-        ])
+        ]
+        res = self.env['delivery.carrier'].search(domain_filter)
         return True if res else False
 
     # 返回订单头

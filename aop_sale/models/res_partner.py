@@ -40,9 +40,9 @@ class ResPartner(models.Model):
         'stock.location', string="Vendor Location", company_dependent=False,
         help="The stock location used as source when receiving goods from this contact.")
 
-    property_account_payable_id = fields.Many2one(company_dependent=False)
+    property_account_payable_id = fields.Many2one('account.account', company_dependent=False)
 
-    property_account_receivable_id = fields.Many2one(company_dependent=False)
+    property_account_receivable_id = fields.Many2one('account.account', company_dependent=False)
 
     # 发送客户供应商的信息
     def send_res_partner_to_wms(self):
