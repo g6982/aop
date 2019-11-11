@@ -11,3 +11,20 @@ class ResCompany(models.Model):
     ]
 
     code = fields.Char('Code')
+
+    # 针对新建公司。不添加公司属性
+    @api.model
+    def create(self, vals):
+        company = super(ResCompany, self).create(vals)
+
+        company.create_transit_location()
+        # mutli-company rules prevents creating warehouse and sub-locations
+        self.env['stock.warehouse'].check_access_rights('create')
+        data = {
+            'name': company.name,
+            'code': company.name[:5],
+            'partner_id': company.partner_id.id
+        }
+        # self.env['stock.warehouse'].sudo().create({'name': company.name, 'code': company.name[:5], 'company_id': company.id, 'partner_id': company.partner_id.id})
+        self.env['stock.warehouse'].sudo().create(data)
+        return company
