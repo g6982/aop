@@ -373,7 +373,7 @@
                     <field name="reconciliation_batch_no"/>
                     <field name="account_period_id"/>
                 </field>
-                <field name="amount_untaxed" position="before">
+                <field name="origin" position="after">
                     <field name="tmp_estimate"/>
                     <field name="advance_receipt"/>
                 </field>
