@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 from requests import Session
 from zeep.transports import Transport
 from zeep import Client
