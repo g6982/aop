@@ -10,6 +10,10 @@ session = Session()
 session.verify = False
 transport = Transport(session=session)
 
+supplier_url = 'https://222.66.94.66:9081/zjwms/ws/supplierInfo?wsdl'
+task_url = 'https://222.66.94.66:9081/zjwms/ws/generationTask?wsdl'
+stock_url = 'https://222.66.94.66:9081/zjwms/ws/searchInventory?wsdl'
+
 # 客户供应商
 zeep_supplier_client = Client('https://222.66.94.66:9081/zjwms/ws/supplierInfo?wsdl', transport=transport)
 

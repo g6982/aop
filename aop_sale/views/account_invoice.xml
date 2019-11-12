@@ -360,7 +360,7 @@
         <record id="invoice_tree_with_onboarding_inherit_aop_sale" model="ir.ui.view">
             <field name="name">account.invoice.tree.with.onboarding.inherit.aop_sale</field>
             <field name="model">account.invoice</field>
-            <field name="inherit_id" ref="account.invoice_tree_with_onboarding"/>
+            <field name="inherit_id" ref="account.invoice_tree"/>
             <field name="mode">extension</field>
             <field name="arch" type="xml">
 
