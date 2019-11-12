@@ -39,16 +39,16 @@ class ResPartner(models.Model):
         'stock.location', string="Vendor Location", company_dependent=False,
         help="The stock location used as source when receiving goods from this contact.")
 
-    # property_account_payable_id = fields.Many2one('account.account', company_dependent=False,
-    #                                               string="Account Payable", oldname="property_account_payable",
-    #                                               domain="[('internal_type', '=', 'payable'), ('deprecated', '=', False)]",
-    #                                               help="This account will be used instead of the default one as the payable account for the current partner",
-    #                                               required=True)
-    # property_account_receivable_id = fields.Many2one('account.account', company_dependent=False,
-    #                                                  string="Account Receivable", oldname="property_account_receivable",
-    #                                                  domain="[('internal_type', '=', 'receivable'), ('deprecated', '=', False)]",
-    #                                                  help="This account will be used instead of the default one as the receivable account for the current partner",
-    #                                                  required=True)
+    property_account_payable_id = fields.Many2one('account.account', company_dependent=False,
+                                                  string="Account Payable", oldname="property_account_payable",
+                                                  domain="[('internal_type', '=', 'payable'), ('deprecated', '=', False)]",
+                                                  help="This account will be used instead of the default one as the payable account for the current partner",
+                                                  required=True)
+    property_account_receivable_id = fields.Many2one('account.account', company_dependent=False,
+                                                     string="Account Receivable", oldname="property_account_receivable",
+                                                     domain="[('internal_type', '=', 'receivable'), ('deprecated', '=', False)]",
+                                                     help="This account will be used instead of the default one as the receivable account for the current partner",
+                                                     required=True)
 
     # 发送客户供应商的信息
     def send_res_partner_to_wms(self):
