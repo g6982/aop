@@ -37,7 +37,7 @@ class AccountTaxInvoice(models.Model):
     @api.depends('date_invoice')
     def _compute_contract_period(self):
         for line_id in self:
-            if line_id.period_month:
+            if line_id.period_month or not line_id.date_invoice:
                 continue
 
             # 找到合同的月份
