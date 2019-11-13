@@ -49,6 +49,8 @@ class StockPickingBatch(models.Model):
 
     mount_car_plan_ids = fields.One2many('mount.car.plan', 'stock_picking_batch_id', string='Mount plan')
 
+    transfer_partner_id = fields.Many2one('res.partner', 'Transfer company')
+
     # 接口。创建采购单后，发送任务数据到WMS
     def send_to_wms_data(self):
         data = []
@@ -303,9 +305,12 @@ class MountCarPlan(models.Model):
 
     name = fields.Char(string='Vehicle model')
 
+    transfer_tool_number = fields.Char('Transfer tool no')
     layer_option = fields.Selection([
         ('upper_layer', 'Upper layer'),
         ('lower_layer', 'Lower layer')
     ], string='Layer')
 
     stock_picking_batch_id = fields.Many2one('stock.picking.batch', 'Dispatch order')
+
+    number = fields.Integer('Number')
