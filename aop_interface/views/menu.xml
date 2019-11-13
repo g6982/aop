@@ -4,21 +4,6 @@
 
         <menuitem id="interface_menu_root" name="Interface" web_icon="aop_interface,static/description/api_icon.png"/>
 
-        <menuitem id="interface_check_stock_picking" name="Check picking" parent="interface_menu_root"/>
-
-        <record id="action_check_stock_picking_view" model="ir.actions.act_window">
-            <field name="name">Check picking</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">check.stock.picking.log</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-
-        <menuitem id="check_stock_picking"
-                  action="action_check_stock_picking_view"
-                  name="Check picking" parent="interface_check_stock_picking"/>
-
-
         <menuitem id="interface_done_picking" name="Done picking" parent="interface_menu_root"/>
 
         <record id="action_done_picking_view" model="ir.actions.act_window">

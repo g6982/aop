@@ -90,7 +90,7 @@ class ApiInterface(http.Controller):
 
         res = request.env['stock.picking.type'].sudo().search([
             ('warehouse_id', '!=', False)
-        ])
+        ], limit=10)
         data = {}
         for index_p, picking_type_id in enumerate(res):
             stock_picking_ids = request.env['stock.picking'].sudo().search([
