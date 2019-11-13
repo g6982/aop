@@ -71,7 +71,8 @@ class StockPickingBatch(models.Model):
                         })
             if tmp:
                 tmp.update({
-                    'quantity_done': 1
+                    'quantity_done': 1,
+                    'supplier_name': self.un_limit_partner_id.name
                 })
                 data.append(tmp)
         _logger.info({
