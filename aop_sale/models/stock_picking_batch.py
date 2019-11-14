@@ -79,6 +79,9 @@ class StockPickingBatch(models.Model):
     def send_to_wms_data(self):
         data = []
         for picking_id in self.picking_ids:
+            _logger.info({
+                'sale_order_line_id': picking_id.sale_order_line_id
+            })
             # 接车并不需要发送到WMS
             if picking_id.picking_incoming_number > 0 or not picking_id.sale_order_line_id:
                 continue
