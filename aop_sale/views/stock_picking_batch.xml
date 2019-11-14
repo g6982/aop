@@ -65,15 +65,13 @@
                                ('sale_order_line_id', '=', False)
                                ]"
                                options="{'not_delete': True}">
-                            <tree>
+                            <tree editable="bottom">
                                 <field name="name"/>
                                 <field name="vin_id"/>
                                 <field name="picking_type_id"/>
                                 <field name="location_id"/>
                                 <field name="location_dest_id"/>
-                                <!--
-                                <field name="backorder_id"/>
-                                -->
+                                <field name="is_must_mount_car"/>
                                 <field name="origin"/>
                                 <field name="date"/>
                                 <field name="scheduled_date"/>

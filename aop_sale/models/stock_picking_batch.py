@@ -311,7 +311,9 @@ class StockPickingBatch(models.Model):
 class MountCarPlan(models.Model):
     _name = "mount.car.plan"
 
-    name = fields.Char(string='Vehicle model')
+    # name = fields.Char(string='Vehicle model')
+
+    name = fields.Many2one('product.product', string='Vehicle model', domain=[('type', '=', 'product')])
 
     transfer_tool_number = fields.Char('Transfer tool no')
     layer_option = fields.Selection([
