@@ -56,13 +56,17 @@ class HandoverVin(models.Model):
             # 筛选没有交接单的
             tmp = tmp.filtered(lambda x: not x.handover_number)
 
-            if len(tmp) > 1:
-                raise UserError('More than one records!')
+            # if len(tmp) > 1:
+            #     raise UserError('More than one records!')
 
             tmp.write({
                 'handover_number': line.name
             })
-            line.order_line_id = tmp.id
+
+            if len(tmp) == 1:
+                line.order_line_id = tmp.id
+            else:
+                line.order_line_id = False
 
     @api.multi
     def register_handover(self):
