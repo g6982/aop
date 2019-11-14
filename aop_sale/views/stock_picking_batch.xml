@@ -57,7 +57,6 @@
                 <notebook>
                     <page string="Dispatch">
                         <field name="picking_ids"
-                               editable="bottom"
                                widget="many2many"
                                domain="['&amp;',
                                ('state', 'not in', ('done', 'cancel')),
@@ -66,7 +65,7 @@
                                ('sale_order_line_id', '=', False)
                                ]"
                                options="{'not_delete': True}">
-                            <tree>
+                            <tree editable="bottom">
                                 <field name="name"/>
                                 <field name="vin_id"/>
                                 <field name="picking_type_id"/>

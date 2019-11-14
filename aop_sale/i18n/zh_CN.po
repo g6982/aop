@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-14 02:33+0000\n"
-"PO-Revision-Date: 2019-11-14 02:33+0000\n"
+"POT-Creation-Date: 2019-11-14 02:59+0000\n"
+"PO-Revision-Date: 2019-11-14 02:59+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1801,6 +1801,11 @@ msgstr "关注者"
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice_line__is_rounding_line
 msgid "Is a rounding line in case of cash rounding."
 msgstr "是现金舍入的舍入明细"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking__is_must_mount_car
+msgid "Is must mount car"
+msgstr "是否必装车"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_rule__is_station_line
