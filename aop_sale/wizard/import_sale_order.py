@@ -19,7 +19,9 @@ CQ_COL = {
     'to_location_id': 9,
     'start_index': 0,
     'file_planned_date': 14,
-    'to_station_name': 2
+    'to_station_name': 2,
+    'product_color': 8,
+    'product_model': 7
 }
 
 CT_COL = {
@@ -29,7 +31,9 @@ CT_COL = {
     'to_location_id': 10,
     'start_index': 6,
     'file_planned_date': 0,
-    'to_station_name': 1
+    'to_station_name': 1,
+    'product_color': 7,
+    'product_model': 6
 }
 TWICE_JUMP_TO_NAME_INDEX = 1
 DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
@@ -77,6 +81,8 @@ class ImportSaleOrder(models.TransientModel):
                 vin_index = CQ_COL.get('vin_code')
                 file_planned_date_index = CQ_COL.get('file_planned_date')
                 to_station_name_index = CQ_COL.get('to_station_name')
+                product_color_index = CQ_COL.get('product_color')
+                product_model_index = CQ_COL.get('product_model')
             else:
                 product_index = CT_COL.get('product_id')
                 start_index = CT_COL.get('start_index')
@@ -85,6 +91,8 @@ class ImportSaleOrder(models.TransientModel):
                 vin_index = CT_COL.get('vin_code')
                 file_planned_date_index = CT_COL.get('file_planned_date')
                 to_station_name_index = CT_COL.get('to_station_name')
+                product_color_index = CT_COL.get('product_color')
+                product_model_index = CT_COL.get('product_model')
 
             # 选了 from_location_id 就是二次起跳
             partner_data = self._parse_partner_id(sheet_data, from_location_id=self.from_location_id,
@@ -101,7 +109,9 @@ class ImportSaleOrder(models.TransientModel):
                                                     start_index=start_index,
                                                     vin_index=vin_index,
                                                     file_planned_date_index=file_planned_date_index,
-                                                    to_station_name_index=to_station_name_index
+                                                    to_station_name_index=to_station_name_index,
+                                                    product_color_index=product_color_index,
+                                                    product_model_index=product_model_index,
                                                     )
             order_data.update({
                 'order_line': line_data,
@@ -155,7 +165,8 @@ class ImportSaleOrder(models.TransientModel):
     # 订单行的数据
     def _parse_order_line_data(self, sheet_data, product_data, partner_data, from_location_id=False,
                                from_partner_index=None, to_partner_index=None, product_index=None, start_index=None,
-                               vin_index=None, file_planned_date_index=None, to_station_name_index=None):
+                               vin_index=None, file_planned_date_index=None, to_station_name_index=None,
+                               product_color_index=None, product_model_index=None):
         line_values = []
 
         # 选择了 from_location_id, 二次起跳
@@ -179,6 +190,15 @@ class ImportSaleOrder(models.TransientModel):
                     date_value = sheet_data.cell_value(x, file_planned_date_index).replace('\xa0', '')
                     file_planned_date = datetime.strptime(date_value, DATE_FORMAT_YMD).date()
 
+                product_color = self.decoding_string(sheet_data.cell_value(x, product_color_index))
+                if self.is_transfer:
+                    # 如果是CQ，车型 + 配置
+                    product_model = self.decoding_string(sheet_data.cell_value(x, product_index))
+                    product_config = self.decoding_string(sheet_data.cell_value(x, product_model_index))
+                    product_model = str(product_model) + str(product_config)
+                else:
+                    product_model = self.decoding_string(sheet_data.cell_value(x, product_model_index))
+
                 line_data = (0, 0, {
                     'product_id': product_id.id,
                     # 'service_product_id': False,
@@ -192,7 +212,9 @@ class ImportSaleOrder(models.TransientModel):
                     'price_unit': 1,
                     'file_planned_date': file_planned_date,
                     'to_station_name': sheet_data.cell_value(x, to_station_name_index),
-                    'from_station_name': getattr(from_location_id.city_id, 'name')
+                    'from_station_name': getattr(from_location_id.city_id, 'name'),
+                    'product_color': product_color,
+                    'product_model': product_model
                 })
                 line_values.append(line_data)
         else:
@@ -223,7 +245,9 @@ class ImportSaleOrder(models.TransientModel):
                     'price_unit': 1,
                     'file_planned_date': file_planned_date,
                     'from_station_name': getattr(from_location_id.city_id, 'name'),
-                    'to_station_name': to_station_name
+                    'to_station_name': to_station_name,
+                    'product_color': self.decoding_string(sheet_data.cell_value(x, 11)),
+                    'product_model': self.decoding_string(sheet_data.cell_value(x, 10))
                 })
                 line_values.append(line_data)
         return line_values

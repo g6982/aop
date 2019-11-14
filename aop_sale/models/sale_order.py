@@ -91,6 +91,9 @@ class SaleOrderLine(models.Model):
     from_station_name = fields.Char('From')
     to_station_name = fields.Char('To')
 
+    product_color = fields.Char('Product color')
+    product_model = fields.Char('Product model')
+
     @api.multi
     @api.depends('stock_picking_ids', 'stock_picking_ids.state', 'stock_picking_ids.date_done')
     def _compute_current_picking_id(self):

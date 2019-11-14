@@ -9,14 +9,11 @@ from ..tools.zeep_client import zeep_task_client
 _logger = logging.getLogger(__name__)
 
 PICKING_FIELD_DICT = {
-    'id': 'task_id',
     'partner_id': 'partner_name',
     'vin_id': 'vin',
-    'product_id': 'product_id',
     'location_id': 'from_location_id',
     'location_dest_id': 'to_location_id',
     'picking_type_id': 'picking_type_name',
-    'warehouse_id': 'warehouse_name'
 }
 
 
@@ -51,36 +48,47 @@ class StockPickingBatch(models.Model):
 
     transfer_partner_id = fields.Many2one('res.partner', 'Transfer company')
 
+    # WMS 任务信息
+    def _format_picking_data(self, picking_id):
+        '''
+        :param picking_id: 任务
+        :return: 任务所包含的信息，传送给WMS
+        '''
+        product_info = picking_id.sale_order_line_id.product_model
+        tmp = {
+            'task_id': picking_id.id,
+            'product_name': picking_id.sale_order_line_id.product_id.name,
+            'product_color': picking_id.sale_order_line_id.product_color,
+            'product_model': product_info[:3] if product_info else False,
+            'product_config': product_info[3:] if product_info else False,
+            'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name,
+            'warehouse_code': picking_id.picking_type_id.warehouse_id.code,
+            'quantity_done': 1,
+            'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name
+        }
+        for key_id in PICKING_FIELD_DICT.keys():
+            if getattr(picking_id, key_id) if hasattr(picking_id, key_id) else False:
+                key_value = getattr(picking_id, key_id)
+                tmp.update({
+                    PICKING_FIELD_DICT.get(key_id): getattr(key_value, 'name') if hasattr(key_value,
+                                                                                          'name') else key_value
+                })
+        return tmp
+
     # 接口。创建采购单后，发送任务数据到WMS
     def send_to_wms_data(self):
         data = []
         for picking_id in self.picking_ids:
-            tmp = {}
-            for key_id in PICKING_FIELD_DICT.keys():
-                if getattr(picking_id, key_id) if hasattr(picking_id, key_id) else False:
-                    key_value = getattr(picking_id, key_id)
-                    tmp.update({
-                        PICKING_FIELD_DICT.get(key_id): getattr(key_value, 'name') if hasattr(key_value,
-                                                                                            'name') else key_value
-                    })
-                if key_id == 'warehouse_id':
-                    key_value = picking_id.picking_type_id.warehouse_id if getattr(picking_id,
-                                                                                   'picking_type_id') else False
-                    if key_value:
-                        tmp.update({
-                            PICKING_FIELD_DICT.get(key_id): getattr(key_value, 'name') if hasattr(key_value,
-                                                                                                'name') else key_value
-                        })
-            if tmp:
-                tmp.update({
-                    'quantity_done': 1,
-                    'supplier_name': self.un_limit_partner_id.name
-                })
-                data.append(tmp)
+            # 接车并不需要发送到WMS
+            if picking_id.picking_incoming_number > 0 or not picking_id.sale_order_line_id:
+                continue
+            tmp = self._format_picking_data(picking_id)
+            data.append(tmp)
         _logger.info({
             'data': data
         })
-        zeep_task_client.service.sendToTask(str(data))
+        if data:
+            zeep_task_client.service.sendToTask(str(data))
 
     # 生成采购订单，采购：服务产品
     def create_purchase_order(self):
