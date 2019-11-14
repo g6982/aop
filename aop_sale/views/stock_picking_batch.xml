@@ -57,6 +57,7 @@
                 <notebook>
                     <page string="Dispatch">
                         <field name="picking_ids"
+                               editable="bottom"
                                widget="many2many"
                                domain="['&amp;',
                                ('state', 'not in', ('done', 'cancel')),
@@ -71,9 +72,7 @@
                                 <field name="picking_type_id"/>
                                 <field name="location_id"/>
                                 <field name="location_dest_id"/>
-                                <!--
-                                <field name="backorder_id"/>
-                                -->
+                                <field name="is_must_mount_car"/>
                                 <field name="origin"/>
                                 <field name="date"/>
                                 <field name="scheduled_date"/>

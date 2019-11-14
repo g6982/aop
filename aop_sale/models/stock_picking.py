@@ -16,6 +16,7 @@ class StockPicking(models.Model):
 
     vin_id = fields.Many2one('stock.production.lot', string='VIN')
     picking_incoming_number = fields.Integer('Picking incoming number')
+    is_must_mount_car = fields.Boolean(string='Is must mount car', default=False)
 
     def match_sale_order(self):
         return self._match_sale_order()

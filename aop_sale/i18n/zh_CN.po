@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-08 06:50+0000\n"
-"PO-Revision-Date: 2019-11-08 06:50+0000\n"
+"POT-Creation-Date: 2019-11-14 02:33+0000\n"
+"PO-Revision-Date: 2019-11-14 02:33+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -73,6 +73,18 @@ msgstr "科目"
 #: selection:account.tax.invoice,state:0
 msgid "Account Checking"
 msgstr "已对账"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_res_partner__property_account_payable_id
+#: model:ir.model.fields,field_description:aop_sale.field_res_users__property_account_payable_id
+msgid "Account Payable"
+msgstr "应付账款"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_res_partner__property_account_receivable_id
+#: model:ir.model.fields,field_description:aop_sale.field_res_users__property_account_receivable_id
+msgid "Account Receivable"
+msgstr "应收账款"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__account_batch_no
@@ -224,7 +236,7 @@ msgid "Allowed warehouse"
 msgstr "适用仓库"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/import_sale_order.py:338
+#: code:addons/aop_sale/wizard/import_sale_order.py:362
 #, python-format
 msgid "Already exist VIN: {}"
 msgstr "VIN码已存在: {}"
@@ -599,8 +611,10 @@ msgid "Companies"
 msgstr "公司"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_account__company_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__company_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__company_id
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__company_id
 msgid "Company"
 msgstr "公司"
 
@@ -936,6 +950,12 @@ msgid "Customer Invoice"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_res_partner__property_stock_customer
+#: model:ir.model.fields,field_description:aop_sale.field_res_users__property_stock_customer
+msgid "Customer Location"
+msgstr "客户位置"
+
+#. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__access_url
 msgid "Customer Portal URL"
 msgstr "客户门户 URL"
@@ -1065,7 +1085,7 @@ msgid "Discount (%)"
 msgstr "折扣 (%)"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:833
+#: code:addons/aop_sale/models/sale_order.py:848
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order__dispatch_order
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_picking_batch_form_inherit_create_purchase
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_location_to_route_location_wizard_form
@@ -1440,7 +1460,7 @@ msgstr "有未清项"
 
 #. module: aop_sale
 #: code:addons/aop_sale/models/account_invoice.py:184
-#: code:addons/aop_sale/models/sale_order.py:432
+#: code:addons/aop_sale/models/sale_order.py:435
 #, python-format
 msgid "Has been monthly!"
 msgstr "已月结!"
@@ -2257,6 +2277,7 @@ msgstr "未申请结算"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__number
 #: model:ir.model.fields,field_description:aop_sale.field_billable_file__number
+#: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__number
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__number
 msgid "Number"
 msgstr "数量(台)"
@@ -2577,7 +2598,7 @@ msgid "Planned date"
 msgstr "计划日期"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:776
+#: code:addons/aop_sale/models/sale_order.py:791
 #, python-format
 msgid "Please wait until the VIN in stock. Any question, Contact administrator. "
 msgstr "请等待VIN码入库。任何问题，联系管理员。"
@@ -2684,6 +2705,11 @@ msgid "Product Vehicle Type"
 msgstr "车型类别"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__product_color
+msgid "Product color"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__product_fixed_price
 msgid "Product fixed price"
 msgstr ""
@@ -2692,6 +2718,11 @@ msgstr ""
 #: model:ir.ui.menu,name:aop_sale.product_manager_menu
 msgid "Product manage"
 msgstr "产品管理"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__product_model
+msgid "Product model"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_product_vehicle_type
@@ -3282,7 +3313,7 @@ msgstr "基于活动的状态 \n"
 " 计划：未来的活动。"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_warehouse.py:30
+#: code:addons/aop_sale/models/stock_warehouse.py:32
 #, python-format
 msgid "Stock"
 msgstr ""
@@ -3509,6 +3540,11 @@ msgid "The commercial entity that will be used on Journal Entries for this invoi
 msgstr "被用在这张发票的分录上的商务实体"
 
 #. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_stock_warehouse__company_id
+msgid "The company is automatically set from your user preferences."
+msgstr "该公司是从您的用户喜好自动设置。"
+
+#. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice_line__account_id
 msgid "The income or expense account related to the selected product."
 msgstr "被选定产品的相关收入科目或者费用科目."
@@ -3546,6 +3582,18 @@ msgid "The product used to invoice a down payment should have an invoice policy 
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_res_partner__property_stock_customer
+#: model:ir.model.fields,help:aop_sale.field_res_users__property_stock_customer
+msgid "The stock location used as destination when sending goods to this contact."
+msgstr "当发送产品到此联系人时， 此预定义的库存将用做目的位置。"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_res_partner__property_stock_supplier
+#: model:ir.model.fields,help:aop_sale.field_res_users__property_stock_supplier
+msgid "The stock location used as source when receiving goods from this contact."
+msgstr "当从此联系人接收产品时， 此预定义的库存将用做源位置。"
+
+#. module: aop_sale
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:137
 #, python-format
 msgid "The value of the down payment amount must be positive."
@@ -3563,6 +3611,18 @@ msgstr "已经存在税务发票了，您必须使用相同的税务发票编号
 #, python-format
 msgid "There is no income account defined for this product: \"%s\". You may have to install a chart of account from Accounting app, settings menu."
 msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_res_partner__property_account_payable_id
+#: model:ir.model.fields,help:aop_sale.field_res_users__property_account_payable_id
+msgid "This account will be used instead of the default one as the payable account for the current partner"
+msgstr "这个科目被用来代替当前业务伙伴的默认的应付科目"
+
+#. module: aop_sale
+#: model:ir.model.fields,help:aop_sale.field_res_partner__property_account_receivable_id
+#: model:ir.model.fields,help:aop_sale.field_res_users__property_account_receivable_id
+msgid "This account will be used instead of the default one as the receivable account for the current partner"
+msgstr "这个科目被用来替代当前业务伙伴的默认的应收科目"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_contract_stock_rule_line__name
@@ -3664,9 +3724,19 @@ msgid "Transfer"
 msgstr "任务"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__transfer_partner_id
+msgid "Transfer company"
+msgstr "运输公司"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__transfer_product_id
 msgid "Transfer product"
 msgstr "运输货物"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__transfer_tool_number
+msgid "Transfer tool no"
+msgstr "车厢号"
 
 #. module: aop_sale
 #: selection:stock.rule,procure_method:0
@@ -3847,6 +3917,12 @@ msgid "Vendor Display Name"
 msgstr "供应商名称"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_res_partner__property_stock_supplier
+#: model:ir.model.fields,field_description:aop_sale.field_res_users__property_stock_supplier
+msgid "Vendor Location"
+msgstr "供应商位置"
+
+#. module: aop_sale
 #: selection:stock.picking.type,code:0
 msgid "Vendors"
 msgstr "供应商"
@@ -3980,7 +4056,7 @@ msgid "Write time"
 msgstr "更新时间"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:452
+#: code:addons/aop_sale/models/sale_order.py:455
 #: model:ir.actions.act_window,name:aop_sale.action_write_off_line_order_wizard
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #, python-format
@@ -4010,7 +4086,7 @@ msgid "You can find a contact by its Name, TIN, Email or Internal Reference."
 msgstr "可以通过姓名、TIN、邮箱或者内部关联找到一个联系人."
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/account_account.py:23
+#: code:addons/aop_sale/models/account_account.py:25
 #, python-format
 msgid "You can not create recursive analytic accounts."
 msgstr ""
@@ -4825,7 +4901,7 @@ msgid "本月"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:64
+#: code:addons/aop_sale/models/stock_picking_batch.py:100
 #, python-format
 msgid "测试"
 msgstr "向导"
