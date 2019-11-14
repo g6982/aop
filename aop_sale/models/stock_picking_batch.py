@@ -7,6 +7,7 @@ from itertools import groupby
 from odoo.exceptions import UserError
 from ..tools.zeep_client import zeep_task_client
 _logger = logging.getLogger(__name__)
+import json
 
 PICKING_FIELD_DICT = {
     'partner_id': 'partner_name',
@@ -88,10 +89,36 @@ class StockPickingBatch(models.Model):
             tmp = self._format_picking_data(picking_id)
             data.append(tmp)
         _logger.info({
-            'data': data
+            'picking data': data
         })
-        if data:
-            zeep_task_client.service.sendToTask(str(data))
+
+        loading_plan = self.send_vehicle_loading_plan_to_wms()
+
+        post_data = {
+            'picking_ids': data
+        }
+        if loading_plan:
+            post_data.update({
+                'loading_plan': loading_plan
+            })
+        _logger.info({
+            'post_data': post_data
+        })
+        if post_data:
+            zeep_task_client.service.sendToTask(json.dumps(post_data))
+
+    def send_vehicle_loading_plan_to_wms(self):
+        data = []
+        for line_id in self.mount_car_plan_ids:
+            tmp = {
+                'transfer_tool_number': line_id.transfer_tool_number,
+                'product_model': line_id.name.default_code,
+                'product_model_layer': line_id.layer_option,
+                'product_model_number': line_id.number,
+                'transfer_company_name': self.transfer_partner_id.name
+            }
+            data.append(tmp)
+        return data
 
     # 生成采购订单，采购：服务产品
     def create_purchase_order(self):
