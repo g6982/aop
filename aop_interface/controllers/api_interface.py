@@ -153,13 +153,14 @@ class ApiInterface(http.Controller):
             'method': '/api/stock_picking/done_picking',
             'time': time.time(),
         }
-        self._done_picking(post)
+        self._done_picking(post.get('data'))
         return json.dumps(msg)
 
     def _check_stock_picking(self, data):
         request.session.db = config.get('interface_db_name')
-        res = request.env['check.stock.picking.log'].sudo().create(data)
-        return res
+        if data:
+            res = request.env['check.stock.picking.log'].sudo().create(data)
+            return res
 
     def _done_picking(self, data):
         request.session.db = config.get('interface_db_name')

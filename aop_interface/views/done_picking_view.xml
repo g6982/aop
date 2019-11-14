@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <data>
+        <record id="view_done_picking_log_tree" model="ir.ui.view">
+            <field name="name">done.picking.log.tree</field>
+            <field name="model">done.picking.log</field>
+            <field name="arch" type="xml">
+                <tree decoration-warning="state == 'draft'" decoration-success="state == 'done'">
+                    <field name="name"/>
+                    <field name="partner_name"/>
+                    <field name="product_name"/>
+                    <field name="product_model"/>
+                    <field name="vin"/>
+                    <field name="from_location_id"/>
+                    <field name="to_location_id"/>
+                    <field name="warehouse_code"/>
+                    <field name="picking_type_name"/>
+                    <field name="task_id"/>
+                    <field name="supplier_name"/>
+                    <field name="brand_model_name"/>
+                    <field name="quantity_done"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+
+</odoo>

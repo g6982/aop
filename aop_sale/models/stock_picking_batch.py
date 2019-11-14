@@ -11,8 +11,6 @@ _logger = logging.getLogger(__name__)
 PICKING_FIELD_DICT = {
     'partner_id': 'partner_name',
     'vin_id': 'vin',
-    'location_id': 'from_location_id',
-    'location_dest_id': 'to_location_id',
     'picking_type_id': 'picking_type_name',
 }
 
@@ -64,7 +62,9 @@ class StockPickingBatch(models.Model):
             'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name,
             'warehouse_code': picking_id.picking_type_id.warehouse_id.code,
             'quantity_done': 1,
-            'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name
+            'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name,
+            'from_location_id': picking_id.location_id.display_name,
+            'to_location_id': picking_id.location_dest_id.display_name,
         }
         for key_id in PICKING_FIELD_DICT.keys():
             if getattr(picking_id, key_id) if hasattr(picking_id, key_id) else False:
