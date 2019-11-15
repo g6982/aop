@@ -19,7 +19,10 @@ class MassLossOrder(models.Model):
         ('draft', 'Draft'),
         ('apply', 'Apply'),
         ('approval', 'Approval'),
-        ('done', 'Done')
+        ('done', 'Done'),
+        ('cancel', 'Cancelled'),
+        ('return_factory', 'Return factory'),
+        ('repair', 'Repair'),
     ], default='draft')
 
     found_department = fields.Many2one('res.partner', 'found department')
@@ -34,7 +37,10 @@ class MassLossOrder(models.Model):
     order_no = fields.Char('Order no')
     task_content = fields.Char('Task Content')
     create_user = fields.Many2one('res.users', 'Creator')
+    apply_user = fields.Many2one('res.users', 'Apply user')
+    apply_time = fields.Datetime('Apply Time')
     approval_user = fields.Many2one('res.users', 'Approval user')
+    approval_time = fields.Datetime('Approval Time')
     confirm_user = fields.Many2one('res.users', 'Confirm user')
     confirm_time = fields.Datetime('Confirm Time')
     note = fields.Text('Note')
@@ -75,11 +81,58 @@ class MassLossOrder(models.Model):
 
             line.insurance_price = 0
 
+    @api.multi
+    def action_cancel(self):
+        for line in self:
+            line.write({
+                'apply_user': False,
+                'apply_time': False,
+                'approval_user': False,
+                'approval_time': False,
+                'close_user': False,
+                'close_time': False,
+                'state': 'draft'
+            })
 
+    @api.multi
+    def action_confirm(self):
+        for line in self:
+            if line.state == 'draft':
+                line.write({
+                    'apply_user': self.env.user.id,
+                    'apply_time': fields.Datetime.now(),
+                    'state': 'apply'
+                })
+
+    @api.multi
+    def action_approval(self):
+        for line in self:
+            if line.state == 'apply':
+                line.write({
+                    'approval_user': self.env.user.id,
+                    'approval_time': fields.Datetime.now(),
+                    'state': 'approval'
+                })
 
     @api.multi
     def action_return_to_factory(self):
-        pass
+        for line in self:
+            if line.state == 'approval':
+                line.write({
+                    'close_user': self.env.user.id,
+                    'close_time': fields.Datetime.now(),
+                    'state': 'return_factory'
+                })
+
+    @api.multi
+    def action_repair(self):
+        for line in self:
+            if line.state == 'approval':
+                line.write({
+                    'close_user': self.env.user.id,
+                    'close_time': fields.Datetime.now(),
+                    'state': 'repair'
+                })
 
     @api.model
     def default_get(self, filed_list):
