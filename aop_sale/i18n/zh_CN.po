@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-15 03:55+0000\n"
-"PO-Revision-Date: 2019-11-15 03:55+0000\n"
+"POT-Creation-Date: 2019-11-15 06:35+0000\n"
+"PO-Revision-Date: 2019-11-15 06:35+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1297,6 +1297,7 @@ msgid "Error Type"
 msgstr "错误类型"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__excluding_deductible
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__excluding_deductible
 msgid "Excluding deductible"
 msgstr "不计免赔"
@@ -1654,6 +1655,7 @@ msgid "Insurance"
 msgstr "保险管理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__insurance_data
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_data
 msgid "Insurance Data"
 msgstr "保险数据"
@@ -1664,6 +1666,7 @@ msgid "Insurance Management"
 msgstr "保险管理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__insurance_partner_id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_partner_id
 msgid "Insurance Partner"
 msgstr "保险公司"
@@ -1676,6 +1679,7 @@ msgid "Insurance Type"
 msgstr "保险类型"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__insurance_cover
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_cover
 msgid "Insurance cover"
 msgstr "保险范围"
@@ -2821,6 +2825,7 @@ msgstr "拉"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__picking_purchase_id
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__purchase_id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__purchase_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__picking_purchase_id
 msgid "Purchase"
@@ -3816,6 +3821,7 @@ msgstr "触发其他规则"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__type
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__invoice_type
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__insurance_type_id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_type_id
 #: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__package_type
 msgid "Type"
