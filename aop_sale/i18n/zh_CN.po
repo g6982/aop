@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-15 08:38+0000\n"
-"PO-Revision-Date: 2019-11-15 08:38+0000\n"
+"POT-Creation-Date: 2019-11-15 09:49+0000\n"
+"PO-Revision-Date: 2019-11-15 09:49+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -305,6 +305,17 @@ msgid "Apply"
 msgstr "申请单号"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__apply_time
+msgid "Apply Time"
+msgstr "申请时间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__apply_user
+msgid "Apply user"
+msgstr "申请人"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
 #: selection:mass.loss.order,state:0
 msgid "Approval"
 msgstr "审批"
@@ -313,6 +324,11 @@ msgstr "审批"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__approval_opinion
 msgid "Approval Options"
 msgstr "审核意见"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__approval_time
+msgid "Approval Time"
+msgstr "审批时间"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__approval_fee
@@ -512,6 +528,7 @@ msgstr "按 销售员"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
@@ -534,6 +551,7 @@ msgstr "取消审核"
 #. module: aop_sale
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
+#: selection:mass.loss.order,state:0
 #: selection:sale.order,state:0
 msgid "Cancelled"
 msgstr "已取消"
@@ -632,6 +650,7 @@ msgid "Company Currency"
 msgstr "公司货币"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_batch_reconciliation_number_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_batch_invoice_form
@@ -3083,6 +3102,12 @@ msgid "Remaining amount due."
 msgstr "应有剩余余额."
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
+#: selection:mass.loss.order,state:0
+msgid "Repair"
+msgstr "维修"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__replenish_picking_id
 msgid "Replenish Picking"
 msgstr ""
@@ -3100,6 +3125,7 @@ msgstr "限制菜单"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
+#: selection:mass.loss.order,state:0
 msgid "Return factory"
 msgstr "返厂"
 
