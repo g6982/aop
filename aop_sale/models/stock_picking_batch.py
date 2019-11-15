@@ -66,6 +66,7 @@ class StockPickingBatch(models.Model):
             'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name,
             'from_location_id': picking_id.location_id.display_name,
             'to_location_id': picking_id.location_dest_id.display_name,
+            'to_location_type': picking_id.location_dest_id.usage
         }
         for key_id in PICKING_FIELD_DICT.keys():
             if getattr(picking_id, key_id) if hasattr(picking_id, key_id) else False:
