@@ -8,6 +8,8 @@ class StockPickingType(models.Model):
 
     service_product_id = fields.Many2one('product.product', 'Service product')
 
+    limit_picking_batch = fields.Boolean('Limit picking batch', default=False)
+
     code = fields.Selection([
         ('incoming', 'Vendors'),
         ('outgoing', 'Customers'),

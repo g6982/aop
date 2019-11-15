@@ -57,24 +57,20 @@ class StockPickingBatch(models.Model):
         tmp = {
             'task_id': picking_id.id,
             'product_name': picking_id.sale_order_line_id.product_id.name,
-            'product_color': picking_id.sale_order_line_id.product_color,
-            'product_model': product_info[:3] if product_info else False,
-            'product_config': product_info[3:] if product_info else False,
-            'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name,
+            'product_color': picking_id.sale_order_line_id.product_color if picking_id.sale_order_line_id.product_color else '',
+            'product_model': product_info[:3] if product_info else '',
+            'product_config': product_info[3:] if product_info else '',
+            'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '',
             'warehouse_code': picking_id.picking_type_id.warehouse_id.code,
             'quantity_done': 1,
             'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name,
             'from_location_id': picking_id.location_id.display_name,
             'to_location_id': picking_id.location_dest_id.display_name,
-            'to_location_type': picking_id.location_dest_id.usage
+            'to_location_type': picking_id.location_dest_id.usage,
+            'partner_name': picking_id.partner_id.name,
+            'vin': picking_id.sale_order_line_id.vin.name,
+            'picking_type_name': picking_id.picking_type_id.name
         }
-        for key_id in PICKING_FIELD_DICT.keys():
-            if getattr(picking_id, key_id) if hasattr(picking_id, key_id) else False:
-                key_value = getattr(picking_id, key_id)
-                tmp.update({
-                    PICKING_FIELD_DICT.get(key_id): getattr(key_value, 'name') if hasattr(key_value,
-                                                                                          'name') else key_value
-                })
         return tmp
 
     # 接口。创建采购单后，发送任务数据到WMS
@@ -86,16 +82,13 @@ class StockPickingBatch(models.Model):
                 continue
             tmp = self._format_picking_data(picking_id)
             data.append(tmp)
-        _logger.info({
-            'picking data': data
-        })
 
         loading_plan = self.send_vehicle_loading_plan_to_wms()
 
         post_data = {
             'picking_ids': data
         }
-        if loading_plan:
+        if loading_plan and data:
             post_data.update({
                 'loading_plan': loading_plan
             })
@@ -119,9 +112,42 @@ class StockPickingBatch(models.Model):
             data.append(tmp)
         return data
 
+    def limit_warehouse_and_loading_plan(self):
+        return self._limit_warehouse_and_loading_plan()
+
+    def _limit_warehouse_and_loading_plan(self):
+
+        if self.picking_ids and self.mount_car_plan_ids:
+            warehouse_ids = self.picking_ids.mapped('picking_type_id').mapped('warehouse_id').ids
+            warehouse_ids = list(set(warehouse_ids))
+            if len(warehouse_ids) > 1 and self.mount_car_plan_ids:
+                raise UserError('You must select same warehouse to make loading plan !')
+        elif self.picking_ids and not self.mount_car_plan_ids:
+            picking_type_ids = self.picking_ids.mapped('picking_type_id')
+            limit_state = picking_type_ids.mapped('limit_picking_batch')
+            picking_type_name = picking_type_ids.mapped('name')
+            picking_type_name = self.format_picking_type_name(picking_type_name)
+
+            # 如果类型做了限制，那么就只能选择同样是被限制了的同种类型的数据，不然抛出提示
+            if any(limit_state) and not all(limit_state) and len(picking_type_name) > 1:
+                raise UserError('You must select same picking type when you choose [train, road] !')
+
+    # FIXME: 写死了以 ':' 作为分隔
+    # 针对公路运输和铁路运输，判断是否是同一种类型
+    def format_picking_type_name(self, picking_type_name):
+        data = []
+        for type_name in picking_type_name:
+            tmp = type_name.split(':')
+            if len(tmp) != 2:
+                continue
+            tmp = tmp[1].replace(' ', '')
+            data.append(tmp)
+        return list(set(data))
+
     # 生成采购订单，采购：服务产品
     def create_purchase_order(self):
         try:
+            self._limit_warehouse_and_loading_plan()
             data, service_product_context = self._get_purchase_data()
 
             if service_product_context:

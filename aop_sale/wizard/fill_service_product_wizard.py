@@ -17,8 +17,12 @@ class FillServiceProductWizard(models.TransientModel):
 
     def start_create_purchase_order(self):
         data = self._get_purchase_data()
-
+        self.stock_picking_batch_id.limit_warehouse_and_loading_plan()
+        # return {
+        #     "type": "ir.actions.do_nothing",
+        # }
         res = self.env['purchase.order'].sudo().create(data)
+
         self.stock_picking_batch_id.send_to_wms_data()
 
         self.stock_picking_batch_id.write({
