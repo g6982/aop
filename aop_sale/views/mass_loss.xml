@@ -101,7 +101,11 @@
                             </group>
                         </group>
                         <group>
+                            <field name="insurance_price"/>
+                        </group>
+                        <group>
                             <group>
+
                                 <field name="payment_amount"/>
                                 <field name="balance"/>
                                 <field name="buyout_deductions_diff"/>

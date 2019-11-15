@@ -344,3 +344,8 @@ msgstr "扣款关联任务"
 msgid "Period"
 msgstr "账期月"
 
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__purchase_id
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_management__purchase_id
+msgid "Purchase"
+msgstr "购买方"

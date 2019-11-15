@@ -52,6 +52,31 @@ class MassLossOrder(models.Model):
     picking_id = fields.Many2one('stock.picking', 'Picking')
     mass_attachment_ids = fields.Many2many('mass.loss.attachment.template', string='Mass Attachment')
 
+    insurance_price = fields.Float(string='insurance Price', compute='_compute_insurance_price', store=True)
+
+    @api.multi
+    @api.depends('vin_code', 'brand_id')
+    def _compute_insurance_price(self):
+        for line in self:
+            if line.vin_code and line.brand_id:
+                search_domain = [('vin_code', '=', line.vin_code)]
+                sale_order_line = self.env['sale.order.line'].search(search_domain, limit=1)
+
+                if sale_order_line:
+                    search_domain = [
+                                        ('product_id', '=', sale_order_line.product_id.id),
+                                        ('brand_id', '=', line.brand_id.id)
+                                     ]
+                    insurance_aop_contract_line_id = self.env['insurance.aop.contract.line'].search(search_domain, limit=1)
+
+                    line.insurance_price = insurance_aop_contract_line_id.fixed_price if insurance_aop_contract_line_id else 0
+
+                    return
+
+            line.insurance_price = 0
+
+
+
     @api.multi
     def action_return_to_factory(self):
         pass
