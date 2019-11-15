@@ -9,6 +9,10 @@
             <xpath expr="//field[@name='barcode']" position="after">
                 <field name="service_product_id" domain="[('type','=','service')]"/>
             </xpath>
+
+            <xpath expr="//field[@name='show_reserved']" position="after">
+                <field name="limit_picking_batch"/>
+            </xpath>
         </field>
     </record>
 
