@@ -309,6 +309,14 @@
                   sequence="30"
         />
 
+        <!-- 物流网络->保险管理->保险合同, 二级菜单 -->
+        <menuitem id="insurance_aop_contract_menu"
+                  parent="insurance_manager_menu"
+                  name="insurance aop contract"
+                  action="action_insurance_aop_contract_view"
+                  sequence="5"
+        />
+
         <!-- 物流网络->保险管理->保险管理, 二级菜单 -->
         <menuitem id="insurance_manager_sub_menu"
                   parent="insurance_manager_menu"

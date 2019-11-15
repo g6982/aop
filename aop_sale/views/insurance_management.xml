@@ -70,6 +70,14 @@
             </field>
         </record>
 
+        <record id="action_insurance_aop_contract_view" model="ir.actions.act_window">
+            <field name="name">insurance aop contract view</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">insurance.aop.contract</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <record id="action_insurance_management" model="ir.actions.act_window">
             <field name="name">Insurance Management</field>
             <field name="type">ir.actions.act_window</field>

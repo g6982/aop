@@ -54,6 +54,7 @@
         'views/verify_batch_reconciliation.xml',
         'views/write_off_batch_view.xml',
         'views/dispatch_order.xml',
+        'views/insurance_aop_contract.xml',
         'wizard/account_tax_invoice_wizard.xml',
         'wizard/change_stock_picking.xml',
         'wizard/import_sale_order.xml',

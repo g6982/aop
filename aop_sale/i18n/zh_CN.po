@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-15 03:42+0000\n"
-"PO-Revision-Date: 2019-11-15 03:42+0000\n"
+"POT-Creation-Date: 2019-11-15 03:55+0000\n"
+"PO-Revision-Date: 2019-11-15 03:55+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -476,6 +476,7 @@ msgstr "车厢号"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__brand_id
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract_line__brand_id
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__brand_id
 #: model:ir.model.fields,field_description:aop_sale.field_product_product__brand_id
 msgid "Brand"
@@ -739,6 +740,7 @@ msgstr "合同规则行"
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__delivery_carrier_ids
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__delivery_carrier_ids
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_insurance_aop_contract_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_supplier_aop_contract_form
 msgid "Contract terms"
 msgstr "合同条款"
@@ -1370,6 +1372,7 @@ msgstr "固定价格"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__fixed_price
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract_line__fixed_price
 msgid "Fixed Price"
 msgstr "固定价格"
 
@@ -4999,7 +5002,7 @@ msgid "本月"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:131
+#: code:addons/aop_sale/models/stock_picking_batch.py:129
 #, python-format
 msgid "测试"
 msgstr "向导"
