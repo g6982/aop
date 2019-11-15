@@ -81,9 +81,6 @@ class StockPickingBatch(models.Model):
     def send_to_wms_data(self):
         data = []
         for picking_id in self.picking_ids:
-            _logger.info({
-                'sale_order_line_id': picking_id.sale_order_line_id
-            })
             # 接车并不需要发送到WMS
             if picking_id.picking_incoming_number > 0 or not picking_id.sale_order_line_id:
                 continue
@@ -106,7 +103,8 @@ class StockPickingBatch(models.Model):
             'post_data': post_data
         })
         if post_data:
-            zeep_task_client.service.sendToTask(json.dumps(post_data))
+            # 输出中文
+            zeep_task_client.service.sendToTask(json.dumps(post_data, ensure_ascii=False))
 
     def send_vehicle_loading_plan_to_wms(self):
         data = []
