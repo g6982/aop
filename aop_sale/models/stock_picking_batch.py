@@ -57,24 +57,20 @@ class StockPickingBatch(models.Model):
         tmp = {
             'task_id': picking_id.id,
             'product_name': picking_id.sale_order_line_id.product_id.name,
-            'product_color': picking_id.sale_order_line_id.product_color,
-            'product_model': product_info[:3] if product_info else False,
-            'product_config': product_info[3:] if product_info else False,
-            'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name,
+            'product_color': picking_id.sale_order_line_id.product_color if picking_id.sale_order_line_id.product_color else '',
+            'product_model': product_info[:3] if product_info else '',
+            'product_config': product_info[3:] if product_info else '',
+            'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '',
             'warehouse_code': picking_id.picking_type_id.warehouse_id.code,
             'quantity_done': 1,
             'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name,
             'from_location_id': picking_id.location_id.display_name,
             'to_location_id': picking_id.location_dest_id.display_name,
-            'to_location_type': picking_id.location_dest_id.usage
+            'to_location_type': picking_id.location_dest_id.usage,
+            'partner_name': picking_id.partner_id.name,
+            'vin': picking_id.sale_order_line_id.vin.name,
+            'picking_type_name': picking_id.picking_type_id.name
         }
-        for key_id in PICKING_FIELD_DICT.keys():
-            if getattr(picking_id, key_id) if hasattr(picking_id, key_id) else False:
-                key_value = getattr(picking_id, key_id)
-                tmp.update({
-                    PICKING_FIELD_DICT.get(key_id): getattr(key_value, 'name') if hasattr(key_value,
-                                                                                          'name') else key_value
-                })
         return tmp
 
     # 接口。创建采购单后，发送任务数据到WMS
@@ -142,7 +138,9 @@ class StockPickingBatch(models.Model):
         data = []
         for type_name in picking_type_name:
             tmp = type_name.split(':')
-            tmp = tmp[2].replace(' ', '')
+            if len(tmp) != 2:
+                continue
+            tmp = tmp[1].replace(' ', '')
             data.append(tmp)
         return list(set(data))
 
