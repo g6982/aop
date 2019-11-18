@@ -215,6 +215,9 @@ class DonePicking(models.Model):
             'picking_type_code': 'incoming',
             'date': line_id.create_datetime
         }
+        _logger.info({
+            'data': data
+        })
         vin_id = self.get_vin_id_in_stock(line_id.vin, product_id)
         picking_id = picking_obj.create(data)
         _logger.info({
@@ -235,7 +238,9 @@ class DonePicking(models.Model):
             'picking_code': 'incoming',
             'vin_id': vin_id.id,
         }
-
+        _logger.info({
+            'move_data': move_data
+        })
         move_id = stock_move_obj.create(move_data)
 
         move_id = move_id.filtered(lambda x: x.state not in ('done', 'cancel'))._action_confirm()
