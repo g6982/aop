@@ -8,14 +8,32 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <field name="state" readonly="1" widget="statusbar"/>
+                        <field name="state" readonly="1" widget="statusbar" statusbar_visible="draft,apply,approval"/>
+                        <button name="action_confirm" id="action_confirm" string="Confirm"
+                                class="btn-primary" type="object"
+                                attrs="{'invisible': [('state', '!=', 'draft')]}"
+                        />
+                        <button name="action_approval" id="action_approval" string="Approval"
+                                class="btn-primary" type="object"
+                                attrs="{'invisible': [('state', '!=', 'apply')]}"
+                        />
                         <button name="action_return_to_factory" id="action_return_to_factory" string="Return factory"
+                                class="btn-primary" type="object"
+                                attrs="{'invisible': [('state', '!=', 'approval')]}"
+                        />
+                        <button name="action_repair" id="action_repair" string="Repair"
+                                class="btn-primary" type="object"
+                                attrs="{'invisible': [('state', '!=', 'approval')]}"
+                        />
+                        <button name="action_cancel" id="action_cancel" string="Cancel"
                                 class="btn-primary" type="object"/>
                     </header>
                     <sheet>
                         <group>
                             <group>
-                                <field name="picking_id" readonly="1"
+                                <field name="picking_id"
+                                       string="picking"
+                                       readonly="0"
                                        options="{'no_create_edit': True, 'no_quick_create': True}"/>
                             </group>
                             <group>
@@ -87,21 +105,31 @@
 
                         <group>
                             <group>
-                                <field name="create_user"/>
+                                <field name="create_uid"/>
                                 <field name="create_date"/>
                             </group>
-                            <group>
-                                <field name="approval_user"/>
-                                <field name="confirm_user"/>
-                                <field name="confirm_time"/>
+                             <group>
+                                <field name="apply_user" readonly="1"/>
+                                <field name="apply_time" readonly="1"/>
                             </group>
                             <group>
+                                <field name="approval_user" readonly="1"/>
+                                <field name="approval_time" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="confirm_user" invisible="1"/>
+                                <field name="confirm_time" invisible="1"/>
                                 <field name="close_user"/>
                                 <field name="close_time"/>
                             </group>
+
+                        </group>
+                        <group>
+                            <field name="insurance_price"/>
                         </group>
                         <group>
                             <group>
+
                                 <field name="payment_amount"/>
                                 <field name="balance"/>
                                 <field name="buyout_deductions_diff"/>

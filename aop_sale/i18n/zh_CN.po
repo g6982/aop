@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20190311\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-15 03:55+0000\n"
-"PO-Revision-Date: 2019-11-15 03:55+0000\n"
+"POT-Creation-Date: 2019-11-15 09:49+0000\n"
+"PO-Revision-Date: 2019-11-15 09:49+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -305,6 +305,17 @@ msgid "Apply"
 msgstr "申请单号"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__apply_time
+msgid "Apply Time"
+msgstr "申请时间"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__apply_user
+msgid "Apply user"
+msgstr "申请人"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
 #: selection:mass.loss.order,state:0
 msgid "Approval"
 msgstr "审批"
@@ -313,6 +324,11 @@ msgstr "审批"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__approval_opinion
 msgid "Approval Options"
 msgstr "审核意见"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__approval_time
+msgid "Approval Time"
+msgstr "审批时间"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__approval_fee
@@ -512,6 +528,7 @@ msgstr "按 销售员"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.form_view_invoice_supplier_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_form_inherit
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_customer_aop_contract_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
@@ -534,6 +551,7 @@ msgstr "取消审核"
 #. module: aop_sale
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
+#: selection:mass.loss.order,state:0
 #: selection:sale.order,state:0
 msgid "Cancelled"
 msgstr "已取消"
@@ -632,6 +650,7 @@ msgid "Company Currency"
 msgstr "公司货币"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_batch_reconciliation_number_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_batch_invoice_form
@@ -1297,6 +1316,7 @@ msgid "Error Type"
 msgstr "错误类型"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__excluding_deductible
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__excluding_deductible
 msgid "Excluding deductible"
 msgstr "不计免赔"
@@ -1428,7 +1448,7 @@ msgstr "源位置"
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order__from_location_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__from_location_id
 msgid "From location"
-msgstr "源位置"
+msgstr "接车点"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice_line__sequence
@@ -1654,6 +1674,7 @@ msgid "Insurance"
 msgstr "保险管理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__insurance_data
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_data
 msgid "Insurance Data"
 msgstr "保险数据"
@@ -1664,6 +1685,7 @@ msgid "Insurance Management"
 msgstr "保险管理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__insurance_partner_id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_partner_id
 msgid "Insurance Partner"
 msgstr "保险公司"
@@ -1676,6 +1698,7 @@ msgid "Insurance Type"
 msgstr "保险类型"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__insurance_cover
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_cover
 msgid "Insurance cover"
 msgstr "保险范围"
@@ -2084,6 +2107,11 @@ msgstr ""
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__limit_state
 msgid "Limit State"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking_type__limit_picking_batch
+msgid "Limit picking batch"
 msgstr ""
 
 #. module: aop_sale
@@ -2821,10 +2849,11 @@ msgstr "拉"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__picking_purchase_id
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__purchase_id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__purchase_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__picking_purchase_id
 msgid "Purchase"
-msgstr "采购订单"
+msgstr "购买方"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_batch_invoice_line__purchase_batch_id
@@ -3073,6 +3102,12 @@ msgid "Remaining amount due."
 msgstr "应有剩余余额."
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
+#: selection:mass.loss.order,state:0
+msgid "Repair"
+msgstr "维修"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__replenish_picking_id
 msgid "Replenish Picking"
 msgstr ""
@@ -3090,6 +3125,7 @@ msgstr "限制菜单"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
+#: selection:mass.loss.order,state:0
 msgid "Return factory"
 msgstr "返厂"
 
@@ -3816,6 +3852,7 @@ msgstr "触发其他规则"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__type
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__invoice_type
+#: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__insurance_type_id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_type_id
 #: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__package_type
 msgid "Type"
@@ -4550,6 +4587,11 @@ msgid "information_management_assistant_manager"
 msgstr "信息管理部/副经理"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__insurance_price
+msgid "insurance Price"
+msgstr "保险金额"
+
+#. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.insurance_aop_contract_menu
 msgid "insurance aop contract"
 msgstr "保险合同"
@@ -4694,6 +4736,7 @@ msgid "period month"
 msgstr "账期月"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_change_stock_picking_form
 msgid "picking"
 msgstr "任务"
@@ -5002,7 +5045,7 @@ msgid "本月"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:129
+#: code:addons/aop_sale/models/stock_picking_batch.py:155
 #, python-format
 msgid "测试"
 msgstr "向导"
