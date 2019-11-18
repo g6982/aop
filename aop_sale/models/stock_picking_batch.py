@@ -5,15 +5,9 @@ import logging
 import time
 from itertools import groupby
 from odoo.exceptions import UserError
+import json
 from ..tools.zeep_client import zeep_task_client
 _logger = logging.getLogger(__name__)
-import json
-
-PICKING_FIELD_DICT = {
-    'partner_id': 'partner_name',
-    'vin_id': 'vin',
-    'picking_type_id': 'picking_type_name',
-}
 
 
 class StockPickingBatch(models.Model):
@@ -61,11 +55,12 @@ class StockPickingBatch(models.Model):
         :param picking_id: 任务
         :return: 任务所包含的信息，传送给WMS
         '''
+        # 导入的订单。一定存在model。不一定存在颜色
         product_info = picking_id.sale_order_line_id.product_model
-        if not product_info:
-            product_model = '874'
-            product_config = 'MJ'
-            product_name = '19款福克斯'
+        # if not product_info:
+        #     product_model = '874'
+        #     product_config = 'MJ'
+        #     product_name = '19款福克斯'
 
         picking_type_name = picking_id.picking_type_id.name
         picking_type_name = picking_type_name.split(':')[1] if len(picking_type_name.split(':')) > 1 else picking_type_name
@@ -73,15 +68,15 @@ class StockPickingBatch(models.Model):
         from_location_name = self._location_to_warehouse(picking_id.location_id)
         to_location_name = self._location_to_warehouse(picking_id.location_dest_id)
 
-        from_location_name = '团结村库'
-        to_location_name = '线边库'
+        # from_location_name = '团结村库'
+        # to_location_name = '线边库'
 
         tmp = {
             'task_id': picking_id.id,
-            'product_name': picking_id.sale_order_line_id.product_id.name if picking_id.sale_order_line_id.product_id else product_name,
+            'product_name': picking_id.sale_order_line_id.product_id.name if picking_id.sale_order_line_id.product_id else '',
             'product_color': picking_id.sale_order_line_id.product_color if picking_id.sale_order_line_id.product_color else '1',
-            'product_model': product_info[:3] if product_info else product_model,
-            'product_config': product_info[3:] if product_info else product_config,
+            'product_model': product_info[:3] if product_info else '',
+            'product_config': product_info[3:] if product_info else '',
             'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '',
             'warehouse_code': picking_id.picking_type_id.warehouse_id.code,
             'quantity_done': 1,
