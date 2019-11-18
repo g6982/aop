@@ -33,6 +33,7 @@ class StockPickingBatch(models.Model):
     ], dafault='un_limit')
 
     picking_purchase_id = fields.Many2one('purchase.order', 'Purchase', copy=False)
+
     dispatch_type = fields.Selection([('center_type', 'Center'),
                                       ('railway_type', 'railway'),
                                       ('road_type', 'road')
@@ -44,8 +45,6 @@ class StockPickingBatch(models.Model):
     vehicle_number = fields.Char(string='Vehicle number')
 
     mount_car_plan_ids = fields.One2many('mount.car.plan', 'stock_picking_batch_id', string='Mount plan')
-
-    transfer_partner_id = fields.Many2one('res.partner', 'Transfer company')
 
     # 仓库的名字
     def _location_to_warehouse(self, location_id):
@@ -83,10 +82,10 @@ class StockPickingBatch(models.Model):
             'product_color': picking_id.sale_order_line_id.product_color if picking_id.sale_order_line_id.product_color else '1',
             'product_model': product_info[:3] if product_info else product_model,
             'product_config': product_info[3:] if product_info else product_config,
-            'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '天津市尊泰汽车销售服务有限公司',
+            'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '',
             'warehouse_code': picking_id.picking_type_id.warehouse_id.code,
             'quantity_done': 1,
-            'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name if picking_id.sale_order_line_id.product_id.brand_id else '长安民生',
+            'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name if picking_id.sale_order_line_id.product_id.brand_id else '',
             'from_location_id': from_location_name,
             'to_location_id': to_location_name,
             'to_location_type': picking_id.location_dest_id.usage,
@@ -132,8 +131,7 @@ class StockPickingBatch(models.Model):
                 'product_model': line_id.name.default_code,
                 'product_model_layer': line_id.layer_option,
                 'product_model_number': line_id.number,
-                # 'transfer_company_name': self.transfer_partner_id.name
-                'transfer_company_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '天津市尊泰汽车销售服务有限公司',
+                'transfer_company_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '',
             }
             data.append(tmp)
         _logger.info({

@@ -86,11 +86,6 @@
                         </field>
                     </page>
                     <page string="Mount plan">
-                        <group>
-                            <group>
-                                <field name="transfer_partner_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                            </group>
-                        </group>
                         <field name="mount_car_plan_ids">
                             <tree editable="bottom">
                                 <field name="transfer_tool_number"/>
