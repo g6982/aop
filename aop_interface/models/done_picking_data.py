@@ -14,7 +14,7 @@ class DonePicking(models.Model):
     name = fields.Char('Name', default=time.time())
 
     create_datetime = fields.Datetime('Create time', default=fields.Datetime.now())
-    partner_id = fields.Many2one('res.partner', 'Partner', compute='_compute_partner_id', store=True)
+    # partner_id = fields.Many2one('res.partner', 'Partner', compute='_compute_partner_id', store=True)
     product_id = fields.Many2one('product.product', 'Product', compute='_compute_product_id', store=True)
     partner_name = fields.Char('Partner')
     product_name = fields.Char('Product name')
@@ -22,12 +22,11 @@ class DonePicking(models.Model):
     product_color = fields.Char('Product color')
     product_config = fields.Char('Product config')
     vin = fields.Char('VIN')
-    from_location_id = fields.Char('From location')
-    to_location_id = fields.Char('To location')
     picking_type_name = fields.Char('Picking type')
     quantity_done = fields.Integer('quantity')
 
     warehouse_code = fields.Char('Warehouse code')
+    warehouse_name = fields.Char('Warehouse name')
     task_id = fields.Many2one('stock.picking', 'Stock picking')
 
     brand_model_name = fields.Char('Brand model name')
@@ -49,30 +48,16 @@ class DonePicking(models.Model):
                 continue
             line.product_id = product_id[0].id
 
-    # @api.depends('picking_type_name', 'warehouse_code')
-    # def _compute_stock_picking_type(self):
+    # @api.depends('partner_name')
+    # def _compute_partner_id(self):
     #     for line in self:
-    #         if not line.warehouse_code or not line.picking_type_name:
-    #             continue
-    #         domain_filter = [
-    #             ('warehouse_id.code', '=', line.warehouse_code),
-    #             ('name', '=', line.picking_type_name)
-    #         ]
-    #         tmp = self.env['stock.picking.type'].sudo().search(domain_filter)
-    #         if not tmp:
-    #             continue
-    #         line.picking_type_id = tmp[0].id
-
-    @api.depends('partner_name')
-    def _compute_partner_id(self):
-        for line in self:
-            if line.partner_name:
-                partner_id = self.env['res.partner'].sudo().search([
-                    ('name', '=', line.partner_name)
-                ])
-                if not partner_id:
-                    continue
-                line.partner_id = partner_id[0].id
+    #         if line.partner_name:
+    #             partner_id = self.env['res.partner'].sudo().search([
+    #                 ('name', '=', line.partner_name)
+    #             ])
+    #             if not partner_id:
+    #                 continue
+    #             line.partner_id = partner_id[0].id
 
     # 删除接口数据，应该是需要被禁止的
     @api.multi
@@ -189,7 +174,7 @@ class DonePicking(models.Model):
 
     def find_to_location_id(self, warehouse_location_id, line_id):
         res = self.env['stock.location'].search([
-            ('name', '=', line_id.from_location_id),
+            ('name', '=', line_id.warehouse_name),
             ('location_id', '=', warehouse_location_id.id)
         ])
         return res[0] if res else warehouse_location_id
@@ -199,21 +184,20 @@ class DonePicking(models.Model):
         picking_obj = self.env['stock.picking']
         stock_move_obj = self.env['stock.move']
         product_id = line_id.product_id
-        partner_id = line_id.partner_id
+        # partner_id = line_id.partner_id
         warehouse_id = warehouse_ids.get(line_id.warehouse_code)
         picking_type_id = warehouse_id.in_type_id
         warehouse_location_id = warehouse_id.lot_stock_id
-        # from_location_id = self.env['stock.location'].search([
-        #     ('name', '=', line_id.brand_model_name)
-        # ])
-        from_location_id = self.env['res.partner'].search([
+
+        # 供应商 作为source
+        from_partner_id = self.env['res.partner'].search([
             ('ref', '=', line_id.brand_model_name)
         ])
-        if from_location_id:
-            from_location_id = from_location_id.property_stock_supplier
+        if from_partner_id:
+            from_location_id = from_partner_id.property_stock_supplier
         to_location_id = self.find_to_location_id(warehouse_location_id, line_id)
         data = {
-            'partner_id': partner_id.id,
+            'partner_id': from_partner_id.id,
             'location_id': from_location_id.id,
             'location_dest_id': to_location_id.id,
             'picking_type_id': picking_type_id.id,
