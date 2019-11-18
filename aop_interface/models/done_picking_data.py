@@ -203,9 +203,14 @@ class DonePicking(models.Model):
         warehouse_id = warehouse_ids.get(line_id.warehouse_code)
         picking_type_id = warehouse_id.in_type_id
         warehouse_location_id = warehouse_id.lot_stock_id
-        from_location_id = self.env['stock.location'].search([
-            ('name', '=', line_id.brand_model_name)
+        # from_location_id = self.env['stock.location'].search([
+        #     ('name', '=', line_id.brand_model_name)
+        # ])
+        from_location_id = self.env['res.partner'].search([
+            ('ref', '=', line_id.brand_model_name)
         ])
+        if from_location_id:
+            from_location_id = from_location_id.property_stock_customer
         to_location_id = self.find_to_location_id(warehouse_location_id, line_id)
         data = {
             'partner_id': partner_id.id,
