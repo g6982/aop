@@ -84,11 +84,14 @@ class DonePicking(models.Model):
         res = super(DonePicking, self).create(vals)
         # 创建完成后，完成任务/或者创建入库任务
 
-        self.done_stock_picking(res)
-        _logger.info({
-            'done picking': res
-        })
-        return res
+        try:
+            self.done_stock_picking(res)
+            return res
+        except Exception as e:
+            res.write({
+                'error_message': e
+            })
+            return res
 
     # FIXME: 是否应该使用定时任务呢？还是实时完成
     # 完成任务
@@ -96,13 +99,18 @@ class DonePicking(models.Model):
     # 无计划接车: task_id 值为空
     def done_stock_picking(self, records):
         warehouse_ids = self._get_warehouse_ids(records)
-        for line_id in records:
-            if line_id.task_id:
-                self.done_stock_picking_by_task_id(line_id)
-            else:
-                self.done_stock_picking_without_task_id(line_id, warehouse_ids)
+        task_ids = records.filtered(lambda x: x.task_id)
+        null_task_ids = records.filtered(lambda x: not x.task_id)
+
+        self.done_stock_picking_by_task_id(task_ids)
+        self.done_stock_picking_without_task_id(null_task_ids, warehouse_ids)
+
+    # 删除采购订单行，完成采购订单
+    def _delete_purchase_line_and_picking_by_return_task(self):
+        pass
 
     # 完成任务
+    # FIXME： 如果完成的数量和实际的不一致，需要把调度订单里面没有反馈回来的数据删除？然后同时删除采购订单行？
     def done_stock_picking_by_task_id(self, line_id):
         # 完成任务
         if line_id.task_id.state == 'assigned':
@@ -110,8 +118,10 @@ class DonePicking(models.Model):
         return True
 
     # 无计划接车，直接入库, 需要生成一张入库单
-    def done_stock_picking_without_task_id(self, line_id, warehouse_ids):
-        self._create_stock_picking(line_id, warehouse_ids)
+    # 系统内部可能存在接车计划，需要完成系统内部的接车计划。只需要判读目的地和数量？
+    def done_stock_picking_without_task_id(self, null_task_ids, warehouse_ids):
+        for line_id in null_task_ids:
+            self._create_stock_picking(line_id, warehouse_ids)
 
     # FIXME： 对于常用到的数据，是否需要定时生成缓存呢？
     # 返回获取到的所有产品
@@ -182,7 +192,7 @@ class DonePicking(models.Model):
             ('name', '=', line_id.from_location_id),
             ('location_id', '=', warehouse_location_id.id)
         ])
-        return res[0] if res else False
+        return res[0] if res else warehouse_location_id
 
     # 接车使用仓库默认的入库
     def _create_stock_picking(self, line_id, warehouse_ids):
