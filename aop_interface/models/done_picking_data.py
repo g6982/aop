@@ -36,6 +36,8 @@ class DonePicking(models.Model):
         ('done', 'Done')
     ], default='draft')
 
+    batch_id = fields.Many2one('stock.picking.batch', 'Picking batch')
+
     error_message = fields.Char('Error message')
 
     @api.depends('product_model')
@@ -91,15 +93,51 @@ class DonePicking(models.Model):
         self.done_stock_picking_without_task_id(null_task_ids, warehouse_ids)
 
     # 删除采购订单行，完成采购订单
-    def _delete_purchase_line_and_picking_by_return_task(self):
-        pass
+    def _remove_picking_purchase_line(self, batch_id, line_ids):
+        picking_ids = line_ids.mapped('task_id')
+        all_picking_ids = batch_id.picking_ids
+
+        diff_picking_ids = set(all_picking_ids.ids) - set(picking_ids.ids)
+
+        # 如果存在差异，则进行删除操作，如果没有差异，完成该采购订单
+        if diff_picking_ids:
+            # 删除调度单
+            batch_id.write({
+                'picking_ids': [(6, 0, picking_ids.ids)]
+            })
+
+            # 删除采购订单行
+            delete_purchase_ids = batch_id.picking_purchase_id.order_line.filtered(
+                lambda x: x.picking_id in diff_picking_ids.ids
+            )
+            _logger.info({
+                'delete purchase line': delete_purchase_ids
+            })
+            delete_purchase_ids.unlink()
+
+            # 确认采购订单
+            batch_id.picking_purchase_id.button_confirm()
+        else:
+            # 完成采购订单
+            batch_id.picking_purchase_id.button_confirm()
 
     # 完成任务
     # FIXME： 如果完成的数量和实际的不一致，需要把调度订单里面没有反馈回来的数据删除？然后同时删除采购订单行？
-    def done_stock_picking_by_task_id(self, line_id):
-        # 完成任务
-        if line_id.task_id.state == 'assigned':
-            line_id.task_id.button_validate()
+    def done_stock_picking_by_task_id(self, line_ids):
+        if len(line_ids) > 1:
+            # 需要找到任务所在的picking_batch_id，删除没有完成的任务，删除采购订单里面的订单行
+            # 一批任务，一定是来自同一个批量调度
+            batch_id = line_ids.mapped('batch_id')
+            if len(batch_id) != 1:
+                line_ids.write({
+                    'error_message': 'one than one batch in interface'
+                })
+            else:
+                self._remove_picking_purchase_line(batch_id, line_ids)
+        elif len(line_ids) == 1:
+            # 完成任务
+            if line_ids.task_id.state == 'assigned':
+                line_ids.task_id.button_validate()
         return True
 
     # 无计划接车，直接入库, 需要生成一张入库单
