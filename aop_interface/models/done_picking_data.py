@@ -210,7 +210,7 @@ class DonePicking(models.Model):
             ('ref', '=', line_id.brand_model_name)
         ])
         if from_location_id:
-            from_location_id = from_location_id.property_stock_customer
+            from_location_id = from_location_id.property_stock_supplier
         to_location_id = self.find_to_location_id(warehouse_location_id, line_id)
         data = {
             'partner_id': partner_id.id,
