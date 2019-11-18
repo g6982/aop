@@ -34,8 +34,8 @@ class StockPickingBatch(models.Model):
 
     picking_purchase_id = fields.Many2one('purchase.order', 'Purchase', copy=False)
     dispatch_type = fields.Selection([('center_type', 'Center'),
-                                      ('train_type', 'train'),
-                                      ('highway_type', 'highway')
+                                      ('railway_type', 'railway'),
+                                      ('road_type', 'road')
                                       ],
                                      string='Dispatch type',
                                      store=True)
@@ -47,6 +47,15 @@ class StockPickingBatch(models.Model):
 
     transfer_partner_id = fields.Many2one('res.partner', 'Transfer company')
 
+    # 仓库的名字
+    def _location_to_warehouse(self, location_id):
+        name = location_id.display_name
+        name = name.split('/')[0]
+        res = self.env['stock.warehouse'].search([
+            ('code', '=', name)
+        ])
+        return res.name if res else ''
+
     # WMS 任务信息
     def _format_picking_data(self, picking_id):
         '''
@@ -54,22 +63,36 @@ class StockPickingBatch(models.Model):
         :return: 任务所包含的信息，传送给WMS
         '''
         product_info = picking_id.sale_order_line_id.product_model
+        if not product_info:
+            product_model = '874'
+            product_config = 'MJ'
+            product_name = '19款福克斯'
+
+        picking_type_name = picking_id.picking_type_id.name
+        picking_type_name = picking_type_name.split(':')[1] if len(picking_type_name.split(':')) > 1 else picking_type_name
+
+        from_location_name = self._location_to_warehouse(picking_id.location_id)
+        to_location_name = self._location_to_warehouse(picking_id.location_dest_id)
+
+        from_location_name = '团结村库'
+        to_location_name = '线边库'
+
         tmp = {
             'task_id': picking_id.id,
-            'product_name': picking_id.sale_order_line_id.product_id.name,
-            'product_color': picking_id.sale_order_line_id.product_color if picking_id.sale_order_line_id.product_color else '',
-            'product_model': product_info[:3] if product_info else '',
-            'product_config': product_info[3:] if product_info else '',
-            'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '',
+            'product_name': picking_id.sale_order_line_id.product_id.name if picking_id.sale_order_line_id.product_id else product_name,
+            'product_color': picking_id.sale_order_line_id.product_color if picking_id.sale_order_line_id.product_color else '1',
+            'product_model': product_info[:3] if product_info else product_model,
+            'product_config': product_info[3:] if product_info else product_config,
+            'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '天津市尊泰汽车销售服务有限公司',
             'warehouse_code': picking_id.picking_type_id.warehouse_id.code,
             'quantity_done': 1,
-            'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name,
-            'from_location_id': picking_id.location_id.display_name,
-            'to_location_id': picking_id.location_dest_id.display_name,
+            'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name if picking_id.sale_order_line_id.product_id.brand_id else '长安民生',
+            'from_location_id': from_location_name,
+            'to_location_id': to_location_name,
             'to_location_type': picking_id.location_dest_id.usage,
             'partner_name': picking_id.partner_id.name,
             'vin': picking_id.sale_order_line_id.vin.name,
-            'picking_type_name': picking_id.picking_type_id.name
+            'picking_type_name': picking_type_name
         }
         return tmp
 
@@ -81,6 +104,8 @@ class StockPickingBatch(models.Model):
             if picking_id.picking_incoming_number > 0 or not picking_id.sale_order_line_id:
                 continue
             tmp = self._format_picking_data(picking_id)
+            if tmp.get('from_location_id') == tmp.get('to_location_id'):
+                continue
             data.append(tmp)
 
         loading_plan = self.send_vehicle_loading_plan_to_wms()
@@ -107,9 +132,13 @@ class StockPickingBatch(models.Model):
                 'product_model': line_id.name.default_code,
                 'product_model_layer': line_id.layer_option,
                 'product_model_number': line_id.number,
-                'transfer_company_name': self.transfer_partner_id.name
+                # 'transfer_company_name': self.transfer_partner_id.name
+                'transfer_company_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '天津市尊泰汽车销售服务有限公司',
             }
             data.append(tmp)
+        _logger.info({
+            'data': data
+        })
         return data
 
     def limit_warehouse_and_loading_plan(self):

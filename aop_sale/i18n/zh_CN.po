@@ -4526,7 +4526,7 @@ msgstr "已开票"
 
 #. module: aop_sale
 #: selection:stock.picking.batch,dispatch_type:0
-msgid "highway"
+msgid "road"
 msgstr "公路调度"
 
 #. module: aop_sale
@@ -4892,7 +4892,7 @@ msgstr "创建税务发票"
 
 #. module: aop_sale
 #: selection:stock.picking.batch,dispatch_type:0
-msgid "train"
+msgid "railway"
 msgstr "铁路调度"
 
 #. module: aop_sale
