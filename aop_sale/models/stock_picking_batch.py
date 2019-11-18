@@ -91,7 +91,8 @@ class StockPickingBatch(models.Model):
             'to_location_type': picking_id.location_dest_id.usage,
             'partner_name': picking_id.partner_id.name,
             'vin': picking_id.sale_order_line_id.vin.name,
-            'picking_type_name': picking_type_name
+            'picking_type_name': picking_type_name,
+            'batch_id': self.id
         }
         return tmp
 
@@ -280,7 +281,8 @@ class StockPickingBatch(models.Model):
                 'price_unit': 0,
                 'product_uom': service_product_id.uom_id.id if service_product_id else line_id.picking_type_id.service_product_id.uom_id.id if line_id.picking_type_id.service_product_id else False,
                 'batch_stock_picking_id': picking.id,
-                'vin_code': line_id.vin_id.name if line_id.vin_id else False
+                'vin_code': line_id.vin_id.name if line_id.vin_id else False,
+                'picking_id': picking.id
             }
             res.append((0, 0, data))
         if not picking.move_lines and service_product_id:
@@ -293,6 +295,7 @@ class StockPickingBatch(models.Model):
                 'carrier_id.product_standard_price if carrier_id else ': carrier_id.product_standard_price,
                 'price_unit': 0,
                 'date_planned': fields.Datetime.now(),
+                'picking_id': picking.id
             }
             res.append((0, 0, data))
         lost_service_product_id = list(set(lost_service_product_id))
