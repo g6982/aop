@@ -108,7 +108,7 @@ class DonePicking(models.Model):
 
             # 删除采购订单行
             delete_purchase_ids = batch_id.picking_purchase_id.order_line.filtered(
-                lambda x: x.picking_id in diff_picking_ids.ids
+                lambda x: x.picking_id in list(diff_picking_ids)
             )
             _logger.info({
                 'delete purchase line': delete_purchase_ids
