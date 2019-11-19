@@ -330,7 +330,7 @@ msgstr "采购订单"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__picking_id
 msgid "Picking"
-msgstr "扣款关联任务"
+msgstr "关联任务"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__account_period_id
