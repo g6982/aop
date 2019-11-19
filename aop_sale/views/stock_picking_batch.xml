@@ -13,7 +13,7 @@
             </field>
             <field name="user_id" position="after">
 
-                <field name="dispatch_type"/>
+<!--                <field name="dispatch_type"/>-->
 
                 <field name="plan_number" attrs='{"invisible": 1}'/>
 

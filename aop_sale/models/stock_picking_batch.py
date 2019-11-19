@@ -28,12 +28,6 @@ class StockPickingBatch(models.Model):
 
     picking_purchase_id = fields.Many2one('purchase.order', 'Purchase', copy=False)
 
-    dispatch_type = fields.Selection([('center_type', 'Center'),
-                                      ('railway_type', 'railway'),
-                                      ('road_type', 'road')
-                                      ],
-                                     string='Dispatch type',
-                                     store=True)
     plan_number = fields.Integer(string='Plan number', default=1)
 
     vehicle_number = fields.Char(string='Vehicle number')

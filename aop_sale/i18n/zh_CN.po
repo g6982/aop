@@ -584,11 +584,6 @@ msgid "Cash Rounding Method"
 msgstr "现金舍入方式"
 
 #. module: aop_sale
-#: selection:stock.picking.batch,dispatch_type:0
-msgid "Center"
-msgstr "中央调度"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_line_wizard__change_wizard_id
 msgid "Change Wizard"
 msgstr "更改任务向导"
@@ -1147,11 +1142,6 @@ msgstr "调度订单"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_change_stock_picking_form
 msgid "Dispatch picking"
 msgstr "调度任务"
-
-#. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__dispatch_type
-msgid "Dispatch type"
-msgstr "调度类型"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__display_name
@@ -4562,11 +4552,6 @@ msgid "has tax"
 msgstr "已开票"
 
 #. module: aop_sale
-#: selection:stock.picking.batch,dispatch_type:0
-msgid "road"
-msgstr "公路调度"
-
-#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_import_dispatch_order_wizard
 msgid "import.dispatch.order.wizard"
 msgstr ""
@@ -4932,11 +4917,6 @@ msgstr "参考必须唯一"
 #: model:ir.model,name:aop_sale.model_account_tax_invoice_wizard
 msgid "the way to make tax invoice"
 msgstr "创建税务发票"
-
-#. module: aop_sale
-#: selection:stock.picking.batch,dispatch_type:0
-msgid "railway"
-msgstr "铁路调度"
 
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__amount_by_group
