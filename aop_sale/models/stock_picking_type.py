@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
+from odoo.osv import expression
 
 
 class StockPickingType(models.Model):
@@ -26,14 +27,20 @@ class StockPickingType(models.Model):
     @api.depends('name')
     def _compute_import_name(self):
         for picking_type in self:
-            if self.env.context.get('special_shortened_wh_name'):
-                if picking_type.warehouse_id:
-                    name = picking_type.warehouse_id.name
-                else:
-                    name = _('Customer') + ' (' + picking_type.name + ')'
-            elif picking_type.warehouse_id:
-                name = picking_type.warehouse_id.name + ': ' + picking_type.name
+            if picking_type.warehouse_id:
+                picking_type.import_name = picking_type.warehouse_id.name + ': ' + picking_type.name
             else:
-                name = picking_type.name
+                picking_type.import_name = picking_type.name
 
-            picking_type.import_name = name
+    @api.model
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+        args = args or []
+        domain = []
+        if name:
+            domain = ['|', '|',
+                      ('name', operator, name),
+                      ('warehouse_id.name', operator, name),
+                      ('import_name', operator, name)
+                      ]
+        picking_ids = self._search(expression.AND([domain, args]), limit=limit, access_rights_uid=name_get_uid)
+        return self.browse(picking_ids).name_get()
