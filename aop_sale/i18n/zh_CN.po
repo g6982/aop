@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0-20190311\n"
+"Project-Id-Version: Odoo Server 12.0-20191118\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-15 09:49+0000\n"
-"PO-Revision-Date: 2019-11-15 09:49+0000\n"
+"POT-Creation-Date: 2019-11-19 04:05+0000\n"
+"PO-Revision-Date: 2019-11-19 04:05+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -302,7 +302,7 @@ msgstr "可应用于产品"
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__apply_no
 #: selection:mass.loss.order,state:0
 msgid "Apply"
-msgstr "申请单号"
+msgstr "申请"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__apply_time
@@ -968,6 +968,7 @@ msgid "Custom contract manage"
 msgstr "客户合同管理"
 
 #. module: aop_sale
+#: code:addons/aop_sale/models/stock_picking_type.py:33
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_line_out_invoice_tree
@@ -975,6 +976,7 @@ msgstr "客户合同管理"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 #: selection:sale.order,order_type:0
+#, python-format
 msgid "Customer"
 msgstr "客户"
 
@@ -1312,6 +1314,11 @@ msgid "Excluding deductible"
 msgstr "不计免赔"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_order_line_filter
+msgid "Expected Date"
+msgstr "单据日期"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__expiry_date
 #: model:ir.model.fields,field_description:aop_sale.field_customer_aop_contract__expiry_date
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__expiry_date
@@ -1459,6 +1466,7 @@ msgstr "跳转到条款"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_in_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_order_line_filter
 msgid "Group By"
 msgstr "分组"
 
@@ -1620,6 +1628,11 @@ msgstr "产品变体的图像(如果为False,采用大尺寸图像模板). 它�
 #: model:ir.actions.act_window,name:aop_sale.action_import_sale_order_wizard
 msgid "Import"
 msgstr "导入"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking_type__import_name
+msgid "Import name"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.import_sale_order_wizard
@@ -2636,7 +2649,7 @@ msgstr "延迟(账期)月"
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__picking_id
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__picking_id
 msgid "Picking"
-msgstr "扣款关联任务"
+msgstr "关联任务"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_stock_picking_type
@@ -3040,6 +3053,11 @@ msgid "Reconciliation state"
 msgstr "状态"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_order_line_filter
+msgid "Reference"
+msgstr "编号"
+
+#. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__origin
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice_line__origin
 msgid "Reference of the document that produced this invoice."
@@ -3101,6 +3119,12 @@ msgstr "维修"
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__replenish_picking_id
 msgid "Replenish Picking"
 msgstr ""
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.purchase_line_rfq
+#: model:ir.ui.menu,name:aop_sale.menu_purchase_line_rfq
+msgid "Requests for Quotation line"
+msgstr "采购订单行"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__activity_user_id
@@ -3234,6 +3258,11 @@ msgstr "负责人"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "Search Invoice"
 msgstr "搜索发票"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_order_line_filter
+msgid "Search Purchase Order line"
+msgstr ""
 
 #. module: aop_sale
 #: selection:account.tax.invoice.line,display_type:0
@@ -3553,6 +3582,11 @@ msgid "Tax amount by group"
 msgstr "按组分配税额"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__amount_tax_signed
+msgid "Tax in Invoice Currency"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.account_tax_invoice_action
 #: model:ir.ui.menu,name:aop_sale.account_tax_invoice
 #: model:ir.ui.menu,name:aop_sale.account_tax_invoice_menu
@@ -3820,12 +3854,8 @@ msgid "Transfer"
 msgstr "任务"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__transfer_partner_id
-msgid "Transfer company"
-msgstr "运输公司"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__transfer_product_id
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_order_line_filter
 msgid "Transfer product"
 msgstr "运输货物"
 
@@ -3915,6 +3945,11 @@ msgid "Untaxed Amount in Company Currency"
 msgstr "按公司本位币计的不含税金额"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__amount_untaxed_invoice_signed
+msgid "Untaxed Amount in Invoice Currency"
+msgstr ""
+
+#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 msgid "Update task"
 msgstr "更新任务"
@@ -3996,6 +4031,7 @@ msgstr "车辆"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__partner_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_batch__un_limit_partner_id
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_order_line_filter
 msgid "Vendor"
 msgstr "供应商"
 
@@ -5025,7 +5061,7 @@ msgid "本月"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:155
+#: code:addons/aop_sale/models/stock_picking_batch.py:172
 #, python-format
 msgid "测试"
 msgstr "向导"
