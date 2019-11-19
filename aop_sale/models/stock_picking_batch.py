@@ -94,21 +94,21 @@ class StockPickingBatch(models.Model):
     # 接口。创建采购单后，发送任务数据到WMS
     def send_to_wms_data(self):
         data = []
+        post_data = []
         for picking_id in self.picking_ids:
             # 接车并不需要发送到WMS
             if picking_id.picking_incoming_number > 0 or not picking_id.sale_order_line_id:
                 continue
             tmp = self._format_picking_data(picking_id)
-            if tmp.get('from_location_id') == tmp.get('to_location_id'):
-                continue
+
             data.append(tmp)
 
         loading_plan = self.send_vehicle_loading_plan_to_wms()
-
-        post_data = {
-            'picking_ids': data
-        }
-        if loading_plan and data:
+        if data:
+            post_data = {
+                'picking_ids': data
+            }
+        if loading_plan:
             post_data.update({
                 'loading_plan': loading_plan
             })
