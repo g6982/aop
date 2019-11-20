@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="group_interface_menus" model="res.groups">
+            <field name="name">AOP/WMS interface</field>
+            <field name="comment">AOP/WMS interface</field>
+        </record>
+    </data>
+</odoo>

@@ -11,10 +11,16 @@
                     <div class="app_settings_block" data-string="Interface" string="Interface" data-key="aop_interface">
                         <h2>Settings</h2>
 
-                        <div class="content-group mt16 o_setting_right_pane">
-                            <label for="partner_url" class="o_light_label" string="Partner"/>
-                            <field name="partner_url"/>
-                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_url"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="task_url"/>
+                            </group>
+                        </group>
 
                     </div>
                 </xpath>

@@ -2,7 +2,9 @@
 <odoo>
     <data>
 
-        <menuitem id="interface_menu_root" name="Interface" web_icon="aop_interface,static/description/api_icon.png"/>
+        <menuitem id="interface_menu_root"
+                  groups="group_interface_menus"
+                  name="Interface" web_icon="aop_interface,static/description/api_icon.png"/>
 
         <menuitem id="interface_done_picking" name="Done picking" parent="interface_menu_root"/>
 

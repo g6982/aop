@@ -9,6 +9,7 @@
     "description": """ AOP-WMS """,
     "depends": ["web", 'stock', 'base', 'stock_picking_batch'],
     "data": [
+        "security/aop_interface.xml",
         "security/ir.model.access.csv",
         "data/ir_config_param.xml",
         "views/ir_model.xml",
