@@ -44,7 +44,7 @@ class DonePicking(models.Model):
     def _compute_product_id(self):
         for line in self:
             product_id = self.env['product.product'].search([
-                ('default_code', '=', line.product_model)
+                ('default_code', '=', line.product_model[:3])
             ])
             if not product_id:
                 continue

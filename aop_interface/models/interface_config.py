@@ -6,15 +6,11 @@ from odoo import fields, models, api
 class InterfaceConfig(models.TransientModel):
     _inherit = 'res.config.settings'
 
+    enable_partner = fields.Boolean('Enable partner', config_parameter='aop_interface.enable_partner')
     partner_url = fields.Char('Partner url', config_parameter='aop_interface.partner_url')
+
+    enable_task = fields.Boolean('Enable task', config_parameter='aop_interface.enable_task')
     task_url = fields.Char('Task url', config_parameter='aop_interface.task_url')
 
-    @api.model
-    def get_values(self):
-        res = super(InterfaceConfig, self).get_values()
-        return res
-
-    @api.multi
-    def set_values(self):
-        res = super(InterfaceConfig, self).set_values()
-        return res
+    enable_stock = fields.Boolean('Enable stock', config_parameter='aop_interface.enable_stock')
+    stock_url = fields.Char('Stock query url', config_parameter='aop_interface.stock_url')

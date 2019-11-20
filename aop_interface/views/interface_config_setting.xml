@@ -13,12 +13,27 @@
 
                         <group>
                             <group>
+                                <field name="enable_partner"/>
+                            </group>
+                            <group>
                                 <field name="partner_url"/>
                             </group>
                         </group>
                         <group>
                             <group>
+                                <field name="enable_task"/>
+                            </group>
+                            <group>
                                 <field name="task_url"/>
+                            </group>
+                        </group>
+
+                         <group>
+                            <group>
+                                <field name="enable_stock"/>
+                            </group>
+                            <group>
+                                <field name="stock_url"/>
                             </group>
                         </group>
 
