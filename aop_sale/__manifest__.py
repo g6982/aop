@@ -7,7 +7,7 @@
         中集AOP
     """,
     'author': "1di0t",
-    'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management',
+    'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management', 'website',
                 'purchase', 'delivery', 'stock_picking_batch',
                 'barcodes', 'delivery_hs_code', 'account_period', 'mail'],
     'data': [
