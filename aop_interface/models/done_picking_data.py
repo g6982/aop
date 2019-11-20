@@ -92,6 +92,10 @@ class DonePicking(models.Model):
         task_ids = records.filtered(lambda x: x.task_id)
         null_task_ids = records.filtered(lambda x: not x.task_id)
 
+        _logger.info({
+            'task_ids': task_ids,
+            'null_task_ids': null_task_ids
+        })
         self.done_stock_picking_by_task_id(task_ids)
         self.done_stock_picking_without_task_id(null_task_ids, warehouse_ids)
 
