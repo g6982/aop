@@ -73,6 +73,9 @@ class DonePicking(models.Model):
 
         try:
             self.done_stock_picking(res)
+            res.write({
+                'state': 'done'
+            })
             return res
         except Exception as e:
             res.write({
@@ -108,7 +111,7 @@ class DonePicking(models.Model):
 
             # 删除采购订单行
             delete_purchase_ids = batch_id.picking_purchase_id.order_line.filtered(
-                lambda x: x.picking_id.id in list(diff_picking_ids)
+                lambda x: x.batch_stock_picking_id.id in list(diff_picking_ids)
             )
             _logger.info({
                 'delete purchase line': delete_purchase_ids
@@ -135,10 +138,21 @@ class DonePicking(models.Model):
             else:
                 self._remove_picking_purchase_line(batch_id, line_ids)
         elif len(line_ids) == 1:
-            # 完成任务
+            # 完成任务, 只完成就绪状态的任务
             if line_ids.task_id.state == 'assigned':
                 line_ids.task_id.button_validate()
+
+            # 完成采购单
+            self._confirm_purchase_order(line_ids)
         return True
+
+    # 完成采购单
+    def _confirm_purchase_order(self, line_id):
+        # 如果所有任务都已完成，则完成采购单
+        picking_state = line_id.batch_id.mapped('picking_ids').mapped('state')
+
+        if all(x == 'done' for x in picking_state):
+            line_id.batch_id.picking_purchase_id.button_confirm()
 
     # 无计划接车，直接入库, 需要生成一张入库单
     # 系统内部可能存在接车计划，需要完成系统内部的接车计划。只需要判读目的地和数量？

@@ -5,7 +5,6 @@ from requests import Session
 from zeep.transports import Transport
 from zeep import Client
 
-
 session = Session()
 session.verify = False
 transport = Transport(session=session)

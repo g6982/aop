@@ -57,7 +57,7 @@ class PurchaseOrder(models.Model):
 
         picking_ids = []
         for picking_id in self.mapped('stock_picking_batch_id').picking_ids:
-            if not picking_id.move_ids_without_package:
+            if not picking_id.move_ids_without_package and picking_id.state != 'done':
                 picking_ids.append(picking_id.id)
 
         for line_id in self.order_line:
@@ -93,9 +93,12 @@ class PurchaseOrder(models.Model):
             # })
 
         # 生成 stock.move
-        res = stock_move_obj.create(stock_move_data)
+        if stock_move_data:
+            res = stock_move_obj.create(stock_move_data)
 
-        self.order_line.mapped('batch_stock_picking_id').action_confirm()
+        # 完成且只完成就绪状态的任务
+        assign_picking_ids = self.order_line.mapped('batch_stock_picking_id').filtered(lambda x: x.state == 'assigned')
+        assign_picking_ids.action_confirm()
 
     # 填充批次号
     def _fill_serial_no(self, picking_id):
