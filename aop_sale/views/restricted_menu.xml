@@ -201,4 +201,14 @@
         <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
     </record>
 
+    <!-- 对所有用户隐藏“结算清单->回款结算清单”菜单 -->
+    <record id="account.menu_action_invoice_tree1" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+    <!-- 对所有用户隐藏“结算清单->付款结算清单”菜单 -->
+    <record id="account.menu_action_invoice_tree2" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
 </odoo>
