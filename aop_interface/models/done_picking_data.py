@@ -138,6 +138,9 @@ class DonePicking(models.Model):
             else:
                 self._remove_picking_purchase_line(batch_id, line_ids)
         elif len(line_ids) == 1:
+            _logger.info({
+                'line_ids': line_ids
+            })
             # 完成任务, 只完成就绪状态的任务
             if line_ids.task_id.state == 'assigned':
                 line_ids.task_id.button_validate()
