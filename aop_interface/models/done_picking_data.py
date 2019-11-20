@@ -143,7 +143,7 @@ class DonePicking(models.Model):
                 line_ids.task_id.button_validate()
 
             # 完成采购单
-            self._confirm_purchase_order(line_ids)
+            # self._confirm_purchase_order(line_ids)
         return True
 
     # 完成采购单
