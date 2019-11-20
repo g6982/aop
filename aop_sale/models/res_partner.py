@@ -65,8 +65,26 @@ class ResPartner(models.Model):
                 data.append(tmp)
         zeep_supplier_client.service.supplier(str(data))
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
         res = super(ResPartner, self).create(vals)
-        res.send_res_partner_to_wms()
+
+        # 如果是系统导入，则不需要进行这一步
+        if not self._context.get('import_file'):
+            res.send_res_partner_to_wms()
+        return res
+
+
+class BaseImport(models.TransientModel):
+    _inherit = 'base_import.import'
+
+    @api.multi
+    def do(self, fields, columns, options, dryrun=False):
+        res = super(BaseImport, self).do(fields, columns, options, dryrun)
+
+        if not dryrun and self.res_model == 'res.partner':
+            records = self.env['res.partner'].browse(res.get('ids'))
+
+            records.send_res_partner_to_wms()
+            # records.reconciliation_account_invoice()
         return res
