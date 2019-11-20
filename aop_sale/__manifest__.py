@@ -67,6 +67,6 @@
         'wizard/stock_location_to_route_location.xml',
         'wizard/package_reconciliation.xml',
         'wizard/batch_purchase_invoice_line.xml',
-        'report/report_statement.xml',
+        # 'report/report_statement.xml',
     ],
 }
