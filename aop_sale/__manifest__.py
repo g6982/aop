@@ -9,7 +9,6 @@
     'author': "1di0t",
     'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management',
                 'purchase', 'delivery', 'stock_picking_batch',
-                'report_xlsx',
                 'barcodes', 'delivery_hs_code', 'account_period', 'mail'],
     'data': [
         'security/access_group.xml',
