@@ -8,7 +8,7 @@
     """,
     'author': "1di0t",
     'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management', 'website',
-                'purchase', 'delivery', 'stock_picking_batch',
+                'purchase', 'delivery', 'stock_picking_batch', 'base',
                 'barcodes', 'delivery_hs_code', 'account_period', 'mail'],
     'data': [
         'security/access_group.xml',
@@ -67,6 +67,6 @@
         'wizard/stock_location_to_route_location.xml',
         'wizard/package_reconciliation.xml',
         'wizard/batch_purchase_invoice_line.xml',
-        # 'report/report_statement.xml',
+        'report/report_statement.xml',
     ],
 }
