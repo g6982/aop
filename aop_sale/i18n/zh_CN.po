@@ -4588,11 +4588,6 @@ msgid "has tax"
 msgstr "已开票"
 
 #. module: aop_sale
-#: model:ir.model,name:aop_sale.model_import_dispatch_order_wizard
-msgid "import.dispatch.order.wizard"
-msgstr ""
-
-#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_import_sale_order_wizard
 msgid "import.sale.order.wizard"
 msgstr ""
