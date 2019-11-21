@@ -94,6 +94,8 @@ class BaseImport(models.TransientModel):
         if not dryrun and self.res_model == 'res.partner':
             records = self.env['res.partner'].browse(res.get('ids'))
 
-            records.send_res_partner_to_wms()
+            supplier_state = self.env['ir.config_parameter'].sudo().get_param('aop_interface.enable_partner', False)
+            if supplier_state and config.get('enable_aop_interface'):
+                records.send_res_partner_to_wms()
             # records.reconciliation_account_invoice()
         return res
