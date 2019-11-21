@@ -3408,7 +3408,7 @@ msgstr "合同开始时间"
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_batch_number__state
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_search
 msgid "State"
-msgstr "省/ 州"
+msgstr "状态"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_invoice_order_statement
