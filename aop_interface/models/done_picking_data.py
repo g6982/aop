@@ -150,7 +150,7 @@ class DonePicking(models.Model):
                 line_ids.task_id.button_validate()
 
             # 完成采购单
-            # self._confirm_purchase_order(line_ids)
+            self._confirm_purchase_order(line_ids)
         return True
 
     # 完成采购单
@@ -158,8 +158,14 @@ class DonePicking(models.Model):
         # 如果所有任务都已完成，则完成采购单
         picking_state = line_id.batch_id.mapped('picking_ids').mapped('state')
 
+        # 调度单所有任务的状态
         if all(x == 'done' for x in picking_state):
-            line_id.batch_id.picking_purchase_id.button_confirm()
+            line_id.batch_id.picking_purchase_id.write({
+                'state': 'purchase'
+            })
+            line_id.batch_id.write({
+                'state': 'done'
+            })
 
     # 无计划接车，直接入库, 需要生成一张入库单
     # 系统内部可能存在接车计划，需要完成系统内部的接车计划。只需要判读目的地和数量？
