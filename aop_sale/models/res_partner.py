@@ -6,7 +6,7 @@ import logging
 _logger = logging.getLogger(__name__)
 import json
 import time
-from ..tools.zeep_client import zeep_supplier_client
+from ..tools.zeep_client import get_zeep_client_session
 
 SUPPLIER_FIELD_DICT = {
     'name': 'name',
@@ -63,6 +63,10 @@ class ResPartner(models.Model):
                     })
             if tmp:
                 data.append(tmp)
+        supplier_url = self.env['ir.config_parameter'].sudo().get_param('aop_interface.partner_url', False)
+
+        # 获取 session, 发送数据
+        zeep_supplier_client = get_zeep_client_session(supplier_url)
         zeep_supplier_client.service.supplier(str(data))
 
     @api.model_create_multi
@@ -71,7 +75,11 @@ class ResPartner(models.Model):
 
         # 如果是系统导入，则不需要进行这一步
         if not self._context.get('import_file'):
-            res.send_res_partner_to_wms()
+            supplier_state = self.env['ir.config_parameter'].sudo().get_param('aop_interface.enable_partner', False)
+
+            # 先判断是否启用
+            if supplier_state:
+                res.send_res_partner_to_wms()
         return res
 
 

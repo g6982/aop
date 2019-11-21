@@ -6,7 +6,7 @@ import time
 from itertools import groupby
 from odoo.exceptions import UserError
 import json
-from ..tools.zeep_client import zeep_task_client
+from ..tools.zeep_client import get_zeep_client_session
 _logger = logging.getLogger(__name__)
 
 
@@ -110,6 +110,8 @@ class StockPickingBatch(models.Model):
             'post_data': post_data
         })
         if post_data:
+            task_url = self.env['ir.config_parameter'].sudo().get_param('aop_interface.task_url', False)
+            zeep_task_client = get_zeep_client_session(task_url)
             # 输出中文
             zeep_task_client.service.sendToTask(json.dumps(post_data, ensure_ascii=False))
 
@@ -181,8 +183,10 @@ class StockPickingBatch(models.Model):
             # 跨公司创建
             res = self.env['purchase.order'].sudo().create(data)
 
-            # 接口数据
-            self.send_to_wms_data()
+            picking_state = self.env['ir.config_parameter'].sudo().get_param('aop_interface.enable_task', False)
+            if picking_state:
+                # 接口数据
+                self.send_to_wms_data()
 
             self.write({
                 'picking_purchase_id': res.id
