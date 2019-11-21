@@ -43,7 +43,11 @@ class PurchaseOrder(models.Model):
 
                 order_id._create_stock_move_by_purchase()
 
-                for picking_id in order_id.mapped('stock_picking_batch_id').sudo().picking_ids.sorted(lambda x: x.id):
+                # 排序过后的就绪状态的任务
+                batch_picking_ids = order_id.mapped('stock_picking_batch_id').sudo().picking_ids.sorted(
+                    lambda x: x.id).filtered(lambda x: x.state == 'assigned')
+
+                for picking_id in batch_picking_ids:
                     self.sudo()._fill_serial_no(picking_id)
                     picking_id.sudo().action_assign()
                     picking_id.sudo().button_validate()
