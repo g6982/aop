@@ -135,9 +135,10 @@ class DonePicking(models.Model):
             # 需要找到任务所在的picking_batch_id，删除没有完成的任务，删除采购订单里面的订单行
             # 一批任务，一定是来自同一个批量调度
             batch_id = line_ids.mapped('batch_id')
+            batch_id = list(set(batch_id))
             if len(batch_id) != 1:
                 line_ids.write({
-                    'error_message': 'one than one batch in interface'
+                    'error_message': 'more than one batch in interface'
                 })
             else:
                 self._remove_picking_purchase_line(batch_id, line_ids)
