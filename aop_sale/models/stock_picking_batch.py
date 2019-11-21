@@ -6,6 +6,7 @@ import time
 from itertools import groupby
 from odoo.exceptions import UserError
 import json
+from odoo.tools import config
 from ..tools.zeep_client import get_zeep_client_session
 _logger = logging.getLogger(__name__)
 
@@ -184,7 +185,7 @@ class StockPickingBatch(models.Model):
             res = self.env['purchase.order'].sudo().create(data)
 
             picking_state = self.env['ir.config_parameter'].sudo().get_param('aop_interface.enable_task', False)
-            if picking_state:
+            if picking_state and config.get('enable_aop_interface'):
                 # 接口数据
                 self.send_to_wms_data()
 

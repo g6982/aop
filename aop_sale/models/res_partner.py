@@ -6,6 +6,7 @@ import logging
 _logger = logging.getLogger(__name__)
 import json
 import time
+from odoo.tools import config
 from ..tools.zeep_client import get_zeep_client_session
 
 SUPPLIER_FIELD_DICT = {
@@ -78,7 +79,7 @@ class ResPartner(models.Model):
             supplier_state = self.env['ir.config_parameter'].sudo().get_param('aop_interface.enable_partner', False)
 
             # 先判断是否启用
-            if supplier_state:
+            if supplier_state and config.get('enable_aop_interface'):
                 res.send_res_partner_to_wms()
         return res
 
