@@ -10,6 +10,7 @@ _logger = logging.getLogger(__name__)
 class DonePicking(models.Model):
     _name = 'done.picking.log'
     _description = 'WMS done picking log'
+    _order = 'id desc'
 
     name = fields.Char('Name', default=time.time())
 
@@ -23,14 +24,13 @@ class DonePicking(models.Model):
     product_config = fields.Char('Product config')
     vin = fields.Char('VIN')
     picking_type_name = fields.Char('Picking type')
-    quantity_done = fields.Integer('quantity')
+    quantity_done = fields.Integer('quantity', default=1)
 
     warehouse_code = fields.Char('Warehouse code')
     warehouse_name = fields.Char('Warehouse name')
     task_id = fields.Many2one('stock.picking', 'Stock picking')
 
     brand_model_name = fields.Char('Brand model name')
-    supplier_name = fields.Char('Supplier')
     state = fields.Selection([
         ('draft', 'Draft'),
         ('done', 'Done')
@@ -134,13 +134,25 @@ class DonePicking(models.Model):
         if len(line_ids) > 1:
             # 需要找到任务所在的picking_batch_id，删除没有完成的任务，删除采购订单里面的订单行
             # 一批任务，一定是来自同一个批量调度
+            # 也有可能是多条完成的任务
             batch_id = line_ids.mapped('batch_id')
             batch_id = list(set(batch_id))
+            loading_plan = batch_id.mapped('mount_car_plan_ids')
+
+            # 如果没有填批次或者多条批次
             if len(batch_id) != 1:
-                line_ids.write({
-                    'error_message': 'more than one batch in interface'
-                })
-            else:
+                # 多条里面是否存在装车计划
+                if loading_plan:
+                    line_ids.write({
+                        'error_message': 'more than one batch in interface'
+                    })
+                else:
+                    for line_id in line_ids:
+                        line_id.task_id.button_validate()
+                        # 完成采购单
+                        self._confirm_purchase_order(line_id)
+            elif len(batch_id) == 1:
+                # 一批装车任务的返回
                 self._remove_picking_purchase_line(batch_id, line_ids)
         elif len(line_ids) == 1:
             _logger.info({
