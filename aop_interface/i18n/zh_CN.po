@@ -207,13 +207,13 @@ msgstr ""
 #: model:ir.ui.menu,name:aop_interface.interface_config_setting_id
 #: model_terms:ir.ui.view,arch_db:aop_interface.interface_config_setting_inherit_res_form
 msgid "Settings"
-msgstr "参数设置"
+msgstr "发送WMS接口参数设置"
 
 #. module: aop_interface
 #: model:ir.model.fields,field_description:aop_interface.field_done_picking_log__state
 #: model_terms:ir.ui.view,arch_db:aop_interface.view_done_picking_log_filter
 msgid "State"
-msgstr "省/ 州"
+msgstr "任务完成状态"
 
 #. module: aop_interface
 #: model:ir.model.fields,field_description:aop_interface.field_done_picking_log__task_id
