@@ -113,10 +113,10 @@ class DonePicking(models.Model):
             delete_purchase_ids.unlink()
 
             # 确认采购订单
-            batch_id.picking_purchase_id.button_confirm()
+            batch_id.picking_purchase_id.button_approve()
         else:
             # 完成采购订单
-            batch_id.picking_purchase_id.button_confirm()
+            batch_id.picking_purchase_id.button_approve()
 
     # 完成任务
     # FIXME： 如果完成的数量和实际的不一致，需要把调度订单里面没有反馈回来的数据删除？然后同时删除采购订单行？
