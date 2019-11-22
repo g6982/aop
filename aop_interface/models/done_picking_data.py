@@ -129,6 +129,8 @@ class DonePicking(models.Model):
             loading_plan = batch_id.mapped('mount_car_plan_ids')
             batch_id = list(set(batch_id))
 
+            batch_id = self.env['stock.picking.batch'].browse(batch_id)
+
             # 如果没有填批次或者多条批次
             if len(batch_id) != 1:
                 # 多条里面是否存在装车计划
