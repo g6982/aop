@@ -424,6 +424,9 @@ class StockPickingBatch(models.Model):
     @api.multi
     def cancel_picking(self):
         # self.mapped('picking_ids').action_cancel()
+        picking_state = self.env['ir.config_parameter'].sudo().get_param('aop_interface.enable_cancel_task', False)
+        if picking_state:
+            self.send_cancel_picking_task_to_wms()
         return self.write({'state': 'cancel'})
 
     # WMS 任务信息
@@ -446,19 +449,19 @@ class StockPickingBatch(models.Model):
     @api.multi
     def send_cancel_picking_task_to_wms(self):
         post_data = []
-        picking_state = self.env['ir.config_parameter'].sudo().get_param('aop_interface.enable_task', False)
-        if picking_state:
-            for line_id in self:
-                for picking_id in line_id.picking_ids:
-                    if picking_id.picking_incoming_number > 0 or not picking_id.sale_order_line_id:
-                        continue
-                    tmp = self._format_cancel_picking_data(picking_id)
+        for line_id in self:
+            for picking_id in line_id.picking_ids:
+                if picking_id.picking_incoming_number > 0 or not picking_id.sale_order_line_id:
+                    continue
+                tmp = self._format_cancel_picking_data(picking_id)
+
+                if tmp:
                     post_data.append(tmp)
-            if post_data:
-                cancel_task_url = self.env['ir.config_parameter'].sudo().get_param('aop_interface.cancel_task_url', False)
-                zeep_cancel_task_client = get_zeep_client_session(cancel_task_url)
-                # 输出中文
-                zeep_cancel_task_client.service.sendToTask(str(post_data, ensure_ascii=False))
+        if post_data:
+            cancel_task_url = self.env['ir.config_parameter'].sudo().get_param('aop_interface.cancel_task_url', False)
+            zeep_cancel_task_client = get_zeep_client_session(cancel_task_url)
+            # 输出中文
+            zeep_cancel_task_client.service.sendToTask(str(post_data, ensure_ascii=False))
 
 
 class MountCarPlan(models.Model):
