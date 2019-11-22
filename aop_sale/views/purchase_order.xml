@@ -89,11 +89,13 @@
                 <!-- 确认订单按钮 -->
                 <xpath expr="//button[@name='button_confirm'][2]" position="attributes">
                     <attribute name="groups">aop_sale.group_purchase_order_button_confirm_button</attribute>
+
                 </xpath>
 
                 <!-- 取消按钮 -->
                 <xpath expr="//button[@name='button_cancel']" position="attributes">
                     <attribute name="groups">aop_sale.group_purchase_order_button_cancel_button</attribute>
+                    <attribute name="states">draft,to approve,sent</attribute>
                 </xpath>
 
                 <!-- 取消按钮 -->
