@@ -127,12 +127,10 @@ class DonePicking(models.Model):
             # 也有可能是多条完成的任务
             batch_id = line_ids.mapped('batch_id')
             loading_plan = batch_id.mapped('mount_car_plan_ids')
-            batch_id = list(set(batch_id))
-
-            batch_id = self.env['stock.picking.batch'].browse(batch_id)
+            batch_id_count = list(set(batch_id))
 
             # 如果没有填批次或者多条批次
-            if len(batch_id) != 1:
+            if len(batch_id_count) != 1:
                 # 多条里面是否存在装车计划
                 if loading_plan:
                     line_ids.write({
@@ -143,7 +141,7 @@ class DonePicking(models.Model):
                         line_id.task_id.button_validate()
                         # 完成采购单
                         self._confirm_purchase_order(line_id)
-            elif len(batch_id) == 1:
+            elif len(batch_id_count) == 1:
                 # 一批装车任务的返回
                 self._remove_picking_purchase_line(batch_id, line_ids)
         elif len(line_ids) == 1:
