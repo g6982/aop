@@ -35,6 +35,39 @@ class StockPickingBatch(models.Model):
 
     mount_car_plan_ids = fields.One2many('mount.car.plan', 'stock_picking_batch_id', string='Mount plan')
 
+    # 定时任务，检查并完成任务
+    def complete_stock_picking_batch(self):
+        records = self.env['stock.picking.batch'].search([
+            '|',
+            ('state', '=', 'in_progress'),
+            ('picking_purchase_id.state', '!=', 'purchase')
+        ])
+        for batch_id in records:
+            # 装车, 如果所有采购订单行都有值，完成调度订单和采购订单
+            if not batch_id.mapped('picking_ids'):
+                purchase_line_vin = batch_id.picking_purchase_id.mapped('vin_code')
+
+                # 如果所有vin_code 都有值
+                if all(True if x else False for x in purchase_line_vin):
+                    batch_id.picking_purchase_id.write({
+                        'state': 'purchase'
+                    })
+                    batch_id.write({
+                        'state': 'done'
+                    })
+            else:
+                picking_state = batch_id.mapped('picking_ids').mapped('state')
+
+                #完成任务
+                if all(x == 'done' for x in picking_state):
+                    batch_id.picking_purchase_id.write({
+                        'state': 'purchase'
+                    })
+                    batch_id.write({
+                        'state': 'done'
+                    })
+
+
     # 仓库的名字
     def _location_to_warehouse(self, location_id):
         name = location_id.display_name
