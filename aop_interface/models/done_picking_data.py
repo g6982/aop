@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 class DonePicking(models.Model):
     _name = 'done.picking.log'
     _description = 'WMS done picking log'
-    _order = 'id desc'
+    _order = 'id'
 
     name = fields.Char('Name', default=time.time())
 
