@@ -23,6 +23,20 @@
                 </tree>
             </field>
         </record>
+
+        <record id="view_done_picking_log_filter" model="ir.ui.view">
+            <field name="name">done.picking.log.filter</field>
+            <field name="model">done.picking.log</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="vin"/>
+                    <field name="state"/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name="state" domain="[]" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
     </data>
 
 </odoo>
