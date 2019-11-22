@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import time
+import random
+import string
 import requests
 import json
 
@@ -43,37 +45,48 @@ HEADERS.update({
 print('headers: ', HEADERS)
 # 返回值： headers:  {'Content-Type': 'application/json', 'charset': 'utf-8', 'access-token': 'access_token_f772d5c69ca510ad54eb91c8d8072e9dd4a2538d'}
 
+# salt = ''.join(random.sample(string.ascii_letters + string.digits, 8))
+
+
+def get_17_vin():
+    return ''.join(random.sample(string.ascii_letters + string.digits, 17))
+
+
+# SLRZ/雒容站
+# WTJZXBK/唐家沱线边库
+# WTJCXBK/团结村线边库
+# WXZTLK/新筑铁路库
+warehouse_code = 'WTJCXBK'
+warehouse_name = '团结村线边库'
 # 接车数据
 data = {
     'params': {
         'data': [{'brand_model_name': 'CQ1VDC2', 'product_color': 'YG4F', 'product_model': '874', 'state_flag': 'T',
-                  'vin': 'LSY12345670000100', 'warehouse_code': 'WTJCXBK', 'warehouse_name': '团结村线边库'},
+                  'vin': 'WW000000000000003', 'warehouse_code': warehouse_code, 'warehouse_name': warehouse_name},
                  {'brand_model_name': 'CQ1VDC2', 'product_color': 'YG4F', 'product_model': '874', 'state_flag': 'T',
-                  'vin': 'LSY12345670000101', 'warehouse_code': 'WTJCXBK', 'warehouse_name': '团结村线边库'},
+                  'vin': 'WW000000000000004', 'warehouse_code': warehouse_code, 'warehouse_name': warehouse_name},
                  {'brand_model_name': 'CQ1VDC2', 'product_color': 'YG4F', 'product_model': '874', 'state_flag': 'T',
-                  'vin': 'LSY12345670000102', 'warehouse_code': 'WTJCXBK', 'warehouse_name': '团结村线边库'},
-                 {'brand_model_name': 'CQ1VDC2', 'product_color': 'YG4F', 'product_model': '874', 'state_flag': 'T',
-                  'vin': 'LSY12345670000103', 'warehouse_code': 'WTJCXBK', 'warehouse_name': '团结村线边库'}]
+                  'vin': 'WW000000000000005', 'warehouse_code': warehouse_code, 'warehouse_name': warehouse_name}]
     }
 }
 
-# 完成任务
-# 227, 236, 254, 245
-# 测试 I_WMS_AOP_001
+# # 完成任务
+# # 227, 236, 254, 245
+# # 测试 I_WMS_AOP_001
 data = {
     'params': {
         'data': [
             # {
-            #     'task_id': 227
+            #     'task_id': 11,
             # },
             # {
-            #     'task_id': 236,
+            #     'task_id': 20,
             # },
             # {
-            #     'task_id': 254
+            #     'task_id': 29,
             # },
             {
-                'task_id': 245
+                'task_id': 30
             }
         ]
     }
@@ -147,3 +160,17 @@ print(content)
 #
 # # res = zeep_task_client.service.sendToTask(str(data))
 # # print(res)
+#
+# [{
+#     'vin': 'LVSHFFAU6KS848090',
+#     'task_id': 2,
+#     'picking_type_name': '装车'
+# },{
+#     'vin': 'LVSHFFAU6KS848089',
+#     'task_id': 1,
+#     'picking_type_name': '铁路装车'
+# },{
+#     'vin': 'LVSHFFAU6KS848091',
+#     'task_id': 3,
+#     'picking_type_name': '短驳接车'
+# }...]
