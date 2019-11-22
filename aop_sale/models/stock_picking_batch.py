@@ -55,6 +55,9 @@ class StockPickingBatch(models.Model):
                     batch_id.write({
                         'state': 'done'
                     })
+                    batch_id.picking_id.batch_id.picking_ids.write({
+                        'state': 'done'
+                    })
             else:
                 picking_state = batch_id.mapped('picking_ids').mapped('state')
 
@@ -220,11 +223,6 @@ class StockPickingBatch(models.Model):
 
             # 跨公司创建
             res = self.env['purchase.order'].sudo().create(data)
-
-            picking_state = self.env['ir.config_parameter'].sudo().get_param('aop_interface.enable_task', False)
-            if picking_state and config.get('enable_aop_interface'):
-                # 接口数据
-                self.send_to_wms_data()
 
             # 任务进行中
             self.write({

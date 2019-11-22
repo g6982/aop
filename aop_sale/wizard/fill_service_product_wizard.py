@@ -23,7 +23,7 @@ class FillServiceProductWizard(models.TransientModel):
         # }
         res = self.env['purchase.order'].sudo().create(data)
 
-        self.stock_picking_batch_id.send_to_wms_data()
+        # self.stock_picking_batch_id.send_to_wms_data()
 
         self.stock_picking_batch_id.write({
             'picking_purchase_id': res.id,
