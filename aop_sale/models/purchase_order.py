@@ -41,7 +41,7 @@ class PurchaseOrder(models.Model):
                         continue
 
                     # 发送数据
-                    line_id.stock_picking_batch_id.send_to_wms_data()
+                    line_id.sudo().stock_picking_batch_id.send_to_wms_data()
 
             return res
         except Exception as e:
