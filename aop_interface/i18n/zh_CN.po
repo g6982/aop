@@ -261,6 +261,11 @@ msgid "Warehouse name"
 msgstr "仓库名字"
 
 #. module: aop_interface
+#: model:ir.model.fields,field_description:aop_interface.field_done_picking_log__state_flag
+msgid "State flag"
+msgstr "状态标识"
+
+#. module: aop_interface
 #: model:ir.model,name:aop_interface.model_api_access_token
 msgid "api.access_token"
 msgstr ""
