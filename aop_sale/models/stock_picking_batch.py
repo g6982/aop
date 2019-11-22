@@ -82,7 +82,8 @@ class StockPickingBatch(models.Model):
             'partner_name': picking_id.partner_id.name,
             'vin': picking_id.sale_order_line_id.vin.name,
             'picking_type_name': picking_type_name,
-            'batch_id': self.id
+            'batch_id': self.id,
+            'scheduled_date': picking_id.scheduled_date
         }
         return tmp
 
@@ -189,8 +190,10 @@ class StockPickingBatch(models.Model):
                 # 接口数据
                 self.send_to_wms_data()
 
+            # 任务进行中
             self.write({
-                'picking_purchase_id': res.id
+                'picking_purchase_id': res.id,
+                'state': 'in_progress'
             })
         except Exception as e:
             self._cr.rollback()
@@ -388,16 +391,14 @@ class StockPickingBatch(models.Model):
 class MountCarPlan(models.Model):
     _name = "mount.car.plan"
 
-    # name = fields.Char(string='Vehicle model')
+    name = fields.Many2one('product.product', string='Vehicle model', domain=[('type', '=', 'product')], required=True)
 
-    name = fields.Many2one('product.product', string='Vehicle model', domain=[('type', '=', 'product')])
-
-    transfer_tool_number = fields.Char('Transfer tool no')
+    transfer_tool_number = fields.Char('Transfer tool no', required=True)
     layer_option = fields.Selection([
         ('upper_layer', 'Upper layer'),
         ('lower_layer', 'Lower layer')
-    ], string='Layer')
+    ], string='Layer', required=True)
 
     stock_picking_batch_id = fields.Many2one('stock.picking.batch', 'Dispatch order')
 
-    number = fields.Integer('Number')
+    number = fields.Integer('Number', required=True)

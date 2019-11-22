@@ -8,7 +8,7 @@
     """,
     'author': "1di0t",
     'depends': ['account', 'sale', 'fleet', 'stock', 'sale_management', 'website',
-                'purchase', 'delivery', 'stock_picking_batch', 'base',
+                'purchase', 'delivery', 'stock_picking_batch', 'base', 'odoo_product_pack_bundle',
                 'barcodes', 'delivery_hs_code', 'account_period', 'mail'],
     'data': [
         'security/access_group.xml',

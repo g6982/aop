@@ -26,7 +26,8 @@ class FillServiceProductWizard(models.TransientModel):
         self.stock_picking_batch_id.send_to_wms_data()
 
         self.stock_picking_batch_id.write({
-            'picking_purchase_id': res.id
+            'picking_purchase_id': res.id,
+            'state': 'in_progress'
         })
 
     def _get_purchase_data(self):
@@ -107,7 +108,7 @@ class FillServiceProductWizard(models.TransientModel):
             }
             res.append((0, 0, data))
         return res
-    
+
     def _parse_service_product_supplier(self, picking):
         delivery_carrier_id = self.env['delivery.carrier'].search([
             ('supplier_contract_id.partner_id', '=', self.stock_picking_batch_id.partner_id.id),
@@ -133,4 +134,3 @@ class FillServiceProductWizardLine(models.TransientModel):
     )
 
     amount = fields.Float('Amount', related='service_product_id.standard_price')
-
