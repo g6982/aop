@@ -66,6 +66,9 @@ class StockPickingBatch(models.Model):
         # from_location_name = '团结村库'
         # to_location_name = '线边库'
 
+        _logger.info({
+            'fields.Datetime.to_string(picking_id.scheduled_date)': fields.Datetime.to_string(picking_id.scheduled_date)
+        })
         tmp = {
             'task_id': picking_id.id,
             'product_name': picking_id.sale_order_line_id.product_id.name if picking_id.sale_order_line_id.product_id else '',
