@@ -93,6 +93,11 @@ msgid "Enable partner"
 msgstr "允许： 发送合作伙伴"
 
 #. module: aop_interface
+#: model:ir.model.fields,field_description:aop_interface.field_res_config_settings__enable_cancel_task
+msgid "Enable cancel task"
+msgstr "允许： 取消任务"
+
+#. module: aop_interface
 #: model:ir.model.fields,field_description:aop_interface.field_res_config_settings__enable_stock
 msgid "Enable stock"
 msgstr "允许： 验证库存"
@@ -223,12 +228,17 @@ msgstr "任务"
 #. module: aop_interface
 #: model:ir.model.fields,field_description:aop_interface.field_res_config_settings__stock_url
 msgid "Stock query url"
-msgstr "查询库存url"
+msgstr "查询库存URL"
+
+#. module: aop_interface
+#: model:ir.model.fields,field_description:aop_interface.field_res_config_settings__cancel_task_url
+msgid "Cancel task url"
+msgstr "取消任务URL"
 
 #. module: aop_interface
 #: model:ir.model.fields,field_description:aop_interface.field_res_config_settings__task_url
 msgid "Task url"
-msgstr "发送批量调度任务url"
+msgstr "发送批量调度任务URL"
 
 #. module: aop_interface
 #: model:ir.model.fields,field_description:aop_interface.field_api_access_token__user_id

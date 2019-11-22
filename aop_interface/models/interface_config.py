@@ -15,5 +15,5 @@ class InterfaceConfig(models.TransientModel):
     enable_stock = fields.Boolean('Enable stock', config_parameter='aop_interface.enable_stock')
     stock_url = fields.Char('Stock query url', config_parameter='aop_interface.stock_url')
 
-    enable_cancel_task = fields.Boolean('Cancel enable task', config_parameter='aop_interface.enable_cancel_task')
+    enable_cancel_task = fields.Boolean('Enable cancel task', config_parameter='aop_interface.enable_cancel_task')
     cancel_task_url = fields.Char('Cancel task url', config_parameter='aop_interface.cancel_task_url')
