@@ -83,7 +83,7 @@ class StockPickingBatch(models.Model):
             'vin': picking_id.sale_order_line_id.vin.name,
             'picking_type_name': picking_type_name,
             'batch_id': self.id,
-            'scheduled_date': picking_id.scheduled_date
+            'scheduled_date': fields.Datetime.to_string(picking_id.scheduled_date)
         }
         return tmp
 
