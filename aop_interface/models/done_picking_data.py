@@ -33,6 +33,7 @@ class DonePicking(models.Model):
         ('done', 'Done')
     ], default='draft')
 
+    state_flag = fields.Char('State flag')
     batch_id = fields.Many2one('stock.picking.batch', 'Picking batch')
 
     error_message = fields.Char('Error message')
