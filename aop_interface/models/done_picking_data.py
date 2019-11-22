@@ -158,8 +158,12 @@ class DonePicking(models.Model):
     # 完成采购单
     def _confirm_purchase_order(self, line_id):
         # 如果所有任务都已完成，则完成采购单
-        picking_state = line_id.batch_id.mapped('picking_ids').mapped('state')
+        picking_state = line_id.mapped('batch_id').mapped('picking_ids').mapped('state')
 
+        _logger.info({
+            'picking_state': picking_state,
+            'picking_ids': line_id.batch_id.mapped('picking_ids')
+        })
         # 调度单所有任务的状态
         if all(x == 'done' for x in picking_state):
             line_id.batch_id.picking_purchase_id.write({
