@@ -6,7 +6,9 @@
             <field name="name">done.picking.log.tree</field>
             <field name="model">done.picking.log</field>
             <field name="arch" type="xml">
-                <tree decoration-warning="state == 'draft'" decoration-success="state == 'done'">
+                <tree decoration-warning="state == 'draft'"
+                      default_order="id desc"
+                      decoration-success="state == 'done'">
                     <field name="name"/>
                     <field name="partner_name"/>
                     <field name="product_name"/>
