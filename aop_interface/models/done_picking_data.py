@@ -40,6 +40,9 @@ class DonePicking(models.Model):
     @api.depends('product_model')
     def _compute_product_id(self):
         for line in self:
+            # 如果只有 task_id
+            if not line.product_model:
+                continue
             product_id = self.env['product.product'].search([
                 ('default_code', '=', line.product_model[:3])
             ])
