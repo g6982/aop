@@ -322,7 +322,7 @@ class DonePicking(models.Model):
 
         # 在完成了任务后执行该操作
         self._fill_picking_batch_purchase_line_value(line_id.warehouse_code, line_id.product_id, line_id.vin)
-        
+
         return True
 
     # 将值填回采购单
@@ -368,6 +368,12 @@ class DonePicking(models.Model):
                 picking_id.batch_id.write({
                     'state': 'done'
                 })
+                _logger.info({
+                    'done picking_id.batch_id.picking_ids': picking_id.batch_id.picking_ids
+                })
+                picking_id.batch_id.picking_ids.write({
+                    'state': 'done'
+                })
 
             # 如果搜到了记录
             purchase_line[0].write({
@@ -382,5 +388,11 @@ class DonePicking(models.Model):
                     'state': 'purchase'
                 })
                 picking_id.batch_id.write({
+                    'state': 'done'
+                })
+                _logger.info({
+                    'done picking_id.batch_id.picking_ids': picking_id.batch_id.picking_ids
+                })
+                picking_id.batch_id.picking_ids.write({
                     'state': 'done'
                 })
