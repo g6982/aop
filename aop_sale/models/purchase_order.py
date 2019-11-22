@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from odoo import api, fields, models, _
 import logging
 import time
+from odoo.tools import config
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -24,11 +25,24 @@ class PurchaseOrder(models.Model):
     # 完成的同时，完成 batch
     # 跨公司 sudo
     # 如果没有明细，则生成明细
+    # 完成后，发送接口数据
     @api.multi
     def button_confirm(self):
         try:
             # 服务产品
             res = super(PurchaseOrder, self).button_confirm()
+
+            # 先确认，再发送接口数据
+            picking_state = self.env['ir.config_parameter'].sudo().get_param('aop_interface.enable_task', False)
+            if picking_state and config.get('enable_aop_interface'):
+                # 接口数据
+                for line_id in self:
+                    if not line_id.stock_picking_batch_id:
+                        continue
+
+                    # 发送数据
+                    line_id.sudo().stock_picking_batch_id.send_to_wms_data()
+
             return res
         except Exception as e:
             import traceback
@@ -112,6 +126,14 @@ class PurchaseOrder(models.Model):
                     'lot_id': move_id.vin_id.id,
                     'qty_done': line.product_uom_qty
                 })
+
+    @api.multi
+    def button_cancel(self):
+        # FIXME: 完成了就不能取消了？
+        if any(x.state == 'purchase' for x in self):
+            raise UserError('You can not cancel when the data has been sent to wms.')
+        res = super(PurchaseOrder, self).button_cancel()
+        return res
 
 
 class PurchaseOrderLine(models.Model):

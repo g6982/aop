@@ -33,6 +33,7 @@ class DonePicking(models.Model):
         ('done', 'Done')
     ], default='draft')
 
+    state_flag = fields.Char('State flag')
     batch_id = fields.Many2one('stock.picking.batch', 'Picking batch')
 
     error_message = fields.Char('Error message')
@@ -126,10 +127,10 @@ class DonePicking(models.Model):
             # 也有可能是多条完成的任务
             batch_id = line_ids.mapped('batch_id')
             loading_plan = batch_id.mapped('mount_car_plan_ids')
-            batch_id = list(set(batch_id))
+            batch_id_count = list(set(batch_id))
 
             # 如果没有填批次或者多条批次
-            if len(batch_id) != 1:
+            if len(batch_id_count) != 1:
                 # 多条里面是否存在装车计划
                 if loading_plan:
                     line_ids.write({
@@ -140,7 +141,7 @@ class DonePicking(models.Model):
                         line_id.task_id.button_validate()
                         # 完成采购单
                         self._confirm_purchase_order(line_id)
-            elif len(batch_id) == 1:
+            elif len(batch_id_count) == 1:
                 # 一批装车任务的返回
                 self._remove_picking_purchase_line(batch_id, line_ids)
         elif len(line_ids) == 1:
@@ -158,18 +159,25 @@ class DonePicking(models.Model):
     # 完成采购单
     def _confirm_purchase_order(self, line_id):
         # 如果所有任务都已完成，则完成采购单
-        picking_state = line_id.mapped('batch_id').mapped('picking_ids').mapped('state')
+        # 不一定会有batch_id
+        batch_id = line_id.batch_id if line_id.batch_id else self.env['stock.picking.batch'].search([
+            ('picking_ids', '=', line_id.task_id.id)
+        ])
+        if not batch_id:
+            raise UserError('Can not find correct picking batch while using {task_id}'.format(
+                task_id=line_id.task_id
+            ))
+        picking_state = batch_id.mapped('picking_ids').mapped('state')
 
         _logger.info({
             'picking_state': picking_state,
-            'picking_ids': line_id.batch_id.mapped('picking_ids')
         })
         # 调度单所有任务的状态
         if all(x == 'done' for x in picking_state):
-            line_id.batch_id.picking_purchase_id.write({
+            batch_id.picking_purchase_id.write({
                 'state': 'purchase'
             })
-            line_id.batch_id.write({
+            batch_id.write({
                 'state': 'done'
             })
 
@@ -302,7 +310,6 @@ class DonePicking(models.Model):
             'move_data': move_data
         })
         move_id = stock_move_obj.create(move_data)
-
         move_id = move_id.filtered(lambda x: x.state not in ('done', 'cancel'))._action_confirm()
         move_id._action_assign()
 
@@ -312,4 +319,80 @@ class DonePicking(models.Model):
         picking_id.move_line_ids.lot_name = vin_id.name
 
         picking_id.button_validate()
+
+        # 在完成了任务后执行该操作
+        self._fill_picking_batch_purchase_line_value(line_id.warehouse_code, line_id.product_id, line_id.vin)
+
         return True
+
+    # 将值填回采购单
+    def _fill_picking_batch_purchase_line_value(self, warehouse_code, product_id, vin_code):
+
+        # 找到草稿状态的接车任务
+        res = self.env['stock.picking'].search([
+            ('picking_incoming_number', '>=', 1),
+            ('state', '=', 'draft'),
+            ('batch_id.state', '=', 'in_progress'),
+        ])
+
+        for picking_id in res:
+            if picking_id.batch_id.picking_purchase_id.state == 'purchase':
+                # FIXME: 任务为什么会没有完成呢？
+                picking_id.batch_id.write({
+                    'state': 'done'
+                })
+                continue
+
+            picking_location_name = picking_id.location_dest_id.display_name
+            picking_location_code = picking_location_name.split('/')
+
+            # FIXME： 有没有可能存在没有/分隔的记录呢？
+            picking_location_code = picking_location_code[0]
+
+            # TODO: 现在只是使用仓库来匹配，不管供应商
+            # 找到对应的仓库
+            if picking_location_code != warehouse_code:
+                continue
+
+            # 完善采购订单行
+            purchase_line_ids = picking_id.batch_id.mapped('picking_purchase_id').mapped('order_line')
+
+            # 筛选出所有，没有填货物和VIN的记录
+            purchase_line = purchase_line_ids.filtered(lambda x: not x.vin_code and not x.transfer_product_id)
+
+            # 如果所有记录都已经填了，需要完成该任务, 这里应该不会执行才对
+            if not purchase_line:
+                picking_id.batch_id.picking_purchase_id.write({
+                    'state': 'purchase'
+                })
+                picking_id.batch_id.write({
+                    'state': 'done'
+                })
+                _logger.info({
+                    'done picking_id.batch_id.picking_ids': picking_id.batch_id.picking_ids
+                })
+                picking_id.batch_id.picking_ids.write({
+                    'state': 'done'
+                })
+
+            # 如果搜到了记录
+            purchase_line[0].write({
+                'transfer_product_id': product_id.id,
+                'vin_code': vin_code
+            })
+
+            # FIXME： 需要再次验证么？
+            purchase_line = purchase_line_ids.filtered(lambda x: not x.vin_code and not x.transfer_product_id)
+            if not purchase_line:
+                picking_id.batch_id.picking_purchase_id.write({
+                    'state': 'purchase'
+                })
+                picking_id.batch_id.write({
+                    'state': 'done'
+                })
+                _logger.info({
+                    'done picking_id.batch_id.picking_ids': picking_id.batch_id.picking_ids
+                })
+                picking_id.batch_id.picking_ids.write({
+                    'state': 'done'
+                })

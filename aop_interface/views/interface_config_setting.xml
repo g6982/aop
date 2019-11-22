@@ -37,6 +37,15 @@
                             </group>
                         </group>
 
+                        <group>
+                            <group>
+                                <field name="enable_cancel_task"/>
+                            </group>
+                            <group>
+                                <field name="cancel_task_url"/>
+                            </group>
+                        </group>
+
                     </div>
                 </xpath>
             </field>

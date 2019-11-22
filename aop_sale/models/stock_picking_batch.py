@@ -35,6 +35,42 @@ class StockPickingBatch(models.Model):
 
     mount_car_plan_ids = fields.One2many('mount.car.plan', 'stock_picking_batch_id', string='Mount plan')
 
+    # 定时任务，检查并完成任务
+    def complete_stock_picking_batch(self):
+        records = self.env['stock.picking.batch'].search([
+            '|',
+            ('state', '=', 'in_progress'),
+            ('picking_purchase_id.state', '!=', 'purchase')
+        ])
+        for batch_id in records:
+            # 装车, 如果所有采购订单行都有值，完成调度订单和采购订单
+            if not batch_id.mapped('picking_ids'):
+                purchase_line_vin = batch_id.picking_purchase_id.mapped('vin_code')
+
+                # 如果所有vin_code 都有值
+                if all(True if x else False for x in purchase_line_vin):
+                    batch_id.picking_purchase_id.write({
+                        'state': 'purchase'
+                    })
+                    batch_id.write({
+                        'state': 'done'
+                    })
+                    batch_id.picking_id.batch_id.picking_ids.write({
+                        'state': 'done'
+                    })
+            else:
+                picking_state = batch_id.mapped('picking_ids').mapped('state')
+
+                #完成任务
+                if all(x == 'done' for x in picking_state):
+                    batch_id.picking_purchase_id.write({
+                        'state': 'purchase'
+                    })
+                    batch_id.write({
+                        'state': 'done'
+                    })
+
+
     # 仓库的名字
     def _location_to_warehouse(self, location_id):
         name = location_id.display_name
@@ -187,11 +223,6 @@ class StockPickingBatch(models.Model):
 
             # 跨公司创建
             res = self.env['purchase.order'].sudo().create(data)
-
-            picking_state = self.env['ir.config_parameter'].sudo().get_param('aop_interface.enable_task', False)
-            if picking_state and config.get('enable_aop_interface'):
-                # 接口数据
-                self.send_to_wms_data()
 
             # 任务进行中
             self.write({
@@ -389,6 +420,48 @@ class StockPickingBatch(models.Model):
                     (picking_id.location_id.id, picking_id.location_dest_id.id, picking_id.picking_type_id.id)
                 )
         return set(data)
+
+    @api.multi
+    def cancel_picking(self):
+        # self.mapped('picking_ids').action_cancel()
+        picking_state = self.env['ir.config_parameter'].sudo().get_param('aop_interface.enable_cancel_task', False)
+        if picking_state:
+            self.send_cancel_picking_task_to_wms()
+        return self.write({'state': 'cancel'})
+
+    # WMS 任务信息
+    def _format_cancel_picking_data(self, picking_id):
+        '''
+        :param picking_id: 任务
+        :return: 取消任务所包含的信息，传送给WMS
+        '''
+        picking_type_name = picking_id.picking_type_id.name
+        picking_type_name = picking_type_name.split(':')[1] if len(
+            picking_type_name.split(':')) > 1 else picking_type_name
+
+        tmp = {
+            'task_id': picking_id.id,
+            'vin': picking_id.sale_order_line_id.vin.name,
+            'picking_type_name': picking_type_name,
+        }
+        return tmp
+
+    @api.multi
+    def send_cancel_picking_task_to_wms(self):
+        post_data = []
+        for line_id in self:
+            for picking_id in line_id.picking_ids:
+                if picking_id.picking_incoming_number > 0 or not picking_id.sale_order_line_id:
+                    continue
+                tmp = self._format_cancel_picking_data(picking_id)
+
+                if tmp:
+                    post_data.append(tmp)
+        if post_data:
+            cancel_task_url = self.env['ir.config_parameter'].sudo().get_param('aop_interface.cancel_task_url', False)
+            zeep_cancel_task_client = get_zeep_client_session(cancel_task_url)
+            # 输出中文
+            zeep_cancel_task_client.service.sendToTask(str(post_data, ensure_ascii=False))
 
 
 class MountCarPlan(models.Model):
