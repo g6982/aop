@@ -159,7 +159,7 @@ class DonePicking(models.Model):
     def _confirm_purchase_order(self, line_id):
         # 如果所有任务都已完成，则完成采购单
         # 不一定会有batch_id
-        batch_id = self.env['stock.picking.batch'].search([
+        batch_id = line_id.batch_id if line_id.batch_id else self.env['stock.picking.batch'].search([
             ('picking_ids', '=', line_id.task_id.id)
         ])
         if not batch_id:
@@ -170,14 +170,13 @@ class DonePicking(models.Model):
 
         _logger.info({
             'picking_state': picking_state,
-            'picking_ids': line_id.batch_id.mapped('picking_ids')
         })
         # 调度单所有任务的状态
         if all(x == 'done' for x in picking_state):
-            line_id.batch_id.picking_purchase_id.write({
+            batch_id.picking_purchase_id.write({
                 'state': 'purchase'
             })
-            line_id.batch_id.write({
+            batch_id.write({
                 'state': 'done'
             })
 
