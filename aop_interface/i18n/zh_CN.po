@@ -207,7 +207,7 @@ msgstr ""
 #: model:ir.ui.menu,name:aop_interface.interface_config_setting_id
 #: model_terms:ir.ui.view,arch_db:aop_interface.interface_config_setting_inherit_res_form
 msgid "Settings"
-msgstr "发送WMS接口参数设置"
+msgstr "接口参数设置"
 
 #. module: aop_interface
 #: model:ir.model.fields,field_description:aop_interface.field_done_picking_log__state
