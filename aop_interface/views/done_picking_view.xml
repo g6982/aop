@@ -10,14 +10,14 @@
                       default_order="id desc"
                       decoration-success="state == 'done'">
                     <field name="name"/>
-                    <field name="partner_name"/>
-                    <field name="product_name"/>
                     <field name="product_model"/>
+                    <field name="product_id"/>
                     <field name="vin"/>
                     <field name="brand_model_name"/>
                     <field name="warehouse_name"/>
                     <field name="warehouse_code"/>
                     <field name="task_id"/>
+                    <field name="batch_id"/>
                     <field name="quantity_done"/>
                     <field name="state"/>
                 </tree>

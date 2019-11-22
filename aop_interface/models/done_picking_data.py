@@ -15,10 +15,7 @@ class DonePicking(models.Model):
     name = fields.Char('Name', default=time.time())
 
     create_datetime = fields.Datetime('Create time', default=fields.Datetime.now())
-    # partner_id = fields.Many2one('res.partner', 'Partner', compute='_compute_partner_id', store=True)
     product_id = fields.Many2one('product.product', 'Product', compute='_compute_product_id', store=True)
-    partner_name = fields.Char('Partner')
-    product_name = fields.Char('Product name')
     product_model = fields.Char('Product model')
     product_color = fields.Char('Product color')
     product_config = fields.Char('Product config')
@@ -49,17 +46,6 @@ class DonePicking(models.Model):
             if not product_id:
                 continue
             line.product_id = product_id[0].id
-
-    # @api.depends('partner_name')
-    # def _compute_partner_id(self):
-    #     for line in self:
-    #         if line.partner_name:
-    #             partner_id = self.env['res.partner'].sudo().search([
-    #                 ('name', '=', line.partner_name)
-    #             ])
-    #             if not partner_id:
-    #                 continue
-    #             line.partner_id = partner_id[0].id
 
     # 删除接口数据，应该是需要被禁止的
     @api.multi
