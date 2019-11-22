@@ -125,8 +125,8 @@ class DonePicking(models.Model):
             # 一批任务，一定是来自同一个批量调度
             # 也有可能是多条完成的任务
             batch_id = line_ids.mapped('batch_id')
-            batch_id = list(set(batch_id))
             loading_plan = batch_id.mapped('mount_car_plan_ids')
+            batch_id = list(set(batch_id))
 
             # 如果没有填批次或者多条批次
             if len(batch_id) != 1:
