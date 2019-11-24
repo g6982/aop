@@ -343,7 +343,12 @@ class SaleOrderLine(models.Model):
                 procurement_uom = quant_uom
 
             try:
-                to_location_id = self._transfer_district_to_location(line.to_location_id)
+                if line.delivery_carrier_id:
+                    # 取合同条款里面的真实运送地
+                    to_location_id = line.delivery_carrier_id.real_location_id
+                else:
+                    to_location_id = self._transfer_district_to_location(line.to_location_id)
+
                 self.env['procurement.group'].run(line.product_id, product_qty, procurement_uom,
                                                   to_location_id,
                                                   line.name,
