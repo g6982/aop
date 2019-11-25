@@ -59,22 +59,6 @@ class DeliveryCarrier(models.Model):
 
     brand_id = fields.Many2one('fleet.vehicle.model.brand', 'Brand')
 
-    real_location_id = fields.Many2one('stock.location', compute='_compute_real_location_id', store=True)
-
-    # 新增真实的运输地址，用于传递给路由
-    @api.depends('route_id')
-    def _compute_real_location_id(self):
-        for line in self:
-            if not line.goto_delivery_carrier_id:
-                continue
-            if not line.goto_delivery_carrier_id.route_id:
-                continue
-            all_rules = line.goto_delivery_carrier_id.route_id.rule_ids
-            if not all_rules:
-                continue
-            last_rules = all_rules[-1]
-            line.real_location_id = last_rules.location_id.id
-
     @api.onchange('from_location_id', 'to_location_id')
     def domain_route_ids(self):
         if self.from_location_id and self.to_location_id:

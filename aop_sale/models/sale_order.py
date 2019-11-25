@@ -290,6 +290,19 @@ class SaleOrderLine(models.Model):
     def _onchange_domain_service_product_route(self):
         pass
 
+    # 获取真实的路由的终点
+    def _get_real_location_id(self, carrier_id):
+        all_rules = carrier_id.route_id.rule_ids
+
+        # 路由一般来说，存在规则的
+        if not all_rules:
+            return carrier_id.location_id
+
+        # 获取最后一条规则
+        last_rules = all_rules[-1]
+        real_location_id = last_rules.location_id
+        return real_location_id
+
     @api.multi
     def _action_launch_stock_rule(self):
         """
@@ -343,12 +356,8 @@ class SaleOrderLine(models.Model):
                 procurement_uom = quant_uom
 
             try:
-                # if line.delivery_carrier_id:
-                #     # 取合同条款里面的真实运送地
-                #     to_location_id = line.delivery_carrier_id.real_location_id
-                # else:
-                #     to_location_id = self._transfer_district_to_location(line.to_location_id)
-                to_location_id = self._transfer_district_to_location(line.to_location_id)
+
+                to_location_id = self._get_real_location_id(line.delivery_carrier_id)
 
                 self.env['procurement.group'].run(line.product_id, product_qty, procurement_uom,
                                                   to_location_id,
