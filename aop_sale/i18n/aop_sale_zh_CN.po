@@ -350,3 +350,7 @@ msgstr "购买方"
 #: selection:mass.loss.order,state:0
 msgid "Apply"
 msgstr "申请"
+
+#: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__to_location_id
+msgid "To location"
+msgstr "到站"
