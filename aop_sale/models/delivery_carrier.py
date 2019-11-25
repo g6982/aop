@@ -67,7 +67,9 @@ class DeliveryCarrier(models.Model):
         for line in self:
             if not line.goto_delivery_carrier_id:
                 continue
-            all_rules = line.goto_delivery_carrier_id.rule_ids
+            if not line.goto_delivery_carrier_id.route_id:
+                continue
+            all_rules = line.goto_delivery_carrier_id.route_id.rule_ids
             if not all_rules:
                 continue
             last_rules = all_rules[-1]
