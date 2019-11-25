@@ -477,4 +477,6 @@ class MountCarPlan(models.Model):
 
     stock_picking_batch_id = fields.Many2one('stock.picking.batch', 'Dispatch order')
 
+    to_location_id = fields.Many2one('stock.location', 'To location')
+
     number = fields.Integer('Number', required=True)
