@@ -202,13 +202,13 @@
     </record>
 
 <!--    &lt;!&ndash; 对所有用户隐藏“结算清单->回款结算清单”菜单 &ndash;&gt;-->
-<!--    <record id="account.menu_action_invoice_tree1" model="ir.ui.menu">-->
-<!--        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>-->
-<!--    </record>-->
+    <record id="account.menu_action_invoice_tree1" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
 
 <!--    &lt;!&ndash; 对所有用户隐藏“结算清单->付款结算清单”菜单 &ndash;&gt;-->
-<!--    <record id="account.menu_action_invoice_tree2" model="ir.ui.menu">-->
-<!--        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>-->
-<!--    </record>-->
+    <record id="account.menu_action_invoice_tree2" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
 
 </odoo>
