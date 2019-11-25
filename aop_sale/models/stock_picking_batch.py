@@ -161,7 +161,7 @@ class StockPickingBatch(models.Model):
         for line_id in self.mount_car_plan_ids:
             tmp = {
                 'transfer_tool_number': line_id.transfer_tool_number,
-                'to_location_name': line_id.to_location_id.name if line_id.to_location_id else '',
+                # 'to_location_name': line_id.to_location_id.name if line_id.to_location_id else '',
                 'product_model': line_id.name.default_code,
                 'product_model_layer': line_id.layer_option,
                 'product_model_number': line_id.number,
