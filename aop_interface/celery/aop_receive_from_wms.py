@@ -5,15 +5,15 @@ import logging
 from xmlrpc import client as xmlrpc_client
 
 try:
-    from ..config import celeryconfig
+    from ..config import receive_from_wms
 except:
-    import celeryconfig
+    import receive_from_wms
 
 _logger = logging.getLogger(__name__)
 
 
 app = Celery('aop_receive_from_wms')
-app.config_from_object(celeryconfig)
+app.config_from_object(receive_from_wms)
 
 
 @app.task(name='aop_receive_from_wms')

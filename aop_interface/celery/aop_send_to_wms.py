@@ -4,10 +4,10 @@ from celery import Celery
 import logging
 import json
 try:
-    from ..config import celeryconfig
+    from ..config import send_to_wms_config
     from ..config.wsdl_zeep_config import get_zeep_client_session
 except:
-    import celeryconfig
+    import send_to_wms_config
     from wsdl_zeep_config import get_zeep_client_session
 
 
@@ -16,7 +16,7 @@ _logger = logging.getLogger(__name__)
 
 # 配置好celery的backend和broker
 app = Celery('aop_send_to_wms')
-app.config_from_object(celeryconfig)
+app.config_from_object(send_to_wms_config)
 
 
 # 使用celery 队列发送数据给WMS
