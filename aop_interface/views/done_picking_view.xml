@@ -2,13 +2,78 @@
 <odoo>
 
     <data>
+
+        <record id="view_done_picking_log_form" model="ir.ui.view">
+            <field name="name">done.picking.log.form</field>
+            <field name="model">done.picking.log</field>
+            <field name="arch" type="xml">
+                <form create="0" import="0" delete="0" edit="0">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                            <group>
+                                <field name="create_datetime"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="product_id"/>
+                            </group>
+                            <group>
+                                <field name="product_model"/>
+                                <field name="product_color"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="vin"/>
+                            </group>
+                            <group>
+                                <field name="brand_model_name"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="warehouse_code"/>
+                            </group>
+                            <group>
+                                <field name="warehouse_name"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="batch_id"/>
+                                <field name="task_id"/>
+                            </group>
+                            <group>
+                                <field name="state_flag"/>
+                                <field name="state"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field name="error_message"/>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
         <record id="view_done_picking_log_tree" model="ir.ui.view">
             <field name="name">done.picking.log.tree</field>
             <field name="model">done.picking.log</field>
             <field name="arch" type="xml">
                 <tree decoration-warning="state == 'draft'"
                       default_order="id desc"
-                      decoration-success="state == 'done'">
+                      decoration-success="state == 'done'"
+                      create="0" import="0" delete="0"
+                >
                     <field name="name"/>
                     <field name="product_model"/>
                     <field name="product_id"/>
@@ -18,7 +83,6 @@
                     <field name="warehouse_code"/>
                     <field name="task_id"/>
                     <field name="batch_id"/>
-                    <field name="quantity_done"/>
                     <field name="state"/>
                 </tree>
             </field>

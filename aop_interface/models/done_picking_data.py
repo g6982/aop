@@ -18,10 +18,7 @@ class DonePicking(models.Model):
     product_id = fields.Many2one('product.product', 'Product', compute='_compute_product_id', store=True)
     product_model = fields.Char('Product model')
     product_color = fields.Char('Product color')
-    product_config = fields.Char('Product config')
     vin = fields.Char('VIN')
-    picking_type_name = fields.Char('Picking type')
-    quantity_done = fields.Integer('quantity', default=1)
 
     warehouse_code = fields.Char('Warehouse code')
     warehouse_name = fields.Char('Warehouse name')
@@ -208,22 +205,6 @@ class DonePicking(models.Model):
         data = {
             x.name: x for x in partner_ids
         }
-        return data
-
-    # 获取所有步骤
-    def _get_picking_type_ids(self):
-        data = {}
-        for line in self:
-            domain_filter = [
-                ('warehouse_id.code', '=', line.warehouse_code),
-                ('name', '=', line.picking_type_name)
-            ]
-            tmp = self.env['stock.picking.type'].sudo().search(domain_filter)
-            if not tmp:
-                continue
-            data.update({
-                line.id: tmp[0]
-            })
         return data
 
     def _get_warehouse_ids(self, records):

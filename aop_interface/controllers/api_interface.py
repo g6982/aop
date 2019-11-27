@@ -5,9 +5,10 @@ from odoo.http import content_disposition, dispatch_rpc, request, \
 from .tools import validate_token, valid_response, invalid_response, extract_arguments
 import logging
 import json
+import uuid
 import time
 from odoo.tools import config
-
+from ..celery.aop_receive_from_wms import aop_receive_from_wms
 _logger = logging.getLogger(__name__)
 
 
@@ -164,5 +165,25 @@ class ApiInterface(http.Controller):
 
     def _done_picking(self, data):
         request.session.db = config.get('interface_db_name')
-        res = request.env['done.picking.log'].sudo().create(data)
-        return res
+
+        # res = request.env['done.picking.log'].sudo().create(data)
+        # return res
+
+        username = config.misc.get("celery", {}).get('user_name')
+        password = config.misc.get("celery", {}).get('user_password')
+        url = config.misc.get("celery", {}).get('url')
+        db_name = config.get('interface_db_name')
+        model_name = 'done.picking.log'
+        method_name = 'create'
+
+        # 放进celery 队列
+        aop_receive_from_wms.delay(
+            url=url,
+            db=db_name,
+            username=username,
+            password=password,
+            model=model_name,
+            method=method_name,
+            data=data
+        )
+
