@@ -155,14 +155,14 @@ class DonePicking(models.Model):
                 line_ids.task_id.button_validate()
 
             if line_ids.sequence_id:
-                self.send_waiting_list_picking(line_ids.sequence_id.id)
+                self.send_waiting_list_picking(line_ids.sequence_id)
             # 完成采购单
             self._confirm_purchase_order(line_ids)
         return True
 
     # 如果回传的字段存在 sequence_id, 检查，同时发送
     def send_waiting_list_picking(self, sequence_id):
-        res = self.env['send.waiting.list'].browse(sequence_id)
+        res = sequence_id
         assigned_picking_ids = res.picking_ids.filtered(lambda x: x.state == 'assigned')
 
         # FIXME: 是否需要删除已经完成的任务呢？
@@ -172,7 +172,8 @@ class DonePicking(models.Model):
         for assigned_picking_id in assigned_picking_ids:
             tmp = self.env['stock.picking.batch']._format_picking_data(assigned_picking_id)
             tmp.update({
-                'sequence_id': sequence_id
+                'sequence_id': sequence_id.id,
+                'supplier_name': sequence_id.partner_id.name if sequence_id.partner_id else ''
             })
             data.append(tmp)
         if data:
