@@ -227,6 +227,12 @@
             <field name="category_id" ref="module_aop_sale_ir_rule"/>
         </record>
 
+        <!--    过滤: 采购/询价单(采购订单行、采购订单)/只看自己的订单   -->
+        <record id="group_filter_ir_rule_purchase_order_line_just_own_data" model="res.groups">
+            <field name="name">过滤: 采购/询价单(采购订单行、采购订单)/只看自己的订单</field>
+            <field name="category_id" ref="module_aop_sale_ir_rule"/>
+        </record>
+
         <!-- ************************** 按钮权限组 **************************  -->
 
         <!--    销售/订单/正式订单/生成结算清单    -->

@@ -6,9 +6,11 @@ import random
 import string
 import requests
 import json
+import pprint
 
 # BASE_URL = 'http://47.103.54.14:8069'
 BASE_URL = 'http://127.0.0.1:8069'
+# BASE_URL = 'http://192.168.13.177:8069'
 
 TOKEN_URL = '/api/auth/token'
 DONE_PICKING = '/api/stock_picking/done_picking'
@@ -105,6 +107,74 @@ data = {
         ]
     }
 }
+# SLRZ/雒容站
+# WTJZXBK/唐家沱线边库
+# WTJCXBK/团结村线边库
+# WXZTLK/新筑铁路库
+warehouse_code = 'WTJCXBK'
+warehouse_name = '团结村线边库'
+# 接车数据
+# data = {
+#     'params': {
+#         'data': [{'brand_model_name': 'CQ2VDC1', 'product_color': 'YG4F', 'product_model': '874', 'state_flag': 'T',
+#                   'vin': 'XX0001', 'warehouse_code': warehouse_code, 'warehouse_name': warehouse_name},
+#                  # {'brand_model_name': 'CQ1VDC2', 'product_color': 'YG4F', 'product_model': '874', 'state_flag': 'T',
+#                  #  'vin': 'WW000000000000004', 'warehouse_code': warehouse_code, 'warehouse_name': warehouse_name},
+#                  # {'brand_model_name': 'CQ1VDC2', 'product_color': 'YG4F', 'product_model': '874', 'state_flag': 'T',
+#                  #  'vin': 'WW000000000000005', 'warehouse_code': warehouse_code, 'warehouse_name': warehouse_name}
+#                  ]
+#     }
+# }
+
+data = {
+    'params': {
+        'data': []
+    }
+}
+
+data_lst = data['params']['data']
+
+source_date = [('LVSHJCAL5KE911041', '87K'),('LVSHFFAU2KS911432', '874'),('LVSHFFAU2KS911477', '874'),('LVSHFFAU3KS911438', '874'),
+                   ('LVSHFFAU5KS911702', '874'),('LVSHFFAU3KS911441', '874'),('LVSHFFAU7KS910681', '874'),('LVSHFFAU0KS910893', '874'),
+                   ('LVSHJCAL6KE908925', '87K'),('LVSHFFAUXKS911744', '874'),('LVSHFFAU8KS911435', '874'),('LVSHFFAU9KS911752', '874'),
+                   ('LVSHFFAUXKS911436', '874'),('LVSHFFAU5KS911750', '874'),('LVSHJCAL0KE910136', '87K'),('LVSHJCAL5KE910083', '87K'),
+                   ('LVSHFFAU1KS911745', '874'),('LVSHFFAUXKS910786', '874'),('LVSHJCAL8KE908926', '87K'),('LVSHFFAU7KS911457', '874'),
+                   ('LVSHFFAU3KS911455', '874'),('LVSHFFAU1KS910949', '874'),('LVSHFFAU0KS911445', '874'),('LVSHFFAU4KS911450', '874'),
+                   ('LVSHJCAL5KE910102', '87K'),('LVSHFFAU0KS910960', '874'),('LVSHFFAU2KS911429', '874'),('LVSHFFAU8KS911421', '874'),
+                   ('LVSHFFAUXKS911453', '874'),('LVSHFFAU6KS910848', '874'),('LVSHJCAL3KE908879', '87K'),('LVSHFFAU6KS911451', '874'),
+                   ('LVSHFFAU5KS908220', '874'),('LVSHFFAU4KS911741', '874'),('LVSHFFAU5KS911439', '874'),('LVSHFFAU4KS911447', '874'),
+                   ('LVSHFFAU8KS911449', '874'),('LVSHFFAUXKS911758', '874'),('LVSHFFAU8KS911452', '874'),('LVSHFFAU0KS911414', '874'),
+                   ('LVSHJCAL2KE909988', '87K'),('LVSHJCAL3KE910048', '87K'),('LVSHJCAL1KE910047', '87K')]
+tml = {'brand_model_name': 'CQ2VDC1', 'product_color': 'YG4F', 'product_model': '874', 'state_flag': 'T',
+                 'vin': 'XX0001', 'warehouse_code': warehouse_code, 'warehouse_name': warehouse_name}
+
+for item in source_date:
+    tml['vin'] = item[0]
+    tml['product_model'] = item[1]
+    data_lst.append(tml)
+pprint.pprint(data_lst)
+# # 完成任务
+# # 227, 236, 254, 245
+# # 测试 I_WMS_AOP_001
+# data = {
+#     'params': {
+#         'data': [
+#             # {
+#             #     'task_id': 11,
+#             # },
+#             # {
+#             #     'task_id': 20,
+#             # },
+#             # {
+#             #     'task_id': 29,
+#             # },
+#             {
+#                 'task_id': 30,
+#                 # 'batch_id': 2
+#             }
+#         ]
+#     }
+# }
 
 res = requests.post(url=BASE_URL + DONE_PICKING, data=json.dumps(data), headers=HEADERS)
 content = json.loads(res.content.decode('utf-8'))
