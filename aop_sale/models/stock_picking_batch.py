@@ -8,6 +8,7 @@ from odoo.exceptions import UserError
 import json
 from odoo.tools import config
 from ..tools.zeep_client import get_zeep_client_session
+from odoo.addons.aop_interface.celery.aop_send_to_wms import send_stock_picking_to_wms
 _logger = logging.getLogger(__name__)
 
 
@@ -94,7 +95,7 @@ class StockPickingBatch(models.Model):
         #     product_name = '19款福克斯'
 
         picking_type_name = picking_id.picking_type_id.name
-        picking_type_name = picking_type_name.split(':')[1] if len(picking_type_name.split(':')) > 1 else picking_type_name
+        picking_type_name = picking_type_name
 
         from_location_name = self._location_to_warehouse(picking_id.location_id)
         to_location_name = self._location_to_warehouse(picking_id.location_dest_id)
@@ -126,16 +127,33 @@ class StockPickingBatch(models.Model):
         }
         return tmp
 
+    # 创建发送列表
+    def _create_send_waiting_list(self, waiting_picking_ids):
+        res = self.env['send.waiting.list'].sudo().create({
+            'picking_ids': [(6, 0, [picking_id.id for picking_id in waiting_picking_ids])]
+        })
+        return res
+
     # 接口。创建采购单后，发送任务数据到WMS
     def send_to_wms_data(self):
         data = []
         post_data = []
-        for picking_id in self.picking_ids:
+        assigned_picking_ids = self.picking_ids.filtered(lambda x: x.state == 'assigned')
+        waiting_picking_ids = self.picking_ids.filtered(lambda x: x.state != 'assigned')
+
+        waiting_list_id = False
+        if waiting_picking_ids:
+            waiting_list_id = self._create_send_waiting_list(waiting_picking_ids)
+
+        for picking_id in assigned_picking_ids:
             # 接车并不需要发送到WMS
             if picking_id.picking_incoming_number > 0 or not picking_id.sale_order_line_id:
                 continue
             tmp = self._format_picking_data(picking_id)
-
+            if waiting_list_id:
+                tmp.update({
+                    'sequence_id': waiting_list_id.id
+                })
             data.append(tmp)
 
         loading_plan = self.send_vehicle_loading_plan_to_wms()
@@ -152,9 +170,12 @@ class StockPickingBatch(models.Model):
         })
         if post_data:
             task_url = self.env['ir.config_parameter'].sudo().get_param('aop_interface.task_url', False)
-            zeep_task_client = get_zeep_client_session(task_url)
+            # zeep_task_client = get_zeep_client_session(task_url)
+
+            # 放进 Celery
+            send_stock_picking_to_wms.delay(task_url, post_data)
             # 输出中文
-            zeep_task_client.service.sendToTask(json.dumps(post_data, ensure_ascii=False))
+            # zeep_task_client.service.sendToTask(json.dumps(post_data, ensure_ascii=False))
 
     def send_vehicle_loading_plan_to_wms(self):
         data = []
@@ -459,10 +480,13 @@ class StockPickingBatch(models.Model):
                 if tmp:
                     post_data.append(tmp)
         if post_data:
+            _logger.info({
+                'post_data': post_data
+            })
             cancel_task_url = self.env['ir.config_parameter'].sudo().get_param('aop_interface.cancel_task_url', False)
             zeep_cancel_task_client = get_zeep_client_session(cancel_task_url)
             # 输出中文
-            zeep_cancel_task_client.service.sendToTask(str(post_data, ensure_ascii=False))
+            zeep_cancel_task_client.service.supplier(str(post_data))
 
 
 class MountCarPlan(models.Model):

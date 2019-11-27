@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from odoo import fields, models, api
+from odoo.addons.aop_sale.tools.zeep_client import get_zeep_client_session
+from ..celery.aop_send_to_wms import send_stock_picking_to_wms
 import time
+import json
 from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
@@ -34,6 +37,8 @@ class DonePicking(models.Model):
     batch_id = fields.Many2one('stock.picking.batch', 'Picking batch')
 
     error_message = fields.Char('Error message')
+
+    sequence_id = fields.Many2one('send.waiting.list', 'Waiting list')
 
     @api.depends('product_model')
     def _compute_product_id(self):
@@ -149,9 +154,40 @@ class DonePicking(models.Model):
             if line_ids.task_id.state == 'assigned':
                 line_ids.task_id.button_validate()
 
+            if line_ids.sequence_id:
+                self.send_waiting_list_picking(line_ids.sequence_id.id)
             # 完成采购单
             self._confirm_purchase_order(line_ids)
         return True
+
+    # 如果回传的字段存在 sequence_id, 检查，同时发送
+    def send_waiting_list_picking(self, sequence_id):
+        res = self.env['send.waiting.list'].browse(sequence_id)
+        assigned_picking_ids = res.picking_ids.filtered(lambda x: x.state == 'assigned')
+
+        # FIXME: 是否需要删除已经完成的任务呢？
+        # 假设不删除完成的任务
+        post_data = []
+        data = []
+        for assigned_picking_id in assigned_picking_ids:
+            tmp = self.env['stock.picking.batch']._format_picking_data(assigned_picking_id)
+            tmp.update({
+                'sequence_id': sequence_id
+            })
+            data.append(tmp)
+        if data:
+            post_data = {
+                'picking_ids': data
+            }
+        if post_data:
+            _logger.info({
+                'send data': post_data
+            })
+            task_url = self.env['ir.config_parameter'].sudo().get_param('aop_interface.task_url', False)
+            send_stock_picking_to_wms.delay(task_url, post_data)
+            # zeep_task_client = get_zeep_client_session(task_url)
+            # # 输出中文
+            # zeep_task_client.service.sendToTask(json.dumps(post_data, ensure_ascii=False))
 
     # 完成采购单
     def _confirm_purchase_order(self, line_id):

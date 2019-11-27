@@ -20,7 +20,7 @@ app.config_from_object(celeryconfig)
 
 
 # 使用celery 队列发送数据给WMS
-@app.task(max_retries=5, retry_backoff=True)
+@app.task(max_retries=5, retry_backoff=True, name='send_stock_picking_to_wms_task')
 def send_stock_picking_to_wms(task_url, data):
     zeep_stock_picking_client = get_zeep_client_session(task_url)
     _logger.info({
@@ -28,12 +28,3 @@ def send_stock_picking_to_wms(task_url, data):
     })
     # 发送任务的数据
     zeep_stock_picking_client.service.sendToTask(json.dumps(data, ensure_ascii=False))
-
-
-@app.task(max_retries=5)
-def send_res_partner_to_wms(task_url, data):
-    zeep_partner_client = get_zeep_client_session(task_url)
-    _logger.info({
-        'data': data
-    })
-    zeep_partner_client.service.supplier(str(data))

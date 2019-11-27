@@ -1,4 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_api_access_token,access_api_access_token,model_api_access_token,,1,1,1,1
-access_done_picking_log,access_done_picking_log,model_done_picking_log,,1,0,0,0
 access_done_picking_log,access_done_picking_log,model_done_picking_log,aop_interface.group_interface_menus,1,1,1,0
+access_send_waiting_list,access_send_waiting_list,model_send_waiting_list,aop_interface.group_interface_menus,1,1,1,0

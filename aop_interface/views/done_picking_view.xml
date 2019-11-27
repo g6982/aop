@@ -48,6 +48,7 @@
                         <group>
                             <group>
                                 <field name="batch_id"/>
+                                <field name="sequence_id"/>
                                 <field name="task_id"/>
                             </group>
                             <group>

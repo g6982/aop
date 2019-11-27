@@ -148,7 +148,6 @@ class SaleOrderLine(models.Model):
             ('name', '=', self.vin_code),
             ('product_id', '=', self.product_id.id)
         ])
-
         # if not vin_id:
         #     vin_id = vin_obj.create({
         #         'name': self.vin_code,

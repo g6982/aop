@@ -34,5 +34,17 @@
                   web_icon="aop_interface,static/description/api_icon.png"
                   action="action_interface_config_setting_view"
                   name="Settings" parent="interface_config_setting"/>
+
+        <menuitem id="send_waiting_list_root" name="Waiting list" parent="interface_menu_root"/>
+        <record id="action_send_waiting_list_view" model="ir.actions.act_window">
+            <field name="name">Waiting list</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">send.waiting.list</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="send_waiting_list"
+                  action="action_send_waiting_list_view"
+                  name="Waiting list" parent="send_waiting_list_root"/>
     </data>
 </odoo>
