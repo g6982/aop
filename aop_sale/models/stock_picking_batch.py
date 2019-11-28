@@ -131,7 +131,8 @@ class StockPickingBatch(models.Model):
     def _create_send_waiting_list(self, waiting_picking_ids):
         res = self.env['send.waiting.list'].sudo().create({
             'partner_id': self.un_limit_partner_id.id if self.un_limit_partner_id else self.partner_id.id if self.partner_id else '',
-            'picking_ids': [(6, 0, [picking_id.id for picking_id in waiting_picking_ids])]
+            'picking_ids': [(6, 0, [picking_id.id for picking_id in waiting_picking_ids])],
+            'picking_batch_id': self.id
         })
         return res
 
@@ -183,7 +184,7 @@ class StockPickingBatch(models.Model):
         for line_id in self.mount_car_plan_ids:
             tmp = {
                 'transfer_tool_number': line_id.transfer_tool_number,
-                # 'to_location_name': line_id.to_location_id.name if line_id.to_location_id else '',
+                'to_location_name': line_id.to_location_id.name if line_id.to_location_id else '',
                 'product_model': line_id.name.default_code,
                 'product_model_layer': line_id.layer_option,
                 'product_model_number': line_id.number,

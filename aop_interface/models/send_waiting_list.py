@@ -10,6 +10,7 @@ _logger = logging.getLogger(__name__)
 class SendWaitingList(models.Model):
     _name = 'send.waiting.list'
 
+    picking_batch_id = fields.Many2one('stock.picking.batch', string='Picking batch', required=True)
     picking_ids = fields.Many2many('stock.picking', string='Picking')
     partner_id = fields.Many2one('res.partner')
 
