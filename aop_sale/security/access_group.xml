@@ -149,6 +149,17 @@
 
         <!--                    西安办事处  End                      -->
 
+         <!--                    新疆办事处  Begin                      -->
+
+        <!--  新疆办事处/内勤  -->
+        <record id="group_xinjiang_office_inside_job" model="res.groups">
+            <field name="name">xinjiang office inside job</field>
+            <field name="category_id" ref="module_aop_sale"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!--                    新疆办事处  End                      -->
+
         <!--                    重庆基地  Begin                       -->
 
         <!--  重庆基地/内勤  -->
@@ -207,6 +218,12 @@
             <field name="category_id" ref="module_aop_sale_others"/>
         </record>
 
+        <!--    系统管理员组    -->
+        <record id="group_aop_system_admin" model="res.groups">
+            <field name="name">system_admin</field>
+
+        </record>
+
         <!-- ************************** 记录规则组 **************************  -->
 
         <!--    过滤: 物流网络/作业/批量调度/只看自己的任务    -->
@@ -228,10 +245,10 @@
         </record>
 
         <!--    过滤: 采购/询价单(采购订单行、采购订单)/只看自己的订单   -->
-        <record id="group_filter_ir_rule_purchase_order_line_just_own_data" model="res.groups">
-            <field name="name">过滤: 采购/询价单(采购订单行、采购订单)/只看自己的订单</field>
-            <field name="category_id" ref="module_aop_sale_ir_rule"/>
-        </record>
+<!--        <record id="group_filter_ir_rule_purchase_order_line_just_own_data" model="res.groups">-->
+<!--            <field name="name">过滤: 采购/询价单(采购订单行、采购订单)/只看自己的订单</field>-->
+<!--            <field name="category_id" ref="module_aop_sale_ir_rule"/>-->
+<!--        </record>-->
 
         <!-- ************************** 按钮权限组 **************************  -->
 
