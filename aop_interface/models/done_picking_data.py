@@ -170,7 +170,8 @@ class DonePicking(models.Model):
         post_data = []
         data = []
         for assigned_picking_id in assigned_picking_ids:
-            tmp = self.env['stock.picking.batch']._format_picking_data(assigned_picking_id)
+            tmp = sequence_id.picking_batch_id._format_picking_data(assigned_picking_id)
+            # tmp = self.env['stock.picking.batch']._format_picking_data(assigned_picking_id)
             tmp.update({
                 'sequence_id': sequence_id.id,
                 'supplier_name': sequence_id.partner_id.name if sequence_id.partner_id else ''

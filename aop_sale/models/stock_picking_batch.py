@@ -131,7 +131,8 @@ class StockPickingBatch(models.Model):
     def _create_send_waiting_list(self, waiting_picking_ids):
         res = self.env['send.waiting.list'].sudo().create({
             'partner_id': self.un_limit_partner_id.id if self.un_limit_partner_id else self.partner_id.id if self.partner_id else '',
-            'picking_ids': [(6, 0, [picking_id.id for picking_id in waiting_picking_ids])]
+            'picking_ids': [(6, 0, [picking_id.id for picking_id in waiting_picking_ids])],
+            'picking_batch_id': self.id
         })
         return res
 
