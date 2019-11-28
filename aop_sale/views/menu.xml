@@ -7,6 +7,7 @@
                   name="Main Data"
                   web_icon="base,static/description/settings.png"
                   sequence="-100"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 一级菜单 -->
@@ -14,6 +15,7 @@
                   parent="main_data_menu_root"
                   name="System manage"
                   sequence="10"
+                  groups="aop_sale.group_aop_system_admin"
 
         />
 
@@ -24,6 +26,7 @@
                   name="User manage"
                   action="base.action_res_users"
                   sequence="10"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
 
@@ -34,6 +37,7 @@
                   name="Group manage"
                   action="base.action_res_groups"
                   sequence="20"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 二级菜单 -->
@@ -51,6 +55,7 @@
                   parent="main_data_menu_root"
                   name="Product manage"
                   sequence="20"
+                  groups="aop_sale.group_aop_system_admin"
 
         />
 
@@ -60,6 +65,7 @@
                   name="Goods manage"
                   action="stock.product_template_action_product"
                   sequence="10"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 二级菜单 -->
@@ -69,6 +75,7 @@
                   name="Service product manage"
                   action="product_template_action_service_product"
                   sequence="20"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
 
@@ -76,7 +83,9 @@
                   name="Product Variant"
                   action="product.product_normal_action_sell"
                   parent="product_manager_menu"
-                  sequence="30" />
+                  sequence="30"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <!--
          <menuitem id="sub_menu_product_bundle"
@@ -91,6 +100,7 @@
                   parent="main_data_menu_root"
                   name="Custom contract manage"
                   sequence="30"
+                  groups="aop_sale.group_aop_system_admin"
 
         />
 
@@ -100,6 +110,7 @@
                   name="Customer contract"
                   action="action_customer_aop_contract_view"
                   sequence="10"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 二级菜单 -->
@@ -137,6 +148,7 @@
                   parent="main_data_menu_root"
                   name="Supplier contract manage"
                   sequence="40"
+                  groups="aop_sale.group_aop_system_admin"
 
         />
 
@@ -146,6 +158,7 @@
                   name="Supplier rate manage"
                   action="action_aop_supplier_contract_view"
                   sequence="10"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 二级菜单 -->
@@ -271,6 +284,7 @@
                   parent="main_data_menu_root"
                   name="Financial"
                   sequence="90"
+                  groups="aop_sale.group_aop_system_admin"
 
         />
 
@@ -280,6 +294,7 @@
                   name="Accounts"
                   action="account.action_account_form"
                   sequence="10"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 二级菜单 -->
@@ -307,6 +322,7 @@
                   parent="stock.menu_stock_root"
                   name="Insurance"
                   sequence="30"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 物流网络->保险管理->保险合同, 二级菜单 -->
@@ -315,6 +331,7 @@
                   name="insurance aop contract"
                   action="action_insurance_aop_contract_view"
                   sequence="5"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 物流网络->保险管理->保险管理, 二级菜单 -->
@@ -323,6 +340,7 @@
                   name="Insurance"
                   action="action_insurance_management"
                   sequence="10"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 物流网络->保险管理->保险管理, 二级菜单 -->
@@ -331,6 +349,7 @@
                   name="Insurance Type"
                   action="action_insurance_management_type"
                   sequence="10"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 物流网络->质损管理, 一级菜单 -->
@@ -338,23 +357,32 @@
                   parent="stock.menu_stock_root"
                   name="Quality Management"
                   sequence="50"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 物流网络->质损管理->质损单, 二级菜单 -->
         <menuitem id="mass_loss_order_child_menu_order" parent="mass_loss_manager_menu" name="Quality Order"
-                  action="action_mass_loss_order" sequence="10"/>
+                  action="action_mass_loss_order" sequence="10"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <!-- 物流网络->质损管理->质损类型, 二级菜单 -->
         <menuitem id="mass_loss_order_child_menu_type" parent="mass_loss_manager_menu" name="Quality type"
-                  action="action_mass_loss_type" sequence="20"/>
+                  action="action_mass_loss_type" sequence="20"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <!-- 物流网络->质损管理->质损部位, 二级菜单 -->
         <menuitem id="mass_loss_order_child_menu_part" parent="mass_loss_manager_menu" name="Quality part"
-                  action="action_mass_loss_part" sequence="30"/>
+                  action="action_mass_loss_part" sequence="30"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <!-- 物流网络->质损管理->质损附件信息, 二级菜单 -->
         <menuitem id="mass_loss_order_child_menu_attachment" parent="mass_loss_manager_menu" name="Quality attachment"
-                  action="action_mass_loss_attachment" sequence="40"/>
+                  action="action_mass_loss_attachment" sequence="40"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
 
         <!--火车-->
@@ -362,14 +390,21 @@
                   name="Trains"
                   web_icon="aop_sale,static/description/train.png"
                   sequence="90"
+                  groups="aop_sale.group_aop_system_admin"
         />
-        <menuitem action="fleet.fleet_vehicle_action" parent="train_manage" id="train_menu"/>
+        <menuitem action="fleet.fleet_vehicle_action" parent="train_manage" id="train_menu"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <!--税务发票-->
-        <menuitem id="account_tax_invoice" parent="account.menu_finance" name="Tax invoice"/>
+        <menuitem id="account_tax_invoice" parent="account.menu_finance" name="Tax invoice"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <menuitem id="account_tax_invoice_menu" parent="account_tax_invoice" action="account_tax_invoice_action"
-                  name="Tax invoice"/>
+                  name="Tax invoice"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
 <!--        税务发票批次号-->
         <record id="account_invoice_no_tax_invoice_action" model="ir.actions.act_window">
@@ -416,22 +451,29 @@
         <menuitem id="import_sale_order_wizard"
                   name="Import order"
                   action="action_import_sale_order_wizard"
-                  parent="sale.sale_order_menu"/>
+                  parent="sale.sale_order_menu"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <!--基地-->
         <menuitem id="base_warehouse_manage"
                   parent="stock.menu_stock_root"
                   name="Base"
                   sequence="30"
+                  groups="aop_sale.group_aop_system_admin"
         />
         <menuitem id="base_warehouse_id"
                   name="Base"
                   action="action_base_warehouse_view"
-                  parent="base_warehouse_manage"/>
+                  parent="base_warehouse_manage"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <menuitem
                 action="product_vehicle_type_action_form" id="menu_product_vehicle_type_stock"
-                parent="stock.menu_product_in_config_stock"/>
+                parent="stock.menu_product_in_config_stock"
+                groups="aop_sale.group_aop_system_admin"
+        />
 
 
 <!--        核销-->
@@ -444,7 +486,9 @@
             <field name="view_mode">form</field>
         </record>
 
-        <menuitem id="month_close_wizard_menu_id" parent="account.menu_finance" name="Monthly"/>
+        <menuitem id="month_close_wizard_menu_id" parent="account.menu_finance" name="Monthly"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <record id="action_month_close_wizard_view" model="ir.actions.act_window">
             <field name="name">Monthly</field>
@@ -456,7 +500,9 @@
         </record>
 
         <menuitem id="month_close_wizard_id" parent="month_close_wizard_menu_id" action="action_month_close_wizard_view"
-                  name="Monthly"/>
+                  name="Monthly"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <record id="action_handover_vin_view" model="ir.actions.act_window">
             <field name="name">Handover VIN</field>
@@ -467,13 +513,16 @@
 
         <menuitem id="handover_vin_menu_id"
                   name="Handover VIN"
-                  parent="sale.sale_order_menu"/>
+                  parent="sale.sale_order_menu"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <menuitem id="handover_vin_sub_menu_id"
                   name="Handover VIN"
                   action="action_handover_vin_view"
                   parent="handover_vin_menu_id"
                   sequence="10"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
 
@@ -489,7 +538,9 @@
         <menuitem id="billable_file_id"
                   name="Billable"
                   action="action_billable_file_view"
-                  parent="sale.sale_order_menu"/>
+                  parent="sale.sale_order_menu"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
 <!--        对账-->
         <record id="action_reconciliation_file_view" model="ir.actions.act_window">
@@ -506,6 +557,7 @@
                   action="action_reconciliation_file_view"
                   parent="account.menu_finance_receivables"
                   sequence="20"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <record id="action_reconciliation_file_lot_view" model="ir.actions.act_window">
@@ -521,6 +573,7 @@
                   action="action_reconciliation_file_lot_view"
                   parent="account.menu_finance_receivables"
                   sequence="30"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <!-- 对帐批次号 -->
@@ -537,6 +590,7 @@
                   action="action_batch_reconciliation_number"
                   parent="account.menu_finance_receivables"
                   sequence="50"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
 <!--      审核批次号 -->
@@ -553,6 +607,7 @@
                   action="action_verify_batch_reconciliation"
                   parent="account.menu_finance_receivables"
                   sequence="60"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <menuitem id="customer_account_invoice_line_id"
@@ -560,12 +615,15 @@
                   action="action_customer_account_invoice_line_view"
                   parent="account.menu_finance_receivables"
                   sequence="5"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <menuitem id="purchase_account_invoice_id"
                   name="Purchase invoice line"
                   action="action_purchase_account_invoice_view"
-                  parent="account.menu_finance_payables"/>
+                  parent="account.menu_finance_payables"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
          <!--        供应商清单单明细行-->
         <record id="action_supplier_account_invoice_view" model="ir.actions.act_window">
@@ -583,7 +641,9 @@
         <menuitem id="supplier_account_invoice_id"
                   name="Supplier invoice line"
                   action="action_supplier_account_invoice_view"
-                  parent="account.menu_finance_payables"/>
+                  parent="account.menu_finance_payables"
+                  groups="aop_sale.group_aop_system_admin"
+        />
 
         <record id="action_write_off_batch_view" model="ir.actions.act_window">
             <field name="name">Write-off batch</field>
@@ -597,6 +657,7 @@
                   action="action_write_off_batch_view"
                   parent="handover_vin_menu_id"
                   sequence="20"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
         <record id="action_reconciliation_file_line_view" model="ir.actions.act_window">
@@ -611,6 +672,7 @@
                   action="action_reconciliation_file_line_view"
                   parent="account.menu_finance_receivables"
                   sequence="40"
+                  groups="aop_sale.group_aop_system_admin"
         />
 
     </data>
