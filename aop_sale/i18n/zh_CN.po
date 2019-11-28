@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191118\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-28 15:09+0000\n"
-"PO-Revision-Date: 2019-11-28 15:09+0000\n"
+"POT-Creation-Date: 2019-11-28 16:59+0000\n"
+"PO-Revision-Date: 2019-11-28 16:59+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2185,11 +2185,6 @@ msgstr "下层"
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__message_main_attachment_id
 msgid "Main Attachment"
 msgstr "附件"
-
-#. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.main_data_menu_root
-msgid "Main Data"
-msgstr "主数据"
 
 #. module: aop_sale
 #: selection:billable.file,invoice_product_type:0
@@ -4913,6 +4908,11 @@ msgid "supplier.contract.stock.rule.line"
 msgstr ""
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_aop_system_admin
+msgid "system_admin"
+msgstr "系统管理员组"
+
+#. module: aop_sale
 #: sql_constraint:res.company:0
 msgid "the code must be unique"
 msgstr "公司编码必须唯一"
@@ -5014,6 +5014,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_in_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "下月账期"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.main_data_menu_root
+msgid "主数据"
 msgstr ""
 
 #. module: aop_sale
