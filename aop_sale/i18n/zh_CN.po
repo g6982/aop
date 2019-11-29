@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191118\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-25 03:54+0000\n"
-"PO-Revision-Date: 2019-11-25 03:54+0000\n"
+"POT-Creation-Date: 2019-11-28 16:59+0000\n"
+"PO-Revision-Date: 2019-11-28 16:59+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1124,7 +1124,7 @@ msgid "Discount (%)"
 msgstr "折扣 (%)"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:854
+#: code:addons/aop_sale/models/sale_order.py:862
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order__dispatch_order
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_picking_batch_form_inherit_create_purchase
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_location_to_route_location_wizard_form
@@ -1511,7 +1511,7 @@ msgstr "有未清项"
 
 #. module: aop_sale
 #: code:addons/aop_sale/models/account_invoice.py:184
-#: code:addons/aop_sale/models/sale_order.py:441
+#: code:addons/aop_sale/models/sale_order.py:449
 #, python-format
 msgid "Has been monthly!"
 msgstr "已月结!"
@@ -2187,11 +2187,6 @@ msgid "Main Attachment"
 msgstr "附件"
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.main_data_menu_root
-msgid "Main Data"
-msgstr "主数据"
-
-#. module: aop_sale
 #: selection:billable.file,invoice_product_type:0
 #: selection:sale.advance.payment.inv,invoice_product_type:0
 msgid "Main product"
@@ -2691,7 +2686,7 @@ msgid "Planned date"
 msgstr "计划日期"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:797
+#: code:addons/aop_sale/models/sale_order.py:805
 #, python-format
 msgid "Please wait until the VIN in stock. Any question, Contact administrator. "
 msgstr "请等待VIN码入库。任何问题，联系管理员。"
@@ -2988,11 +2983,6 @@ msgstr "关联对账数据"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__re_line_ids
 msgid "Re Line"
-msgstr ""
-
-#. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__real_location_id
-msgid "Real Location"
 msgstr ""
 
 #. module: aop_sale
@@ -3411,7 +3401,7 @@ msgstr "合同开始时间"
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_batch_number__state
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_search
 msgid "State"
-msgstr "状态"
+msgstr "省/ 州"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_invoice_order_statement
@@ -4198,7 +4188,7 @@ msgid "Write time"
 msgstr "更新时间"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:461
+#: code:addons/aop_sale/models/sale_order.py:469
 #: model:ir.actions.act_window,name:aop_sale.action_write_off_line_order_wizard
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #, python-format
@@ -4918,6 +4908,11 @@ msgid "supplier.contract.stock.rule.line"
 msgstr ""
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_aop_system_admin
+msgid "system_admin"
+msgstr "系统管理员组"
+
+#. module: aop_sale
 #: sql_constraint:res.company:0
 msgid "the code must be unique"
 msgstr "公司编码必须唯一"
@@ -5004,6 +4999,11 @@ msgid "xian office safety officer"
 msgstr "西安办事处/安全员"
 
 #. module: aop_sale
+#: model:res.groups,name:aop_sale.group_xinjiang_office_inside_job
+msgid "xinjiang office inside job"
+msgstr "新疆办事处/内勤"
+
+#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_in_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_out_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_sales_order_line_filter_inherit_aop_sale
@@ -5014,6 +5014,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_invoice_in_invoice_filter
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_account_tax_invoice_filter
 msgid "下月账期"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.main_data_menu_root
+msgid "主数据"
 msgstr ""
 
 #. module: aop_sale
@@ -5060,7 +5065,7 @@ msgid "本月"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:215
+#: code:addons/aop_sale/models/stock_picking_batch.py:238
 #, python-format
 msgid "测试"
 msgstr "向导"
