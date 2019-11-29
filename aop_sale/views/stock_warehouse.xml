@@ -16,6 +16,13 @@
                     <attribute name="invisible">1</attribute>
                 </xpath>
 
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="child_ids"
+                           widget="many2many_tags"
+                           readonly="1"
+                           options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                </xpath>
+
             </field>
         </record>
 
