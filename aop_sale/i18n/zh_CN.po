@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191118\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-28 16:59+0000\n"
-"PO-Revision-Date: 2019-11-28 16:59+0000\n"
+"POT-Creation-Date: 2019-11-29 05:03+0000\n"
+"PO-Revision-Date: 2019-11-29 05:03+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -400,7 +400,6 @@ msgstr "已支付的发票将记录银行账号。如果这是客户发票或供
 #: model:ir.actions.act_window,name:aop_sale.action_base_warehouse_view
 #: model:ir.model.fields,field_description:aop_sale.field_res_users__allow_base_warehouse_ids
 #: model:ir.ui.menu,name:aop_sale.base_warehouse_id
-#: model:ir.ui.menu,name:aop_sale.base_warehouse_manage
 msgid "Base"
 msgstr "基地办事处"
 
@@ -448,7 +447,6 @@ msgstr ""
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_purchase_batch_invoice_view
-#: model:ir.ui.menu,name:aop_sale.purchase_batch_invoice_id
 msgid "Batch invoice(purchase)"
 msgstr "付款结算批次"
 
@@ -476,7 +474,6 @@ msgstr "对账批次号"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_billable_file_view
-#: model:ir.ui.menu,name:aop_sale.billable_file_id
 msgid "Billable"
 msgstr "可结算数据"
 
@@ -769,7 +766,6 @@ msgstr "合同类型"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_contract_version_view
-#: model:ir.ui.menu,name:aop_sale.contract_version_menu_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_contract_version_tree
 msgid "Contract version"
 msgstr "合同版本号"
@@ -879,6 +875,7 @@ msgstr "创建税务发票"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__create_uid
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse_type__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__create_uid
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__create_uid
@@ -936,6 +933,7 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__create_date
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse_type__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__create_date
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__create_date
@@ -961,11 +959,6 @@ msgstr "币种"
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__current_picking_id
 msgid "Current picking task"
 msgstr ""
-
-#. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.customer_contract_manager_menu
-msgid "Custom contract manage"
-msgstr "客户合同管理"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
@@ -1007,13 +1000,11 @@ msgstr "客户结算价格错误"
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_customer_aop_contract_view
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__customer_contract_id
-#: model:ir.ui.menu,name:aop_sale.customer_contract_manager_menu_id
 msgid "Customer contract"
 msgstr "客户合同管理"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_customer_account_invoice_line_view
-#: model:ir.ui.menu,name:aop_sale.customer_account_invoice_line_id
 msgid "Customer invoice line"
 msgstr "回款结算清单行"
 
@@ -1192,6 +1183,7 @@ msgstr "调度任务"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__display_name
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse_type__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__display_name
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__display_name
@@ -1371,11 +1363,6 @@ msgid "Finance verify time"
 msgstr "财务核销时间"
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.financial_manager_menu
-msgid "Financial"
-msgstr "财务管理"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__fiscal_position_id
 msgid "Fiscal Position"
 msgstr "税科目调整"
@@ -1451,11 +1438,6 @@ msgid "Gives the sequence of this line when displaying the invoice."
 msgstr "按序列顺序显示发票."
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.goods_manager_menu
-msgid "Goods manage"
-msgstr "货物管理"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__goto_delivery_carrier_id
 msgid "Goto Contract Terms"
 msgstr "跳转到条款"
@@ -1487,7 +1469,6 @@ msgstr "交接单号"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_handover_vin_view
-#: model:ir.ui.menu,name:aop_sale.handover_vin_menu_id
 #: model:ir.ui.menu,name:aop_sale.handover_vin_sub_menu_id
 msgid "Handover VIN"
 msgstr "交接单管理"
@@ -1565,6 +1546,7 @@ msgstr "已月结!"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__id
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse_type__id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__id
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__id
@@ -1633,11 +1615,6 @@ msgid "Import name"
 msgstr ""
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.import_sale_order_wizard
-msgid "Import order"
-msgstr "导入临时订单"
-
-#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_import_sale_order_wizard_form
 msgid "Import orders"
 msgstr "导入临时订单"
@@ -1669,7 +1646,6 @@ msgid "Incoterms are series of sales terms. They are used to divide transaction 
 msgstr "贸易术语是一系列的销售术语，用来划分交易成本和买卖双方的责任，并反映运输方法的发展。"
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.insurance_manager_menu
 #: model:ir.ui.menu,name:aop_sale.insurance_manager_sub_menu
 msgid "Insurance"
 msgstr "保险管理"
@@ -1824,7 +1800,6 @@ msgstr "差异明细行"
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.account_invoice_no_tax_invoice_action
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_invoice_batch_no__invoice_no
-#: model:ir.ui.menu,name:aop_sale.account_invoice_no_tax_invoice_menu
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_tree
 msgid "Invoice no"
@@ -1971,6 +1946,7 @@ msgstr "公里数"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard____last_update
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse_type____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line____last_update
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation____last_update
@@ -2028,6 +2004,7 @@ msgstr "最后修改日"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__write_uid
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse_type__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__write_uid
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__write_uid
@@ -2086,6 +2063,7 @@ msgstr "最后更新者"
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__write_date
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse_type__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__write_date
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__write_date
@@ -2260,8 +2238,6 @@ msgstr "消息"
 #. module: aop_sale
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:222
 #: model:ir.actions.act_window,name:aop_sale.action_month_close_wizard_view
-#: model:ir.ui.menu,name:aop_sale.month_close_wizard_id
-#: model:ir.ui.menu,name:aop_sale.month_close_wizard_menu_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_month_close_wizard_form
 #, python-format
 msgid "Monthly"
@@ -2301,6 +2277,7 @@ msgstr "我的发票"
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_batch_invoice__name
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__name
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_lot__name
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse_type__name
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__name
 #: model:ir.model.fields,field_description:aop_sale.field_verify_batch_reconciliation__name
 #: model:ir.model.fields,field_description:aop_sale.field_write_off_batch_number__name
@@ -2457,7 +2434,6 @@ msgstr "调度/客户 订单类型"
 #: model:ir.actions.act_window,name:aop_sale.action_sale_order_line_view
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file_line__sale_order_line_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking__sale_order_line_id
-#: model:ir.ui.menu,name:aop_sale.sale_order_line_id
 msgid "Order line"
 msgstr "订单行"
 
@@ -2782,13 +2758,7 @@ msgid "Product Template"
 msgstr "产品模板"
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.menu_products
-msgid "Product Variant"
-msgstr "货物变体"
-
-#. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.product_vehicle_type_action_form
-#: model:ir.ui.menu,name:aop_sale.menu_product_vehicle_type_stock
 #: model_terms:ir.ui.view,arch_db:aop_sale.product_vehicle_type_list_view
 msgid "Product Vehicle Type"
 msgstr "车型类别"
@@ -2802,11 +2772,6 @@ msgstr "货物颜色"
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__product_fixed_price
 msgid "Product fixed price"
 msgstr ""
-
-#. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.product_manager_menu
-msgid "Product manage"
-msgstr "产品管理"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__product_model
@@ -2875,12 +2840,6 @@ msgid "Purchase fill data"
 msgstr "采购回填数据"
 
 #. module: aop_sale
-#: model:ir.actions.act_window,name:aop_sale.action_purchase_account_invoice_view
-#: model:ir.ui.menu,name:aop_sale.purchase_account_invoice_id
-msgid "Purchase invoice line"
-msgstr "付款结算清单行"
-
-#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_invoice_wizard_form
 msgid "Purchase orders"
 msgstr "采购订单"
@@ -2902,11 +2861,6 @@ msgstr "推"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_tree_inherit_tree
 msgid "Qty"
 msgstr "数量"
-
-#. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.mass_loss_manager_menu
-msgid "Quality Management"
-msgstr "质损管理"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.mass_loss_order_child_menu_order
@@ -2989,7 +2943,6 @@ msgstr ""
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
 #: model:ir.actions.act_window,name:aop_sale.action_reconciliation_file_view
-#: model:ir.ui.menu,name:aop_sale.reconciliation_file_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_reconciliation_file_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_reconciliation_file_lot_form
 msgid "Reconciliation"
@@ -3023,7 +2976,6 @@ msgstr "对账数据"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_reconciliation_file_line_view
-#: model:ir.ui.menu,name:aop_sale.reconciliation_file_line_id
 msgid "Reconciliation line"
 msgstr "对账数据行"
 
@@ -3036,7 +2988,6 @@ msgstr "对账数据"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_reconciliation_file_lot_view
-#: model:ir.ui.menu,name:aop_sale.reconciliation_file_lot_id
 msgid "Reconciliation lot"
 msgstr "校验对账数据"
 
@@ -3322,11 +3273,6 @@ msgid "Service product line"
 msgstr ""
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.service_product_manager_menu
-msgid "Service product manage"
-msgstr "服务产品管理"
-
-#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__service_product_id
 msgid "Service products"
 msgstr "服务产品"
@@ -3430,7 +3376,7 @@ msgstr "基于活动的状态 \n"
 " 计划：未来的活动。"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_warehouse.py:32
+#: code:addons/aop_sale/models/stock_warehouse.py:33
 #, python-format
 msgid "Stock"
 msgstr ""
@@ -3498,13 +3444,7 @@ msgid "Supplier contract"
 msgstr "供应商合同"
 
 #. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.supplier_contract_manager_menu
-msgid "Supplier contract manage"
-msgstr "供应商合同管理"
-
-#. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_supplier_account_invoice_view
-#: model:ir.ui.menu,name:aop_sale.supplier_account_invoice_id
 msgid "Supplier invoice line"
 msgstr "供应商结算清单"
 
@@ -3513,11 +3453,6 @@ msgstr "供应商结算清单"
 #, python-format
 msgid "Supplier invoice state must be no."
 msgstr "供应商发票不能重复登记"
-
-#. module: aop_sale
-#: model:ir.ui.menu,name:aop_sale.supplier_rate_manager_menu
-msgid "Supplier rate manage"
-msgstr "供应商合同管理"
 
 #. module: aop_sale
 #: model:ir.ui.menu,name:aop_sale.system_manager_menu
@@ -3581,8 +3516,6 @@ msgstr ""
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.account_tax_invoice_action
-#: model:ir.ui.menu,name:aop_sale.account_tax_invoice
-#: model:ir.ui.menu,name:aop_sale.account_tax_invoice_menu
 msgid "Tax invoice"
 msgstr "发票"
 
@@ -3869,6 +3802,7 @@ msgstr "触发其他规则"
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__insurance_type_id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_type_id
 #: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__package_type
+#: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__type_id
 msgid "Type"
 msgstr "类型"
 
@@ -4073,7 +4007,6 @@ msgstr "审核人"
 
 #. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_verify_batch_reconciliation
-#: model:ir.ui.menu,name:aop_sale.verify_batch_reconciliation_id
 msgid "Verify batch"
 msgstr "审核批次"
 
@@ -4117,6 +4050,12 @@ msgstr "体积"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_partner_form_inherit
 msgid "Warehouse"
 msgstr "仓库"
+
+#. module: aop_sale
+#: model:ir.actions.act_window,name:aop_sale.action_stock_warehouse_type_view
+#: model:ir.ui.menu,name:aop_sale.stock_warehouse_type_id
+msgid "Warehouse type"
+msgstr "仓库类型"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__transfer_way
@@ -4888,6 +4827,11 @@ msgid "stock.location.to.route.location.wizard"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.model,name:aop_sale.model_stock_warehouse_type
+msgid "stock.warehouse.type"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_supplier_aop_contract
 msgid "supplier aop contract"
 msgstr ""
@@ -5022,13 +4966,103 @@ msgid "主数据"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.handover_vin_menu_id
+msgid "交接单管理"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.product_manager_menu
+msgid "产品管理"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.purchase_batch_invoice_id
+msgid "付款结算批次"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.action_purchase_account_invoice_view
+#: model:ir.ui.menu,name:aop_sale.purchase_account_invoice_id
+msgid "付款结算清单行"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.supplier_contract_manager_menu
+#: model:ir.ui.menu,name:aop_sale.supplier_rate_manager_menu
+msgid "供应商合同管理"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.supplier_account_invoice_id
+msgid "供应商结算清单"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model,name:aop_sale.model_insurance_aop_contract
 msgid "保险合同"
 msgstr ""
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_insurance_management
+#: model:ir.ui.menu,name:aop_sale.insurance_manager_menu
 msgid "保险管理"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.account_tax_invoice
+#: model:ir.ui.menu,name:aop_sale.account_tax_invoice_menu
+msgid "发票"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.account_invoice_no_tax_invoice_menu
+msgid "发票批次"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.billable_file_id
+msgid "可结算数据"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.contract_version_menu_id
+msgid "合同版本号"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.customer_account_invoice_line_id
+msgid "回款结算清单行"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.base_warehouse_manage
+msgid "基地办事处"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.verify_batch_reconciliation_id
+msgid "审核批次"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.customer_contract_manager_menu
+#: model:ir.ui.menu,name:aop_sale.customer_contract_manager_menu_id
+msgid "客户合同管理"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.reconciliation_file_line_id
+msgid "对帐数据行"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.reconciliation_file_id
+msgid "对账数据"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.import_sale_order_wizard
+msgid "导入临时订单"
 msgstr ""
 
 #. module: aop_sale
@@ -5039,8 +5073,19 @@ msgid "当天"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.month_close_wizard_id
+#: model:ir.ui.menu,name:aop_sale.month_close_wizard_menu_id
+msgid "月结"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.product_template_action_service_product
 msgid "服务产品"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.service_product_manager_menu
+msgid "服务产品管理"
 msgstr ""
 
 #. module: aop_sale
@@ -5065,14 +5110,29 @@ msgid "本月"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:238
+#: model:ir.ui.menu,name:aop_sale.reconciliation_file_lot_id
+msgid "校验对帐数据"
+msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/stock_picking_batch.py:239
 #, python-format
 msgid "测试"
 msgstr "向导"
 
 #. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.sale_order_line_id
+msgid "订单行"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.actions.act_window,name:aop_sale.action_dispatch_order
 msgid "调度订单"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.financial_manager_menu
+msgid "财务管理"
 msgstr ""
 
 #. module: aop_sale
@@ -5081,8 +5141,28 @@ msgid "货物"
 msgstr ""
 
 #. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.menu_products
+msgid "货物变体"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.goods_manager_menu
+msgid "货物管理"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.mass_loss_manager_menu
+msgid "质损管理"
+msgstr ""
+
+#. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_location_route_form_view_inherit
 msgid "路由"
+msgstr ""
+
+#. module: aop_sale
+#: model:ir.ui.menu,name:aop_sale.menu_product_vehicle_type_stock
+msgid "车型类别"
 msgstr ""
 
 #. module: aop_sale
