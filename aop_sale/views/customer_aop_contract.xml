@@ -18,7 +18,8 @@
 
                     <field name="name"/>
                     <field name="serial_number"/>
-                    <field name="version_id"/>
+                    <field name="contract_version"/>
+<!--                    <field name="version_id"/>-->
                     <field name="date_start"/>
                     <field name="date_end"/>
 
@@ -67,7 +68,8 @@
                                        domain="[('customer', '=', True)]"
                                        options="{'no_quick_create': True, 'no_create_edit': True}"/>
                                 <field name="serial_number"/>
-                                <field name="version_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
+<!--                                <field name="version_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>-->
+                                <field name="contract_version"/>
                                 <field name="serial_no"/>
                                 <field name="is_formal"/>
                                 <field name="project_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>

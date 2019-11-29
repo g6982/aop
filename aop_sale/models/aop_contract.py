@@ -10,10 +10,12 @@ class AopContract(models.Model):
     _name = 'aop.contract'
     _inherit = ['mail.thread']
     _description = 'AOP contract'
+    _order = 'contract_version desc'
 
     name = fields.Char('name', required=True)
     partner_id = fields.Many2one('res.partner', 'Partner')
     serial_number = fields.Char(string='Contract number')
+    contract_version = fields.Float(string='Version', default=0.1)
     version_id = fields.Many2one('contract.version', string="Version")
     serial_no = fields.Char(string='Contract no')
     is_formal = fields.Boolean(string='Contract', default=True)
@@ -99,6 +101,16 @@ class AopContract(models.Model):
     #         'delivery_carrier_ids': data
     #     })
     #     return res
+
+    # 复制后，更改为正式合同
+    @api.multi
+    def copy(self, default=None):
+        res = super(AopContract, self).copy(default=default)
+        for line in res:
+            line.write({
+                'contract_version': line.contract_version + 0.1 if line.contract_version else 0.1
+            })
+        return res
 
 
 class ContractVersion(models.Model):

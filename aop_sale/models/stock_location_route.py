@@ -29,8 +29,9 @@ class StockLocationRoute(models.Model):
         partner_id = self._context.get('sale_filter_route_id_by_partner')
         if partner_id:
             contract = self.env['customer.aop.contract'].search([
-                ('partner_id', '=', partner_id)
-            ])
+                ('partner_id', '=', partner_id),
+                ('contract_version', '!=', 0)
+            ], limit=1)
             _route_ids = []
 
             for line in contract.delivery_carrier_ids:

@@ -38,3 +38,4 @@ from . import write_off_batch_number        # 核销批次号
 from . import purchase_batch_invoice
 from . import insurance_aop_contract
 from . import stock_warehouse_type
+from . import res_users_type

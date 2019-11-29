@@ -474,8 +474,9 @@ class SaleOrder(models.Model):
     # TODO： fix me 需要加上时间的维度
     def _fetch_customer_contract(self, res):
         res = self.env['customer.aop.contract'].search([
-            ('partner_id', '=', res.partner_id.id)
-        ])
+            ('partner_id', '=', res.partner_id.id),
+            ('contract_version', '!=', 0)
+        ], limit=1)
         return res[0] if res else False
 
     def _transfer_district_to_location(self, partner_id, patch=False):

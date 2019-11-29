@@ -7,7 +7,7 @@
                   name="Main Data"
                   web_icon="base,static/description/settings.png"
                   sequence="-100"
-                  groups="aop_sale.group_aop_system_admin"
+                  groups="aop_sale.group_main_data_manager"
         />
 
         <!-- 一级菜单 -->

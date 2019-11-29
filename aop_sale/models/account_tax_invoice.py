@@ -51,11 +51,11 @@ class AccountTaxInvoice(models.Model):
 
     # 客户合同 / 供应商合同， 账期
     def get_contract_period_month(self, invoice_id):
-        search_domain = [('partner_id', '=', invoice_id.partner_id.id)]
+        search_domain = [('partner_id', '=', invoice_id.partner_id.id), ('contract_version', '!=', 0)]
         if invoice_id.type == 'out_invoice':
-            res = self.env['customer.aop.contract'].search(search_domain)
+            res = self.env['customer.aop.contract'].search(search_domain, limit=1)
         elif invoice_id.type == 'in_invoice':
-            res = self.env['supplier.aop.contract'].search(search_domain)
+            res = self.env['supplier.aop.contract'].search(search_domain, limit=1)
         return res[0].period_month if res else 0
 
     # 获取下一个值

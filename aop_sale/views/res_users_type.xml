@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_res_users_type_form_view" model="ir.ui.view">
+            <field name="name">res.users.type form</field>
+            <field name="model">res.users.type</field>
+            <field name="arch" type="xml">
+
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+
+            </field>
+        </record>
+
+        <record id="action_res_users_type_view" model="ir.actions.act_window">
+            <field name="name">User type</field>
+            <field name="res_model">res.users.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="res_users_type_id"
+                  name="User type"
+                  action="action_res_users_type_view"
+                  parent="base.menu_users"
+                  sequence="40"
+        />
+    </data>
+</odoo>
