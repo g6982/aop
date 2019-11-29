@@ -4055,7 +4055,7 @@ msgstr "仓库"
 #: model:ir.actions.act_window,name:aop_sale.action_stock_warehouse_type_view
 #: model:ir.ui.menu,name:aop_sale.stock_warehouse_type_id
 msgid "Warehouse type"
-msgstr ""
+msgstr "仓库类型"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__transfer_way
