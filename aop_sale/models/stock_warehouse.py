@@ -25,6 +25,7 @@ class Warehouse(models.Model):
     code = fields.Char('Short Name', required=True, size=20, help="Short name used to identify your warehouse")
 
     company_id = fields.Many2one(readonly=False, required=False)
+    type_id = fields.Many2one('stock.warehouse.type', 'Type')
 
     def _get_locations_values(self, vals):
         res = super(Warehouse, self)._get_locations_values(vals)

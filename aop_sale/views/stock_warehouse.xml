@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+    <data>
         <record id="view_warehouse_inherit_aop_sale" model="ir.ui.view">
             <field name="name">Stock Warehouse Inherit aop sale</field>
             <field name="model">stock.warehouse</field>
@@ -8,15 +9,27 @@
 
                 <xpath expr="//field[@name='code']" position="after">
                     <field name="parent_id"/>
-
+                    <field name="type_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                 </xpath>
 
                 <xpath expr="//group[@name='group_resupply']" position="attributes">
                     <attribute name="invisible">1</attribute>
-
                 </xpath>
 
             </field>
         </record>
 
+        <record id="view_warehouse_tree_inherit_view" model="ir.ui.view">
+            <field name="name">Stock Warehouse Inherit aop sale tree</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="type_id"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
 </odoo>
