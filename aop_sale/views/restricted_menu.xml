@@ -211,4 +211,10 @@
         <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
     </record>
 
+    <!-- 对所有用户隐藏“结算清单->发票/供应商发票登记”菜单 -->
+    <record id="aop_sale.account_purchase_invoice_batch_no_menu" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ref('group_hide_menus')])]"/>
+    </record>
+
+
 </odoo>
