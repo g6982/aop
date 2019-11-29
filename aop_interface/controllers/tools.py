@@ -73,12 +73,13 @@ def validate_token(func):
         request.session.db = config.get('interface_db_name')
 
         """."""
+        access_token = request.httprequest.headers.get("access_token")
         _logger.info({
             'args': args,
             'kwargs': kwargs,
-            'func': func
+            'func': func,
+            'access_token': access_token
         })
-        access_token = request.httprequest.headers.get("access_token")
         if not access_token:
             return invalid_response(
                 "access_token_not_found", "missing access token in request header", 401
