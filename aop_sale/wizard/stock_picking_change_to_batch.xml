@@ -9,7 +9,9 @@
                     <group>
                         <group>
                             <separator string="Select a location"/>
+                            <field name="all_location_ids" invisible="1"/>
                             <field name="to_location_id" class="oe_inline" required="1"
+                                   domain="[('id', 'in', all_location_ids)]"
                                    options="{'no_create_edit': True, 'no_open': True}"/>
                         </group>
                         <group>

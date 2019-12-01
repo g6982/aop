@@ -17,14 +17,27 @@ class StockPickingChangeToBatch(models.TransientModel):
     picking_type_id = fields.Many2one('stock.picking.type', 'Picking type')
     partner_id = fields.Many2one('res.partner', 'Partner')
 
-    # @api.model
-    # def default_get(self, fields_list):
-    #     res = super(StockPickingChangeToBatch, self).default_get(fields_list)
-    #     if self.env.context.get('active_ids'):
-    #         res.update({
-    #             'picking_ids': [(6, 0, self.env.context.get('active_ids'))]
-    #         })
-    #     return res
+    all_location_ids = fields.Many2many('stock.location', string='domain')
+
+    @api.model
+    def default_get(self, fields_list):
+        res = super(StockPickingChangeToBatch, self).default_get(fields_list)
+        if self.env.context.get('active_ids'):
+            res.update({
+                'picking_ids': [(6, 0, self.env.context.get('active_ids'))]
+            })
+            picking_ids = self.env['stock.picking'].browse(self.env.context.get('active_ids'))
+            location_ids = picking_ids.mapped('location_id')
+            location_ids = list(set(location_ids.ids))
+
+            # 同一个总库
+            all_location_ids = self.env['stock.location'].search([
+                ('location_id', 'in', location_ids)
+            ])
+            res.update({
+                'all_location_ids': [(6, 0, all_location_ids.ids)]
+            })
+        return res
 
     # 验证数据，只能选择同一个源和目的地的数据
     def _validate_choose_picking(self, picking_ids):
