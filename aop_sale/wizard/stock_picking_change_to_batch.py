@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 class StockPickingChangeToBatch(models.TransientModel):
     _name = 'stock.picking.change.to.batch'
 
-    picking_ids = fields.Many2many('stock.picking', 'Picking')
+    picking_ids = fields.Many2many('stock.picking', string='Picking')
     to_location_id = fields.Many2one('stock.location', 'Change to location')
 
     picking_type_id = fields.Many2one('stock.picking.type', 'Picking type')
