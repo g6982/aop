@@ -166,8 +166,9 @@ class ApiInterface(http.Controller):
     def _done_picking(self, data):
         request.session.db = config.get('interface_db_name')
 
-        # res = request.env['done.picking.log'].sudo().create(data)
-        # return res
+        # 正常创建
+        res = request.env['done.picking.log'].sudo().create(data)
+        return res
 
         username = config.misc.get("celery", {}).get('user_name')
         password = config.misc.get("celery", {}).get('user_password')
