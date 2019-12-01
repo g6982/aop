@@ -11,6 +11,6 @@ from . import purchase_invoice
 from . import stock_location_to_route_location
 from . import package_reconciliation_verify
 from . import batch_purchase_invoice_line
-
+from . import stock_picking_change_to_batch
 
 

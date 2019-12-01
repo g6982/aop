@@ -55,6 +55,7 @@
         'views/write_off_batch_view.xml',
         'views/dispatch_order.xml',
         'views/stock_warehouse_type.xml',
+        'views/res_users_type.xml',
         'views/insurance_aop_contract.xml',
         'wizard/account_tax_invoice_wizard.xml',
         'wizard/change_stock_picking.xml',
@@ -68,6 +69,7 @@
         'wizard/stock_location_to_route_location.xml',
         'wizard/package_reconciliation.xml',
         'wizard/batch_purchase_invoice_line.xml',
+        'wizard/stock_picking_change_to_batch.xml',
         'report/report_statement.xml',
     ],
 }

@@ -47,13 +47,39 @@ class StockRule(models.Model):
         # _logger.info({
         #     'stock_quant_id': stock_quant_id
         # })
-        return stock_quant_id.location_id.id if stock_quant_id else False
+        return stock_quant_id.location_id if stock_quant_id else False
+
+    # 获取上级仓库的位置
+    # 可以根据上级仓库，即总库来截断路由
+    def _get_parent_warehouse_location_id(self, product_stock_id):
+        warehouse_id = self.env['stock.warehouse'].search([
+            ('lot_stock_id', '=', product_stock_id.id)
+        ])
+        if not warehouse_id.parent_id if warehouse_id else False:
+            return False
+        parent_warehouse_location_id = warehouse_id.parent_id.lot_stock_id
+
+        return parent_warehouse_location_id
 
     def _run_pull(self, product_id, product_qty, product_uom, location_id, name, origin, values):
+        # 货物在库存的位置
+        # FIXME： 需要根据上级来判断么？
         product_stock_id = self._get_product_stock_location(product_id, values.get('vin_id', False))
-        if location_id.id == product_stock_id if product_stock_id else False:
+
+        # 根据库存的位置和路由的规则，进行截断
+        if location_id.id == product_stock_id.id if product_stock_id else False:
             _logger.info({
-                'date_plannedvalues': values.get('date_planned')
+                'split stock location route': product_stock_id
+            })
+            return True
+
+        parent_location_id = self._get_parent_warehouse_location_id(product_stock_id)
+
+        # 总库截断，任务详情，使用子库下面的位置
+        # 根据库存的上级位置（总库）和路由的规则，进行截断
+        if location_id.id == parent_location_id.id if parent_location_id else False:
+            _logger.info({
+                'split stock location route': parent_location_id
             })
             return True
 

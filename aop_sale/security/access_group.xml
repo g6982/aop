@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <data noupdate="1">
+    <data noupdate="0">
         <record model="ir.module.category" id="module_aop_sale">
             <field name="name">AOP</field>
             <field name="sequence">1000</field>
@@ -17,49 +17,35 @@
             <field name="sequence">1010</field>
         </record>
 
-        <!--
-        <record id="group_aop_sale_customers" model="res.groups">
-            <field name="name">Order</field>
-            <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-        </record>
-        -->
-
-        <!--
-        <record id="group_aop_sale_scheduling" model="res.groups">
-            <field name="name">Draft order</field>
-            <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-        </record>
-        -->
-
-        <!--  调度订单,功能已废弃  -->
-        <!--
-        <record id="group_dispatch_right" model="res.groups">
-            <field name="name">Dispatch</field>
-            <field name="category_id" ref="base.module_category_sales_management"/>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-        </record>
-        -->
 
         <!--                    信息管理部  Begin                     -->
 
 
+        <record model="ir.module.category" id="module_aop_sale_it_manager">
+            <field name="name">IT</field>
+        </record>
+
         <!--  信息管理部/副经理  -->
         <record id="group_information_management_assistant_manager" model="res.groups">
             <field name="name">information_management_assistant_manager</field>
-            <field name="category_id" ref="module_aop_sale"/>
+            <field name="category_id" ref="module_aop_sale_it_manager"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <!--  信息管理部/总监  -->
         <record id="group_information_management_majordomo" model="res.groups">
             <field name="name">information management majordomo</field>
-            <field name="category_id" ref="module_aop_sale"/>
+            <field name="category_id" ref="module_aop_sale_it_manager"/>
             <field name="implied_ids" eval="[(4, ref('group_information_management_assistant_manager'))]"/>
         </record>
 
+
         <!--                    信息管理部  End                     -->
+
+
+        <record model="ir.module.category" id="module_aop_sale_dispatch_manager">
+            <field name="name">Dispatch</field>
+        </record>
 
         <!--                     调度中心  Begin                     -->
 
@@ -67,40 +53,41 @@
         <!--  调度中心/值班员  -->
         <record id="group_dispatch_duty_staffer" model="res.groups">
             <field name="name">dispatch duty staffer</field>
-            <field name="category_id" ref="module_aop_sale"/>
+            <field name="category_id" ref="module_aop_sale_dispatch_manager"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <!--  调度中心/OTD管理员兼材料管理员  -->
         <record id="group_dispatch_otd_and_material_manager" model="res.groups">
             <field name="name">dispatch otd and material manager</field>
-            <field name="category_id" ref="module_aop_sale"/>
+            <field name="category_id" ref="module_aop_sale_dispatch_manager"/>
             <field name="implied_ids" eval="[(4, ref('group_dispatch_duty_staffer'))]"/>
         </record>
 
         <!--  调度中心/长安福特项目客服员  -->
         <record id="group_dispatch_changanfute_customer" model="res.groups">
             <field name="name">dispatch changanfute customer</field>
-            <field name="category_id" ref="module_aop_sale"/>
+            <field name="category_id" ref="module_aop_sale_dispatch_manager"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <!--  调度中心/网络项目客服员  -->
         <record id="group_dispatch_network_customer" model="res.groups">
             <field name="name">dispatch network customer</field>
-            <field name="category_id" ref="module_aop_sale"/>
+            <field name="category_id" ref="module_aop_sale_dispatch_manager"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <!--  调度中心/副部长  -->
         <record id="group_dispatch_undersecretary" model="res.groups">
             <field name="name">dispatch undersecretary</field>
-            <field name="category_id" ref="module_aop_sale"/>
+            <field name="category_id" ref="module_aop_sale_dispatch_manager"/>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
 
         <!--                    调度中心  End                       -->
+
 
         <!--                    财务部门  Begin                     -->
 
@@ -206,6 +193,11 @@
             <field name="comment">Restricted Menus Group</field>
         </record>
 
+        <!--        主数据: 针对主数据这个顶级菜单-->
+        <record id="group_main_data_manager" model="res.groups">
+            <field name="name">Main data manager</field>
+        </record>
+
         <!--    采购单回填VIN    -->
         <record id="group_purchase_fill_vin_product" model="res.groups">
             <field name="name">Purchase fill data</field>
@@ -221,7 +213,6 @@
         <!--    系统管理员组    -->
         <record id="group_aop_system_admin" model="res.groups">
             <field name="name">system_admin</field>
-
         </record>
 
         <!-- ************************** 记录规则组 **************************  -->
@@ -350,10 +341,14 @@
         </record>
 
 
+        <record model="ir.module.category" id="module_aop_sale_invoice_customer">
+            <field name="name">Invoice(customer)</field>
+        </record>
+
         <!--    结算清单/客户/回款结算清单/创建税务发票    -->
         <record id="group_generate_tax_invoice_button" model="res.groups">
             <field name="name">generate tax invoice button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_customer"/>
         </record>
 
 
@@ -361,94 +356,98 @@
         <!--    结算清单/客户/回款结算清单/验证    -->
         <record id="group_action_invoice_open_button" model="res.groups">
             <field name="name">generate action invoice open button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_customer"/>
         </record>
 
         <!--    结算清单/客户/回款结算清单/重置为草稿    -->
         <record id="group_action_invoice_draft_button" model="res.groups">
             <field name="name">generate action invoice draft button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_customer"/>
         </record>
 
         <!--    结算清单/客户/回款结算清单/取消    -->
         <record id="group_action_invoice_cancel_button" model="res.groups">
             <field name="name">generate action invoice cancel button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_customer"/>
         </record>
 
         <!--    结算清单/客户/回款结算清单/审核    -->
         <record id="group_verify_reconciliation_button" model="res.groups">
             <field name="name">generate verify reconciliation button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_customer"/>
         </record>
 
         <!--    结算清单/客户/回款结算清单/取消审核    -->
         <record id="group_cancel_verify_reconciliation_button" model="res.groups">
             <field name="name">generate cancel verify reconciliation button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_customer"/>
         </record>
 
         <!--    结算清单/客户/对账数据/生成对账批次号    -->
         <record id="group_package_reconciliation_file_button" model="res.groups">
             <field name="name">package reconciliation file button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_customer"/>
         </record>
 
         <!--    结算清单/客户/对账批次/生成审核批次    -->
         <record id="group_verify_reconciliation_file_button" model="res.groups">
             <field name="name">verify reconciliation file button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_customer"/>
         </record>
 
         <!--    结算清单/客户/对账批次/确认    -->
         <record id="group_confirm_account_invoice_button" model="res.groups">
             <field name="name">confirm_account_invoice button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_customer"/>
         </record>
 
         <!--    结算清单/客户/审核批次/创建税务发票    -->
         <record id="group_verify_generate_tax_invoice_button" model="res.groups">
             <field name="name">verify generate tax invoice button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_customer"/>
         </record>
 
         <!--    结算清单/客户/审核批次/审核批次    -->
         <record id="group_verify_account_invoice_button" model="res.groups">
             <field name="name">verify account invoice button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_customer"/>
         </record>
 
 
+<!--        结算清单分类-->
 
+        <record model="ir.module.category" id="module_aop_sale_invoice_supplier">
+            <field name="name">Invoice(supplier)</field>
+        </record>
 
         <!--    结算清单/供应商/付款结算清单/验证    -->
         <record id="group_supplier_action_invoice_open_button" model="res.groups">
             <field name="name">generate supplier action invoice open button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_supplier"/>
         </record>
 
         <!--    结算清单/供应商/付款结算清单/设为草稿    -->
         <record id="group_supplier_action_invoice_draft_button" model="res.groups">
             <field name="name">generate supplier action invoice draft button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_supplier"/>
         </record>
 
         <!--    结算清单/供应商/付款结算清单/取消    -->
         <record id="group_supplier_action_invoice_cancel_button" model="res.groups">
             <field name="name">generate supplier action invoice cancel button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_supplier"/>
         </record>
 
         <!--    结算清单/供应商/付款结算清单/审核    -->
         <record id="group_supplier_verify_reconciliation_button" model="res.groups">
             <field name="name">generate supplier verify reconciliation button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_supplier"/>
         </record>
 
         <!--    结算清单/供应商/付款结算清单/取消审核    -->
         <record id="group_supplier_cancel_verify_reconciliation_button" model="res.groups">
             <field name="name">generate supplier cancel verify reconciliation button</field>
-            <field name="category_id" ref="module_aop_sale_others"/>
+            <field name="category_id" ref="module_aop_sale_invoice_supplier"/>
         </record>
 
 

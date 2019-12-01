@@ -37,3 +37,4 @@ access_purchase_batch_invoice_line,access_purchase_batch_invoice_line,model_purc
 access_insurance_aop_contract,access_insurance_aop_contract,model_insurance_aop_contract,base.group_user,1,1,1,1
 access_insurance_aop_contract_line,access_insurance_aop_contract_line,model_insurance_aop_contract_line,base.group_user,1,1,1,1
 access_stock_warehouse_type,access_stock_warehouse_type,model_stock_warehouse_type,base.group_user,1,1,1,1
+access_res_users_type,access_res_users_type,model_res_users_type,base.group_user,1,1,1,1

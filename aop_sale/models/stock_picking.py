@@ -18,6 +18,8 @@ class StockPicking(models.Model):
     picking_incoming_number = fields.Integer('Picking incoming number')
     is_must_mount_car = fields.Boolean(string='Is must mount car', default=False)
 
+    real_stock_location_id = fields.Many2one('stock.location', 'Real stock location')
+
     def match_sale_order(self):
         return self._match_sale_order()
 

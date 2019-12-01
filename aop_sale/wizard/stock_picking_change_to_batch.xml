@@ -6,11 +6,28 @@
             <field name="model">stock.picking.change.to.batch</field>
             <field name="arch" type="xml">
                 <form string="Add pickings to batch">
-                    <separator string="Select a batch"/>
-                    <field name="batch_id" class="oe_inline" required="1"
-                           options="{'no_create_edit': True, 'no_open': True}"/>
+                    <group>
+                        <group>
+                            <separator string="Select a location"/>
+                            <field name="to_location_id" class="oe_inline" required="1"
+                                   options="{'no_create_edit': True, 'no_open': True}"/>
+                        </group>
+                        <group>
+                            <separator string="Select a supplier"/>
+                            <field name="partner_id" class="oe_inline" required="1"
+                                   options="{'no_create_edit': True, 'no_open': True}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="picking_type_id"
+                                   options="{'no_create_edit': True, 'no_open': True}" required="1"/>
+                        </group>
+                    </group>
+
                     <footer>
-                        <button name="attach_pickings" type="object" string="Add to Batch" class="btn-primary"/>
+                        <button name="change_and_attach_pickings" type="object" string="Change and Batch"
+                                class="btn-primary"/>
                         <button string="Cancel" class="btn-secondary" special="cancel"/>
                     </footer>
                 </form>
