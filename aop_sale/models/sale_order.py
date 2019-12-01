@@ -782,8 +782,8 @@ class SaleOrder(models.Model):
                 line_id._fill_order_line_vin_id()
 
         # 判断。如果判断的结果是存在VIN不在路由上的。则先进行调度
-        # if self.dispatch_or_not():
-        #     return self.change_vin_location_to_route()
+        if self.dispatch_or_not():
+            return self.change_vin_location_to_route()
 
         # 如果一个VIN都没有。不运行
         vin_order_ids = self.mapped('order_line').filtered(lambda x: not x.vin)
@@ -880,14 +880,18 @@ class SaleOrder(models.Model):
                 route_location_ids = line.route_id.rule_ids.mapped('location_src_id').ids
 
                 if from_location_id.id != stock_location_id.location_id.id and stock_location_id.location_id.id not in route_location_ids:
-                    return True
-
+                    # 库存的上级位置
+                    if stock_location_id.location_id.location_id.id not in route_location_ids if stock_location_id.location_id.location_id else False:
+                        return True
         return False
 
     # 截断的生成任务后，路由设置到总库，出库的时候，判断是否使用子库的库存
     def patch_sale_order_picking_assign_picking(self, order):
         for line_id in order.order_line:
 
+            if not line_id.stock_picking_ids:
+                continue
+                
             # 获取到最后一条记录，只需要处理，状态 state == 'waiting'
             # 排序，取最后一条记录
             last_picking_id = line_id.stock_picking_ids.sorted(lambda x: x.id)[0]
@@ -927,4 +931,7 @@ class SaleOrder(models.Model):
                     'procure_method': 'make_to_stock'
                 })
             # 检查预留
+            last_picking_id.write({
+                'real_stock_location_id': real_stock_location.id
+            })
             last_picking_id.action_assign()
