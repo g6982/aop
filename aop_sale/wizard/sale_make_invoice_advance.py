@@ -295,6 +295,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
             #     'monthly_confirm_invoice') else 0
             tmp_estimate = sale_id.delivery_carrier_id.fixed_price if self.period_id else 0
             contract_price = self._get_contract_price(sale_id)
+            contract_id = self._get_latest_contract_id(sale_id)
             for product_id in product_ids:
                 tmp = invoice_data
                 account_id = self._get_account_id(product_id)
@@ -313,7 +314,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         'invoice_line_tax_ids': [(6, 0, product_id.taxes_id.ids)],
                         'analytic_tag_ids': False,
                         'account_analytic_id': False,
-                        'tmp_estimate': tmp_estimate
+                        'tmp_estimate': tmp_estimate,
+                        'customer_aop_contract_id': contract_id.id if contract_id else False
                         # 'customer_price': contract_price
                     })],
                 })
@@ -332,6 +334,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
             account_id = self._get_account_id(line_id.service_product_id, order=sale_order_id)
             contract_price = self._get_contract_price(line_id)
+            contract_id = self._get_latest_contract_id(line_id)
             # tmp_estimate = line_id.delivery_carrier_id.fixed_price if self._context.get('monthly_confirm_invoice') else 0
             tmp_estimate = line_id.delivery_carrier_id.fixed_price if self.period_id else 0
             line_data.append((0, 0, {
@@ -349,7 +352,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 'invoice_line_tax_ids': [(6, 0, line_id.tax_id.ids)],
                 'analytic_tag_ids': [(6, 0, line_id.analytic_tag_ids.ids)],
                 'account_analytic_id': sale_order_id.analytic_account_id.id or False,
-                'tmp_estimate': tmp_estimate
+                'tmp_estimate': tmp_estimate,
+                'customer_aop_contract_id': contract_id.id if contract_id else False
                 # 'customer_price': contract_price
             }))
 
@@ -376,8 +380,50 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 (service_product_id.name,))
         return account_id
 
+    # 获取位置
+    def _transfer_district_to_location(self, partner_id):
+        return partner_id.property_stock_customer
+
+    # 查找最新的合同版本
+    def _get_latest_contract_id(self, line_id):
+        partner_id = getattr(line_id, 'order_partner_id')
+
+        if not partner_id:
+            partner_id = getattr(line_id, 'partner_id')
+
+        res = self.env['customer.aop.contract'].search([
+            ('partner_id', '=', partner_id.id),
+            ('contract_version', '!=', 0)
+        ], limit=1)
+        return res
+
+    def _get_latest_carrier_id(self, contract_id, order_line_id):
+        contract_line_ids = contract_id.mapped('delivery_carrier_ids')
+
+        from_location_id = self._transfer_district_to_location(order_line_id.from_location_id)
+        to_location_id = self._transfer_district_to_location(order_line_id.to_location_id)
+
+        for line_id in contract_line_ids:
+            # 判断路由，来源地，目的地
+            if from_location_id.id == line_id.from_location_id.id and \
+                    to_location_id.id == line_id.to_location_id.id and order_line_id.route_id.id == line_id.route_id.id:
+                # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
+                carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
+                return carrier_id
+
     # 合同价格
+    # TODO: 需要获取最新的合同,同时需要合同和版本号，需要显示在结算清单行上面
     def _get_contract_price(self, line_id):
+        # 获取最新的合同
+        latest_contract_id = self._get_latest_contract_id(line_id)
+
+        if latest_contract_id:
+            latest_carrier_id = self._get_latest_carrier_id(latest_contract_id, line_id)
+
+            # 使用最新的条款的价格
+            if latest_carrier_id:
+                return latest_carrier_id.fixed_price
+
         return line_id.delivery_carrier_id.fixed_price
 
     # 生成结算清单的时候。去匹配一次对帐数据

@@ -32,7 +32,8 @@ class AopContract(models.Model):
         ],
         string='Contract type',
         default='buyer')
-    delivery_carrier_ids = fields.One2many('delivery.carrier', 'contract_id', string="Contract terms")
+    delivery_carrier_ids = fields.One2many('delivery.carrier', 'contract_id', copy=True,
+                                           string="Contract terms")
     aging = fields.Float('Aging(day)', default=1)
     contract_rule_ids = fields.One2many('contract.stock.rule.line', 'rule_contract_id', 'Contract rule line')
 
@@ -105,11 +106,18 @@ class AopContract(models.Model):
     # 复制后，更改为正式合同
     @api.multi
     def copy(self, default=None):
-        res = super(AopContract, self).copy(default=default)
-        for line in res:
-            line.write({
-                'contract_version': line.contract_version + 0.1 if line.contract_version else 0.1
+        self.ensure_one()
+        data = self.copy_data()
+        for line_data in data:
+            line_data.update({
+                'contract_version': line_data.get('contract_version') + 0.1 if line_data.get('contract_version') else 0.1
             })
+            # 条款行
+            for line in line_data.get('delivery_carrier_ids'):
+                line[2].update({
+                    'name': str(line_data.get('contract_version')) + '/' + line[2].get('name') if line_data.get('contract_version') else str(0.1) + '/' + line[2].get('name')
+                })
+        res = super(AopContract, self).copy(default=data[0])
         return res
 
 

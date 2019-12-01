@@ -59,6 +59,16 @@ class DeliveryCarrier(models.Model):
 
     brand_id = fields.Many2one('fleet.vehicle.model.brand', 'Brand')
 
+    @api.multi
+    def copy(self, default=None):
+        res = super(DeliveryCarrier, self).copy(default=default)
+        for line in self:
+            _logger.info({
+                'customer_contract_id': line.customer_contract_id
+            })
+            line.name = line.name + str(1)
+        return res
+
     @api.onchange('from_location_id', 'to_location_id')
     def domain_route_ids(self):
         if self.from_location_id and self.to_location_id:

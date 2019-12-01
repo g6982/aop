@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="write_back_account_invoice_line_form" model="ir.ui.view">
+            <field name="name">write.back.account.invoice.line.form</field>
+            <field name="model">write.back.account.invoice.line</field>
+            <field name="arch" type="xml">
+                <form string="Write back">
+                    <footer>
+                        <button name="write_back" type="object" string="Write back"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="write_back_account_invoice_line_action" model="ir.actions.act_window">
+            <field name="name">Write back"</field>
+            <field name="res_model">stock.picking.change.to.batch</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="stock_picking_change_to_batch_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <act_window id="write_back_account_invoice_line_id"
+                    multi="True"
+                    key2="client_action_multi" name="Write back"
+                    res_model="write.back.account.invoice.line" src_model="account.invoice.line"
+                    view_mode="form" target="new" view_type="form"
+        />
+
+    </data>
+</odoo>

@@ -378,6 +378,17 @@ class AccountInvoiceLine(models.Model):
 
     price_diff = fields.Boolean('Price Diff', compute='_compute_price_diff', store=True, default=False)
 
+    # 客户合同
+    customer_aop_contract_id = fields.Many2one('customer.aop.contract', 'Customer contract')
+    customer_aop_contract_version = fields.Float(related='customer_aop_contract_id.contract_version')
+
+    # 合同条款
+    delivery_carrier_id = fields.Many2one('delivery.carrier', 'Carrier')
+
+    # 供应商合同
+    supplier_aop_contract_id = fields.Many2one('supplier.aop.contract', 'Supplier contract')
+    supplier_aop_contract_version = fields.Float(related='supplier_aop_contract_id.contract_version')
+
     @api.multi
     @api.depends('price_unit', 'contract_price', 'purchase_line_price')
     def _compute_price_diff(self):
