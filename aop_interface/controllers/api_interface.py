@@ -176,6 +176,9 @@ class ApiInterface(http.Controller):
         model_name = 'done.picking.log'
         method_name = 'create'
 
+        _logger.info({
+            'data': data
+        })
         # 放进celery 队列
         aop_receive_from_wms.delay(
             url=url,

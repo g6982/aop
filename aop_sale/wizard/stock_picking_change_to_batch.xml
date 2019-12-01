@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="stock_picking_change_to_batch_form" model="ir.ui.view">
+            <field name="name">stock.picking.change.to.batch.form</field>
+            <field name="model">stock.picking.change.to.batch</field>
+            <field name="arch" type="xml">
+                <form string="Add pickings to batch">
+                    <separator string="Select a batch"/>
+                    <field name="batch_id" class="oe_inline" required="1"
+                           options="{'no_create_edit': True, 'no_open': True}"/>
+                    <footer>
+                        <button name="attach_pickings" type="object" string="Add to Batch" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="stock_picking_change_to_batch_action" model="ir.actions.act_window">
+            <field name="name">Change and batch</field>
+            <field name="res_model">stock.picking.change.to.batch</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="stock_picking_change_to_batch_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <act_window id="stock_picking_change_to_batch_action_stock_picking"
+                    multi="True"
+                    key2="client_action_multi" name="Change and Batch"
+                    res_model="stock.picking.change.to.batch" src_model="stock.picking"
+                    view_mode="form" target="new" view_type="form"
+        />
+
+    </data>
+</odoo>
