@@ -83,15 +83,15 @@ class ResPartner(models.Model):
                 res.send_res_partner_to_wms()
         return res
 
-    # TODO: 对用户进行分类，客户，供应商，仓库的合作伙伴，用户的合作伙伴，位置的合作伙伴，公司的合作伙伴
-    user_usage_type = fields.Selection([
-        ('warehouse_type', 'Warehouse type'),
-        ('location_type', 'Location type'),
-        ('customer_type', 'Customer type'),
-        ('supplier_type', 'Supplier type'),
-        ('user_type', 'User type'),
-        ('company_type', 'Company type')
-    ], default=False)
+    # # TODO: 对用户进行分类，客户，供应商，仓库的合作伙伴，用户的合作伙伴，位置的合作伙伴，公司的合作伙伴
+    # user_usage_type = fields.Selection([
+    #     ('warehouse_type', 'Warehouse type'),
+    #     ('location_type', 'Location type'),
+    #     ('customer_type', 'Customer type'),
+    #     ('supplier_type', 'Supplier type'),
+    #     ('user_type', 'User type'),
+    #     ('company_type', 'Company type')
+    # ], default=False)
 
 
 class BaseImport(models.TransientModel):
