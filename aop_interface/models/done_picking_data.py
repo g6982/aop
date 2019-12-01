@@ -70,8 +70,9 @@ class DonePicking(models.Model):
             })
             return res
         except Exception as e:
+            import traceback
             res.write({
-                'error_message': e
+                'error_message': traceback.format_exc()
             })
             return res
 
@@ -340,13 +341,12 @@ class DonePicking(models.Model):
         picking_id.button_validate()
 
         # 在完成了任务后执行该操作
-        self._fill_picking_batch_purchase_line_value(line_id.warehouse_code, line_id.product_id, line_id.vin)
+        self._fill_picking_batch_purchase_line_value(line_id.warehouse_code, line_id.product_id, line_id.vin, line_id.warehouse_name)
 
         return True
 
     # 将值填回采购单
-    def _fill_picking_batch_purchase_line_value(self, warehouse_code, product_id, vin_code):
-
+    def _fill_picking_batch_purchase_line_value(self, warehouse_code, product_id, vin_code, warehouse_name):
         # 找到草稿状态的接车任务
         res = self.env['stock.picking'].search([
             ('picking_incoming_number', '>=', 1),
@@ -362,15 +362,21 @@ class DonePicking(models.Model):
                 })
                 continue
 
-            picking_location_name = picking_id.location_dest_id.display_name
-            picking_location_code = picking_location_name.split('/')
+            warehouse_id = self.env['stock.warehouse'].search([
+                ('code', '=', warehouse_code)
+            ])
+            parent_warehouse_id = warehouse_id.parent_id
+            parent_code = parent_warehouse_id.code if parent_warehouse_id else False
+
+            picking_location_display_name = picking_id.location_dest_id.display_name
+            picking_location_code = picking_location_display_name.split('/')
 
             # FIXME： 有没有可能存在没有/分隔的记录呢？
             picking_location_code = picking_location_code[0]
 
             # TODO: 现在只是使用仓库来匹配，不管供应商
             # 找到对应的仓库
-            if picking_location_code != warehouse_code:
+            if picking_location_code != warehouse_code and picking_location_code != parent_code:
                 continue
 
             # 完善采购订单行
