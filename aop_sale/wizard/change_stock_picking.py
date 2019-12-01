@@ -143,7 +143,7 @@ class ChangeStockPicking(models.TransientModel):
             'picking_type_id': picking.picking_type_id.id,
             'location_id': location_route[0].id,
             'location_dest_id': location_route[-1].id,
-            'vin_id': picking.vin_id
+            'vin_id': picking.vin_id.id
         }
 
     # 第一跳： 空
