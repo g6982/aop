@@ -97,7 +97,7 @@ class StockPickingBatch(models.Model):
         ])
         parent_location_id = location_id.location_id
 
-        if parent_warehouse_id.lot_stock_id.id == parent_location_id.id:
+        if parent_warehouse_id.parent_id.lot_stock_id.id == parent_location_id.id:
             return location_id.name
 
         # 仅针对总库, 但是入库到子库
