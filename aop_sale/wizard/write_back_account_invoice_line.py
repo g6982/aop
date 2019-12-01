@@ -49,7 +49,7 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
                 carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
                 return carrier_id
 
-    def _invoice_data(self, order, line_id=False):
+    def _invoice_data(self, order, line_id=False, invoice_line_id=False):
         date_invoice = False
         if line_id:
             date_invoice = line_id.picking_confirm_date if line_id.picking_confirm_date else fields.Date.today()
@@ -69,7 +69,7 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             'fiscal_position_id': order.fiscal_position_id.id or order.partner_id.property_account_position_id.id,
             'user_id': order.user_id.id,
             'date_invoice': date_invoice,
-            'reconciliation_batch_no': self.reconciliation_batch_no
+            'reconciliation_batch_no': invoice_line_id.invoice_id.reconciliation_batch_no
         }
 
     def _get_account_id(self, service_product_id, order=False):
@@ -90,6 +90,13 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         return account_id
 
     def _get_account_invoice_line_data(self, line_id, sale_order_line_id, carrier_id, contract_id):
+        '''
+        :param line_id: 结算清单行
+        :param sale_order_line_id: 销售订单行
+        :param carrier_id: 合同条款
+        :param contract_id: 合同
+        :return:
+        '''
         sale_order_id = sale_order_line_id.order_id
         service_product_id = carrier_id.service_product_id
         account_id = self._get_account_id(service_product_id, order=sale_order_id)
@@ -108,7 +115,7 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             'sale_line_ids': [(6, 0, [sale_order_line_id.id])],
             'sale_order_line_id': sale_order_line_id.id,
             'contract_price': -line_id.contract_price,
-            'invoice_line_tax_ids': [(6, 0, line_id.tax_id.ids)],
+            'invoice_line_tax_ids': [(6, 0, line_id.invoice_line_tax_ids.ids)],
             'analytic_tag_ids': [(6, 0, line_id.analytic_tag_ids.ids)],
             'account_analytic_id': sale_order_id.analytic_account_id.id or False,
             'tmp_estimate': line_id.tmp_estimate,
@@ -127,7 +134,7 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             'sale_line_ids': [(6, 0, [sale_order_line_id.id])],
             'sale_order_line_id': sale_order_line_id.id,
             'contract_price': contract_price,
-            'invoice_line_tax_ids': [(6, 0, line_id.tax_id.ids)],
+            'invoice_line_tax_ids': [(6, 0, line_id.invoice_line_tax_ids.ids)],
             'analytic_tag_ids': [(6, 0, line_id.analytic_tag_ids.ids)],
             'account_analytic_id': sale_order_id.analytic_account_id.id or False,
             'tmp_estimate': line_id.tmp_estimate,
@@ -172,7 +179,7 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
                 # 销售订单行
                 # 如果发票行的状态是完成
                 # 生成一条新的记录，使用最新的合同信息，先创建负数，再创建正数的新合同数据
-                invoice_data = self._invoice_data(order, line_id=sale_order_line_id)
+                invoice_data = self._invoice_data(order, line_id=sale_order_line_id, invoice_line_id=line_id)
                 invoice_line_data = self._get_account_invoice_line_data(line_id, sale_order_line_id, carrier_id, contract_id)
                 invoice_data.update({
                     'invoice_line_ids': invoice_line_data

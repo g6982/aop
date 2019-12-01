@@ -839,6 +839,8 @@ class SaleOrder(models.Model):
                 order_line_ids._fill_order_line_vin_id()
                 order_line_ids._action_launch_stock_rule()
 
+            # 更新任务的时候，也使用
+            self.patch_sale_order_picking_assign_picking(order)
             order_line_ids._compute_stock_picking_state()
             if all(order.order_line.mapped('stock_picking_state')):
                 order.write({
