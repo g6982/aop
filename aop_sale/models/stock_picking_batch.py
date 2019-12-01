@@ -71,9 +71,40 @@ class StockPickingBatch(models.Model):
                         'state': 'done'
                     })
 
+    # 找到来源地的仓库
+    def _find_location_warehouse(self, location_id, picking_id=False):
+        if picking_id:
+            move_line = picking_id.move_lines[0]
+            origin_from_location_id = move_line.location_id
+
+            # 针对move 和 picking 不是同一个位置的情况
+            if origin_from_location_id.id != location_id.id:
+
+                # 验证： 上级 位置
+                if origin_from_location_id.location_id.id == location_id.id:
+                    res = self.env['stock.warehouse'].search([
+                        ('name', '=', origin_from_location_id.name)
+                    ])
+                    return res if res else ''
 
     # 仓库的名字
-    def _location_to_warehouse(self, location_id):
+    def _location_to_warehouse(self, location_id, picking_id=False):
+
+        # 仅针对总库, 但是入库到子库
+        if picking_id:
+            move_line = picking_id.move_lines[0]
+            origin_from_location_id = move_line.location_id
+
+            # 针对move 和 picking 不是同一个位置的情况
+            if origin_from_location_id.id != location_id.id:
+
+                # 验证： 上级 位置
+                if origin_from_location_id.location_id.id == location_id.id:
+                    res = self.env['stock.warehouse'].search([
+                        ('name', '=', origin_from_location_id.name)
+                    ])
+                    return res.name if res else ''
+
         name = location_id.display_name
         name = name.split('/')[0]
         res = self.env['stock.warehouse'].search([
@@ -97,9 +128,11 @@ class StockPickingBatch(models.Model):
         picking_type_name = picking_id.picking_type_id.name
         picking_type_name = picking_type_name
 
-        from_location_name = self._location_to_warehouse(picking_id.location_id)
+        # 也可以使用子位置的数据
+        from_location_name = self._location_to_warehouse(picking_id.location_id, picking_id=picking_id)
         to_location_name = self._location_to_warehouse(picking_id.location_dest_id)
 
+        from_warehouse_id = self._find_location_warehouse(picking_id.location_id, picking_id=picking_id)
         # from_location_name = '团结村库'
         # to_location_name = '线边库'
 
@@ -113,7 +146,7 @@ class StockPickingBatch(models.Model):
             'product_model': product_info[:3] if product_info else '',
             'product_config': product_info[3:] if product_info else '',
             'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '',
-            'warehouse_code': picking_id.picking_type_id.warehouse_id.code,
+            'warehouse_code': from_warehouse_id.code if from_warehouse_id else picking_id.picking_type_id.warehouse_id.code,
             'quantity_done': 1,
             'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name if picking_id.sale_order_line_id.product_id.brand_id else '',
             'from_location_id': from_location_name,

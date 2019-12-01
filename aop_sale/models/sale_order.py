@@ -782,8 +782,8 @@ class SaleOrder(models.Model):
                 line_id._fill_order_line_vin_id()
 
         # 判断。如果判断的结果是存在VIN不在路由上的。则先进行调度
-        if self.dispatch_or_not():
-            return self.change_vin_location_to_route()
+        # if self.dispatch_or_not():
+        #     return self.change_vin_location_to_route()
 
         # 如果一个VIN都没有。不运行
         vin_order_ids = self.mapped('order_line').filtered(lambda x: not x.vin)
@@ -811,6 +811,9 @@ class SaleOrder(models.Model):
                     'state': 'part_done',
                     'confirmation_date': fields.Datetime.now()
                 })
+
+            # PATCH: 生成后，完善上下层出库，自动填充
+            self.patch_sale_order_picking_assign_picking(order)
         return res
 
     # 取消的同时。删除
@@ -880,3 +883,48 @@ class SaleOrder(models.Model):
                     return True
 
         return False
+
+    # 截断的生成任务后，路由设置到总库，出库的时候，判断是否使用子库的库存
+    def patch_sale_order_picking_assign_picking(self, order):
+        for line_id in order.order_line:
+
+            # 获取到最后一条记录，只需要处理，状态 state == 'waiting'
+            # 排序，取最后一条记录
+            last_picking_id = line_id.stock_picking_ids.sorted(lambda x: x.id)[0]
+
+            if last_picking_id.state != 'waiting':
+                continue
+
+            # 使用子位置的库存信息
+            # 有且仅有一条记录
+            stock_move = last_picking_id.move_lines
+
+            if len(stock_move) != 1:
+                continue
+
+            from_location_id = stock_move.location_id
+            vin_id = stock_move.vin_id
+
+            # from_location_id 如果存在下级，则可以使用下级的数据
+            stock_quant_ids = vin_id.quant_ids
+
+            if not stock_quant_ids:
+                continue
+
+            stock_quant_id = stock_quant_ids.filtered(lambda x: x.quantity == 1)
+
+            real_stock_location = stock_quant_id.location_id
+
+            # 如果真实的库存位置，是路由的总库位置的子位置，则可以进行出库，替换from_location，重新检查库存
+            partner_location_id = real_stock_location.location_id
+
+            if not partner_location_id:
+                continue
+
+            if from_location_id.id == partner_location_id.id:
+                stock_move.write({
+                    'location_id': real_stock_location.id,
+                    'procure_method': 'make_to_stock'
+                })
+            # 检查预留
+            last_picking_id.action_assign()
