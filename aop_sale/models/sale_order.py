@@ -889,9 +889,6 @@ class SaleOrder(models.Model):
     def patch_sale_order_picking_assign_picking(self, order):
         for line_id in order.order_line:
 
-            if not line_id.stock_picking_ids:
-                continue
-                
             # 获取到最后一条记录，只需要处理，状态 state == 'waiting'
             # 排序，取最后一条记录
             last_picking_id = line_id.stock_picking_ids.sorted(lambda x: x.id)[0]
