@@ -127,6 +127,7 @@ class ChangeStockPicking(models.TransientModel):
             'date_expected': move_id.date_expected,
             'propagate': move_id.propagate,
             'priority': move_id.priority,
+            'vin_id': picking.vin_id.id
         }
         return move_values
 
@@ -142,6 +143,7 @@ class ChangeStockPicking(models.TransientModel):
             'picking_type_id': picking.picking_type_id.id,
             'location_id': location_route[0].id,
             'location_dest_id': location_route[-1].id,
+            'vin_id': picking.vin_id
         }
 
     # 第一跳： 空
