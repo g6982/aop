@@ -182,7 +182,7 @@ class StockPickingBatch(models.Model):
 
         for picking_id in assigned_picking_ids:
             # 接车并不需要发送到WMS
-            if picking_id.picking_incoming_number > 0 or not picking_id.sale_order_line_id:
+            if picking_id.picking_incoming_number > 0:
                 continue
             tmp = self._format_picking_data(picking_id)
             if waiting_list_id:
