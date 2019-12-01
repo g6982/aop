@@ -130,6 +130,8 @@ class StockPickingBatch(models.Model):
         '''
         # 导入的订单。一定存在model。不一定存在颜色
         product_info = picking_id.sale_order_line_id.product_model
+        if not product_info:
+            product_info = picking_id.move_lines[0].product_id.default_code
         # if not product_info:
         #     product_model = '874'
         #     product_config = 'MJ'
