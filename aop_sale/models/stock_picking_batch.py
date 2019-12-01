@@ -90,6 +90,16 @@ class StockPickingBatch(models.Model):
     # 仓库的名字
     def _location_to_warehouse(self, location_id, picking_id=False):
 
+        location_name = location_id.name
+        # 如果是总库和子库
+        parent_warehouse_id = self.env['stock.warehouse'].search([
+            ('name', '=', location_name)
+        ])
+        parent_location_id = location_id.location_id
+
+        if parent_warehouse_id.lot_stock_id.id == parent_location_id.id:
+            return location_id.name
+
         # 仅针对总库, 但是入库到子库
         if picking_id:
             move_line = picking_id.move_lines[0]
