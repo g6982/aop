@@ -3062,7 +3062,7 @@ msgstr ""
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking__real_stock_location_id
 msgid "Real stock location"
-msgstr ""
+msgstr "源库"
 
 #. module: aop_sale
 #: selection:account.invoice,state:0
