@@ -153,7 +153,7 @@ class StockPickingBatch(models.Model):
             'to_location_id': to_location_name,
             'to_location_type': picking_id.location_dest_id.usage,
             'partner_name': picking_id.partner_id.name,
-            'vin': picking_id.sale_order_line_id.vin.name,
+            'vin': picking_id.vin_id.name if picking_id.vin_id else picking_id.sale_order_line_id.vin.name if picking_id.sale_order_line_id else '',
             'picking_type_name': picking_type_name,
             'batch_id': self.id,
             'scheduled_date': fields.Datetime.to_string(picking_id.scheduled_date)
