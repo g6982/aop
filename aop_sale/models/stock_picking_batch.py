@@ -130,8 +130,12 @@ class StockPickingBatch(models.Model):
         '''
         # 导入的订单。一定存在model。不一定存在颜色
         product_info = picking_id.sale_order_line_id.product_model
+        product_model = ''
+        product_name = ''
         if not product_info:
             product_info = picking_id.move_lines[0].product_id.default_code
+            product_model = picking_id.move_lines[0].product_id.brand_id.name
+            product_name = picking_id.move_lines[0].product_id.name
         # if not product_info:
         #     product_model = '874'
         #     product_config = 'MJ'
@@ -153,14 +157,14 @@ class StockPickingBatch(models.Model):
         })
         tmp = {
             'task_id': picking_id.id,
-            'product_name': picking_id.sale_order_line_id.product_id.name if picking_id.sale_order_line_id.product_id else '',
+            'product_name': picking_id.sale_order_line_id.product_id.name if picking_id.sale_order_line_id.product_id else product_name,
             'product_color': picking_id.sale_order_line_id.product_color if picking_id.sale_order_line_id.product_color else '1',
             'product_model': product_info[:3] if product_info else '',
             'product_config': product_info[3:] if product_info else '',
             'supplier_name': self.un_limit_partner_id.name if self.un_limit_partner_id else self.partner_id.name if self.partner_id else '',
             'warehouse_code': from_warehouse_id.code if from_warehouse_id else picking_id.picking_type_id.warehouse_id.code,
             'quantity_done': 1,
-            'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name if picking_id.sale_order_line_id.product_id.brand_id else '',
+            'brand_model_name': picking_id.sale_order_line_id.product_id.brand_id.name if picking_id.sale_order_line_id.product_id.brand_id else product_model,
             'from_location_id': from_location_name,
             'to_location_id': to_location_name,
             'to_location_type': picking_id.location_dest_id.usage,
