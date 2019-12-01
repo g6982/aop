@@ -812,7 +812,7 @@ class SaleOrder(models.Model):
                     'confirmation_date': fields.Datetime.now()
                 })
 
-            # PATCH: 生成后，完善上下层出库，自动填充
+            # PATCH: 生成后，完善上下级位置，自动填充
             self.patch_sale_order_picking_assign_picking(order)
         return res
 

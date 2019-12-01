@@ -66,7 +66,8 @@ class StockPickingChangeToBatch(models.TransientModel):
             'location_dest_id': new_to_location_id.id,
             'scheduled_date': picking_id.scheduled_date,
             'procure_method': 'make_to_stock',
-            'picking_type_id': self.picking_type_id.id
+            'picking_type_id': self.picking_type_id.id,
+            'vin_id': picking_id.vin_id.id if picking_id.vin_id else False
         }
         return data
 
@@ -93,6 +94,7 @@ class StockPickingChangeToBatch(models.TransientModel):
             'date_expected': move_id.date_expected,
             'propagate': move_id.propagate,
             'priority': move_id.priority,
+            'vin_id': picking_id.vin_id.id if picking_id.vin_id else False
         }
         return move_values
 
@@ -126,21 +128,40 @@ class StockPickingChangeToBatch(models.TransientModel):
             })
 
             res = stock_picking_obj.create(new_picking_data)
+
+            # 预留生成的新任务
+            res.action_assign()
             new_picking_ids.append(res.id)
 
-            # 将原本的 picking 关联到 新创建的 picking
-            # move_orig_ids
-            # move_dest_ids
+            # 有且仅能有一条
+            new_move_id = res.move_lines
+            new_move_id = new_move_id[0]
 
             move_id = picking_id.move_lines
             move_id = move_id[0]
 
+            # 将原本的 picking 关联到 新创建的 picking
+
             move_id.location_id = new_to_location_id.id
+
+            # move_orig_ids
+            # move_dest_ids
+            new_move_id.move_dest_ids = [(4, move_id.id)]
+            move_id.move_orig_ids = [(4, new_move_id.id)]
+
+            # 取消预留
+            picking_id.do_unreserve()
 
         picking_batch_id = self._create_stock_picking_batch()
         picking_batch_id.write({
+            'state': 'in_progress',
             'picking_ids': [(6, 0, new_picking_ids)]
         })
+
+        # 验证是否是就绪
+        for picking_id in picking_batch_id.picking_ids:
+            if picking_id.state !=' assigned':
+                picking_id.action_assign()
 
         view_id = self.env.ref('stock_picking_batch.stock_picking_batch_tree').id
         form_id = self.env.ref('stock_picking_batch.stock_picking_batch_form').id
