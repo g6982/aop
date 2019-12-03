@@ -15,15 +15,15 @@
                                    options="{'no_create_edit': True, 'no_open': True}"/>
                         </group>
                         <group>
-                            <separator string="Select a supplier"/>
-                            <field name="partner_id" class="oe_inline" required="1"
+                            <separator string="Select a supplier" invisible="1"/>
+                            <field name="partner_id" class="oe_inline" required="0" invisible="1"
                                    options="{'no_create_edit': True, 'no_open': True}"/>
                         </group>
                     </group>
                     <group>
                         <group>
-                            <field name="picking_type_id"
-                                   options="{'no_create_edit': True, 'no_open': True}" required="1"/>
+                            <field name="picking_type_id" invisible="1"
+                                   options="{'no_create_edit': True, 'no_open': True}" required="0"/>
                         </group>
                     </group>
 
