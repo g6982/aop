@@ -52,6 +52,8 @@ class StockRule(models.Model):
     # 获取上级仓库的位置
     # 可以根据上级仓库，即总库来截断路由
     def _get_parent_warehouse_location_id(self, product_stock_id):
+        if not product_stock_id:
+            return False
         warehouse_id = self.env['stock.warehouse'].search([
             ('lot_stock_id', '=', product_stock_id.id)
         ])
