@@ -261,6 +261,10 @@ class StockPickingChangeToBatch(models.TransientModel):
             })
 
             sale_order_value.append(order_data)
+            
+            # 取消预留
+            picking_id.do_unreserve()
+
         res = False
         if sale_order_value:
             res = sale_order_obj.create(sale_order_value)
