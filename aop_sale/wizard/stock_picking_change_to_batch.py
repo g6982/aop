@@ -261,7 +261,7 @@ class StockPickingChangeToBatch(models.TransientModel):
             })
 
             sale_order_value.append(order_data)
-            
+
             # 取消预留
             picking_id.do_unreserve()
 

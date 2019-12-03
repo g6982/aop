@@ -8,6 +8,7 @@ _logger = logging.getLogger(__name__)
 
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
+    _sql_constraints = [('unique_batch_id_and_id', 'unique(id, batch_id)', 'You can not choose by two batch!')]
 
     origin_purchase_id = fields.Many2one('purchase.order', 'Origin purchase order', copy=False)
     delivery_to_partner_id = fields.Many2one('res.partner', 'Delivery to partner', readonly=True)
