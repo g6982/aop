@@ -414,6 +414,8 @@ class SaleOrder(models.Model):
 
     delivery_company_id = fields.Many2one('res.company', 'Delivery company')
 
+    created_by_picking_id = fields.Many2one('stock.picking', 'Created by picking')
+
     # 检查月结
     @api.constrains('partner_id')
     def _check_monthly_state(self):
@@ -887,8 +889,29 @@ class SaleOrder(models.Model):
                         return True
         return False
 
+    def link_new_picking_and_by_picking(self, new_picking_id, created_by_picking_id):
+        '''
+        :param new_picking_id: 生成的任务
+        :param created_by_picking_id: 由该任务生成的订单
+        :return:
+        '''
+        last_picking_move_id = new_picking_id.move_lines
+        last_picking_move_id = last_picking_move_id[0]
+
+        created_picking_move_id = created_by_picking_id.move_lines
+        created_picking_move_id = created_picking_move_id[0]
+
+        # 对新生成的任务，以及由此生成的任务，进行关联
+        last_picking_move_id.move_dest_ids = [(4, created_picking_move_id.id)]
+        created_picking_move_id.move_orig_ids = [(4, last_picking_move_id.id)]
+
     # 截断的生成任务后，路由设置到总库，出库的时候，判断是否使用子库的库存
+    # 阶段后，如果存在 created_by_picking_id， 则需要进行关联
     def patch_sale_order_picking_assign_picking(self, order):
+        '''
+        :param order: 订单
+        :return:
+        '''
         for line_id in order.order_line:
 
             if not line_id.stock_picking_ids:
@@ -896,14 +919,21 @@ class SaleOrder(models.Model):
 
             # 获取到最后一条记录，只需要处理，状态 state == 'waiting'
             # 排序，取最后一条记录
-            last_picking_id = line_id.stock_picking_ids.sorted(lambda x: x.id)[0]
+            last_picking_id = line_id.stock_picking_ids.sorted(lambda x: x.id)[-1]
 
-            if last_picking_id.state != 'waiting':
+            # 对任务进行关联
+            if order.created_by_picking_id:
+                # 关联任务
+                self.link_new_picking_and_by_picking(last_picking_id, order.created_by_picking_id)
+
+            first_picking_id = line_id.stock_picking_ids.sorted(lambda x: x.id)[0]
+
+            if first_picking_id.state != 'waiting':
                 continue
 
             # 使用子位置的库存信息
             # 有且仅有一条记录
-            stock_move = last_picking_id.move_lines
+            stock_move = first_picking_id.move_lines
 
             if len(stock_move) != 1:
                 continue
@@ -933,7 +963,7 @@ class SaleOrder(models.Model):
                     'procure_method': 'make_to_stock'
                 })
             # 检查预留
-            last_picking_id.write({
+            first_picking_id.write({
                 'real_stock_location_id': real_stock_location.id
             })
-            last_picking_id.action_assign()
+            first_picking_id.action_assign()

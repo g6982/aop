@@ -64,7 +64,39 @@ class StockPickingChangeToBatch(models.TransientModel):
         # 新的目的地的位置信息
         new_to_location_id = self.to_location_id
 
-        self._create_stock_picking(picking_ids, from_location_id, new_to_location_id)
+        # picking_batch_id = self._create_stock_picking(picking_ids, from_location_id, new_to_location_id)
+        #
+        # # 跳转到生成的批量调度的 tree view
+        # view_id = self.env.ref('stock_picking_batch.stock_picking_batch_tree').id
+        # form_id = self.env.ref('stock_picking_batch.stock_picking_batch_form').id
+        # return {
+        #     'name': 'Picking batch',
+        #     'view_type': 'form',
+        #     'view_id': False,
+        #     'views': [(view_id, 'tree'), (form_id, 'form')],
+        #     'res_model': 'stock.picking.batch',
+        #     'type': 'ir.actions.act_window',
+        #     'domain': [('id', 'in', picking_batch_id.ids)],
+        #     'limit': 80,
+        #     'target': 'current',
+        # }
+
+        # 创建对应的销售订单
+        sale_order_ids = self.create_change_picking_sale_order(picking_ids, from_location_id, new_to_location_id)
+        if sale_order_ids:
+            view_id = self.env.ref('sale.view_quotation_tree_with_onboarding').id
+            form_id = self.env.ref('sale.view_order_form').id
+            return {
+                'name': 'Sale order',
+                'view_type': 'form',
+                'view_id': False,
+                'views': [(view_id, 'tree'), (form_id, 'form')],
+                'res_model': 'sale.order',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', sale_order_ids.ids)],
+                'limit': 80,
+                'target': 'current',
+            }
 
     # 先根据位置，创建任务，再创建调度单
     # 创建任务的时候，需要将原先的任务与新创建的任务进行关联，同时修改原先任务的stock.move 的 location_id
@@ -171,21 +203,66 @@ class StockPickingChangeToBatch(models.TransientModel):
             'picking_ids': [(6, 0, new_picking_ids)]
         })
 
+        # 计算一下允许的范围
+        picking_batch_id._compute_allow_partner_ids()
+
         # 验证是否是就绪
         for picking_id in picking_batch_id.picking_ids:
-            if picking_id.state !=' assigned':
+            if picking_id.state != 'assigned':
                 picking_id.action_assign()
 
-        view_id = self.env.ref('stock_picking_batch.stock_picking_batch_tree').id
-        form_id = self.env.ref('stock_picking_batch.stock_picking_batch_form').id
+        return picking_batch_id
+
+    # 通过位置，找到对应的合作伙伴
+    def find_partner_by_location(self, location_id):
+        partner_id = self.env['res.partner'].search([
+            ('property_stock_customer', '=', location_id.id)
+        ])
+        if not partner_id:
+            raise ValueError('Can not find partner')
+        return partner_id[0]
+
+    # 销售订单数据
+    def _get_sale_order_data(self, picking_id):
         return {
-            'name': 'Picking batch',
-            'view_type': 'form',
-            'view_id': False,
-            'views': [(view_id, 'tree'), (form_id, 'form')],
-            'res_model': 'stock.picking.batch',
-            'type': 'ir.actions.act_window',
-            'domain': [('id', 'in', picking_batch_id.ids)],
-            'limit': 80,
-            'target': 'current',
+            'partner_id': picking_id.partner_id.id,
+            'created_by_picking_id': picking_id.id
         }
+
+    # 销售订单行数据
+    def _get_sale_order_line_data(self, picking_id, from_location_id, new_to_location_id):
+        from_partner_id = self.find_partner_by_location(from_location_id)
+        to_partner_id = self.find_partner_by_location(new_to_location_id)
+        return {
+            'vin_code': picking_id.vin_id.name,
+            'product_id': picking_id.product_id.id,
+            'name': picking_id.product_id.name,
+            'from_location_id': from_partner_id.id,
+            'to_location_id': to_partner_id.id
+        }
+
+    # 更改为 ->
+    # 总库A（子库A1，子库A2，子库A3）
+    # 当货物到了子库A1，需要调度到子库A2（A3）的时候，即子库-子库的库间移动
+    # 先创建相应的销售订单，所有任务都通过销售产生
+    def create_change_picking_sale_order(self, picking_ids, from_location_id, new_to_location_id):
+        sale_order_obj = self.env['sale.order']
+        sale_order_value = []
+        for picking_id in picking_ids:
+
+            # 订单数据
+            order_data = self._get_sale_order_data(picking_id)
+
+            # 订单行数据
+            order_line_data = self._get_sale_order_line_data(picking_id, from_location_id, new_to_location_id)
+
+            order_data.update({
+                'order_line': [(0, 0, order_line_data)]
+            })
+
+            sale_order_value.append(order_data)
+        res = False
+        if sale_order_value:
+            res = sale_order_obj.create(sale_order_value)
+
+        return res
