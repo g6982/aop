@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_production_lot_form_inherit">
+            <field name="name">stock.production.lot form</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group/group[last()]" position="after">
+                    <group>
+                        <field name="image" widget="image" class="oe_avatar" options='{"size": [200, 200]}'/>
+                    </group>
+                </xpath>
+
+                <group>
+                    <group>
+                        <field name="barcode_type"/>
+                        <field name="barcode" widget="image" options='{"size": [600, 100]}'/>
+                    </group>
+                </group>
+            </field>
+        </record>
+    </data>
+</odoo>
