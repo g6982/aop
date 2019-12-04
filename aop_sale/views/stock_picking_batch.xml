@@ -8,6 +8,11 @@
         <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
         <field name="arch" type="xml">
 
+<!--            # 隐藏批量调度的完成-->
+            <xpath expr="//button[@name='done']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
             <field name="user_id" position="attributes">
                 <attribute name="options">{'no_quick_create': True, 'no_create_edit': True}</attribute>
             </field>
