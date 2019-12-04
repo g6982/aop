@@ -27,6 +27,6 @@ def aop_receive_from_wms(url=False, db=False, username=False, password=False, mo
         _logger.info({
             'create': res
         })
-    except:
+    except Exception as e:
         import traceback
         raise traceback.format_exc()
