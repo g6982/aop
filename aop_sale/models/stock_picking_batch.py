@@ -255,6 +255,9 @@ class StockPickingBatch(models.Model):
             warehouse_ids = list(set(warehouse_ids))
             if len(warehouse_ids) > 1 and self.mount_car_plan_ids:
                 raise UserError('You must select same warehouse to make loading plan !')
+
+            # 检查装车计划
+            self.check_loading_plan()
         elif self.picking_ids and not self.mount_car_plan_ids:
             picking_type_ids = self.picking_ids.mapped('picking_type_id')
             limit_state = picking_type_ids.mapped('limit_picking_batch')
@@ -265,16 +268,22 @@ class StockPickingBatch(models.Model):
             if any(limit_state) and not all(limit_state) and len(picking_type_name) > 1:
                 raise UserError('You must select same picking type when you choose [train, road] !')
 
-    # FIXME: 写死了以 ':' 作为分隔
+    # 检查装车计划，是否是同一个目的地
+    def check_loading_plan(self):
+        plan_ids = self.mount_car_plan_ids
+        to_location_ids = plan_ids.mapped('to_location_id').ids
+        if len(set(to_location_ids)) != 1:
+            raise ValueError('You must select same location !')
+
     # 针对公路运输和铁路运输，判断是否是同一种类型
     def format_picking_type_name(self, picking_type_name):
-        data = []
-        for type_name in picking_type_name:
-            tmp = type_name.split(':')
-            if len(tmp) != 2:
-                continue
-            tmp = tmp[1].replace(' ', '')
-            data.append(tmp)
+        data = [type_name for type_name in picking_type_name]
+        # for type_name in picking_type_name:
+        #     tmp = type_name.split(':')
+        #     if len(tmp) != 2:
+        #         continue
+        #     tmp = tmp[1].replace(' ', '')
+        #     data.append(tmp)
         return list(set(data))
 
     # 生成采购订单，采购：服务产品
