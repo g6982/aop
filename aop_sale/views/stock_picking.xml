@@ -101,6 +101,7 @@
             </xpath>
             <xpath expr="group" position="inside">
                 <filter string="Product" name="product_id" domain="[]" context="{'group_by':'product_id'}"/>
+                <filter string="Real stock" name="real_stock_location_id" domain="[]" context="{'group_by':'real_stock_location_id'}"/>
             </xpath>
         </field>
     </record>
