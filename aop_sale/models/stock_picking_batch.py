@@ -272,8 +272,18 @@ class StockPickingBatch(models.Model):
     def check_loading_plan(self):
         plan_ids = self.mount_car_plan_ids
         to_location_ids = plan_ids.mapped('to_location_id').ids
-        if len(set(to_location_ids)) != 1:
+
+        if len(set(to_location_ids)) != 1 if to_location_ids else False:
             raise ValueError('You must select same location !')
+
+        location_dest_ids = self.picking_ids.mapped('location_dest_id').ids
+
+        # 验证 选择的任务
+        if len(set(location_dest_ids.ids)) != 1 if location_dest_ids else False:
+            ValueError('You must select same to location !')
+
+        if set(to_location_ids) - set(location_dest_ids):
+            raise ValueError('picking location_dest_id != loading plan to_location_id')
 
     # 针对公路运输和铁路运输，判断是否是同一种类型
     def format_picking_type_name(self, picking_type_name):
