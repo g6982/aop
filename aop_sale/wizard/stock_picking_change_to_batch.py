@@ -3,6 +3,7 @@
 
 from odoo import fields, models, api
 from odoo.exceptions import ValidationError
+from itertools import groupby
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -229,6 +230,11 @@ class StockPickingChangeToBatch(models.TransientModel):
             'created_by_picking_id': picking_id.id
         }
 
+    def _get_group_partner_sale_order_data(self, partner_id):
+        return {
+            'partner_id': partner_id.id
+        }
+
     # 销售订单行数据
     def _get_sale_order_line_data(self, picking_id, from_location_id, new_to_location_id):
         from_partner_id = self.find_partner_by_location(from_location_id)
@@ -238,7 +244,8 @@ class StockPickingChangeToBatch(models.TransientModel):
             'product_id': picking_id.product_id.id,
             'name': picking_id.product_id.name,
             'from_location_id': from_partner_id.id,
-            'to_location_id': to_partner_id.id
+            'to_location_id': to_partner_id.id,
+            'created_by_picking_id': picking_id.id
         }
 
     # 更改为 ->
@@ -248,22 +255,43 @@ class StockPickingChangeToBatch(models.TransientModel):
     def create_change_picking_sale_order(self, picking_ids, from_location_id, new_to_location_id):
         sale_order_obj = self.env['sale.order']
         sale_order_value = []
-        for picking_id in picking_ids:
 
+        for partner_id, partner_picking_ids in groupby(picking_ids, lambda x: x.partner_id):
             # 订单数据
-            order_data = self._get_sale_order_data(picking_id)
+            order_data = self._get_group_partner_sale_order_data(partner_id)
+            tmp = []
+            for picking_id in partner_picking_ids:
 
-            # 订单行数据
-            order_line_data = self._get_sale_order_line_data(picking_id, from_location_id, new_to_location_id)
+                # 订单行数据
+                order_line_data = self._get_sale_order_line_data(picking_id, from_location_id, new_to_location_id)
 
+                tmp.append(
+                    (0, 0, order_line_data)
+                )
+
+                # 取消预留
+                picking_id.do_unreserve()
             order_data.update({
-                'order_line': [(0, 0, order_line_data)]
+                'order_line': tmp
             })
-
             sale_order_value.append(order_data)
 
-            # 取消预留
-            picking_id.do_unreserve()
+        # for picking_id in picking_ids:
+        #
+        #     # 订单数据
+        #     order_data = self._get_sale_order_data(picking_id)
+        #
+        #     # 订单行数据
+        #     order_line_data = self._get_sale_order_line_data(picking_id, from_location_id, new_to_location_id)
+        #
+        #     order_data.update({
+        #         'order_line': [(0, 0, order_line_data)]
+        #     })
+        #
+        #     sale_order_value.append(order_data)
+        #
+        #     # 取消预留
+        #     picking_id.do_unreserve()
 
         res = False
         if sale_order_value:

@@ -94,6 +94,8 @@ class SaleOrderLine(models.Model):
     product_color = fields.Char('Product color')
     product_model = fields.Char('Product model')
 
+    created_by_picking_id = fields.Many2one('stock.picking', 'Created by picking')
+
     @api.multi
     @api.depends('stock_picking_ids', 'stock_picking_ids.state', 'stock_picking_ids.date_done')
     def _compute_current_picking_id(self):
@@ -414,7 +416,7 @@ class SaleOrder(models.Model):
 
     delivery_company_id = fields.Many2one('res.company', 'Delivery company')
 
-    created_by_picking_id = fields.Many2one('stock.picking', 'Created by picking')
+    # created_by_picking_id = fields.Many2one('stock.picking', 'Created by picking')
 
     # 检查月结
     @api.constrains('partner_id')
@@ -922,9 +924,9 @@ class SaleOrder(models.Model):
             last_picking_id = line_id.stock_picking_ids.sorted(lambda x: x.id)[-1]
 
             # 对任务进行关联
-            if order.created_by_picking_id:
+            if line_id.created_by_picking_id:
                 # 关联任务
-                self.link_new_picking_and_by_picking(last_picking_id, order.created_by_picking_id)
+                self.link_new_picking_and_by_picking(last_picking_id, line_id.created_by_picking_id)
 
             first_picking_id = line_id.stock_picking_ids.sorted(lambda x: x.id)[0]
 
