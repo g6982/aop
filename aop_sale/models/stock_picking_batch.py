@@ -271,12 +271,15 @@ class StockPickingBatch(models.Model):
     # 检查装车计划，是否是同一个目的地
     def check_loading_plan(self):
         plan_ids = self.mount_car_plan_ids
-        to_location_ids = plan_ids.mapped('to_location_id').ids
+        to_location_ids = plan_ids.mapped('to_location_id')
+        to_location_ids = [x.id for x in to_location_ids]
 
         if len(set(to_location_ids)) != 1 if to_location_ids else False:
             raise ValueError('You must select same location !')
 
-        location_dest_ids = self.picking_ids.mapped('location_dest_id').ids
+        location_dest_ids = self.picking_ids.mapped('location_dest_id')
+
+        location_dest_ids = [x.id for x in location_dest_ids]
 
         # 验证 选择的任务
         if len(set(location_dest_ids.ids)) != 1 if location_dest_ids else False:
