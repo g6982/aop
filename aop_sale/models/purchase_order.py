@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from odoo import api, fields, models, _
 import logging
 import time
+from ..tools.zeep_client import get_zeep_client_session
 from odoo.tools import config
 from odoo.exceptions import UserError
 
@@ -13,6 +14,59 @@ class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
     stock_picking_batch_id = fields.Many2one('stock.picking.batch', 'Stock batch')
+
+    # 供应商手动完成任务的同时，取消额外的任务
+    @api.multi
+    def send_cancel_picking_task_to_wms(self, batch_id, assigned_picking_ids):
+        post_data = []
+        for picking_id in assigned_picking_ids:
+            if picking_id.picking_incoming_number > 0 or not picking_id.sale_order_line_id:
+                continue
+            tmp = batch_id._format_cancel_picking_data(picking_id)
+
+            if tmp:
+                post_data.append(tmp)
+
+        if post_data:
+            _logger.info({
+                'post_data': post_data
+            })
+            cancel_task_url = self.env['ir.config_parameter'].sudo().get_param('aop_interface.cancel_task_url', False)
+            zeep_cancel_task_client = get_zeep_client_session(cancel_task_url)
+            # 输出中文
+            zeep_cancel_task_client.service.supplier(str(post_data))
+
+    # 供应商手动确认完成了任务
+    @api.multi
+    def supplier_confirm_done_picking(self):
+        for line_id in self:
+            batch_id = line_id.stock_picking_batch_id
+
+            done_picking_ids = batch_id.picking_ids.filtered(
+                lambda x: x.state == 'done'
+            )
+            assigned_picking_ids = batch_id.picking_ids.filtered(
+                lambda x: x.state == 'assigned'
+            )
+
+            done_line_ids = line_id.order_line.filtered(
+                lambda x: x.batch_stock_picking_id.id in done_picking_ids.ids
+            )
+
+            # 删除任务，同时取消
+            batch_id.write({
+                'picking_ids': [(6, 0, done_picking_ids.ids)],
+                'state': 'done'
+            })
+
+            line_id.write({
+                'order_line': [(6, 0, done_line_ids.ids)],
+                'state': 'purchase'
+            })
+
+            if assigned_picking_ids:
+                # 取消不要的任务
+                self.send_cancel_picking_task_to_wms(batch_id, assigned_picking_ids)
 
     @api.model
     def _prepare_picking(self):
