@@ -20,6 +20,14 @@ class StockPicking(models.Model):
 
     real_stock_location_id = fields.Many2one('stock.location', 'Real stock location')
 
+    product_id = fields.Many2one(
+        'product.product',
+        'Product',
+        related='move_lines.product_id',
+        readonly=False,
+        store=True
+    )
+
     def match_sale_order(self):
         return self._match_sale_order()
 

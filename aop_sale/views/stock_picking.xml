@@ -98,6 +98,9 @@
                 <field name="vin_id"/>
                 <field name="product_id"/>
             </xpath>
+            <xpath expr="group" position="inside">
+                <filter string="Product" name="product_id" domain="[]" context="{'group_by':'product_id'}"/>
+            </xpath>
         </field>
     </record>
 
