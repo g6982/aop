@@ -97,6 +97,7 @@
             <xpath expr="//field[@name='name']" position="after">
                 <field name="vin_id"/>
                 <field name="product_id"/>
+                <field name="real_stock_location_id"/>
             </xpath>
             <xpath expr="group" position="inside">
                 <filter string="Product" name="product_id" domain="[]" context="{'group_by':'product_id'}"/>
