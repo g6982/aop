@@ -96,6 +96,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
                 <field name="vin_id"/>
+                <field name="product_id"/>
             </xpath>
         </field>
     </record>
