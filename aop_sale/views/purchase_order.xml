@@ -110,8 +110,8 @@
 
                 <!-- 完成任务按钮 -->
                 <xpath expr="//button[@name='button_approve']" position="attributes">
-<!--                    <attribute name="groups">aop_sale.group_purchase_button_approve_button</attribute>-->
-                    <attribute name="invisible">1</attribute>
+                   <attribute name="groups">aop_sale.group_purchase_button_approve_button</attribute>
+                    <attribute name="invisible">0</attribute>
                 </xpath>
 
 

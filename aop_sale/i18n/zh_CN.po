@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191118\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-03 14:14+0000\n"
-"PO-Revision-Date: 2019-12-03 14:14+0000\n"
+"POT-Creation-Date: 2019-12-05 13:54+0000\n"
+"PO-Revision-Date: 2019-12-05 13:54+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2292,6 +2292,11 @@ msgid "Make invoice"
 msgstr "生成回款/付款结算清单"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.purchase_order_form_inherit
+msgid "Manual done"
+msgstr "手动完成"
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__mass_attachment_ids
 msgid "Mass Attachment"
 msgstr "质损附件信息"
@@ -4365,13 +4370,6 @@ msgid "You can find a contact by its Name, TIN, Email or Internal Reference."
 msgstr "可以通过姓名、TIN、邮箱或者内部关联找到一个联系人."
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking.py:11
-#: sql_constraint:stock.picking:0
-#, python-format
-msgid "You can not choose by two batch!"
-msgstr "任务不能被重复调度!"
-
-#. module: aop_sale
 #: code:addons/aop_sale/models/account_account.py:25
 #, python-format
 msgid "You can not create recursive analytic accounts."
@@ -5239,7 +5237,7 @@ msgid "本月"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:288
+#: code:addons/aop_sale/models/stock_picking_batch.py:307
 #, python-format
 msgid "测试"
 msgstr "向导"
