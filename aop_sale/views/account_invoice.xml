@@ -123,6 +123,7 @@
                     <field name="tmp_estimate"/>
                     <field name="cost_passage" invisible="1"/>
                     <field name="price_unit" string="customer price"/>
+                    <field name="account_period_id"/>
                     <field name="discount" invisible="1" groups="base.group_no_one"/>
                     <field name="price_subtotal" invisible="1" groups="account.group_show_line_subtotals_tax_excluded"/>
                     <field name="price_total" invisible="1" groups="account.group_show_line_subtotals_tax_included"/>

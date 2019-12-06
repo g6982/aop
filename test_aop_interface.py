@@ -22,7 +22,7 @@ data = {
     'params': {
         'login': 'aop_interface_test_name',
         'password': 'aop_interface_test_password',
-        'db': 'aop3'
+        'db': 'daodu_demo'
     }
 }
 
@@ -45,13 +45,18 @@ HEADERS.update({
 })
 print('headers: ', HEADERS)
 
+#这一段在shell中执行
+#################################################
 batch_id = self.env['stock.picking.batch'].browse(1)
 data = []
 for task_id in batch_id.picking_ids:
     tmp = {
-        'task_id': task_id
+        'task_id': task_id.id
     }
     data.append(tmp)
+###################################################
+
+
 # 测试 I_WMS_AOP_001
 data = {
     'params': {
@@ -59,9 +64,11 @@ data = {
     }
 }
 
+
 res = requests.post(url=BASE_URL + DONE_PICKING, data=json.dumps(data), headers=HEADERS)
 content = json.loads(res.content.decode('utf-8'))
 print(content)
+
 
 # 返回值： headers:  {'Content-Type': 'application/json', 'charset': 'utf-8', 'access-token': 'access_token_f772d5c69ca510ad54eb91c8d8072e9dd4a2538d'}
 
