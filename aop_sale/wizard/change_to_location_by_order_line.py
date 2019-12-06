@@ -202,7 +202,7 @@ class ChangeToLocationByOrderLine(models.TransientModel):
                     })
 
                     if new_picking_id:
-                        all_new_stock_picking_ids.append(new_picking_id.ids)
+                        all_new_stock_picking_ids.append(new_picking_id.id)
                     if new_move_id:
                         new_dispatch_move_ids.append(new_move_id)
 
