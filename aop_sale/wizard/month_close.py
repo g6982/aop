@@ -17,29 +17,34 @@ class MonthClose(models.TransientModel):
     # 1. 将没有生成结算清单的销售订单行，生成结算清单
     # 2. 标记月结状态
     def start_generate_monthly(self):
-        if self.period_id.monthly_state:
-            raise UserError('Please cancel monthly first')
+        try:
+            if self.period_id.monthly_state:
+                raise UserError('Please cancel monthly first')
 
-        self._null_invoice_order_line_data()
-        sale_order_line_ids = self.find_sale_order_not_invoice()
+            self._null_invoice_order_line_data()
+            sale_order_line_ids = self.find_sale_order_not_invoice()
 
-        if sale_order_line_ids:
-            # 月结操作的时候，需要生成收入确认的值
-            context = {
-                'active_ids': [x.mapped('order_id').id for x in sale_order_line_ids],
-                'period_id': self.period_id.id
-            }
-            return {
-                'name': _('Make invoice'),
-                'view_type': 'form',
-                "view_mode": 'form',
-                'res_model': 'sale.advance.payment.inv',
-                'type': 'ir.actions.act_window',
-                'context': context,
-                'target': 'new',
-            }
-        self._purchase_create_invoice()
-        self.period_id.monthly_state = True
+            if sale_order_line_ids:
+                ids = [x.id for x in sale_order_line_ids]
+                # 月结操作的时候，需要生成收入确认的值
+                context = {
+                    'active_ids': ids,
+                    'period_id': self.period_id.id
+                }
+                return {
+                    'name': _('Make invoice'),
+                    'view_type': 'form',
+                    "view_mode": 'form',
+                    'res_model': 'sale.advance.payment.inv',
+                    'type': 'ir.actions.act_window',
+                    'context': context,
+                    'target': 'new',
+                }
+            self._purchase_create_invoice()
+            self.period_id.monthly_state = True
+        except Exception as e:
+            import traceback
+            raise ValueError(traceback.format_exc())
 
     def cancel_monthly(self):
         self.period_id.monthly_state = False
