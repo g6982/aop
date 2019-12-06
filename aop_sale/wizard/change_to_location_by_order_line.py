@@ -96,7 +96,7 @@ class ChangeToLocationByOrderLine(models.TransientModel):
             'partner_id': picking.partner_id.id,
             'picking_type_id': location_route[-1].id,
             'location_id': location_route[0].id,
-            'location_dest_id': location_route[11].id,
+            'location_dest_id': location_route[1].id,
             'vin_id': picking.vin_id.id
         }
 
