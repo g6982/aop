@@ -31,7 +31,7 @@ class StockPicking(models.Model):
     route_id = fields.Many2one(
         'stock.location.route',
         string='Route',
-        related='sale_order_line_id.route_id',
+        related='move_lines.rule_id.route_id',
         readonly=True,
         store=True
     )

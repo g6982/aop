@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191118\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-05 14:53+0000\n"
-"PO-Revision-Date: 2019-12-05 14:53+0000\n"
+"POT-Creation-Date: 2019-12-06 02:45+0000\n"
+"PO-Revision-Date: 2019-12-06 02:45+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3263,6 +3263,7 @@ msgstr "舍入明细"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__route_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__route_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__route_id
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking__route_id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__route_id
 msgid "Route"
 msgstr "路由"
