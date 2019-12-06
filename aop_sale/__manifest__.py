@@ -72,6 +72,7 @@
         'wizard/batch_purchase_invoice_line.xml',
         'wizard/stock_picking_change_to_batch.xml',
         'wizard/write_back_account_invoice_line.xml',
+        'wizard/change_to_location_by_order_line.xml',
         'report/report_statement.xml',
     ],
 }

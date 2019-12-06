@@ -283,9 +283,6 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             if tmp:
                 create_invoice_values.append(tmp)
 
-        _logger.info({
-            'create_invoice_values': create_invoice_values
-        })
         if create_invoice_values:
             create_invoice_ids = invoice_obj.create(create_invoice_values).ids
 

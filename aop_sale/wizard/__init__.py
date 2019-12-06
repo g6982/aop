@@ -13,6 +13,7 @@ from . import package_reconciliation_verify
 from . import batch_purchase_invoice_line
 from . import stock_picking_change_to_batch
 from . import write_back_account_invoice_line
+from . import change_to_location_by_order_line
 
 
 
