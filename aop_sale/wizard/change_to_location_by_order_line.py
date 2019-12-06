@@ -52,6 +52,7 @@ class ChangeToLocationByOrderLine(models.TransientModel):
                 next_move_id = start_picking_id.move_lines[0].move_dest_ids
                 start_picking_id = next_move_id.picking_id
             else:
+                area_picking_ids.append(start_picking_id)
                 break
 
         return area_picking_ids
@@ -69,7 +70,7 @@ class ChangeToLocationByOrderLine(models.TransientModel):
             'location_id': location_route[0].id,
             'location_dest_id': location_route[-1].id,
             'rule_id': move_id.rule_id.id,
-            'procure_method': move_id.procure_method,
+            'procure_method': 'make_to_stock',
             'origin': move_id.name,
             'picking_type_id': move_id.picking_type_id.id,
             'group_id': picking[0].group_id.id,
@@ -219,17 +220,27 @@ class ChangeToLocationByOrderLine(models.TransientModel):
                 self._link_old_move_and_new_move(create_first_move_id, area_first_picking_id, position='first')
                 self._link_old_move_and_new_move(create_last_move_id, area_last_picking_id, position='end')
 
+                _logger.info({
+                    'area_picking_ids': area_picking_ids
+                })
                 # 取消之间的所有任务
                 for picking_id in area_picking_ids:
+                    picking_id.move_lines._do_unreserve()
+                    picking_id.move_lines.write({
+                        'move_dest_ids': False,
+                        'move_orig_ids': False,
+                        'state': 'cancel'
+                    })
                     # 取消预留
-                    picking_id.move_lines._action_cancel()
+                    # picking_id.move_lines._action_cancel()
                     picking_id.write({
                         'state': 'cancel'
                     })
 
                 # 预留新生成的 stock move
-                new_dispatch_move_ids[0]._action_confirm()
-                new_dispatch_move_ids[0].picking_id.action_assign()
+                for new_dispatch_move_id in new_dispatch_move_ids:
+                    new_dispatch_move_id[0]._action_confirm()
+                    new_dispatch_move_id[0].picking_id.action_assign()
 
             if all_new_stock_picking_ids:
                 view_id = self.env.ref('stock.vpicktree').id
