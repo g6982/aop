@@ -28,6 +28,16 @@ class StockPicking(models.Model):
         store=True
     )
 
+    route_id = fields.Many2one(
+        'stock.location.route',
+        string='Route',
+        related='sale_order_line_id.route_id',
+        readonly=True,
+        store=True
+    )
+
+
+
     def match_sale_order(self):
         return self._match_sale_order()
 
