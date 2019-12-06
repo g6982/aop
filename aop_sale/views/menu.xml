@@ -392,9 +392,17 @@
                   sequence="90"
                   groups="aop_sale.group_aop_system_admin"
         />
-        <menuitem action="fleet.fleet_vehicle_action" parent="train_manage" id="train_menu"
-                  groups="aop_sale.group_aop_system_admin"
-        />
+        <record id="action_train_manage" model="ir.actions.act_window">
+            <field name="name">Train</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">train.manage</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem parent="train_manage" id="train_manage_menu" string="Train manage"/>
+
+        <menuitem action="action_train_manage" parent="train_manage_menu" id="train_manage_menu_child"/>
 
         <!--税务发票-->
         <menuitem id="account_tax_invoice" parent="account.menu_finance" name="Tax invoice"

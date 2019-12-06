@@ -57,6 +57,7 @@
         'views/stock_warehouse_type.xml',
         'views/res_users_type.xml',
         'views/insurance_aop_contract.xml',
+        'views/train_manage.xml',
         'wizard/account_tax_invoice_wizard.xml',
         'wizard/change_stock_picking.xml',
         'wizard/import_sale_order.xml',
