@@ -68,11 +68,11 @@ class ChangeToLocationByOrderLine(models.TransientModel):
             'product_uom_qty': move_id.product_uom_qty,
             'partner_id': (move_id.group_id and move_id.group_id.partner_id.id) or False,
             'location_id': location_route[0].id,
-            'location_dest_id': location_route[-1].id,
+            'location_dest_id': location_route[1].id,
             'rule_id': move_id.rule_id.id,
             'procure_method': 'make_to_stock',
             'origin': move_id.name,
-            'picking_type_id': move_id.picking_type_id.id,
+            'picking_type_id': location_route[-1].id,
             'group_id': picking[0].group_id.id,
             'route_ids': [(4, route.id) for route in move_id.route_ids],
             'warehouse_id': move_id.warehouse_id.id,
@@ -89,20 +89,20 @@ class ChangeToLocationByOrderLine(models.TransientModel):
         picking = picking[0]
         return {
             'name': 'DISPATCH/' + picking.name + '/' + str(location_route[0].id) + '/' + str(
-                location_route[-1].id) + '/' + str(random.choice(range(int(time.time())))),
+                location_route[1].id) + '/' + str(random.choice(range(int(time.time())))),
             'origin': picking.name,
             'company_id': picking.company_id.id,
             'move_type': picking.group_id and picking.group_id.move_type or 'direct',
             'partner_id': picking.partner_id.id,
-            'picking_type_id': picking.picking_type_id.id,
+            'picking_type_id': location_route[-1].id,
             'location_id': location_route[0].id,
-            'location_dest_id': location_route[-1].id,
+            'location_dest_id': location_route[11].id,
             'vin_id': picking.vin_id.id
         }
 
     # 获取需要修改的线路数据
     def _get_change_location_route(self):
-        return [(line.from_location_id, line.to_location_id) for line in self.line_ids]
+        return [(line.from_location_id, line.to_location_id, line.picking_type_id) for line in self.line_ids]
 
     # 对任务进行关联
     def _link_old_move_and_new_move(self, new_move, picking, position=False):
@@ -274,3 +274,4 @@ class ChangeToLocationByOrderLineDetail(models.TransientModel):
     change_id = fields.Many2one('change.to.location.by.order.line')
     from_location_id = fields.Many2one('stock.location', 'From')
     to_location_id = fields.Many2one('stock.location', 'To')
+    picking_type_id = fields.Many2one('stock.picking.type', string='Picking type')
