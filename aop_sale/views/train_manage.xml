@@ -16,8 +16,8 @@
                         <notebook>
                             <page string="Lines">
                                 <field name="line_ids">
-                                    <tree>
-                                        <field name="name"/>
+                                    <tree editable="bottom">
+                                        <field name="name" required="1"/>
                                     </tree>
                                 </field>
                             </page>

@@ -232,7 +232,7 @@ class StockPickingBatch(models.Model):
         data = []
         for line_id in self.mount_car_plan_ids:
             tmp = {
-                'transfer_tool_number': line_id.transfer_tool_number,
+                'transfer_tool_number': line_id.transfer_tool_number.name,
                 'to_location_name': line_id.to_location_id.name if line_id.to_location_id else '',
                 'product_model': line_id.name.default_code,
                 'product_model_layer': line_id.layer_option,
@@ -565,7 +565,8 @@ class MountCarPlan(models.Model):
 
     name = fields.Many2one('product.product', string='Vehicle model', domain=[('type', '=', 'product')], required=True)
 
-    transfer_tool_number = fields.Char('Transfer tool no', required=True)
+    # transfer_tool_number = fields.Char('Transfer tool no', required=True)
+    transfer_tool_number = fields.Many2one('train.manage.line', string='Transfer tool no', required=True)
     layer_option = fields.Selection([
         ('upper_layer', 'Upper layer'),
         ('lower_layer', 'Lower layer')
