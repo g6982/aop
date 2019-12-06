@@ -23,19 +23,22 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         return partner_id.property_stock_customer
 
     # 查找最新的合同版本
-    def _get_latest_contract_id(self, line_id):
-        partner_id = getattr(line_id, 'order_partner_id')
+    def _get_latest_contract_id(self, invoice_line_id):
+        partner_id = invoice_line_id.partner_id
 
-        if not partner_id:
-            partner_id = getattr(line_id, 'partner_id')
+        if invoice_line_id.invoice_id.type == 'out_invoice':
+            contract_obj = self.env['customer.aop.contract']
+        elif invoice_line_id.invoice_id.type == 'in_invoice':
+            contract_obj = self.env['supplier.aop.contract']
 
-        res = self.env['customer.aop.contract'].search([
+        res = contract_obj.sudo().search([
             ('partner_id', '=', partner_id.id),
             ('contract_version', '!=', 0)
         ], limit=1)
         return res
 
-    def _get_latest_carrier_id(self, contract_id, order_line_id):
+    # 客户合同
+    def _get_customer_carrier_id(self, contract_id, order_line_id):
         contract_line_ids = contract_id.mapped('delivery_carrier_ids')
 
         from_location_id = self._transfer_district_to_location(order_line_id.from_location_id)
@@ -49,27 +52,44 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
                 carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
                 return carrier_id
 
-    def _invoice_data(self, order, line_id=False, invoice_line_id=False):
-        date_invoice = False
-        if line_id:
-            date_invoice = line_id.picking_confirm_date if line_id.picking_confirm_date else fields.Date.today()
-            date_invoice = date_invoice.date() if hasattr(date_invoice, 'date') else date_invoice
-        else:
-            date_invoice = fields.Date.today()
+    # 供应商合同
+    def _get_supplier_carrier_id(self, purchase_line_id):
+        picking_id = purchase_line_id.batch_stock_picking_id
+        if not picking_id:
+            return False
+        res = self.env['delivery.carrier'].search([
+            ('from_location_id', '=', picking_id.location_id.id),
+            ('to_location_id', '=', picking_id.location_dest_id.id),
+            ('supplier_contract_id.partner_id', '=', purchase_line_id.order_id.partner_id.id),
+            ('service_product_id', '=', purchase_line_id.product_id.id)
+        ])
+        return res[0] if res else False
+
+    def _invoice_data(self, invoice_line_id=False):
+        # 使用当前日期
+        date_invoice = fields.Date.today()
+
+        invoice_id_data = invoice_line_id.invoice_id.copy_data()
+        invoice_id_data = invoice_id_data[0]
+        invoice_id_data.update({
+            'date_invoice': date_invoice
+        })
+
+        # 复制部分的数据
         return {
-            'name': order.client_order_ref or order.name + '/' + str(time.time()),
-            'origin': order.name,
-            'type': 'out_invoice',
-            'reference': False,
-            'account_id': order.partner_id.property_account_receivable_id.id,
-            'partner_id': order.partner_invoice_id.id,
-            'partner_shipping_id': order.partner_shipping_id.id,
-            'currency_id': order.pricelist_id.currency_id.id,
-            'payment_term_id': order.payment_term_id.id,
-            'fiscal_position_id': order.fiscal_position_id.id or order.partner_id.property_account_position_id.id,
-            'user_id': order.user_id.id,
+            'name': invoice_id_data.get('name'),
+            'origin': invoice_id_data.get('origin'),
+            'type': invoice_id_data.get('type'),
+            'reference': invoice_id_data.get('reference'),
+            'account_id': invoice_id_data.get('account_id'),
+            'partner_id': invoice_id_data.get('partner_id'),
+            'partner_shipping_id': invoice_id_data.get('partner_shipping_id'),
+            'currency_id': invoice_id_data.get('currency_id'),
+            'payment_term_id': invoice_id_data.get('payment_term_id'),
+            'fiscal_position_id': invoice_id_data.get('fiscal_position_id'),
+            'user_id': invoice_id_data.get('user_id'),
             'date_invoice': date_invoice,
-            'reconciliation_batch_no': invoice_line_id.invoice_id.reconciliation_batch_no
+            'reconciliation_batch_no': invoice_id_data.get('reconciliation_batch_no')
         }
 
     def _get_account_id(self, service_product_id, order=False):
@@ -89,7 +109,7 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
                 (service_product_id.name,))
         return account_id
 
-    def _get_account_invoice_line_data(self, line_id, sale_order_line_id, carrier_id, contract_id):
+    def _get_account_invoice_line_customer_data(self, line_id, sale_order_line_id, carrier_id, contract_id):
         '''
         :param line_id: 结算清单行
         :param sale_order_line_id: 销售订单行
@@ -119,7 +139,8 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             'analytic_tag_ids': [(6, 0, line_id.analytic_tag_ids.ids)],
             'account_analytic_id': sale_order_id.analytic_account_id.id or False,
             'tmp_estimate': line_id.tmp_estimate,
-            'customer_aop_contract_id': contract_id.id if contract_id else False
+            'customer_aop_contract_id': contract_id.id if contract_id else False,
+            'supplier_aop_contract_id': False
         }
         data.append((0, 0, old_data))
         new_data = {
@@ -138,68 +159,155 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             'analytic_tag_ids': [(6, 0, line_id.analytic_tag_ids.ids)],
             'account_analytic_id': sale_order_id.analytic_account_id.id or False,
             'tmp_estimate': line_id.tmp_estimate,
-            'customer_aop_contract_id': contract_id.id if contract_id else False
+            'customer_aop_contract_id': contract_id.id if contract_id else False,
+            'supplier_aop_contract_id': False
         }
         data.append((0, 0, new_data))
         return data
 
+    def _get_account_invoice_line_supplier_data(self, line_id, carrier_id, contract_id):
+        '''
+        :param line_id: 结算清单行
+        :param carrier_id: 合同条款
+        :param contract_id: 合同
+        :return:
+        '''
+
+        data = []
+        invoice_line_data = line_id.copy_data()
+        invoice_line_data = invoice_line_data[0]
+
+        contract_price = carrier_id.fixed_price
+
+        old_data = invoice_line_data
+        new_data = invoice_line_data
+        old_data.update({
+            'price_unit': -line_id.price_unit,
+            'contract_price': -line_id.contract_price,
+            'supplier_aop_contract_id': contract_id.id if contract_id else False,
+            'customer_aop_contract_id': False
+        })
+
+        data.append((0, 0, old_data))
+
+        new_data.update({
+            'price_unit': line_id.price_unit,
+            'contract_price': contract_price,
+            'supplier_aop_contract_id': contract_id.id if contract_id else False,
+            'customer_aop_contract_id': False
+        })
+        data.append((0, 0, new_data))
+        return data
+
+    def write_back_customer_invoice(self, invoice_line_id):
+        invoice_data = ''
+        sale_order_line_id = invoice_line_id.sale_order_line_id
+
+        # 合同
+        contract_id = self._get_latest_contract_id(invoice_line_id)
+
+        # 条款
+        carrier_id = self._get_customer_carrier_id(contract_id, sale_order_line_id)
+
+        # 如果是草稿，直接修改即可
+        if invoice_line_id.state == 'draft':
+            tmp = {
+                'customer_aop_contract_id': contract_id.id,
+                'contract_price': carrier_id.fixed_price
+            }
+            invoice_line_id.write(tmp)
+        else:
+            # 销售订单行
+            # 如果发票行的状态是完成
+            # 生成一条新的记录，使用最新的合同信息，先创建负数，再创建正数的新合同数据
+            invoice_data = self._invoice_data(invoice_line_id=invoice_line_id)
+            invoice_line_data = self._get_account_invoice_line_customer_data(
+                invoice_line_id,
+                sale_order_line_id,
+                carrier_id,
+                contract_id
+            )
+            invoice_data.update({
+                'invoice_line_ids': invoice_line_data
+            })
+        return invoice_data if invoice_data else False
+
+    def write_back_supplier_invoice(self, invoice_line_id):
+        invoice_data = ''
+        purchase_line_id = invoice_line_id.purchase_line_id
+
+        # 合同
+        contract_id = self._get_latest_contract_id(invoice_line_id)
+        # 条款
+        carrier_id = self._get_supplier_carrier_id(purchase_line_id)
+
+        _logger.info({
+            'contract_id': contract_id,
+            'carrier_id': carrier_id
+        })
+        # 如果是草稿，直接修改即可
+        if invoice_line_id.state == 'draft':
+            tmp = {
+                'supplier_aop_contract_id': contract_id.id,
+                'contract_price': carrier_id.fixed_price
+            }
+            invoice_line_id.write(tmp)
+        else:
+            # 销售订单行
+            # 如果发票行的状态是完成
+            # 生成一条新的记录，使用最新的合同信息，先创建负数，再创建正数的新合同数据
+            invoice_data = self._invoice_data(invoice_line_id=invoice_line_id)
+            invoice_line_data = self._get_account_invoice_line_supplier_data(
+                invoice_line_id,
+                carrier_id,
+                contract_id
+            )
+            invoice_data.update({
+                'invoice_line_ids': invoice_line_data
+            })
+        return invoice_data if invoice_data else False
+
     def write_back(self):
-        ids = self.env.context.get('active_ids')
-        line_ids = self.env['account.invoice.line'].browse(ids)
+        try:
+            ids = self.env.context.get('active_ids')
+            line_ids = self.env['account.invoice.line'].browse(ids)
 
-        invoice_obj = self.env['account.invoice']
-        create_invoice_ids = []
-        for line_id in line_ids:
-            sale_order_line_id = line_id.sale_order_line_id
+            invoice_obj = self.env['account.invoice']
+            create_invoice_ids = []
+            create_invoice_values = []
 
-            order = sale_order_line_id.order_id
+            # 结算清单行
+            for line_id in line_ids:
 
-            # 合同
-            contract_id = self._get_latest_contract_id(sale_order_line_id)
-
-            # 条款
-            carrier_id = self._get_latest_carrier_id(contract_id, sale_order_line_id)
-
-            # 如果是草稿，直接修改即可
-            if line_id.state == 'draft':
-                tmp = {}
+                # 回款结算清单
                 if line_id.invoice_id.type == 'out_invoice':
-                    tmp.update({
-                        'customer_aop_contract_id': contract_id.id
-                    })
-                else:
-                    tmp.update({
-                        'supplier_aop_contract_id': contract_id.id
-                    })
-                tmp.update({
-                    'contract_price': carrier_id.fixed_price
-                })
-                line_id.write(tmp)
-            else:
-                # 销售订单行
-                # 如果发票行的状态是完成
-                # 生成一条新的记录，使用最新的合同信息，先创建负数，再创建正数的新合同数据
-                invoice_data = self._invoice_data(order, line_id=sale_order_line_id, invoice_line_id=line_id)
-                invoice_line_data = self._get_account_invoice_line_data(line_id, sale_order_line_id, carrier_id, contract_id)
-                invoice_data.update({
-                    'invoice_line_ids': invoice_line_data
-                })
-                res = invoice_obj.create(invoice_data)
-                create_invoice_ids.append(res.id)
-        if not create_invoice_ids:
-            return True
+                    tmp = self.write_back_customer_invoice(line_id)
+                elif line_id.invoice_id.type == 'in_invoice':
+                    tmp = self.write_back_supplier_invoice(line_id)
 
-        view_id = self.env.ref('account.invoice_tree_with_onboarding').id
-        form_id = self.env.ref('account.invoice_form').id
+                if tmp:
+                    create_invoice_values.append(tmp)
 
-        return {
-            'name': _('Invoice'),
-            'view_type': 'form',
-            'view_id': False,
-            'views': [(view_id, 'tree'), (form_id, 'form')],
-            'res_model': 'account.invoice',
-            'type': 'ir.actions.act_window',
-            'domain': [('id', 'in', create_invoice_ids)],
-            'limit': 80,
-            'target': 'current',
-        }
+            if create_invoice_values:
+                create_invoice_ids = invoice_obj.create(create_invoice_values).ids
+
+            if not create_invoice_ids:
+                return True
+
+            view_id = self.env.ref('account.invoice_tree_with_onboarding').id
+            form_id = self.env.ref('account.invoice_form').id
+
+            return {
+                'name': _('Invoice'),
+                'view_type': 'form',
+                'view_id': False,
+                'views': [(view_id, 'tree'), (form_id, 'form')],
+                'res_model': 'account.invoice',
+                'type': 'ir.actions.act_window',
+                'domain': [('id', 'in', create_invoice_ids)],
+                'limit': 80,
+                'target': 'current',
+            }
+        except Exception as e:
+            import traceback
+            raise ValueError(traceback.format_exc())
