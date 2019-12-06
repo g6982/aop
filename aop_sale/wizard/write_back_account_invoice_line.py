@@ -41,8 +41,16 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         for line_id in contract_line_ids:
             # 判断路由，来源地，目的地
             if from_location_id.id == line_id.from_location_id.id and \
-                    to_location_id.id == line_id.to_location_id.id and order_line_id.route_id.id == line_id.route_id.id:
+                    to_location_id.id == line_id.to_location_id.id and \
+                    order_line_id.route_id.id == line_id.route_id.id and \
+                    order_line_id.product_id.id == line_id.product_id.id:
                 # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
+                carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
+                return carrier_id
+            elif from_location_id.id == line_id.from_location_id.id and \
+                    to_location_id.id == line_id.to_location_id.id and \
+                    not line_id.product_id:
+
                 carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
                 return carrier_id
 
@@ -208,7 +216,8 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         if invoice_line_id.state == 'draft':
             tmp = {
                 'customer_aop_contract_id': contract_id.id,
-                'contract_price': carrier_id.fixed_price
+                'contract_price': carrier_id.fixed_price,
+                'price_unit': carrier_id.fixed_price
             }
             invoice_line_id.write(tmp)
         else:

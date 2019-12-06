@@ -505,17 +505,27 @@ class SaleOrder(models.Model):
         return partner_id.property_stock_customer
 
     # 尝试获取条款
-    def _get_contract_line(self, contract_id, from_location_id, to_location_id):
+    def _get_contract_line(self, contract_id, from_location_id, to_location_id, product_id):
         contract_line_ids = contract_id.mapped('delivery_carrier_ids')
 
         delivery_ids = []
 
         for line_id in contract_line_ids:
             if from_location_id.id == line_id.from_location_id.id and \
-                    to_location_id.id == line_id.to_location_id.id:
+                    to_location_id.id == line_id.to_location_id.id and \
+                    product_id.id == line_id.product_id.id:
                 # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
                 line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
                 delivery_ids.append(line_id)
+
+        if not delivery_ids:
+            for line_id in contract_line_ids:
+                if from_location_id.id == line_id.from_location_id.id and \
+                        to_location_id.id == line_id.to_location_id.id and \
+                        not line_id.product_id:
+                    line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
+                    delivery_ids.append(line_id)
+
 
         delivery_ids = list(set(delivery_ids))
 
@@ -527,11 +537,11 @@ class SaleOrder(models.Model):
         order_from_location_id = self._transfer_district_to_location(order_line.from_location_id)
         order_to_location_id = self._transfer_district_to_location(order_line.to_location_id)
 
-        delivery_ids = self._get_contract_line(contract_id, order_from_location_id, order_to_location_id)
+        delivery_ids = self._get_contract_line(contract_id, order_from_location_id, order_to_location_id, order_line.product_id)
 
         if not delivery_ids:
             order_from_location_id = self._transfer_district_to_location(order_line.from_location_id, patch=True)
-            delivery_ids = self._get_contract_line(contract_id, order_from_location_id, order_to_location_id)
+            delivery_ids = self._get_contract_line(contract_id, order_from_location_id, order_to_location_id, order_line.product_id)
 
         return delivery_ids
 

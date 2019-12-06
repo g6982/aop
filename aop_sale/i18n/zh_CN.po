@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191118\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-06 06:34+0000\n"
-"PO-Revision-Date: 2019-12-06 06:34+0000\n"
+"POT-Creation-Date: 2019-12-06 12:41+0000\n"
+"PO-Revision-Date: 2019-12-06 12:41+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1179,7 +1179,7 @@ msgid "Discount (%)"
 msgstr "折扣 (%)"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:859
+#: code:addons/aop_sale/models/sale_order.py:869
 #: model:ir.actions.act_window,name:aop_sale.change_to_location_by_order_line_action
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order__dispatch_order
 #: model:ir.module.category,name:aop_sale.module_aop_sale_dispatch_manager
@@ -1824,7 +1824,7 @@ msgstr "库存路线"
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:238
-#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:296
+#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:304
 #: model:ir.model,name:aop_sale.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
@@ -2766,8 +2766,10 @@ msgstr "支付挂件"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice__account_period_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__account_period_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__account_period_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__period_month
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__account_period_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__period_month
 #: model:ir.model.fields,field_description:aop_sale.field_month_close_wizard__period_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_advance_payment_inv__period_id
@@ -2836,7 +2838,7 @@ msgid "Planned date"
 msgstr "计划日期"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:797
+#: code:addons/aop_sale/models/sale_order.py:807
 #, python-format
 msgid "Please wait until the VIN in stock. Any question, Contact administrator. "
 msgstr "请等待VIN码入库。任何问题，联系管理员。"
@@ -3907,7 +3909,7 @@ msgstr "已经存在税务发票了，您必须使用相同的税务发票编号
 #. module: aop_sale
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:132
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:377
-#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:100
+#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:108
 #, python-format
 msgid "There is no income account defined for this product: \"%s\". You may have to install a chart of account from Accounting app, settings menu."
 msgstr ""
