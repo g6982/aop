@@ -257,7 +257,7 @@ class StockPickingBatch(models.Model):
                 raise UserError('You must select same warehouse to make loading plan !')
 
             # 检查装车计划
-            self.check_loading_plan()
+            # self.check_loading_plan()
         elif self.picking_ids and not self.mount_car_plan_ids:
             picking_type_ids = self.picking_ids.mapped('picking_type_id')
             limit_state = picking_type_ids.mapped('limit_picking_batch')
