@@ -141,7 +141,7 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             'name': line_id.name,
             'origin': line_id.name,
             'account_id': account_id,
-            'price_unit': line_id.price_unit,
+            'price_unit': contract_price,
             'quantity': 1.0,
             'discount': 0.0,
             'uom_id': service_product_id.uom_id.id,
@@ -185,7 +185,7 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         data.append((0, 0, old_data))
 
         new_data.update({
-            'price_unit': line_id.price_unit,
+            'price_unit': contract_price,
             'contract_price': contract_price,
             'supplier_aop_contract_id': contract_id.id if contract_id else False,
             'customer_aop_contract_id': False
