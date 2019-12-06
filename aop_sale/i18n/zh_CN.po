@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191118\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-05 13:54+0000\n"
-"PO-Revision-Date: 2019-12-05 13:54+0000\n"
+"POT-Creation-Date: 2019-12-06 02:45+0000\n"
+"PO-Revision-Date: 2019-12-06 02:45+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -918,7 +918,7 @@ msgid "Created by"
 msgstr "创建人"
 
 #. module: aop_sale
-#: model:ir.model.fields,field_description:aop_sale.field_sale_order__created_by_picking_id
+#: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__created_by_picking_id
 msgid "Created by picking"
 msgstr ""
 
@@ -1164,7 +1164,7 @@ msgid "Discount (%)"
 msgstr "折扣 (%)"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:857
+#: code:addons/aop_sale/models/sale_order.py:859
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order__dispatch_order
 #: model:ir.module.category,name:aop_sale.module_aop_sale_dispatch_manager
 #: model_terms:ir.ui.view,arch_db:aop_sale.stock_picking_batch_form_inherit_create_purchase
@@ -1561,7 +1561,7 @@ msgstr "有未清项"
 
 #. module: aop_sale
 #: code:addons/aop_sale/models/account_invoice.py:184
-#: code:addons/aop_sale/models/sale_order.py:438
+#: code:addons/aop_sale/models/sale_order.py:440
 #, python-format
 msgid "Has been monthly!"
 msgstr "已月结!"
@@ -2788,7 +2788,7 @@ msgid "Planned date"
 msgstr "计划日期"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:795
+#: code:addons/aop_sale/models/sale_order.py:797
 #, python-format
 msgid "Please wait until the VIN in stock. Any question, Contact administrator. "
 msgstr "请等待VIN码入库。任何问题，联系管理员。"
@@ -2868,8 +2868,10 @@ msgstr "定价"
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract_line__product_id
 #: model:ir.model.fields,field_description:aop_sale.field_reconciliation_file__product_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__service_product_id
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking__product_id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__service_product_id
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_delivery_carrier_form_inherit
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_picking_internal_search_inherit_aop_sale
 msgid "Product"
 msgstr "货物"
 
@@ -3088,6 +3090,11 @@ msgid "Re Line"
 msgstr ""
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_picking_internal_search_inherit_aop_sale
+msgid "Real stock"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking__real_stock_location_id
 msgid "Real stock location"
 msgstr "源库"
@@ -3256,6 +3263,7 @@ msgstr "舍入明细"
 #: model:ir.model.fields,field_description:aop_sale.field_rule_service_product__route_id
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__route_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__route_id
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking__route_id
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_contract_stock_rule_line__route_id
 msgid "Route"
 msgstr "路由"
@@ -4340,7 +4348,7 @@ msgid "Write time"
 msgstr "更新时间"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:458
+#: code:addons/aop_sale/models/sale_order.py:460
 #: model:ir.actions.act_window,name:aop_sale.action_write_off_line_order_wizard
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_form_inherit_aop_sale
 #, python-format
@@ -4409,6 +4417,18 @@ msgstr ""
 #, python-format
 msgid "You must select more than one record."
 msgstr ""
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/stock_picking_batch.py:277
+#, python-format
+msgid "You must select same location !"
+msgstr "你必须选择相同的目的位置!"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/stock_picking_batch.py:283
+#, python-format
+msgid "You must select same to location !"
+msgstr "你必须选择相同的目的位置!"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_account_tax_invoice
@@ -4907,6 +4927,12 @@ msgstr "账期月"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_change_stock_picking_form
 msgid "picking"
 msgstr "任务"
+
+#. module: aop_sale
+#: code:addons/aop_sale/models/stock_picking_batch.py:286
+#, python-format
+msgid "picking location_dest_id != loading plan to_location_id"
+msgstr "任务的目的位置和装车计划的到站位置不同!"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_invoice_no_tax_invoice_form
