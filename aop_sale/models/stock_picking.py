@@ -29,7 +29,8 @@ class StockPicking(models.Model):
     )
 
     delivery_carrier_id = fields.Many2one('delivery.carrier', 'Delivery carrier')
-    route_id = fields.Many2one('stock.location.route', related='delivery_carrier_id.route_id', store=True)
+    # route_id = fields.Many2one('stock.location.route', related='delivery_carrier_id.route_id', store=True)
+    route_id = fields.Many2one('stock.location.route', related='sale_order_line_id.route_id', store=True)
 
     def match_sale_order(self):
         return self._match_sale_order()
