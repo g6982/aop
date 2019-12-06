@@ -195,7 +195,7 @@
                 <xpath expr="//field[@name='order_line']/tree/field[@name='tax_id']" position="attributes">
                     <attribute name="attrs">{
                         'readonly': [('qty_invoiced', '&gt;', 0)],
-                        'invisible': 0
+                        'invisible': [('state', '!=', 'sale')]
                         }
                     </attribute>
 
@@ -204,7 +204,7 @@
 
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
                     <attribute name="attrs">{
-                        'invisible': 0
+                        'invisible': [('state', '!=', 'sale')]
                         }
                     </attribute>
                 </xpath>
