@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191118\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-06 12:41+0000\n"
-"PO-Revision-Date: 2019-12-06 12:41+0000\n"
+"POT-Creation-Date: 2019-12-06 16:09+0000\n"
+"PO-Revision-Date: 2019-12-06 16:09+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1824,7 +1824,7 @@ msgstr "库存路线"
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:238
-#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:304
+#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:305
 #: model:ir.model,name:aop_sale.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
@@ -2331,7 +2331,7 @@ msgstr "主产品"
 
 #. module: aop_sale
 #: code:addons/aop_sale/models/write_off_batch_number.py:32
-#: code:addons/aop_sale/wizard/month_close.py:33
+#: code:addons/aop_sale/wizard/month_close.py:35
 #, python-format
 msgid "Make invoice"
 msgstr "生成回款/付款结算清单"
@@ -2812,6 +2812,7 @@ msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_aop_route_line__picking_type_id
+#: model:ir.model.fields,field_description:aop_sale.field_change_to_location_by_order_line_detail__picking_type_id
 #: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__picking_type_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_picking_change_to_batch__picking_type_id
 msgid "Picking type"
@@ -4009,12 +4010,12 @@ msgstr "以发票币种总计"
 #: model:ir.model.fields,field_description:aop_sale.field_train_manage_line__train_id
 #: model:ir.ui.menu,name:aop_sale.train_manage_menu_child
 msgid "Train"
-msgstr ""
+msgstr "火车"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_train_manage__line_ids
 msgid "Train lines"
-msgstr ""
+msgstr "明细行"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_line__train_type
