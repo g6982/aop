@@ -216,7 +216,8 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         if invoice_line_id.state == 'draft':
             tmp = {
                 'customer_aop_contract_id': contract_id.id,
-                'contract_price': carrier_id.fixed_price
+                'contract_price': carrier_id.fixed_price,
+                'price_unit': carrier_id.fixed_price
             }
             invoice_line_id.write(tmp)
         else:
