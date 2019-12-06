@@ -84,7 +84,8 @@ class StockMove(models.Model):
         res.update({
             'delivery_to_partner_id': self.delivery_to_partner_id.id,
             'sale_order_line_id': self.sale_order_line_id.id,
-            'vin_id': self.vin_id.id
+            'vin_id': self.vin_id.id,
+            'delivery_carrier_id': self.delivery_carrier_id.id
         })
         return res
 
