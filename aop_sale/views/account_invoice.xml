@@ -137,6 +137,19 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="account_invoice_line_form_inherit_aop_sale">
+            <field name="name">account.invoice.line.form</field>
+            <field name="model">account.invoice.line</field>
+            <field name="inherit_id" ref="account.view_invoice_line_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='price_unit']" position="after">
+                        <field name="account_period_id" />
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
         <!--        客户发票明细行-->
         <record id="action_customer_account_invoice_line_view" model="ir.actions.act_window">
             <field name="name">Customer invoice line</field>
