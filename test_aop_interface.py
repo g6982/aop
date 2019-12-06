@@ -22,7 +22,7 @@ data = {
     'params': {
         'login': 'aop_interface_test_name',
         'password': 'aop_interface_test_password',
-        'db': 'aop3'
+        'db': 'aop6'
     }
 }
 
@@ -45,19 +45,19 @@ HEADERS.update({
 })
 print('headers: ', HEADERS)
 
-batch_id = self.env['stock.picking.batch'].browse(1)
-data = []
-for task_id in batch_id.picking_ids:
-    tmp = {
-        'task_id': task_id
-    }
-    data.append(tmp)
-# 测试 I_WMS_AOP_001
-data = {
-    'params': {
-        'data': data
-    }
-}
+# batch_id = self.env['stock.picking.batch'].browse(1)
+# data = []
+# for task_id in batch_id.picking_ids:
+#     tmp = {
+#         'task_id': task_id
+#     }
+#     data.append(tmp)
+# # 测试 I_WMS_AOP_001
+# data = {
+#     'params': {
+#         'data': data
+#     }
+# }
 
 res = requests.post(url=BASE_URL + DONE_PICKING, data=json.dumps(data), headers=HEADERS)
 content = json.loads(res.content.decode('utf-8'))
@@ -129,30 +129,30 @@ def get_17_vin():
 # WTJZXBK/唐家沱线边库
 # WTJCXBK/团结村线边库
 # WXZTLK/新筑铁路库
-# warehouse_code = 'WTJCKYK'
-# warehouse_name = '团结村快运库'
-# #
-# # warehouse_code = 'WTJCXBK'
-# # warehouse_name = '团结村线边库'
-# # 接车数据
+warehouse_code = 'WTJCKYK'
+warehouse_name = '团结村快运库'
 #
-# data1 = []
-# index = 128
-# for _ in range(6):
-#     tmp = {'brand_model_name': 'WFTCZK', 'product_color': 'YG4F', 'product_model': '86H', 'state_flag': 'T',
-#            'vin': 'WwidqDp5CYhQAC' + str(index), 'warehouse_code': warehouse_code, 'warehouse_name': warehouse_name}
-#     data1.append(tmp)
-#     index += 1
-#
-# data = {
-#     'params': {
-#         'data': data1
-#     }
-# }
-#
-# res = requests.post(url=BASE_URL + DONE_PICKING, data=json.dumps(data), headers=HEADERS)
-# content = json.loads(res.content.decode('utf-8'))
-# print(content)
+# warehouse_code = 'WTJCXBK'
+# warehouse_name = '团结村线边库'
+# 接车数据
+
+data1 = []
+index = 140
+for _ in range(6):
+    tmp = {'brand_model_name': 'WFTCZK', 'product_color': 'YG4F', 'product_model': '86H', 'state_flag': 'T',
+           'vin': 'WwidqDp5CYhQAC' + str(index), 'warehouse_code': warehouse_code, 'warehouse_name': warehouse_name}
+    data1.append(tmp)
+    index += 1
+
+data = {
+    'params': {
+        'data': data1
+    }
+}
+
+res = requests.post(url=BASE_URL + DONE_PICKING, data=json.dumps(data), headers=HEADERS)
+content = json.loads(res.content.decode('utf-8'))
+print(content)
 
 # data = {
 #     'params': {
