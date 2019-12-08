@@ -444,13 +444,18 @@ class StockPickingBatch(models.Model):
             picking_ids = line.mapped('picking_ids')
 
             # 搜索客户合同
-            customer_contract_id = self.env['customer.aop.contract'].search([
-                ('partner_id', 'in', list(set(picking_ids.mapped('partner_id').ids))),
-                ('contract_version', '!=', 0)
-            ], limit=1)
+            start_date = picking_ids.mapped('scheduled_date')
+            start_date = sorted(start_date)
 
-            # 根据任务和客户和同，过滤供应商合同
-            partner_ids = self.find_supplier_contract_partner(picking_ids, customer_contract_id=customer_contract_id)
+            customer_contract_ids = self.env['customer.aop.contract'].search([
+                ('partner_id', 'in', list(set(picking_ids.mapped('partner_id').ids))),
+                ('contract_version', '!=', 0),
+                ('date_start', '<', start_date[0]),
+                ('date_end', '>', start_date[-1])
+            ])
+
+            # 根据任务和客户合同，过滤供应商合同
+            partner_ids = self.find_supplier_contract_partner(picking_ids, customer_contract_id=customer_contract_ids)
             if not partner_ids:
                 line.allow_partner_ids = False
                 line.limit_state = 'un_limit'

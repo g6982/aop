@@ -475,73 +475,63 @@ class SaleOrder(models.Model):
                 order.order_type = 'customer'
 
     # 获取合同
-    # TODO： fix me 需要加上时间的维度
     def _fetch_customer_contract(self, res):
         res = self.env['customer.aop.contract'].search([
             ('partner_id', '=', res.partner_id.id),
-            ('contract_version', '!=', 0)
-        ], limit=1)
-        return res[0] if res else False
+            ('contract_version', '!=', 0),
+            ('date_start', '<', res.create_date),
+            ('date_end', '>', res.create_date)
+        ])
+
+        # 获取到多个合同
+        return res if res else False
 
     def _transfer_district_to_location(self, partner_id, patch=False):
-        # location_obj = self.env['stock.location']
-        # filter_domain = []
-        # if partner_id.district_id:
-        #     filter_domain = [('name', '=', partner_id.district_id.name)]
-        # elif partner_id.city_id:
-        #     filter_domain = [('name', '=', partner_id.city_id.name)]
-        #
-        # location_id = False
-        # if filter_domain:
-        #     location_id = location_obj.search(filter_domain)
-        #
-        # # 搜索到不是想要的值
-        # if not location_id:
-        #     # 保留取上级的默认客户位置
-        #     location_id = partner_id.parent_id.property_stock_customer
-        # if patch:
-        #     location_id = partner_id.parent_id.property_stock_customer
-        # return location_id
         return partner_id.property_stock_customer
 
     # 尝试获取条款
-    def _get_contract_line(self, contract_id, from_location_id, to_location_id, product_id):
-        contract_line_ids = contract_id.mapped('delivery_carrier_ids')
-
+    def _get_contract_line(self, contract_ids, from_location_id, to_location_id, product_id):
         delivery_ids = []
+        for contract_id in contract_ids:
+            if delivery_ids:
+                continue
+            contract_line_ids = contract_id.mapped('delivery_carrier_ids')
 
-        for line_id in contract_line_ids:
-            if from_location_id.id == line_id.from_location_id.id and \
-                    to_location_id.id == line_id.to_location_id.id and \
-                    product_id.id == line_id.product_id.id:
-                # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
-                line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
-                delivery_ids.append(line_id)
-
-        if not delivery_ids:
             for line_id in contract_line_ids:
                 if from_location_id.id == line_id.from_location_id.id and \
                         to_location_id.id == line_id.to_location_id.id and \
-                        not line_id.product_id:
+                        product_id.id == line_id.product_id.id:
+                    # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
                     line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
                     delivery_ids.append(line_id)
 
+            if not delivery_ids:
+                for line_id in contract_line_ids:
+                    if from_location_id.id == line_id.from_location_id.id and \
+                            to_location_id.id == line_id.to_location_id.id and \
+                            not line_id.product_id:
+                        line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
+                        delivery_ids.append(line_id)
+
+        # 没有就抛出异常
+        if not delivery_ids:
+            raise ValueError('Can not find correct delivery carrier !')
 
         delivery_ids = list(set(delivery_ids))
 
         return delivery_ids
 
     # 查找 条款
-    def _find_contract_line(self, contract_id, order_line):
+    def _find_contract_line(self, contract_ids, order_line):
 
         order_from_location_id = self._transfer_district_to_location(order_line.from_location_id)
         order_to_location_id = self._transfer_district_to_location(order_line.to_location_id)
 
-        delivery_ids = self._get_contract_line(contract_id, order_from_location_id, order_to_location_id, order_line.product_id)
+        delivery_ids = self._get_contract_line(contract_ids, order_from_location_id, order_to_location_id, order_line.product_id)
 
         if not delivery_ids:
             order_from_location_id = self._transfer_district_to_location(order_line.from_location_id, patch=True)
-            delivery_ids = self._get_contract_line(contract_id, order_from_location_id, order_to_location_id, order_line.product_id)
+            delivery_ids = self._get_contract_line(contract_ids, order_from_location_id, order_to_location_id, order_line.product_id)
 
         return delivery_ids
 
@@ -602,8 +592,9 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).create(vals)
 
         # 获取合同
-        contract_id = self._fetch_customer_contract(res)
-        if not contract_id:
+        # 返回 该用户的多个合同
+        contract_ids = self._fetch_customer_contract(res)
+        if not contract_ids:
             return res
 
         # 接车单创建
@@ -614,7 +605,7 @@ class SaleOrder(models.Model):
             # 获取数据
             # 如果 delivery_carrier_id 存在多条条款，需要用户进行选择
             # 默认使用第一条
-            delivery_carrier_id = self._find_contract_line(contract_id, line_id)
+            delivery_carrier_id = self._find_contract_line(contract_ids, line_id)
             service_product_id = self._find_service_product(delivery_carrier_id)
             route_id = self._find_contract_route_id(delivery_carrier_id)
 
@@ -624,7 +615,7 @@ class SaleOrder(models.Model):
                     'route_id': route_id.id if route_id else False,
                     'price_unit': delivery_carrier_id[0].fixed_price if delivery_carrier_id else 0,
                     'delivery_carrier_id': delivery_carrier_id[0].id if delivery_carrier_id else False,
-                    'customer_contract_id': contract_id.id,
+                    'customer_contract_id': delivery_carrier_id[0].customer_contract_id if delivery_carrier_id else False,
                     'allowed_carrier_ids': [(6, 0, allowed_carrier_ids)] if allowed_carrier_ids else False
                 }
             if not line_id.vin:

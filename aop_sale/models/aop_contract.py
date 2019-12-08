@@ -10,13 +10,19 @@ class AopContract(models.Model):
     _name = 'aop.contract'
     _inherit = ['mail.thread']
     _description = 'AOP contract'
-    _order = 'contract_version desc'
+    _order = 'version_code desc, contract_version desc'
 
     name = fields.Char('name', required=True)
     partner_id = fields.Many2one('res.partner', 'Partner')
     serial_number = fields.Char(string='Contract number')
-    contract_version = fields.Float(string='Version', default=0.1)
+
     version_id = fields.Many2one('contract.version', string="Version")
+
+    # 小版本
+    contract_version = fields.Float(string='Version', default=0.1)
+    # 大版本号
+    version_code = fields.Char('Version code')
+
     serial_no = fields.Char(string='Contract no')
     is_formal = fields.Boolean(string='Contract', default=True)
     project_id = fields.Many2one('contract.project', string="Project")

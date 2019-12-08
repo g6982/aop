@@ -392,6 +392,13 @@ class AccountInvoiceLine(models.Model):
     #会计期间
     account_period_id = fields.Many2one('account.period', string='Period', related='invoice_id.account_period_id', readonly=False, store=True)
 
+    sale_order_line_confirm_date = fields.Datetime('Sale order line confirm date')
+    sale_order_line_import_date = fields.Datetime(
+        'Sale order line import date',
+        related='sale_order_line_id.create_date'
+    )
+    sale_order_line_first_picking_done_date = fields.Datetime('Sale order first picking done date')
+
     @api.multi
     @api.depends('price_unit', 'contract_price', 'purchase_line_price')
     def _compute_price_diff(self):

@@ -27,45 +27,62 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
 
         res = contract_obj.sudo().search([
             ('partner_id', '=', partner_id.id),
-            ('contract_version', '!=', 0)
-        ], limit=1)
+            ('contract_version', '!=', 0),
+            ('date_start', '<', fields.Date.today()),
+            ('date_stop', '>', fields.Date.today())
+        ])
         return res
 
     # 客户合同条款
-    def _get_customer_carrier_id(self, contract_id, order_line_id):
-        contract_line_ids = contract_id.mapped('delivery_carrier_ids')
+    def _get_customer_carrier_id(self, contract_ids, order_line_id):
+        latest_carrier_id = False
+        for contract_id in contract_ids:
+            if latest_carrier_id:
+                continue
+            contract_line_ids = contract_id.mapped('delivery_carrier_ids')
 
-        from_location_id = self._transfer_district_to_location(order_line_id.from_location_id)
-        to_location_id = self._transfer_district_to_location(order_line_id.to_location_id)
+            from_location_id = self._transfer_district_to_location(order_line_id.from_location_id)
+            to_location_id = self._transfer_district_to_location(order_line_id.to_location_id)
 
-        for line_id in contract_line_ids:
-            # 判断路由，来源地，目的地
-            if from_location_id.id == line_id.from_location_id.id and \
-                    to_location_id.id == line_id.to_location_id.id and \
-                    order_line_id.route_id.id == line_id.route_id.id and \
-                    order_line_id.product_id.id == line_id.product_id.id:
-                # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
-                carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
-                return carrier_id
-            elif from_location_id.id == line_id.from_location_id.id and \
-                    to_location_id.id == line_id.to_location_id.id and \
-                    not line_id.product_id:
+            for line_id in contract_line_ids:
+                # 判断路由，来源地，目的地
+                if from_location_id.id == line_id.from_location_id.id and \
+                        to_location_id.id == line_id.to_location_id.id and \
+                        order_line_id.route_id.id == line_id.route_id.id and \
+                        order_line_id.product_id.id == line_id.product_id.id:
+                    # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
+                    carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
+                    latest_carrier_id = carrier_id
+                elif from_location_id.id == line_id.from_location_id.id and \
+                        to_location_id.id == line_id.to_location_id.id and \
+                        not line_id.product_id:
 
-                carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
-                return carrier_id
+                    carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
+                    latest_carrier_id = carrier_id
+        if not latest_carrier_id:
+            raise UserError('Can not find correct carrier delivery')
+
+        return latest_carrier_id
 
     # 供应商合同条款
-    def _get_supplier_carrier_id(self, purchase_line_id):
-        picking_id = purchase_line_id.batch_stock_picking_id
-        if not picking_id:
-            return False
-        res = self.env['delivery.carrier'].search([
-            ('from_location_id', '=', picking_id.location_id.id),
-            ('to_location_id', '=', picking_id.location_dest_id.id),
-            ('supplier_contract_id.partner_id', '=', purchase_line_id.order_id.partner_id.id),
-            ('service_product_id', '=', purchase_line_id.product_id.id)
-        ])
-        return res[0] if res else False
+    def _get_supplier_carrier_id(self, contract_ids, purchase_line_id):
+        latest_contract_id = False
+        for contract_id in contract_ids:
+            if latest_contract_id:
+                continue
+            picking_id = purchase_line_id.batch_stock_picking_id
+            if not picking_id:
+                return False
+            res = self.env['delivery.carrier'].search([
+                ('from_location_id', '=', picking_id.location_id.id),
+                ('to_location_id', '=', picking_id.location_dest_id.id),
+                ('supplier_contract_id', '=', contract_id.id),
+                ('service_product_id', '=', purchase_line_id.product_id.id),
+            ])
+            latest_contract_id = res
+        if not latest_contract_id:
+            raise UserError('Can not find correct supplier contract.')
+        return latest_contract_id
 
     def _invoice_data(self, invoice_line_id=False):
         # 使用当前日期
@@ -207,10 +224,11 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         sale_order_line_id = invoice_line_id.sale_order_line_id
 
         # 合同
-        contract_id = self._get_latest_contract_id(invoice_line_id)
+        contract_ids = self._get_latest_contract_id(invoice_line_id)
 
         # 条款
-        carrier_id = self._get_customer_carrier_id(contract_id, sale_order_line_id)
+        carrier_id = self._get_customer_carrier_id(contract_ids, sale_order_line_id)
+        contract_id = carrier_id.customer_contract_id
 
         # 如果是草稿，直接修改即可
         if invoice_line_id.state == 'draft':
@@ -242,10 +260,10 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         purchase_line_id = invoice_line_id.purchase_line_id
 
         # 合同
-        contract_id = self._get_latest_contract_id(invoice_line_id)
+        contract_ids = self._get_latest_contract_id(invoice_line_id)
         # 条款
-        carrier_id = self._get_supplier_carrier_id(purchase_line_id)
-
+        carrier_id = self._get_supplier_carrier_id(contract_ids, purchase_line_id)
+        contract_id = carrier_id.supplier_contract_id
         # _logger.info({
         #     'contract_id': contract_id,
         #     'carrier_id': carrier_id,

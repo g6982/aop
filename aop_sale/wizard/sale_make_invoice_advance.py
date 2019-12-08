@@ -149,7 +149,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
         else:
             tax_ids = taxes.ids
 
-        contract_price = self._get_contract_price(so_line)
+        contract_line = self._get_contract_delivery(so_line)
+        contract_price = contract_line.fixed_price
 
         invoice = inv_obj.create({
             'name': order.client_order_ref or order.name,
@@ -294,8 +295,13 @@ class SaleAdvancePaymentInv(models.TransientModel):
             # tmp_estimate = sale_id.delivery_carrier_id.fixed_price if self._context.get(
             #     'monthly_confirm_invoice') else 0
             tmp_estimate = sale_id.delivery_carrier_id.fixed_price if self.period_id else 0
-            contract_price = self._get_contract_price(sale_id)
-            contract_id = self._get_latest_contract_id(sale_id)
+            contract_line = self._get_contract_delivery(sale_id)
+
+            contract_price = contract_line.fixed_price
+            contract_id = contract_line.customer_aop_contract_id
+
+            picking_create_date, picking_done_date = self.get_picking_date(sale_id)
+
             for product_id in product_ids:
                 tmp = invoice_data
                 account_id = self._get_account_id(product_id)
@@ -315,12 +321,23 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         'analytic_tag_ids': False,
                         'account_analytic_id': False,
                         'tmp_estimate': tmp_estimate,
-                        'customer_aop_contract_id': contract_id.id if contract_id else False
-                        # 'customer_price': contract_price
+                        'customer_aop_contract_id': contract_id.id if contract_id else False,
+                        'sale_order_line_confirm_date': picking_create_date,
+                        'sale_order_line_first_picking_done_date': picking_done_date
                     })],
                 })
                 invoice_res.append(tmp)
         return invoice_res
+
+    # 获取订单的日期
+    def get_picking_date(self, sale_order_line_id):
+        picking_ids = sale_order_line_id.stock_picking_ids
+        if not picking_ids:
+            return False, False
+
+        picking_ids = picking_ids.sorted(lambda x: x.id)
+
+        return picking_ids[0].scheduled_date, picking_ids[0].date_done
 
     def _get_main_service_product_data(self, order_line_amount=False):
         invoice_res = []
@@ -333,9 +350,13 @@ class SaleAdvancePaymentInv(models.TransientModel):
             line_data = []
 
             account_id = self._get_account_id(line_id.service_product_id, order=sale_order_id)
-            contract_price = self._get_contract_price(line_id)
-            contract_id = self._get_latest_contract_id(line_id)
-            # tmp_estimate = line_id.delivery_carrier_id.fixed_price if self._context.get('monthly_confirm_invoice') else 0
+
+            contract_line = self._get_contract_delivery(line_id)
+            contract_price = contract_line.ficed_price
+            contract_id = contract_line.customer_aop_contract_id
+
+            picking_create_date, picking_done_date = self.get_picking_date(line_id)
+
             tmp_estimate = line_id.delivery_carrier_id.fixed_price if self.period_id else 0
             line_data.append((0, 0, {
                 'name': str(time.time()),
@@ -353,8 +374,9 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 'analytic_tag_ids': [(6, 0, line_id.analytic_tag_ids.ids)],
                 'account_analytic_id': sale_order_id.analytic_account_id.id or False,
                 'tmp_estimate': tmp_estimate,
-                'customer_aop_contract_id': contract_id.id if contract_id else False
-                # 'customer_price': contract_price
+                'customer_aop_contract_id': contract_id.id if contract_id else False,
+                'sale_order_line_confirm_date': picking_create_date,
+                'sale_order_line_first_picking_done_date': picking_done_date
             }))
 
             invoice_data.update({
@@ -393,36 +415,53 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
         res = self.env['customer.aop.contract'].search([
             ('partner_id', '=', partner_id.id),
-            ('contract_version', '!=', 0)
-        ], limit=1)
+            ('contract_version', '!=', 0),
+            ('date_start', '<', line_id.create_date),
+            ('date_end', '>', line_id.create_date)
+        ])
+
+        if not res:
+            raise UserError('Can not find correct contract !')
+
         return res
 
-    def _get_latest_carrier_id(self, contract_id, order_line_id):
-        contract_line_ids = contract_id.mapped('delivery_carrier_ids')
+    def _get_latest_carrier_id(self, contract_ids, order_line_id):
+        latest_carrier_id = False
+        for contract_id in contract_ids:
+            if latest_carrier_id:
+                continue
+            contract_line_ids = contract_id.mapped('delivery_carrier_ids')
 
-        from_location_id = self._transfer_district_to_location(order_line_id.from_location_id)
-        to_location_id = self._transfer_district_to_location(order_line_id.to_location_id)
+            from_location_id = self._transfer_district_to_location(order_line_id.from_location_id)
+            to_location_id = self._transfer_district_to_location(order_line_id.to_location_id)
 
-        for line_id in contract_line_ids:
-            # 判断路由，来源地，目的地
-            if from_location_id.id == line_id.from_location_id.id and \
-                    to_location_id.id == line_id.to_location_id.id and \
-                    order_line_id.route_id.id == line_id.route_id.id and \
-                    order_line_id.product_id.id == line_id.product_id.id:
-                # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
-                carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
-                return carrier_id
-            elif from_location_id.id == line_id.from_location_id.id and \
-                to_location_id.id == line_id.to_location_id.id and \
-                not line_id.product_id:
+            for line_id in contract_line_ids:
+                # 判断路由，来源地，目的地
+                if from_location_id.id == line_id.from_location_id.id and \
+                        to_location_id.id == line_id.to_location_id.id and \
+                        order_line_id.route_id.id == line_id.route_id.id and \
+                        order_line_id.product_id.id == line_id.product_id.id:
+                    # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
+                    carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
+                    latest_carrier_id = carrier_id
+                elif from_location_id.id == line_id.from_location_id.id and \
+                        to_location_id.id == line_id.to_location_id.id and \
+                        not line_id.product_id:
 
-                carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
-                return carrier_id
+                    carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
+                    latest_carrier_id = carrier_id
+
+        if not latest_carrier_id:
+            raise UserError('Can not find correct carrier !')
+
+        return latest_carrier_id
+
     # 合同价格
     # TODO: 需要获取最新的合同,同时需要合同和版本号，需要显示在结算清单行上面
-    def _get_contract_price(self, line_id):
+    def _get_contract_delivery(self, line_id):
         # 获取最新的合同
         latest_contract_id = self._get_latest_contract_id(line_id)
+        latest_carrier_id = False
 
         if latest_contract_id:
             latest_carrier_id = self._get_latest_carrier_id(latest_contract_id, line_id)
@@ -431,7 +470,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
             if latest_carrier_id:
                 return latest_carrier_id.fixed_price
 
-        return line_id.delivery_carrier_id.fixed_price
+        return latest_carrier_id if latest_carrier_id else line_id.delivery_carrier_id
+        # return line_id.delivery_carrier_id.fixed_price
 
     # 生成结算清单的时候。去匹配一次对帐数据
     def fetch_reconciliation_data(self, invoice_ids):
