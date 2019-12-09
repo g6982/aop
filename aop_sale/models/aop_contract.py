@@ -115,8 +115,10 @@ class AopContract(models.Model):
         self.ensure_one()
         data = self.copy_data()
         for line_data in data:
+            # 精度问题
+            contract_version = round(float(line_data.get('contract_version') + 0.1) * 1000, -1) / 1000
             line_data.update({
-                'contract_version': line_data.get('contract_version') + 0.1 if line_data.get('contract_version') else 0.1
+                'contract_version': contract_version if line_data.get('contract_version') else 0.1
             })
             # 条款行
             for line in line_data.get('delivery_carrier_ids'):
