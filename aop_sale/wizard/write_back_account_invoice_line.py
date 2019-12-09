@@ -274,7 +274,7 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         if invoice_line_id.state == 'draft':
             invoice_line_id.sudo().write({
                 'supplier_aop_contract_id': contract_id.id,
-                'contract_price': carrier_id.fixed_price
+                'contract_price': carrier_id.product_standard_price
             })
         else:
             # 销售订单行
