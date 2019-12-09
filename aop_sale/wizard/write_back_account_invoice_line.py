@@ -25,11 +25,12 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         elif invoice_line_id.invoice_id.type == 'in_invoice':
             contract_obj = self.env['supplier.aop.contract']
 
+        now_date = fields.Datetime.now()
         res = contract_obj.sudo().search([
             ('partner_id', '=', partner_id.id),
             ('contract_version', '!=', 0),
-            ('date_start', '<', fields.Date.today()),
-            ('date_stop', '>', fields.Date.today())
+            ('date_start', '<', now_date),
+            ('date_end', '>', now_date)
         ])
         return res
 

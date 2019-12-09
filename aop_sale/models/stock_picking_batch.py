@@ -452,7 +452,7 @@ class StockPickingBatch(models.Model):
                 ('contract_version', '!=', 0),
                 ('date_start', '<', start_date[0]),
                 ('date_end', '>', start_date[-1])
-            ])
+            ]) if start_date else False
 
             # 根据任务和客户合同，过滤供应商合同
             partner_ids = self.find_supplier_contract_partner(picking_ids, customer_contract_id=customer_contract_ids)

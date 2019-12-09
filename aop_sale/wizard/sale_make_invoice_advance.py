@@ -298,7 +298,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
             contract_line = self._get_contract_delivery(sale_id)
 
             contract_price = contract_line.fixed_price
-            contract_id = contract_line.customer_aop_contract_id
+            contract_id = contract_line.customer_contract_id
 
             picking_create_date, picking_done_date = self.get_picking_date(sale_id)
 
@@ -352,8 +352,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
             account_id = self._get_account_id(line_id.service_product_id, order=sale_order_id)
 
             contract_line = self._get_contract_delivery(line_id)
-            contract_price = contract_line.ficed_price
-            contract_id = contract_line.customer_aop_contract_id
+            contract_price = contract_line.fixed_price
+            contract_id = contract_line.customer_contract_id
 
             picking_create_date, picking_done_date = self.get_picking_date(line_id)
 
@@ -468,7 +468,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
             # 使用最新的条款的价格
             if latest_carrier_id:
-                return latest_carrier_id.fixed_price
+                return latest_carrier_id
 
         return latest_carrier_id if latest_carrier_id else line_id.delivery_carrier_id
         # return line_id.delivery_carrier_id.fixed_price

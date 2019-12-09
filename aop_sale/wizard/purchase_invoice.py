@@ -128,7 +128,12 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             ('currency_id', '=', line.order_id.partner_id.property_purchase_currency_id.id),
         ]
         journal_id = self.env['account.journal'].search(journal_domain, limit=1)
-        contract_price = self._get_contract_price(line)
+
+        # contract_price = self._get_contract_price(line)
+
+        contract_ids = self._get_supplier_aop_contract(line)
+        carrier_id = self._get_contract_price(contract_ids, line)
+        contract_price = carrier_id.product_standard_price if carrier_id else 0
         data = {
             'purchase_line_id': line.id,
             'name': line.order_id.name + ': ' + line.name,
@@ -147,7 +152,8 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             'sale_line_ids': [(6, 0, line.sale_line_id.ids)] if line.sale_line_id else False,
             'location_id': line.batch_stock_picking_id.location_id.id,
             'location_dest_id': line.batch_stock_picking_id.location_dest_id.id,
-            'contract_price': contract_price
+            'contract_price': contract_price,
+            'supplier_aop_contract_id': carrier_id.supplier_contract_id.id
         }
         account = invoice_line.get_invoice_line_account('in_invoice', line.product_id, line.order_id.fiscal_position_id,
                                                         self.env.user.company_id)
@@ -179,3 +185,39 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             ('service_product_id', '=', purchase_line_id.product_id.id)
         ])
         return res[0].product_standard_price if res else 0
+
+    def _get_delivery_carrier_id(self, contract_ids, purchase_line_id):
+        latest_carrier_id = False
+        for contract_id in contract_ids:
+            if latest_carrier_id:
+                continue
+            picking_id = purchase_line_id.batch_stock_picking_id
+            if not picking_id:
+                return 0
+            res = self.env['delivery.carrier'].search([
+                ('from_location_id', '=', picking_id.location_id.id),
+                ('to_location_id', '=', picking_id.location_dest_id.id),
+                ('supplier_contract_id', '=', contract_id.id),
+                ('service_product_id', '=', purchase_line_id.product_id.id)
+            ])
+            latest_carrier_id = res[0]
+
+        if not latest_carrier_id:
+            raise UserError('Can not find correct supplier contract !')
+        return latest_carrier_id
+
+    def _get_supplier_aop_contract(self, purchase_line_id):
+        '''
+        获取供应商合同
+        :param purchase_line_id: 采购订单行
+        :return: 获取到的供应商合同
+        '''
+        now_date = fields.Datetime.now()
+        res = self.env['supplier.aop.contract'].search([
+            ('contract_version', '!=', 0),
+            ('partner_id', '=', purchase_line_id.partner_id.id),
+            ('date_start', '<', now_date),
+            ('date_end', '>', now_date)
+        ])
+        return res
+
