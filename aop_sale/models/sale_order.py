@@ -615,7 +615,7 @@ class SaleOrder(models.Model):
                     'route_id': route_id.id if route_id else False,
                     'price_unit': delivery_carrier_id[0].fixed_price if delivery_carrier_id else 0,
                     'delivery_carrier_id': delivery_carrier_id[0].id if delivery_carrier_id else False,
-                    'customer_contract_id': delivery_carrier_id[0].customer_contract_id if delivery_carrier_id else False,
+                    'customer_contract_id': delivery_carrier_id[0].customer_contract_id.id if delivery_carrier_id else False,
                     'allowed_carrier_ids': [(6, 0, allowed_carrier_ids)] if allowed_carrier_ids else False
                 }
             if not line_id.vin:
