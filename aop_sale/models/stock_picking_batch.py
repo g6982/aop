@@ -102,9 +102,13 @@ class StockPickingBatch(models.Model):
 
         # 仅针对总库, 但是入库到子库
         if picking_id:
-            move_line = picking_id.move_lines[0]
+            move_line = picking_id.move_line_ids[0] if picking_id.state == 'assigned' else picking_id.move_lines[0]
             origin_from_location_id = move_line.location_id
 
+            _logger.info({
+                'origin_from_location_id': origin_from_location_id.display_name,
+                'location_id': location_id.display_name
+            })
             # 针对move 和 picking 不是同一个位置的情况
             if origin_from_location_id.id != location_id.id:
 
@@ -414,7 +418,7 @@ class StockPickingBatch(models.Model):
                 'name': service_product_id.name,
                 'product_uom': service_product_id.uom_id.id,
                 'batch_stock_picking_id': picking.id,
-                'carrier_id.product_standard_price if carrier_id else ': carrier_id.product_standard_price,
+                'service_contract_price': carrier_id.product_standard_price if carrier_id else 0,
                 'price_unit': 0,
                 'date_planned': fields.Datetime.now(),
             }
@@ -435,11 +439,13 @@ class StockPickingBatch(models.Model):
             ('from_location_id', '=', picking.location_id.id),
             ('to_location_id', '=', picking.location_dest_id.id)
         ]
-        if product_id:
-            contract_domain.append(
-                ('product_id', '=', product_id.id)
-            )
+
         delivery_carrier_id = self.env['delivery.carrier'].search(contract_domain)
+        delivery_carrier_product_ids = delivery_carrier_id.mapped('product_id')
+
+        # 如果存在货物才去匹配
+        if delivery_carrier_product_ids and product_id:
+            delivery_carrier_id = delivery_carrier_id.filtered(lambda x: x.product_id.id == product_id.id)
 
         return delivery_carrier_id[0] if delivery_carrier_id else False
 

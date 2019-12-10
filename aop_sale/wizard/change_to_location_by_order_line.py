@@ -173,6 +173,7 @@ class ChangeToLocationByOrderLine(models.TransientModel):
                     'end_location_id': start_location_id,
                     'end_location_name': start_location_id.display_name
                 })
+
                 # 验证位置在路由内
                 if start_location_id.id not in from_location_ids.ids or end_location_id.id not in to_location_ids.ids:
                     raise ValueError('Value Error')

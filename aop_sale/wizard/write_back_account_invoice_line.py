@@ -86,11 +86,12 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
                 ('service_product_id', '=', purchase_line_id.product_id.id),
             ]
 
-            if product_id:
-                filter_domain.append(
-                    ('product_id', '=', product_id.id)
-                )
             res = self.env['delivery.carrier'].search(filter_domain)
+
+            res_product_ids = res.mapped('product_id')
+
+            if res_product_ids and product_id:
+                res = res.filtered(lambda x: x.product_id.id == product_id.id)
 
             latest_contract_id = res
         if not latest_contract_id:

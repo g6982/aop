@@ -516,6 +516,11 @@ class SaleOrder(models.Model):
                 # 存在车型
                 carrier_product_exist = line_id.product_id
 
+                _logger.info({
+                    'line_id': line_id,
+                    'cus': line_id.customer_contract_id.partner_id.name,
+                    'location_state': location_state
+                })
                 # FIXME: 'or' or 'and'
                 if (location_state and (product_color_state if carrier_color_exist else not carrier_color_exist)) or (
                         location_state and (product_state if carrier_product_exist else not carrier_product_exist)):
