@@ -435,11 +435,13 @@ class StockPickingBatch(models.Model):
             ('from_location_id', '=', picking.location_id.id),
             ('to_location_id', '=', picking.location_dest_id.id)
         ]
-        if product_id:
-            contract_domain.append(
-                ('product_id', '=', product_id.id)
-            )
+
         delivery_carrier_id = self.env['delivery.carrier'].search(contract_domain)
+        delivery_carrier_product_ids = delivery_carrier_id.mapped('product_id')
+
+        # 如果存在货物才去匹配
+        if delivery_carrier_product_ids and product_id:
+            delivery_carrier_id = delivery_carrier_id.filtered(lambda x: x.product_id.id == product_id.id)
 
         return delivery_carrier_id[0] if delivery_carrier_id else False
 
