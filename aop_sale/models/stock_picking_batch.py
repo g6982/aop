@@ -424,12 +424,23 @@ class StockPickingBatch(models.Model):
 
     # 查找供应商合同条款
     def _parse_service_product_supplier(self, picking):
+        move_lines = picking.move_lines
+        if not move_lines:
+            product_id = False
+        else:
+            product_id = move_lines[0].product_id
+
         contract_domain = [
             ('supplier_contract_id.partner_id', '=', self.partner_id.id),
             ('from_location_id', '=', picking.location_id.id),
             ('to_location_id', '=', picking.location_dest_id.id)
         ]
+        if product_id:
+            contract_domain.append(
+                ('product_id', '=', product_id.id)
+            )
         delivery_carrier_id = self.env['delivery.carrier'].search(contract_domain)
+
         return delivery_carrier_id[0] if delivery_carrier_id else False
 
     def _match_company_id(self, partner_id):

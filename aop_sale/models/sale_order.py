@@ -490,7 +490,9 @@ class SaleOrder(models.Model):
         return partner_id.property_stock_customer
 
     # 尝试获取条款
-    def _get_contract_line(self, contract_ids, from_location_id, to_location_id, product_id):
+    def _get_contract_line(self, contract_ids, from_location_id, to_location_id, order_line):
+        product_id = order_line.product_id
+        product_color = order_line.product_color
         delivery_ids = []
         for contract_id in contract_ids:
             if delivery_ids:
@@ -498,20 +500,28 @@ class SaleOrder(models.Model):
             contract_line_ids = contract_id.mapped('delivery_carrier_ids')
 
             for line_id in contract_line_ids:
-                if from_location_id.id == line_id.from_location_id.id and \
-                        to_location_id.id == line_id.to_location_id.id and \
-                        product_id.id == line_id.product_id.id:
+                # 位置的判断
+                location_state = from_location_id.id == line_id.from_location_id.id and \
+                                  to_location_id.id == line_id.to_location_id.id
+
+                # 货物的判断
+                product_state = product_id.id == line_id.product_id.id
+
+                # 颜色的判断
+                product_color_state = product_color == line_id.product_color
+
+                # 存在颜色
+                carrier_color_exist = line_id.product_color
+
+                # 存在车型
+                carrier_product_exist = line_id.product_id
+
+                # FIXME: 'or' or 'and'
+                if (location_state and (product_color_state if carrier_color_exist else not carrier_color_exist)) or (
+                        location_state and (product_state if carrier_product_exist else not carrier_product_exist)):
                     # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
                     line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
                     delivery_ids.append(line_id)
-
-            if not delivery_ids:
-                for line_id in contract_line_ids:
-                    if from_location_id.id == line_id.from_location_id.id and \
-                            to_location_id.id == line_id.to_location_id.id and \
-                            not line_id.product_id:
-                        line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
-                        delivery_ids.append(line_id)
 
         # 没有就抛出异常
         if not delivery_ids:
@@ -527,11 +537,11 @@ class SaleOrder(models.Model):
         order_from_location_id = self._transfer_district_to_location(order_line.from_location_id)
         order_to_location_id = self._transfer_district_to_location(order_line.to_location_id)
 
-        delivery_ids = self._get_contract_line(contract_ids, order_from_location_id, order_to_location_id, order_line.product_id)
+        delivery_ids = self._get_contract_line(contract_ids, order_from_location_id, order_to_location_id, order_line)
 
         if not delivery_ids:
             order_from_location_id = self._transfer_district_to_location(order_line.from_location_id, patch=True)
-            delivery_ids = self._get_contract_line(contract_ids, order_from_location_id, order_to_location_id, order_line.product_id)
+            delivery_ids = self._get_contract_line(contract_ids, order_from_location_id, order_to_location_id, order_line)
 
         return delivery_ids
 

@@ -193,14 +193,27 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
                 continue
             picking_id = purchase_line_id.batch_stock_picking_id
             if not picking_id:
-                return 0
-            res = self.env['delivery.carrier'].search([
+                return False
+
+            #  需要判断车型
+            filter_domain = [
                 ('from_location_id', '=', picking_id.location_id.id),
                 ('to_location_id', '=', picking_id.location_dest_id.id),
                 ('supplier_contract_id', '=', contract_id.id),
                 ('service_product_id', '=', purchase_line_id.product_id.id)
-            ])
-            latest_carrier_id = res[0]
+            ]
+            move_lines = picking_id.move_lines
+            if not move_lines:
+                product_id = False
+            else:
+                product_id = move_lines[0].product_id
+            if product_id:
+                filter_domain.append(
+                    ('product_id', '=', product_id.id)
+                )
+            res = self.env['delivery.carrier'].search(filter_domain)
+            if res:
+                latest_carrier_id = res[0]
 
         if not latest_carrier_id:
             raise UserError('Can not find correct supplier contract !')

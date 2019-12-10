@@ -47,19 +47,17 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
 
             for line_id in contract_line_ids:
                 # 判断路由，来源地，目的地
-                if from_location_id.id == line_id.from_location_id.id and \
+                location_state = from_location_id.id == line_id.from_location_id.id and \
                         to_location_id.id == line_id.to_location_id.id and \
-                        order_line_id.route_id.id == line_id.route_id.id and \
-                        order_line_id.product_id.id == line_id.product_id.id:
+                        order_line_id.route_id.id == line_id.route_id.id
+                product_state = order_line_id.product_id.id == line_id.product_id.id
+                product_exist = line_id.product_id
+
+                if location_state and (product_state if product_exist else not product_exist):
                     # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
                     carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
                     latest_carrier_id = carrier_id
-                elif from_location_id.id == line_id.from_location_id.id and \
-                        to_location_id.id == line_id.to_location_id.id and \
-                        not line_id.product_id:
 
-                    carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
-                    latest_carrier_id = carrier_id
         if not latest_carrier_id:
             raise UserError('Can not find correct carrier delivery')
 
@@ -74,12 +72,26 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             picking_id = purchase_line_id.batch_stock_picking_id
             if not picking_id:
                 return False
-            res = self.env['delivery.carrier'].search([
+
+            # 添加产品过滤
+            move_lines = picking_id.move_lines
+            if not move_lines:
+                product_id = False
+            else:
+                product_id = move_lines[0].product_id
+            filter_domain = [
                 ('from_location_id', '=', picking_id.location_id.id),
                 ('to_location_id', '=', picking_id.location_dest_id.id),
                 ('supplier_contract_id', '=', contract_id.id),
                 ('service_product_id', '=', purchase_line_id.product_id.id),
-            ])
+            ]
+
+            if product_id:
+                filter_domain.append(
+                    ('product_id', '=', product_id.id)
+                )
+            res = self.env['delivery.carrier'].search(filter_domain)
+
             latest_contract_id = res
         if not latest_contract_id:
             raise UserError('Can not find correct supplier contract.')
