@@ -102,9 +102,13 @@ class StockPickingBatch(models.Model):
 
         # 仅针对总库, 但是入库到子库
         if picking_id:
-            move_line = picking_id.move_lines[0]
+            move_line = picking_id.move_line_ids[0] if picking_id.state == 'assigned' else picking_id.move_lines[0]
             origin_from_location_id = move_line.location_id
 
+            _logger.info({
+                'origin_from_location_id': origin_from_location_id.display_name,
+                'location_id': location_id.display_name
+            })
             # 针对move 和 picking 不是同一个位置的情况
             if origin_from_location_id.id != location_id.id:
 
