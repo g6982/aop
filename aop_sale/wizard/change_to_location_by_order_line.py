@@ -208,10 +208,6 @@ class ChangeToLocationByOrderLine(models.TransientModel):
                 create_first_move_id = new_dispatch_move_ids[0]
                 create_last_move_id = new_dispatch_move_ids[-1]
 
-                _logger.info({
-                    'area_last_picking_id': area_last_picking_id
-                })
-
                 # 关联任务
                 self._link_old_move_and_new_move(create_first_move_id, area_first_picking_id, position='first')
                 self._link_old_move_and_new_move(create_last_move_id, area_last_picking_id, position='end')

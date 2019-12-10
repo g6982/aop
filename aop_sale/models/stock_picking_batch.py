@@ -209,7 +209,7 @@ class StockPickingBatch(models.Model):
             post_data = {
                 'picking_ids': data
             }
-        if loading_plan:
+        if loading_plan and post_data:
             post_data.update({
                 'loading_plan': loading_plan
             })
