@@ -118,7 +118,7 @@ class ChangeToLocationByOrderLine(models.TransientModel):
                     'move_dest_ids': [(4, new_move.id)]
                 })
                 new_move.write({
-                    'move_orig_ids': pre_picking_move_id.id
+                    'move_orig_ids': [(4, pre_picking_move_id.id)]
                 })
         elif position == 'end':
             last_picking_move_id = picking_move_id.move_dest_ids
@@ -165,15 +165,6 @@ class ChangeToLocationByOrderLine(models.TransientModel):
                 from_location_ids = sale_order_line_id.route_id.rule_ids.mapped('location_src_id')
                 to_location_ids = sale_order_line_id.route_id.rule_ids.mapped('location_id')
 
-                _logger.info({
-                    'from_location_id': from_location_ids.mapped('display_name'),
-                    'to_location_id': to_location_ids.mapped('display_name'),
-                    'start_location_id': start_location_id,
-                    'start_name': start_location_id.display_name,
-                    'end_location_id': start_location_id,
-                    'end_location_name': start_location_id.display_name
-                })
-
                 # 验证位置在路由内
                 if start_location_id.id not in from_location_ids.ids or end_location_id.id not in to_location_ids.ids:
                     raise ValueError('Value Error')
@@ -185,7 +176,7 @@ class ChangeToLocationByOrderLine(models.TransientModel):
                 # 筛选出第一条和最后一条
 
                 area_first_picking_id = area_picking_ids[0]
-                area_last_picking_id = area_picking_ids[0]
+                area_last_picking_id = area_picking_ids[-1]
 
                 location_routes = self._get_change_location_route()
 
@@ -215,7 +206,11 @@ class ChangeToLocationByOrderLine(models.TransientModel):
                 self._link_all_new_move(new_dispatch_move_ids)
 
                 create_first_move_id = new_dispatch_move_ids[0]
-                create_last_move_id = new_dispatch_move_ids[0]
+                create_last_move_id = new_dispatch_move_ids[-1]
+
+                _logger.info({
+                    'area_last_picking_id': area_last_picking_id
+                })
 
                 # 关联任务
                 self._link_old_move_and_new_move(create_first_move_id, area_first_picking_id, position='first')
