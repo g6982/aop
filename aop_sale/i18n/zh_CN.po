@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191118\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-10 03:01+0000\n"
-"PO-Revision-Date: 2019-12-10 03:01+0000\n"
+"POT-Creation-Date: 2019-12-10 05:40+0000\n"
+"PO-Revision-Date: 2019-12-10 05:40+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1179,7 +1179,7 @@ msgid "Discount (%)"
 msgstr "折扣 (%)"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:860
+#: code:addons/aop_sale/models/sale_order.py:870
 #: model:ir.actions.act_window,name:aop_sale.change_to_location_by_order_line_action
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order__dispatch_order
 #: model:ir.module.category,name:aop_sale.module_aop_sale_dispatch_manager
@@ -1824,7 +1824,7 @@ msgstr "库存路线"
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:239
-#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:324
+#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:336
 #: model:ir.model,name:aop_sale.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
@@ -2839,7 +2839,7 @@ msgid "Planned date"
 msgstr "计划日期"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:798
+#: code:addons/aop_sale/models/sale_order.py:808
 #, python-format
 msgid "Please wait until the VIN in stock. Any question, Contact administrator. "
 msgstr "请等待VIN码入库。任何问题，联系管理员。"
@@ -2949,6 +2949,7 @@ msgid "Product Vehicle Type"
 msgstr "车型类别"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_delivery_carrier__product_color
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__product_color
 msgid "Product color"
 msgstr "货物颜色"
@@ -3928,7 +3929,7 @@ msgstr "已经存在税务发票了，您必须使用相同的税务发票编号
 #. module: aop_sale
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:132
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:399
-#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:126
+#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:138
 #, python-format
 msgid "There is no income account defined for this product: \"%s\". You may have to install a chart of account from Accounting app, settings menu."
 msgstr ""
@@ -4326,7 +4327,7 @@ msgstr "版本"
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__version_code
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__version_code
 msgid "Version code"
-msgstr "合同编号"
+msgstr "合同ID"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__vin_id
