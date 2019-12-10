@@ -132,7 +132,7 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
         # contract_price = self._get_contract_price(line)
 
         contract_ids = self._get_supplier_aop_contract(line)
-        carrier_id = self._get_contract_price(contract_ids, line)
+        carrier_id = self._get_delivery_carrier_id(contract_ids, line)
         contract_price = carrier_id.product_standard_price if carrier_id else 0
         data = {
             'purchase_line_id': line.id,
@@ -207,11 +207,14 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
                 product_id = False
             else:
                 product_id = move_lines[0].product_id
-            if product_id:
-                filter_domain.append(
-                    ('product_id', '=', product_id.id)
-                )
+
             res = self.env['delivery.carrier'].search(filter_domain)
+
+            product_ids = res.mapped('product_id')
+
+            if product_ids:
+                res = res.filtered(lambda x: x.product_id.id == product_id.id)
+
             if res:
                 latest_carrier_id = res[0]
 
