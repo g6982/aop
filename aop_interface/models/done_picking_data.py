@@ -48,7 +48,7 @@ class DonePicking(models.Model):
                 continue
             product_id = self.env['product.product'].search([
                 '|',
-                ('default_code', '=', line.product_model[:3])
+                ('default_code', '=', line.product_model[:3]),
                 ('default_code', '=', line.product_model)
             ])
             if not product_id:
