@@ -4327,7 +4327,7 @@ msgstr "版本"
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__version_code
 #: model:ir.model.fields,field_description:aop_sale.field_supplier_aop_contract__version_code
 msgid "Version code"
-msgstr "合同编号"
+msgstr "合同ID"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_line__vin_id
