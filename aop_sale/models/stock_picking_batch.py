@@ -414,7 +414,7 @@ class StockPickingBatch(models.Model):
                 'name': service_product_id.name,
                 'product_uom': service_product_id.uom_id.id,
                 'batch_stock_picking_id': picking.id,
-                'carrier_id.product_standard_price if carrier_id else ': carrier_id.product_standard_price,
+                'service_contract_price': carrier_id.product_standard_price if carrier_id else 0,
                 'price_unit': 0,
                 'date_planned': fields.Datetime.now(),
             }
