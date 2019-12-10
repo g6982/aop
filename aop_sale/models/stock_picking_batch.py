@@ -192,7 +192,7 @@ class StockPickingBatch(models.Model):
     # 接口。创建采购单后，发送任务数据到WMS
     def send_to_wms_data(self):
         data = []
-        post_data = []
+        post_data = {}
         assigned_picking_ids = self.picking_ids.filtered(lambda x: x.state == 'assigned')
         waiting_picking_ids = self.picking_ids.filtered(lambda x: x.state != 'assigned')
 
