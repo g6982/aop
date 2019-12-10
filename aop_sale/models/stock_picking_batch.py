@@ -105,10 +105,6 @@ class StockPickingBatch(models.Model):
             move_line = picking_id.move_line_ids[0] if picking_id.state == 'assigned' else picking_id.move_lines[0]
             origin_from_location_id = move_line.location_id
 
-            _logger.info({
-                'origin_from_location_id': origin_from_location_id.display_name,
-                'location_id': location_id.display_name
-            })
             # 针对move 和 picking 不是同一个位置的情况
             if origin_from_location_id.id != location_id.id:
 
@@ -156,9 +152,6 @@ class StockPickingBatch(models.Model):
         # from_location_name = '团结村库'
         # to_location_name = '线边库'
 
-        _logger.info({
-            'fields.Datetime.to_string(picking_id.scheduled_date)': fields.Datetime.to_string(picking_id.scheduled_date)
-        })
         tmp = {
             'task_id': picking_id.id,
             'product_name': picking_id.sale_order_line_id.product_id.name if picking_id.sale_order_line_id.product_id else product_name,

@@ -121,11 +121,11 @@ class SaleOrderLine(models.Model):
             for line in self:
                 if not line.vin_code or line.vin or not line.order_id or line.replenish_picking_id:
                     continue
-                _logger.info({
-                    'vin_code': line.vin_code,
-                    'vin': line.vin,
-                    'replenish_picking_id': line.replenish_picking_id
-                })
+                # _logger.info({
+                #     'vin_code': line.vin_code,
+                #     'vin': line.vin,
+                #     'replenish_picking_id': line.replenish_picking_id
+                # })
                 line.create_stock_picking_in_stock()
         except Exception as e:
             self._cr.rollback()
@@ -218,9 +218,9 @@ class SaleOrderLine(models.Model):
                 line.stock_picking_state = False
             else:
                 picking_state = line.stock_picking_ids.filtered(lambda x: x.state not in ['cancel'])
-                _logger.info({
-                    'picking_state': picking_state
-                })
+                # _logger.info({
+                #     'picking_state': picking_state
+                # })
                 if picking_state:
                     line.stock_picking_state = True
                 else:
@@ -516,11 +516,6 @@ class SaleOrder(models.Model):
                 # 存在车型
                 carrier_product_exist = line_id.product_id
 
-                _logger.info({
-                    'line_id': line_id,
-                    'cus': line_id.customer_contract_id.partner_id.name,
-                    'location_state': location_state
-                })
                 # FIXME: 'or' or 'and'
                 if (location_state and (product_color_state if carrier_color_exist else not carrier_color_exist)) or (
                         location_state and (product_state if carrier_product_exist else not carrier_product_exist)):
@@ -710,6 +705,11 @@ class SaleOrder(models.Model):
         allow_area = []
         for rule_id in rule_area:
             contract_state = self.split_filter_rule_contract(rule_id, order_line_id)
+            # _logger.info({
+            #     'from': rule_id.location_src_id.display_name,
+            #     'to': rule_id.location_id.display_name,
+            #     'contract_state': contract_state
+            # })
             if contract_state:
                 allow_area.append(rule_id)
         return allow_area
