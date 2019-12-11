@@ -132,7 +132,9 @@
                     <field name="customer_aop_contract_version"/>
                     <field name="state"/>
                     <field name="tax_invoice_amount"/>
-
+                    <field name="sale_order_line_confirm_date"/>
+                    <field name="sale_order_line_import_date"/>
+                    <field name="sale_order_line_first_picking_done_date"/>
                 </tree>
             </field>
         </record>
