@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0-20191118\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-10 05:40+0000\n"
-"PO-Revision-Date: 2019-12-10 05:40+0000\n"
+"POT-Creation-Date: 2019-12-11 01:06+0000\n"
+"PO-Revision-Date: 2019-12-11 01:06+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1179,7 +1179,7 @@ msgid "Discount (%)"
 msgstr "折扣 (%)"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:870
+#: code:addons/aop_sale/models/sale_order.py:875
 #: model:ir.actions.act_window,name:aop_sale.change_to_location_by_order_line_action
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order__dispatch_order
 #: model:ir.module.category,name:aop_sale.module_aop_sale_dispatch_manager
@@ -1824,7 +1824,7 @@ msgstr "库存路线"
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:239
-#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:336
+#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:337
 #: model:ir.model,name:aop_sale.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
@@ -2839,7 +2839,7 @@ msgid "Planned date"
 msgstr "计划日期"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/sale_order.py:808
+#: code:addons/aop_sale/models/sale_order.py:813
 #, python-format
 msgid "Please wait until the VIN in stock. Any question, Contact administrator. "
 msgstr "请等待VIN码入库。任何问题，联系管理员。"
@@ -3375,7 +3375,7 @@ msgstr "订单价"
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__sale_order_line_first_picking_done_date
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__sale_order_line_first_picking_done_date
 msgid "Sale order first picking done date"
-msgstr ""
+msgstr "订单首任务完成时间"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__sale_order_line_id
@@ -3387,13 +3387,13 @@ msgstr "销售订单行"
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__sale_order_line_confirm_date
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__sale_order_line_confirm_date
 msgid "Sale order line confirm date"
-msgstr ""
+msgstr "订单确认时间"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__sale_order_line_import_date
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__sale_order_line_import_date
 msgid "Sale order line import date"
-msgstr ""
+msgstr "订单导入时间"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_sale_advance_payment_inv
@@ -3929,7 +3929,7 @@ msgstr "已经存在税务发票了，您必须使用相同的税务发票编号
 #. module: aop_sale
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:132
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:399
-#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:138
+#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:139
 #, python-format
 msgid "There is no income account defined for this product: \"%s\". You may have to install a chart of account from Accounting app, settings menu."
 msgstr ""
@@ -4506,13 +4506,13 @@ msgid "You must select more than one record."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:277
+#: code:addons/aop_sale/models/stock_picking_batch.py:274
 #, python-format
 msgid "You must select same location !"
 msgstr "你必须选择相同的目的位置!"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:283
+#: code:addons/aop_sale/models/stock_picking_batch.py:280
 #, python-format
 msgid "You must select same to location !"
 msgstr "你必须选择相同的目的位置!"
@@ -5026,7 +5026,7 @@ msgid "picking"
 msgstr "任务"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:286
+#: code:addons/aop_sale/models/stock_picking_batch.py:283
 #, python-format
 msgid "picking location_dest_id != loading plan to_location_id"
 msgstr "任务的目的位置和装车计划的到站位置不同!"
@@ -5375,7 +5375,7 @@ msgid "本月"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:307
+#: code:addons/aop_sale/models/stock_picking_batch.py:304
 #, python-format
 msgid "测试"
 msgstr "向导"
