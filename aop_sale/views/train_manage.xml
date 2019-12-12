@@ -15,16 +15,17 @@
 
                         <group>
                             <group>
-                                <field name="from_location_id"/>
+                                <field name="from_location_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                             </group>
                             <group>
-                                <field name="to_location_id"/>
+                                <field name="to_location_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                             </group>
                         </group>
                         <notebook>
                             <page string="Lines">
                                 <field name="line_ids">
                                     <tree editable="bottom">
+                                        <field name="sequence" widget="handle"/>
                                         <field name="name" required="1"/>
                                     </tree>
                                 </field>

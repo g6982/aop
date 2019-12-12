@@ -18,7 +18,9 @@ class TrainManage(models.Model):
 
 class TrainManageLine(models.Model):
     _name = 'train.manage.line'
+    _order = "sequence, name, id"
 
+    sequence = fields.Integer('Sequence', default=1, help="Used to order stages. Lower is better.")
     name = fields.Char('Name')
     train_id = fields.Many2one('train.manage', 'Train')
 
