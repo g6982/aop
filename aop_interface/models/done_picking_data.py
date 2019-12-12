@@ -84,8 +84,8 @@ class DonePicking(models.Model):
     # 无计划接车: task_id 值为空
     def done_stock_picking(self, records):
         warehouse_ids = self._get_warehouse_ids(records)
-        task_ids = records.filtered(lambda x: x.task_id)
-        null_task_ids = records.filtered(lambda x: not x.task_id)
+        task_ids = records.filtered(lambda x: x.task_id and x.state_flag == 'T')
+        null_task_ids = records.filtered(lambda x: not x.task_id and x.state_flag == 'T')
 
         _logger.info({
             'task_ids': task_ids,
