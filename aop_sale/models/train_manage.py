@@ -10,6 +10,9 @@ class TrainManage(models.Model):
     _name = 'train.manage'
 
     name = fields.Char('Name')
+    from_location_id = fields.Many2one('stock.location', 'From')
+    to_location_id = fields.Many2one('stock.location', 'To')
+
     line_ids = fields.One2many('train.manage.line', 'train_id', string='Train lines')
 
 

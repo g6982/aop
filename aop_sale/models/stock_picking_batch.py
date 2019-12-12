@@ -577,9 +577,11 @@ class StockPickingBatch(models.Model):
 
 class MountCarPlan(models.Model):
     _name = "mount.car.plan"
+    _order = "sequence, transfer_tool_number, id"
 
     name = fields.Many2one('product.product', string='Vehicle model', domain=[('type', '=', 'product')], required=True)
 
+    sequence = fields.Integer('Sequence', default=1, help="Used to order stages. Lower is better.")
     # transfer_tool_number = fields.Char('Transfer tool no', required=True)
     transfer_tool_number = fields.Many2one('train.manage.line', string='Transfer tool no', required=True)
     layer_option = fields.Selection([

@@ -13,6 +13,14 @@
                             </group>
                         </group>
 
+                        <group>
+                            <group>
+                                <field name="from_location_id"/>
+                            </group>
+                            <group>
+                                <field name="to_location_id"/>
+                            </group>
+                        </group>
                         <notebook>
                             <page string="Lines">
                                 <field name="line_ids">
