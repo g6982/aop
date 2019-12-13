@@ -294,6 +294,13 @@ class SaleAdvancePaymentInv(models.TransientModel):
         invoice_res = []
         legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(lambda x: x if not x.invoice_lines else '')
 
+        # FIXME: 采购订单生成的结算清单，为什么关联到了销售呢？
+        if not legal_order_line_ids:
+            legal_order_line_ids = []
+            for line_id in self.selected_order_lines.mapped('sale_order_line_id'):
+                if line_id.invoice_lines.filtered(lambda x: x.invoice_id.type != 'out_invoice'):
+                    legal_order_line_ids.append(line_id)
+
         product_ids = self._get_child_service_product(legal_order_line_ids.mapped('stock_picking_ids'))
 
         # for sale_id in self.sale_order_ids:
