@@ -358,6 +358,8 @@ class AccountInvoiceLine(models.Model):
     contract_price = fields.Float('Contract price')
     purchase_line_price = fields.Monetary(related='purchase_line_id.price_subtotal', store=True, readonly=False)
 
+    purchase_id = fields.Many2one('purchase.order', related='purchase_line_id.order_id', store=True, readonly=False)
+
     tmp_estimate = fields.Float('Temporary estimate')
 
     pre_billing = fields.Float('Pre-billing', compute='_compute_pre_billing', store=True)
