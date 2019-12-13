@@ -190,9 +190,17 @@ class SaleAdvancePaymentInv(models.TransientModel):
                                        subtype_id=self.env.ref('mail.mt_note').id)
         return invoice
 
+    def _null_invoice_order_line_data(self):
+        sql_delete = '''
+            delete from sale_order_line_invoice_rel where invoice_line_id not in (select id from account_invoice_line)
+        '''
+        self.env.cr.execute(sql_delete)
+        self.env.cr.commit()
+
     # 生成结算清单
     # 根据订单行生成
     def create_account_invoice(self, order_line_amount=False):
+        self._null_invoice_order_line_data()
         if not self.selected_order_lines:
             raise UserError(_('You must select more than one record.'))
 
@@ -343,6 +351,13 @@ class SaleAdvancePaymentInv(models.TransientModel):
         invoice_res = []
 
         legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(lambda x: x if not x.invoice_lines else '')
+
+        # FIXME: 采购订单生成的结算清单，为什么关联到了销售呢？
+        if not legal_order_line_ids:
+            legal_order_line_ids = []
+            for line_id in self.selected_order_lines.mapped('sale_order_line_id'):
+                if line_id.invoice_lines.filtered(lambda x: x.invoice_id.type != 'out_invoice'):
+                    legal_order_line_ids.append(line_id)
 
         for line_id in legal_order_line_ids:
             sale_order_id = line_id.mapped('order_id')
