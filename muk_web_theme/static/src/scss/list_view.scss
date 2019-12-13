@@ -62,7 +62,8 @@
 
 .o_list_view tfoot {
     background-color: $o-list-footer-bg-color;
-    color: white;
+    color: black;
     cursor: default;
-    font-weight: normal;
+    //font-weight: normal;
+    font-weight: $o-list-footer-font-weight;
 }
