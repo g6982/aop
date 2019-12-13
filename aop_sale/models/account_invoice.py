@@ -329,6 +329,7 @@ class AccountInvoice(models.Model):
             raise UserError(_('Supplier invoice state must be no.'))
         return self.write({'supplier_invoice_state': 'yes'})
 
+
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 

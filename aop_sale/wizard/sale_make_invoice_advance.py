@@ -303,19 +303,19 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
         product_ids = self._get_child_service_product(legal_order_line_ids.mapped('stock_picking_ids'))
 
-        # for sale_id in self.sale_order_ids:
-        for sale_id in legal_order_line_ids:
-            invoice_data = self._invoice_data(sale_id.order_id, line_id=sale_id)
+        # for sale_order_id in self.sale_order_ids:
+        for sale_order_id in legal_order_line_ids:
+            invoice_data = self._invoice_data(sale_order_id.order_id, line_id=sale_order_id)
 
-            # tmp_estimate = sale_id.delivery_carrier_id.fixed_price if self._context.get(
+            # tmp_estimate = sale_order_id.delivery_carrier_id.fixed_price if self._context.get(
             #     'monthly_confirm_invoice') else 0
-            tmp_estimate = sale_id.delivery_carrier_id.fixed_price if self.period_id else 0
-            contract_line = self._get_contract_delivery(sale_id)
+            tmp_estimate = sale_order_id.delivery_carrier_id.fixed_price if self.period_id else 0
+            contract_line = self._get_contract_delivery(sale_order_id)
 
             contract_price = contract_line.fixed_price
             contract_id = contract_line.customer_contract_id
 
-            picking_create_date, picking_done_date = self.get_picking_date(sale_id)
+            picking_create_date, picking_done_date = self.get_picking_date(sale_order_id)
 
             for product_id in product_ids:
                 tmp = invoice_data
@@ -323,14 +323,14 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 tmp.update({
                     'invoice_line_ids': [(0, 0, {
                         'name': str(time.time()),
-                        'origin': sale_id.name,
+                        'origin': sale_order_id.name,
                         'account_id': account_id,
-                        'price_unit': order_line_amount.get(sale_id.id, product_id.list_price),
+                        'price_unit': order_line_amount.get(sale_order_id.id, product_id.list_price),
                         'quantity': 1,
                         'product_id': product_id.id,
                         'uom_id': product_id.uom_id.id,
-                        'sale_line_ids': [(6, 0, sale_id.ids)],
-                        'sale_order_line_id': sale_id[0].id,
+                        'sale_line_ids': [(6, 0, sale_order_id.ids)],
+                        'sale_order_line_id': sale_order_id[0].id,
                         'contract_price': contract_price,
                         'invoice_line_tax_ids': [(6, 0, product_id.taxes_id.ids)],
                         'analytic_tag_ids': False,
