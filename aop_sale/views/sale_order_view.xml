@@ -546,8 +546,17 @@
                 <xpath expr="//search" position="inside">
 
                     <field name="id"/>
+                    <field name="vin_code" string="VIN"/>
+                    <field name="from_station_name"/>
+                    <field name="to_station_name"/>
                     <filter string="Quotations" name="draft" domain="[('state','in',('draft', 'sent'))]"/>
                     <filter string="Sales Orders" name="sales" domain="[('state','in',('sale','done'))]"/>
+
+                    <group expand="0" string="Group By">
+                        <filter name="group_by_vin_code" string="VIN"
+                                context="{'group_by':'vin_code'}"/>
+                    </group>
+
                     <separator/>
                     <filter string="当天" name="today"
                             domain="[('create_date','&gt;=', time.strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
