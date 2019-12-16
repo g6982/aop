@@ -24,11 +24,6 @@
                     </group>
 
                     <footer>
-<!--                        <button name="start_write_off"-->
-<!--                                attrs="{'invisible': [('write_off_line_ids', '=', False)]}"-->
-<!--                                string="Write-off" class="oe_highlight"-->
-<!--                                type="object"/>-->
-
                         <button name="batch_write_off" string="Batch" type="object" class="oe_highlight"/>
                     </footer>
                 </form>

@@ -26,9 +26,8 @@ class HandoverVin(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'),
         ('register', 'Register'),
-        ('done', 'Audit'),
-        ('verify', 'Finance verify')
-    ], default='draft', track_visibility='onchange')
+        ('done', 'Audit')
+    ], default='draft', track_visibility='onchange', store=True, index=True)
 
     register_user_id = fields.Many2one('res.users', track_visibility='onchange')
     register_datetime = fields.Datetime('register time', track_visibility='onchange')
@@ -36,13 +35,13 @@ class HandoverVin(models.Model):
     verify_user_id = fields.Many2one('res.users', track_visibility='onchange')
     verify_datetime = fields.Datetime('Verify time', track_visibility='onchange')
 
-    finance_verify_user_id = fields.Many2one('res.users', track_visibility='onchange')
-    finance_verify_datetime = fields.Datetime('Finance verify time', track_visibility='onchange')
-
     file_planned_date = fields.Date('Planned date', related='order_line_id.file_planned_date', readonly=True)
     to_location_id = fields.Many2one('res.partner', related='order_line_id.to_location_id', readonly=True)
 
     write_off_batch_id = fields.Many2one('write.off.batch.number', 'Write-off batch')
+
+    return_user_id = fields.Many2one('res.users', 'Return by user')
+    return_datetime = fields.Datetime('Return time', track_visibility='onchange')
 
     @api.multi
     @api.depends('name')
@@ -107,28 +106,28 @@ class HandoverVin(models.Model):
             'verify_datetime': False
         })
 
-    @api.multi
-    def finance_verify_handover(self):
-        self.ensure_one()
-        res = self.env['handover.vin'].search([
-            ('name', '=', self.name),
-            ('state', '=', 'done')
-        ])
-        res.sudo().write({
-            'state': 'verify',
-            'finance_verify_user_id': self.env.user.id,
-            'finance_verify_datetime': fields.Datetime.now()
-        })
-
-    @api.multi
-    def cancel_finance_verify(self):
-        self.ensure_one()
-        res = self.env['handover.vin'].search([
-            ('name', '=', self.name),
-            ('state', '=', 'verify')
-        ])
-        res.sudo().write({
-            'state': 'done',
-            'finance_verify_user_id': False,
-            'finance_verify_datetime': False
-        })
+    # @api.multi
+    # def finance_verify_handover(self):
+    #     self.ensure_one()
+    #     res = self.env['handover.vin'].search([
+    #         ('name', '=', self.name),
+    #         ('state', '=', 'done')
+    #     ])
+    #     res.sudo().write({
+    #         'state': 'verify',
+    #         'finance_verify_user_id': self.env.user.id,
+    #         'finance_verify_datetime': fields.Datetime.now()
+    #     })
+    #
+    # @api.multi
+    # def cancel_finance_verify(self):
+    #     self.ensure_one()
+    #     res = self.env['handover.vin'].search([
+    #         ('name', '=', self.name),
+    #         ('state', '=', 'verify')
+    #     ])
+    #     res.sudo().write({
+    #         'state': 'done',
+    #         'finance_verify_user_id': False,
+    #         'finance_verify_datetime': False
+    #     })

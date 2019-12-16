@@ -7,16 +7,47 @@
             <field name="arch" type="xml">
                 <form create="0">
                     <header>
+                        <button name="return_to_register"
+                                string="Return"
+                                type="object"
+                                attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                                class="oe_highlight"/>
+
                         <button name="generate_account_invoice"
                                 string="Create invoice"
                                 type="object"
-                                attrs="{'invisible': [('state', '!=', 'draft')]}"
+                                attrs="{'invisible': [('state', '=', 'draft')]}"
                                 class="oe_highlight"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,done" readonly="1"/>
+
+                        <button name="finance_verify_handover"
+                                string="Finance verify"
+                                attrs="{'invisible': [('state', 'not in', ['draft', 'done'])]}"
+                                type="object"
+                                class="oe_highlight"
+                        />
+
+                        <button name="cancel_finance_verify"
+                                string="Finance cancel verify"
+                                attrs="{'invisible': [('state', '!=', 'verify')]}"
+                                type="object"
+                                class="oe_highlight"
+                        />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,verify,done" readonly="1"/>
                     </header>
                     <sheet>
                         <group>
                             <field name="name"/>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="finance_verify_user_id" readonly="1"
+                                       attrs="{'invisible': [('finance_verify_user_id', '=', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="finance_verify_datetime" readonly="1"
+                                       attrs="{'invisible': [('finance_verify_datetime', '=', False)]}"/>
+                            </group>
                         </group>
 
                         <group>
@@ -27,6 +58,10 @@
                             <field name="invoice_line_ids"/>
                         </group>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -38,8 +73,8 @@
                 <tree create="0" import="0">
                     <field name="name"/>
                     <field name="state"/>
-                     <field name="create_date"/>
-                     <field name="write_date"/>
+                    <field name="create_date"/>
+                    <field name="write_date"/>
                 </tree>
             </field>
         </record>

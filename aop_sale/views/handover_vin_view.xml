@@ -18,33 +18,18 @@
                         <button name="verify_handover"
                                 string="Verify"
                                 type="object"
-                                attrs="{'invisible': [('state', 'not in', ['register'])]}"
+                                attrs="{'invisible': [('state', 'not in', ['verify', 'done'])]}"
                                 class="oe_highlight"
                                 groups="aop_sale.group_handover_vin_verify_handover_button"
                         />
                         <button name="cancel_verify_handover"
                                 string="Cancel"
-                                attrs="{'invisible': [('state', 'in', ['draft', 'verify'])]}"
+                                attrs="{'invisible': [('state', 'in', ['draft'])]}"
                                 type="object"
                                 class="oe_highlight"
                                 groups="aop_sale.group_handover_vin_cancel_verify_handover_button"
                         />
-                        <button name="finance_verify_handover"
-                                string="Finance verify"
-                                attrs="{'invisible': [('state', 'not in', ['done'])]}"
-                                type="object"
-                                class="oe_highlight"
-                                groups="aop_sale.group_handover_vin_finance_verify_handover_button"
-                        />
-
-                        <button name="cancel_finance_verify"
-                                string="Finance cancel verify"
-                                attrs="{'invisible': [('state', '!=', 'verify')]}"
-                                type="object"
-                                class="oe_highlight"
-                                groups="aop_sale.group_handover_vin_cancel_finance_verify_button"
-                        />
-                        <field name="state" widget="statusbar" statusbar_visible="draft,register,done,verify"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,register,done"/>
                     </header>
                     <sheet>
 
@@ -104,12 +89,12 @@
 
                         <group>
                             <group>
-                                <field name="finance_verify_user_id" readonly="1"
-                                       attrs="{'invisible': [('finance_verify_user_id', '=', False)]}"/>
+                                <field name="return_user_id" readonly="1"
+                                       attrs="{'invisible': [('return_user_id', '=', False)]}"/>
                             </group>
                             <group>
-                                <field name="finance_verify_datetime" readonly="1"
-                                       attrs="{'invisible': [('finance_verify_datetime', '=', False)]}"/>
+                                <field name="return_datetime" readonly="1"
+                                       attrs="{'invisible': [('return_datetime', '=', False)]}"/>
                             </group>
                         </group>
                     </sheet>

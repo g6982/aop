@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_return_handover_wizard_form" model="ir.ui.view">
+            <field name="name">return.handover.wizard</field>
+            <field name="model">return.handover.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="select_handover_ids"
+                               readonly="1"
+                               options="{'no_quick_create': True, 'no_create_edit': True}">
+                            <tree>
+                                <field name="name"/>
+                                <field name="vin_code"/>
+                                <field name="order_line_id"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group>
+                        <field name="return_handover_ids"
+                               options="{'no_quick_create': True, 'no_create_edit': True, 'no_create': True}"
+                               domain="[('id', 'in', select_handover_ids)]">
+                            <tree>
+                                <field name="name"/>
+                                <field name="vin_code"/>
+                                <field name="order_line_id"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                    <footer>
+                        <button name="return_handover" string="Return" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

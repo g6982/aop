@@ -112,6 +112,7 @@
                     <field name="purchase_line_id" invisible="1"/>
                     <field name="sale_order_line_id"/>
                     <field name="vin_id"/>
+                    <field name="handover_id"/>
                     <field name="location_id"/>
                     <field name="location_dest_id"/>
                     <field name="account_id" groups="account.group_account_user"/>
