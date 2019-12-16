@@ -254,6 +254,7 @@ class ImportSaleOrder(models.TransientModel):
 
     def _parse_product_data(self, sheet_data, from_location_id=False, product_index=None, start_index=None):
         product_dict = {}
+        product_obj = self.env['product.product']
         if not from_location_id:
 
             # partner_name = sheet_data.row_values(4)
@@ -263,18 +264,6 @@ class ImportSaleOrder(models.TransientModel):
                 return False
 
             product_name = list(set(product_name[start_index:]))
-
-            product_obj = self.env['product.product']
-
-            for p_name in product_name:
-                p_name = p_name.replace('\u202d', '').replace('\u202c', '')
-                if not p_name:
-                    continue
-                product_id = product_obj.sudo().search([('default_code', '=', p_name[:3])])
-                product_dict[p_name[:3]] = product_id
-            _logger.info({
-                'product_dict': product_dict
-            })
         else:
             product_name = sheet_data.col_values(10)
 
@@ -283,17 +272,13 @@ class ImportSaleOrder(models.TransientModel):
 
             product_name = list(set(product_name[1:]))
 
-            product_obj = self.env['product.product']
+        for p_name in product_name:
+            p_name = p_name.replace('\u202d', '').replace('\u202c', '')
+            if not p_name:
+                continue
+            product_id = product_obj.sudo().search([('default_code', '=', p_name[:3])])
+            product_dict[p_name[:3]] = product_id
 
-            for p_name in product_name:
-                p_name = p_name.replace('\u202d', '').replace('\u202c', '')
-                if not p_name:
-                    continue
-                product_id = product_obj.sudo().search([('default_code', '=', p_name[:3])])
-                product_dict[p_name[:3]] = product_id
-            _logger.info({
-                'product_dict': product_dict
-            })
         return product_dict
 
     def _find_product_id(self, product_type, product_data):

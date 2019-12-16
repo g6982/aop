@@ -498,29 +498,35 @@ class SaleOrder(models.Model):
         for contract_id in contract_ids:
             if delivery_ids:
                 continue
-            contract_line_ids = contract_id.mapped('delivery_carrier_ids')
+            product_contract_line_ids = False
+            color_contract_line_ids = False
+
+            product_contract_line_ids = contract_id.mapped('delivery_carrier_ids').filtered(
+                lambda x: x.product_id.id == product_id.id)
+            if product_contract_line_ids:
+                color_contract_line_ids = product_contract_line_ids.filtered(lambda x: x.product_color == product_color)
+            if color_contract_line_ids:
+                contract_line_ids = color_contract_line_ids
+
+            if product_contract_line_ids and not color_contract_line_ids:
+                contract_line_ids = product_contract_line_ids
+
+            if not product_contract_line_ids:
+                contract_line_ids = contract_id.mapped('delivery_carrier_ids')
+            _logger.info({
+                'product_contract_line_ids': product_contract_line_ids,
+                'color_contract_line_ids': color_contract_line_ids,
+                'contract_line_ids': contract_line_ids
+            })
 
             for line_id in contract_line_ids:
                 # 位置的判断
                 location_state = from_location_id.id == line_id.from_location_id.id and \
                                   to_location_id.id == line_id.to_location_id.id
+                if not location_state:
+                    continue
 
-                # 货物的判断
-                product_state = product_id.id == line_id.product_id.id
-
-                # 颜色的判断
-                product_color_state = product_color == line_id.product_color
-
-                # 存在颜色
-                carrier_color_exist = line_id.product_color
-
-                # 存在车型
-                carrier_product_exist = line_id.product_id
-
-                # FIXME: 'or' or 'and'
-                if (location_state and (product_color_state if carrier_color_exist else not carrier_color_exist)) or (
-                        location_state and (product_state if carrier_product_exist else not carrier_product_exist)):
-                    # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
+                if location_state:
                     line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
                     delivery_ids.append(line_id)
 
