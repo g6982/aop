@@ -513,11 +513,6 @@ class SaleOrder(models.Model):
 
             if not product_contract_line_ids:
                 contract_line_ids = contract_id.mapped('delivery_carrier_ids')
-            _logger.info({
-                'product_contract_line_ids': product_contract_line_ids,
-                'color_contract_line_ids': color_contract_line_ids,
-                'contract_line_ids': contract_line_ids
-            })
 
             for line_id in contract_line_ids:
                 # 位置的判断
