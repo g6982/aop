@@ -29,7 +29,7 @@
                                 class="oe_highlight"
                                 groups="aop_sale.group_handover_vin_cancel_verify_handover_button"
                         />
-                        <field name="state" widget="statusbar" statusbar_visible="draft,register,done"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,register,done,verify"/>
                     </header>
                     <sheet>
 

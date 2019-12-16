@@ -57,6 +57,12 @@ class ReconciliationFile(models.Model):
     @api.depends('re_line_ids', 're_line_ids.invoice_line_id', 're_line_ids.sale_order_line_id')
     def _compute_reconciliation_state(self):
         for line in self:
+            if line.re_line_ids:
+                line_state = line.re_line_ids.mapped('state')
+                if 'price_error' in line_state:
+                    line.reconciliation_state = 'failed'
+                    continue
+
             if not line.re_line_ids:
                 line.reconciliation_state = 'failed'
             else:
@@ -70,6 +76,7 @@ class ReconciliationFile(models.Model):
 
     @api.multi
     def reconciliation_account_invoice(self):
+        self.confirm_account_invoice()
         for line in self:
             sale_order_line_ids = self.env['sale.order.line'].search([
                 ('handover_number', '=', line.name),

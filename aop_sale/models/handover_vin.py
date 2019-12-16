@@ -26,7 +26,8 @@ class HandoverVin(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'),
         ('register', 'Register'),
-        ('done', 'Audit')
+        ('done', 'Audit'),
+        ('verify', 'Verify')
     ], default='draft', track_visibility='onchange', store=True, index=True)
 
     register_user_id = fields.Many2one('res.users', track_visibility='onchange')
@@ -42,6 +43,9 @@ class HandoverVin(models.Model):
 
     return_user_id = fields.Many2one('res.users', 'Return by user')
     return_datetime = fields.Datetime('Return time', track_visibility='onchange')
+
+    finance_verify_user_id = fields.Many2one('res.users', track_visibility='onchange')
+    finance_verify_datetime = fields.Datetime('Finance verify time', track_visibility='onchange')
 
     @api.multi
     @api.depends('name')

@@ -31,6 +31,11 @@ class WriteOffBatchNUmber(models.Model):
             'finance_verify_user_id': self.env.user.id,
             'finance_verify_datetime': fields.Datetime.now()
         })
+        self.handover_ids.write({
+            'state': 'verify',
+            'finance_verify_user_id': self.env.user.id,
+            'finance_verify_datetime': fields.Datetime.now()
+        })
 
     @api.multi
     def cancel_finance_verify(self):
@@ -38,6 +43,11 @@ class WriteOffBatchNUmber(models.Model):
             if line.state != 'verify':
                 continue
             line.sudo().write({
+                'state': 'draft',
+                'finance_verify_user_id': False,
+                'finance_verify_datetime': False
+            })
+            line.handover_ids.write({
                 'state': 'draft',
                 'finance_verify_user_id': False,
                 'finance_verify_datetime': False
