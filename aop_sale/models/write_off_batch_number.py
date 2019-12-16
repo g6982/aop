@@ -26,7 +26,8 @@ class WriteOffBatchNUmber(models.Model):
 
             context = {
                 'active_ids': order_line_ids.ids,
-                'write_off_batch_number_id': line.id
+                'write_off_batch_number_id': line.id,
+                'handover_ids': line.handover_ids.ids
             }
             return {
                 'name': _('Make invoice'),

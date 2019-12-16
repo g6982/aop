@@ -43,13 +43,21 @@ class SaleAdvancePaymentInv(models.TransientModel):
     def default_get(self, fields_list):
         res = super(SaleAdvancePaymentInv, self).default_get(fields_list)
 
+        data = []
         ids = self._context.get('active_ids', [])
         line_ids = self.env['sale.order.line'].browse(ids)
-        data = []
-        for line_id in line_ids:
-            data.append((0, 0, {
-                'sale_order_line_id': line_id.id
-            }))
+        handover_ids = self.env['handover.vin'].browse(self._context.get('handover_ids'))
+        if handover_ids:
+            for line_id in handover_ids:
+                data.append((0, 0, {
+                    'sale_order_line_id': line_id.order_line_id.id,
+                    'handover_id': line_id.id
+                }))
+        else:
+            for line_id in line_ids:
+                data.append((0, 0, {
+                    'sale_order_line_id': line_id.id,
+                }))
         if data:
             res['selected_order_lines'] = data
 
@@ -290,6 +298,11 @@ class SaleAdvancePaymentInv(models.TransientModel):
         product_ids = [move_id.service_product_id for move_id in move_ids if move_id.service_product_id]
         return list(set(product_ids))
 
+    # 交接单
+    def _find_handover_id(self, order_line_id):
+        res = self.selected_order_lines.filtered(lambda x: x.sale_order_line_id == order_line_id)
+        return res[0].handover_id if res else False
+
     def _get_child_service_product_data(self, order_line_amount=False):
         invoice_res = []
         legal_order_line_ids = self.selected_order_lines.mapped('sale_order_line_id').filtered(lambda x: x if not x.invoice_lines else '')
@@ -305,6 +318,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
         # for sale_order_id in self.sale_order_ids:
         for sale_order_id in legal_order_line_ids:
+            handover_id = self._find_handover_id(sale_order_id)
+
             invoice_data = self._invoice_data(sale_order_id.order_id, line_id=sale_order_id)
 
             # tmp_estimate = sale_order_id.delivery_carrier_id.fixed_price if self._context.get(
@@ -338,7 +353,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
                         'tmp_estimate': tmp_estimate,
                         'customer_aop_contract_id': contract_id.id if contract_id else False,
                         'sale_order_line_confirm_date': picking_create_date,
-                        'sale_order_line_first_picking_done_date': picking_done_date
+                        'sale_order_line_first_picking_done_date': picking_done_date,
+                        'handover_id': handover_id.id if handover_id else False
                     })],
                 })
                 invoice_res.append(tmp)
@@ -367,6 +383,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                     legal_order_line_ids.append(line_id)
 
         for line_id in legal_order_line_ids:
+            handover_id = self._find_handover_id(line_id)
             sale_order_id = line_id.mapped('order_id')
             invoice_data = self._invoice_data(sale_order_id, line_id=line_id)
             line_data = []
@@ -398,7 +415,8 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 'tmp_estimate': tmp_estimate,
                 'customer_aop_contract_id': contract_id.id if contract_id else False,
                 'sale_order_line_confirm_date': picking_create_date,
-                'sale_order_line_first_picking_done_date': picking_done_date
+                'sale_order_line_first_picking_done_date': picking_done_date,
+                'handover_id': handover_id.id if handover_id else False
             }))
 
             invoice_data.update({
@@ -519,6 +537,7 @@ class InvoiceOrderLine(models.TransientModel):
 
     payment_inv_id = fields.Many2one('sale.advance.payment.inv')
 
+    handover_id = fields.Many2one('handover.vin', string='Handover')
     sale_order_line_id = fields.Many2one('sale.order.line', string='Order Line')
     currency_id = fields.Many2one(related='sale_order_line_id.currency_id')
     price_subtotal = fields.Monetary(related='sale_order_line_id.price_subtotal',

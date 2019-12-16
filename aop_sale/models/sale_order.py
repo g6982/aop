@@ -268,8 +268,11 @@ class SaleOrderLine(models.Model):
     def name_get(self):
         result = []
         for so_line in self.sudo():
-            name = '%s - %s' % (
-                so_line.order_id.name, so_line.name.split('\n')[0] if so_line.name else [] or so_line.product_id.name)
+            name = '%s - %s - %s' % (
+                so_line.order_id.name,
+                so_line.name.split('\n')[0] if so_line.name else [] or so_line.product_id.name,
+                so_line.id if so_line else ''
+            )
             if so_line.order_partner_id.ref:
                 name = '%s (%s)' % (name, so_line.order_partner_id.ref)
             result.append((so_line.id, name))

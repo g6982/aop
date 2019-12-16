@@ -402,6 +402,8 @@ class AccountInvoiceLine(models.Model):
     )
     sale_order_line_first_picking_done_date = fields.Datetime('Sale order first picking done date')
 
+    handover_id = fields.Many2one('handover.vin', string='Handover')
+
     @api.multi
     @api.depends('price_unit', 'contract_price', 'purchase_line_price')
     def _compute_price_diff(self):

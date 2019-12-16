@@ -206,8 +206,13 @@ class StockPickingBatch(models.Model):
 
         loading_plan = self.send_vehicle_loading_plan_to_wms()
         if data:
+            validate_data = {
+                'batch_id': self.id,
+                'batch_number': len(assigned_picking_ids)
+            }
             post_data = {
-                'picking_ids': data
+                'picking_ids': data,
+                'validate': validate_data
             }
         if loading_plan and post_data:
             post_data.update({
