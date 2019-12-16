@@ -43,7 +43,7 @@ class WriteOffBatchNUmber(models.Model):
             if line.state != 'verify':
                 continue
             line.sudo().write({
-                'state': 'register',
+                'state': 'draft',
                 'finance_verify_user_id': False,
                 'finance_verify_datetime': False
             })
