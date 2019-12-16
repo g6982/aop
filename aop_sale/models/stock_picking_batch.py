@@ -400,7 +400,7 @@ class StockPickingBatch(models.Model):
                 # 'service_product_id': service_product_id.id if service_product_id else False,
                 'product_qty': line_id.product_uom_qty,
                 'sale_line_id': line_id.sale_order_line_id.id,
-                'name': picking.picking_type_id.display_name,
+                'name': picking.picking_type_id.display_name + '(' + picking.location_id.display_name + '->' + picking.location_dest_id.display_name + ')',
                 'date_planned': fields.Datetime.now(),
                 'service_contract_price': carrier_id.product_standard_price if carrier_id else 0,
                 'price_unit': 0,
@@ -413,7 +413,7 @@ class StockPickingBatch(models.Model):
             data = {
                 'product_id': service_product_id.id,
                 'product_qty': 1,
-                'name': service_product_id.name,
+                'name': service_product_id.name + '(' + picking.location_id.display_name + '->' + picking.location_dest_id.display_name + ')',
                 'product_uom': service_product_id.uom_id.id,
                 'batch_stock_picking_id': picking.id,
                 'service_contract_price': carrier_id.product_standard_price if carrier_id else 0,
