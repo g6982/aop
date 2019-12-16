@@ -419,8 +419,6 @@ class SaleOrder(models.Model):
 
     delivery_company_id = fields.Many2one('res.company', 'Delivery company')
 
-    # created_by_picking_id = fields.Many2one('stock.picking', 'Created by picking')
-
     # 检查月结
     @api.constrains('partner_id')
     def _check_monthly_state(self):

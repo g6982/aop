@@ -57,7 +57,8 @@ class HandoverVin(models.Model):
                 continue
 
             # 筛选没有交接单的
-            tmp = tmp.filtered(lambda x: not x.handover_number)
+            # 筛选不是子库间移库的
+            tmp = tmp.filtered(lambda x: not x.handover_number and not x.created_by_picking_id)
 
             # if len(tmp) > 1:
             #     raise UserError('More than one records!')
