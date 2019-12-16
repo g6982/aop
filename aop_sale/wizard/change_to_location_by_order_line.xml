@@ -11,6 +11,11 @@
                                required="1"
                                options="{'no_quick_create': True, 'no_create_edit': True}"/>
                     </group>
+
+                    <group>
+                        <field name="trigger_history" invisible="1"/>
+                        <field name="history_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                    </group>
                     <notebook>
                         <page string="Lines">
                             <field name="line_ids">

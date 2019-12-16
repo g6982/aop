@@ -131,6 +131,7 @@
                     <field name="currency_id" invisible="1"/>
                     <field name="customer_aop_contract_id"/>
                     <field name="customer_aop_contract_version"/>
+                    <field name="latest_aop_contract_version" readonly="1"/>
                     <field name="state"/>
                     <field name="tax_invoice_amount"/>
                     <field name="sale_order_line_confirm_date"/>

@@ -383,14 +383,14 @@ class AccountInvoiceLine(models.Model):
 
     # 客户合同
     customer_aop_contract_id = fields.Many2one('customer.aop.contract', 'Customer contract')
-    customer_aop_contract_version = fields.Float(related='customer_aop_contract_id.contract_version')
+    customer_aop_contract_version = fields.Float(related='customer_aop_contract_id.contract_version', store=True)
 
     # 合同条款
     delivery_carrier_id = fields.Many2one('delivery.carrier', 'Carrier')
 
     # 供应商合同
     supplier_aop_contract_id = fields.Many2one('supplier.aop.contract', 'Supplier contract')
-    supplier_aop_contract_version = fields.Float(related='supplier_aop_contract_id.contract_version')
+    supplier_aop_contract_version = fields.Float(related='supplier_aop_contract_id.contract_version', store=True)
 
     #会计期间
     account_period_id = fields.Many2one('account.period', string='Period', related='invoice_id.account_period_id', readonly=False, store=True)
@@ -403,6 +403,8 @@ class AccountInvoiceLine(models.Model):
     sale_order_line_first_picking_done_date = fields.Datetime('Sale order first picking done date')
 
     handover_id = fields.Many2one('handover.vin', string='Handover')
+
+    latest_aop_contract_version = fields.Char('Latest version')
 
     @api.multi
     @api.depends('price_unit', 'contract_price', 'purchase_line_price')

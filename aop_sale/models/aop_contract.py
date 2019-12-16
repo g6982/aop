@@ -13,7 +13,7 @@ class AopContract(models.Model):
     _order = 'version_code desc, contract_version desc'
 
     name = fields.Char('name', required=True)
-    partner_id = fields.Many2one('res.partner', 'Partner')
+    partner_id = fields.Many2one('res.partner', 'Partner', index=True)
     serial_number = fields.Char(string='Contract number')
 
     version_id = fields.Many2one('contract.version', string="Version")
@@ -72,7 +72,7 @@ class AopContract(models.Model):
             'state': 'done',
             'active': True
         })
-    
+
     @api.multi
     def toggle_active(self):
         res = super(AopContract, self).toggle_active()
@@ -87,27 +87,11 @@ class AopContract(models.Model):
                 'active': False
             })
 
-    # @api.model
-    # def create(self, vals):
-    #     res = super(AopContract, self).create(vals)
-    #
-    #     # FIXME: 补丁。。。
-    #     data = []
-    #     for x in res.delivery_carrier_ids:
-    #         if len(x.rule_service_product_ids) == len(x.route_id.rule_ids):
-    #             tmp = []
-    #             for index_i, rule_line_id in enumerate(x.rule_service_product_ids):
-    #                 tmp.append((1, rule_line_id.id, {
-    #                     'rule_id': x.route_id.rule_ids[index_i].id,
-    #                     'route_id': x.route_id.id
-    #                 }))
-    #         data.append((1, x.id, {
-    #             'rule_service_product_ids': tmp
-    #         }))
-    #     res.write({
-    #         'delivery_carrier_ids': data
-    #     })
-    #     return res
+    @api.model
+    def create(self, vals):
+        res = super(AopContract, self).create(vals)
+        self.update_invoice_line_to_latest_contract_version(res)
+        return res
 
     # 复制后，更改为正式合同
     @api.multi
@@ -123,10 +107,35 @@ class AopContract(models.Model):
             # 条款行
             for line in line_data.get('delivery_carrier_ids'):
                 line[2].update({
-                    'name': str(line_data.get('contract_version')) + '/' + line[2].get('name') if line_data.get('contract_version') else str(0.1) + '/' + line[2].get('name')
+                    'name': str(line_data.get('contract_version')) + '/' + line[2].get('name') if line_data.get(
+                        'contract_version') else str(0.1) + '/' + line[2].get('name')
                 })
         res = super(AopContract, self).copy(default=data[0])
         return res
+
+    # 当修改和新增时，更新最新版本
+    @api.multi
+    def write(self, vals):
+        update_state = False
+        if 'contract_version' in vals.keys():
+            update_state = True
+        res = super(AopContract, self).write(vals)
+        if update_state:
+            for line_id in self:
+                self.update_invoice_line_to_latest_contract_version(line_id)
+        return res
+
+    # 定时更新结算清单行的最新合同版本号
+    def update_invoice_line_to_latest_contract_version(self, records):
+        for record_id in records:
+            sql_update = '''
+                        update account_invoice_line set 
+                        latest_aop_contract_version = {latest_aop_contract_version} where partner_id = {partner_id};
+                    '''.format(
+                latest_aop_contract_version=record_id.contract_version,
+                partner_id=record_id.partner_id.id
+            )
+            self.env.cr.execute(sql_update)
 
 
 class ContractVersion(models.Model):
@@ -150,4 +159,3 @@ class ContractStockRule(models.Model):
     rule_id = fields.Many2one('stock.rule', 'Rule')
     service_product_id = fields.Many2one('product.product', string='Product', domain=[('type', '=', 'service')])
     rule_contract_id = fields.Many2one('aop.contract', 'Contract')
-

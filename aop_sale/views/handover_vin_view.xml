@@ -18,7 +18,7 @@
                         <button name="verify_handover"
                                 string="Verify"
                                 type="object"
-                                attrs="{'invisible': [('state', 'not in', ['verify', 'done'])]}"
+                                attrs="{'invisible': [('state', 'not in', ['register', 'done'])]}"
                                 class="oe_highlight"
                                 groups="aop_sale.group_handover_vin_verify_handover_button"
                         />

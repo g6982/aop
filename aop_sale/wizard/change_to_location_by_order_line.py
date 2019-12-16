@@ -4,6 +4,7 @@ from odoo import api, fields, models, _
 import logging
 import random
 import time
+import hashlib
 
 _logger = logging.getLogger(__name__)
 
@@ -13,7 +14,25 @@ class ChangeToLocationByOrderLine(models.TransientModel):
 
     order_line_ids = fields.Many2many('sale.order.line', string='Order lines')
 
+    history_id = fields.Many2one('change.sale.order.line.route.history', string='History')
+    trigger_history = fields.Boolean('Trigger', compute='change_history_id', store=True)
     line_ids = fields.One2many('change.to.location.by.order.line.detail', 'change_id', 'Line ids')
+
+    @api.onchange('history_id')
+    def change_history_id(self):
+        for line_id in self:
+            if line_id.history_id:
+                data = []
+                for history_line_id in line_id.history_id.line_ids:
+                    tmp = {
+                        'picking_type_id': history_line_id.picking_type_id.id,
+                        'from_location_id': history_line_id.from_location_id.id,
+                        'to_location_id': history_line_id.to_location_id.id
+                    }
+                    data.append((0, 0, tmp))
+
+                if data:
+                    line_id.line_ids = data
 
     @api.model
     def default_get(self, fields_list):
@@ -145,10 +164,46 @@ class ChangeToLocationByOrderLine(models.TransientModel):
                 'move_orig_ids': [(4, move_id.id)]
             })
 
+    # 生成修改历史记录
+    def create_dispatch_history(self):
+        line_ids = self.line_ids
+        _logger.info({
+            'line_ids': line_ids
+        })
+        data = []
+        history_name = '/'.join(
+            x.picking_type_id.name + '-' + x.from_location_id.name + '-' + x.to_location_id.name for x in line_ids)
+        for line_id in line_ids:
+            tmp = {
+                'picking_type_id': line_id.picking_type_id.id,
+                'from_location_id': line_id.from_location_id.id,
+                'to_location_id': line_id.to_location_id.id
+            }
+            data.append((0, 0, tmp))
+
+        if data:
+            md5_obj = hashlib.md5()
+            md5_obj.update(str(data).encode())
+            md5_name = md5_obj.hexdigest()
+            res = self.env['change.sale.order.line.route.history'].search([
+                ('md5_name', '=', md5_name)
+            ])
+            if not res:
+                new_history_id = self.env['change.sale.order.line.route.history'].create({
+                    'name': history_name,
+                    'md5_name': md5_name,
+                    'line_ids': data
+                })
+                _logger.info({
+                    'create new history': new_history_id
+                })
+
     # 先判断，选择的起点和终点，是否都在路由上
     # 再调度
     def dispatch_location_id_2_new_location_id(self):
         try:
+            self.create_dispatch_history()
+
             if not self.line_ids:
                 raise ValueError('You must select from/to location')
             start_location_id = self.line_ids[0].from_location_id
