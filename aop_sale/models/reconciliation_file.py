@@ -57,12 +57,6 @@ class ReconciliationFile(models.Model):
     @api.depends('re_line_ids', 're_line_ids.invoice_line_id', 're_line_ids.sale_order_line_id')
     def _compute_reconciliation_state(self):
         for line in self:
-            if line.re_line_ids:
-                line_state = line.re_line_ids.mapped('state')
-                if 'price_error' in line_state:
-                    line.reconciliation_state = 'failed'
-                    continue
-
             if not line.re_line_ids:
                 line.reconciliation_state = 'failed'
             else:
@@ -72,6 +66,10 @@ class ReconciliationFile(models.Model):
                     if len(set(line.re_line_ids.mapped('sale_order_line_id'))) != line.number:
                         line.reconciliation_state = 'order_only'
                     else:
+                        line_state = line.re_line_ids.mapped('state')
+                        if 'price_error' in line_state:
+                            line.reconciliation_state = 'failed'
+                            continue
                         line.reconciliation_state = 'order_invoice'
 
     @api.multi
