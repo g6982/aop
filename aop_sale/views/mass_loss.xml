@@ -27,6 +27,16 @@
                         />
                         <button name="action_cancel" id="action_cancel" string="Cancel"
                                 class="btn-primary" type="object"/>
+
+                        <button name="create_sale_order"
+                                string="Sale order"
+                                attrs="{'invisible': [('state', '!=', 'approval')]}"
+                                class="btn-primary" type="object"/>
+                        <button name="create_purchase_order"
+                                string="Purchase order"
+                                class="btn-primary"
+                                attrs="{'invisible': [('state', '!=', 'approval')]}"
+                                type="object"/>
                     </header>
                     <sheet>
                         <group>

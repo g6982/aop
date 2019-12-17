@@ -60,6 +60,15 @@ class MassLossOrder(models.Model):
 
     insurance_price = fields.Float(string='insurance Price', compute='_compute_insurance_price', store=True)
 
+    sale_order_id = fields.Many2one('sale.order')
+    purchase_order_id = fields.Many2one('purchase.order')
+
+    def create_sale_order(self):
+        pass
+    
+    def create_purchase_order(self):
+        pass
+
     @api.multi
     @api.depends('vin_code', 'brand_id')
     def _compute_insurance_price(self):
