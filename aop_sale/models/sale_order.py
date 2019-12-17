@@ -487,7 +487,7 @@ class SaleOrder(models.Model):
         # 获取到多个合同
         return res if res else False
 
-    def _transfer_district_to_location(self, partner_id, patch=False):
+    def _transfer_district_to_location(self, partner_id):
         return partner_id.property_stock_customer
 
     # 尝试获取条款
@@ -552,10 +552,6 @@ class SaleOrder(models.Model):
         order_to_location_id = self._transfer_district_to_location(order_line.to_location_id)
 
         delivery_ids = self._get_contract_line(contract_ids, order_from_location_id, order_to_location_id, order_line)
-
-        if not delivery_ids:
-            order_from_location_id = self._transfer_district_to_location(order_line.from_location_id, patch=True)
-            delivery_ids = self._get_contract_line(contract_ids, order_from_location_id, order_to_location_id, order_line)
 
         return delivery_ids
 
