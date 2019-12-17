@@ -131,7 +131,9 @@ class AopContract(models.Model):
             sql_update = '''
                         update account_invoice_line set 
                         latest_aop_contract_version = {latest_aop_contract_version} 
-                        where partner_id = {partner_id} and latest_aop_contract_version < {latest_aop_contract_version}
+                        where partner_id = {partner_id} and 
+                        (latest_aop_contract_version < {latest_aop_contract_version} or 
+                        latest_aop_contract_version is null)
                     '''.format(
                 latest_aop_contract_version=record_id.contract_version,
                 partner_id=record_id.partner_id.id
