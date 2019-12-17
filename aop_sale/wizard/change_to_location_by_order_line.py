@@ -22,6 +22,7 @@ class ChangeToLocationByOrderLine(models.TransientModel):
     def change_history_id(self):
         for line_id in self:
             if line_id.history_id:
+                line_id.line_ids = False
                 data = []
                 for history_line_id in line_id.history_id.line_ids:
                     tmp = {

@@ -404,7 +404,7 @@ class AccountInvoiceLine(models.Model):
 
     handover_id = fields.Many2one('handover.vin', string='Handover')
 
-    latest_aop_contract_version = fields.Char('Latest version')
+    latest_aop_contract_version = fields.Float('Latest version')
 
     @api.multi
     @api.depends('price_unit', 'contract_price', 'purchase_line_price')

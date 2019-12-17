@@ -60,7 +60,8 @@ class InvoiceNoTaxInvoice(models.Model):
 
         context_wizard = {
             'default_tax_invoice_no': self.name,
-            'active_ids': self.invoice_line_ids.ids
+            'active_ids': self.invoice_line_ids.ids,
+            'invoice_model_name': 'account.invoice.line'
         }
         return {
             'name': _('invoice no'),
