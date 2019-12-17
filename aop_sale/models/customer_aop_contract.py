@@ -14,6 +14,10 @@ class CustomerAopContract(models.Model):
     delivery_carrier_ids = fields.One2many('delivery.carrier', 'customer_contract_id', string="Contract terms")
     contract_rule_ids = fields.One2many('customer.contract.stock.rule.line', 'rule_contract_id', 'Contract rule line')
 
+    # 通用的方法来查找数据
+    def find_customer_delivery_carrier_id(self, contract_ids, sale_order_line_id):
+        pass
+
 
 class CustomerStockRuleLine(models.Model):
     _inherit = 'contract.stock.rule.line'

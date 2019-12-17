@@ -498,32 +498,44 @@ class SaleOrder(models.Model):
         for contract_id in contract_ids:
             if delivery_ids:
                 continue
-            product_contract_line_ids = False
+
+            # 先把位置相同的筛选出来
+            carrier_ids = contract_id.mapped('delivery_carrier_ids').filtered(
+                lambda x:
+                x.from_location_id.id == from_location_id.id and
+                x.to_location_id.id == to_location_id.id
+            )
+            if not carrier_ids:
+                continue
+
+            # 初始化变量
             color_contract_line_ids = False
 
-            product_contract_line_ids = contract_id.mapped('delivery_carrier_ids').filtered(
-                lambda x: x.product_id.id == product_id.id)
-            if product_contract_line_ids:
+            # 过滤产品
+            product_contract_line_ids = carrier_ids.filtered(lambda x: x.product_id.id == product_id.id)
+
+            # 找到了产品, 找颜色
+            if product_contract_line_ids and product_color:
                 color_contract_line_ids = product_contract_line_ids.filtered(lambda x: x.product_color == product_color)
+
+            # 找到了颜色
             if color_contract_line_ids:
-                contract_line_ids = color_contract_line_ids
+                carrier_ids = color_contract_line_ids
 
+            # 找到了货物，没有找到颜色
             if product_contract_line_ids and not color_contract_line_ids:
-                contract_line_ids = product_contract_line_ids
+                carrier_ids = product_contract_line_ids
 
+            # 没有找到货物
             if not product_contract_line_ids:
-                contract_line_ids = contract_id.mapped('delivery_carrier_ids')
+                no_product_carrier_ids = carrier_ids.filtered(lambda x: not x.product_id)
+                if no_product_carrier_ids:
+                    carrier_ids = no_product_carrier_ids
 
-            for line_id in contract_line_ids:
-                # 位置的判断
-                location_state = from_location_id.id == line_id.from_location_id.id and \
-                                  to_location_id.id == line_id.to_location_id.id
-                if not location_state:
-                    continue
-
-                if location_state:
-                    line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
-                    delivery_ids.append(line_id)
+            # 可能存在多条这样的记录
+            for line_id in carrier_ids:
+                line_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
+                delivery_ids.append(line_id)
 
         # 没有就抛出异常
         if not delivery_ids:
