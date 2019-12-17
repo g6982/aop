@@ -2262,7 +2262,7 @@ msgstr "最后更新时间"
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__latest_aop_contract_version
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__latest_aop_contract_version
 msgid "Latest version"
-msgstr ""
+msgstr "最新版本"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_mount_car_plan__layer_option
