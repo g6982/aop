@@ -9,99 +9,101 @@
                 <field name="partner_id"/>
                 <field name="name"/>
                 <field name="serial_number"/>
-                <field name="version_id"/>
+                <field name="version_code"/>
+                <field name="contract_version"/>
                 <field name="date_start"/>
                 <field name="date_end"/>
-
             </tree>
         </field>
     </record>
 
     <record id="view_insurance_aop_contract_form" model="ir.ui.view">
-            <field name="name">insurance.aop.contract.form</field>
-            <field name="model">insurance.aop.contract</field>
-            <field name="arch" type="xml">
-                <form string="insurance contract">
+        <field name="name">insurance.aop.contract.form</field>
+        <field name="model">insurance.aop.contract</field>
+        <field name="arch" type="xml">
+            <form string="insurance contract">
 
 
-                    <sheet>
+                <sheet>
 
 
-                        <div class="oe_title" name="title">
-                            <label for="name" string="Name" class="oe_edit_only"/>
-                            <h1>
-                                <field name="name"/>
-                            </h1>
-                        </div>
-
-                        <group>
-                            <group>
-                                <field name="partner_id"
-                                       options="{'no_quick_create': True, 'no_create_edit': True}"
-                                />
-                                <field name="insurance_type_id"
-                                       options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                            </group>
-                            <group>
-                                <field name="purchase_id"
-                                       options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                            </group>
-                        </group>
-                        <group>
-                            <group>
-                                <field name="insurance_partner_id"
-                                       invisible="1"
-                                       options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                                <field name="excluding_deductible"/>
-                            </group>
-                            <group>
-                                <field name="insurance_cover"/>
-                                <field name="insurance_data" invisible="1"/>
-                            </group>
-                        </group>
-
-                        <group>
-                            <group>
-
-                                <field name="serial_number"/>
-                                <field name="version_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                                <field name="serial_no"/>
-                                <field name="is_formal"/>
-                                <field name="project_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
-
-
-                            </group>
-                            <group>
-                                <field name="date_start"/>
-                                <field name="date_end"/>
-                                <field name="effective_date"/>
-                                <field name="expiry_date"/>
-
-                            </group>
-                        </group>
-
-                         <notebook>
-                            <page string="Contract terms">
-                                <field name="contract_ids">
-                                    <tree editable="bottom">
-                                        <field name="name" />
-                                        <field name="brand_id" />
-                                        <field name="product_id" />
-                                        <field name="fixed_price" />
-
-                                    </tree>
-                                </field>
-                            </page>
-                         </notebook>
-
-                    </sheet>
-
-                    <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
-                        <field name="message_ids" widget="mail_thread"/>
+                    <div class="oe_title" name="title">
+                        <label for="name" string="Name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
                     </div>
-                </form>
-            </field>
-        </record>
+
+                    <group>
+                        <group>
+                            <field name="partner_id"
+                                   options="{'no_quick_create': True, 'no_create_edit': True}"
+                            />
+                            <field name="insurance_type_id"
+                                   options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                        </group>
+                        <group>
+                            <field name="purchase_id"
+                                   options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="insurance_partner_id"
+                                   invisible="1"
+                                   options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                            <field name="excluding_deductible"/>
+                        </group>
+                        <group>
+                            <field name="insurance_cover"/>
+                            <field name="insurance_data" invisible="1"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group>
+
+                            <field name="serial_number"/>
+                            <field name="version_code"/>
+                            <field name="contract_version"/>
+<!--                            <field name="version_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>-->
+                            <field name="serial_no"/>
+                            <field name="is_formal"/>
+                            <field name="project_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
+
+
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="effective_date"/>
+                            <field name="expiry_date"/>
+
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Contract terms">
+                            <field name="contract_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="brand_id"/>
+                                    <field name="product_id"/>
+                                    <field name="fixed_price"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
 
 </odoo>

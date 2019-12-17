@@ -129,10 +129,9 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
         ]
         journal_id = self.env['account.journal'].search(journal_domain, limit=1)
 
-        # contract_price = self._get_contract_price(line)
-
         contract_ids = self._get_supplier_aop_contract(line)
-        carrier_id = self._get_delivery_carrier_id(contract_ids, line)
+        # carrier_id = self._get_delivery_carrier_id(contract_ids, line)
+        carrier_id = contract_ids.find_supplier_delivery_carrier_id(contract_ids, line)
         contract_price = carrier_id.product_standard_price if carrier_id else 0
         data = {
             'purchase_line_id': line.id,
@@ -185,42 +184,6 @@ class PurchaseOrderInvoiceWizard(models.TransientModel):
             ('service_product_id', '=', purchase_line_id.product_id.id)
         ])
         return res[0].product_standard_price if res else 0
-
-    def _get_delivery_carrier_id(self, contract_ids, purchase_line_id):
-        latest_carrier_id = False
-        for contract_id in contract_ids:
-            if latest_carrier_id:
-                continue
-            picking_id = purchase_line_id.batch_stock_picking_id
-            if not picking_id:
-                return False
-
-            #  需要判断车型
-            filter_domain = [
-                ('from_location_id', '=', picking_id.location_id.id),
-                ('to_location_id', '=', picking_id.location_dest_id.id),
-                ('supplier_contract_id', '=', contract_id.id),
-                ('service_product_id', '=', purchase_line_id.product_id.id)
-            ]
-            move_lines = picking_id.move_lines
-            if not move_lines:
-                product_id = False
-            else:
-                product_id = move_lines[0].product_id
-
-            res = self.env['delivery.carrier'].search(filter_domain)
-
-            product_ids = res.mapped('product_id')
-
-            if product_ids:
-                res = res.filtered(lambda x: x.product_id.id == product_id.id)
-
-            if res:
-                latest_carrier_id = res[0]
-
-        if not latest_carrier_id:
-            raise UserError('Can not find correct supplier contract !')
-        return latest_carrier_id
 
     def _get_supplier_aop_contract(self, purchase_line_id):
         '''

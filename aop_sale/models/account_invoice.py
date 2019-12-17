@@ -392,8 +392,13 @@ class AccountInvoiceLine(models.Model):
     supplier_aop_contract_id = fields.Many2one('supplier.aop.contract', 'Supplier contract')
     supplier_aop_contract_version = fields.Float(related='supplier_aop_contract_id.contract_version', store=True)
 
-    #会计期间
-    account_period_id = fields.Many2one('account.period', string='Period', related='invoice_id.account_period_id', readonly=False, store=True)
+    # 保险合同
+    insurance_aop_contract_id = fields.Many2one('insurance.aop.contract', 'Insurance contract')
+    insurance_aop_contract_version = fields.Float(related='insurance_aop_contract_id.contract_version', store=True)
+
+    # 会计期间
+    account_period_id = fields.Many2one('account.period', string='Period', related='invoice_id.account_period_id',
+                                        readonly=False, store=True)
 
     sale_order_line_confirm_date = fields.Datetime('Sale order line confirm date')
     sale_order_line_import_date = fields.Datetime(

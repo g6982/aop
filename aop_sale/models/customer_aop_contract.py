@@ -64,13 +64,9 @@ class CustomerAopContract(models.Model):
                 )
                 if no_product_contract_line_ids:
                     contract_line_ids = no_product_contract_line_ids
-            _logger.info({
-                'contract_line_ids': contract_line_ids,
-                'from_location_id': from_location_id,
-                'to': to_location_id,
-                'product_id': order_line_id.product_id.display_name
-            })
+
             # 使用第一条记录
+            # fixme: 这里应该仅且仅有一条数据才对
             line_id = contract_line_ids[0]
             # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
             carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id

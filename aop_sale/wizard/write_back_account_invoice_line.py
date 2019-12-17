@@ -53,44 +53,6 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
 
         return latest_carrier_id
 
-    # 供应商合同条款
-    def _get_supplier_carrier_id(self, contract_ids, purchase_line_id):
-        latest_contract_id = False
-        for contract_id in contract_ids:
-            if latest_contract_id:
-                continue
-            picking_id = purchase_line_id.batch_stock_picking_id
-            if not picking_id:
-                return False
-
-            # 添加产品过滤
-            move_lines = picking_id.move_lines
-            if not move_lines:
-                product_id = False
-            else:
-                product_id = move_lines[0].product_id
-            filter_domain = [
-                ('from_location_id', '=', picking_id.location_id.id),
-                ('to_location_id', '=', picking_id.location_dest_id.id),
-                ('supplier_contract_id', '=', contract_id.id),
-                ('service_product_id', '=', purchase_line_id.product_id.id),
-            ]
-
-            res = self.env['delivery.carrier'].search(filter_domain)
-
-            res_product_ids = res.mapped('product_id')
-
-            if res_product_ids and product_id:
-                # 筛选货物
-                filter_res = res.filtered(lambda x: x.product_id.id == product_id.id)
-                if filter_res:
-                    res = filter_res
-
-            latest_contract_id = res
-        if not latest_contract_id:
-            raise UserError('Can not find correct supplier contract.')
-        return latest_contract_id
-
     def _invoice_data(self, invoice_line_id=False):
         # 使用当前日期
         date_invoice = fields.Date.today()
@@ -269,7 +231,8 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         # 合同
         contract_ids = self._get_latest_contract_id(invoice_line_id)
         # 条款
-        carrier_id = self._get_supplier_carrier_id(contract_ids, purchase_line_id)
+        carrier_id = contract_ids.find_supplier_delivery_carrier_id(contract_ids, purchase_line_id)
+
         contract_id = carrier_id.supplier_contract_id
         # _logger.info({
         #     'contract_id': contract_id,
@@ -297,6 +260,34 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             })
         return invoice_data if invoice_data else []
 
+    def write_back_insurance_invoice(self, invoice_line_id):
+        purchase_line_id = invoice_line_id.purchase_line_id
+        carrier_id = self.env['insurance.aop.contract'].find_insurance_delivery_carrier_id(purchase_line_id)
+
+        # 有可能是保险合同!!!
+        if hasattr(carrier_id, 'contract_id'):
+            contract_id = carrier_id.contract_id
+            if invoice_line_id.state == 'draft':
+                invoice_line_id.sudo().write({
+                    'insurance_aop_contract_id': contract_id.id,
+                    'contract_price': carrier_id.fixed_price
+                })
+            # 如果已经完成了，需要生成新的
+            # else:
+            #     # 销售订单行
+            #     # 如果发票行的状态是完成
+            #     # 生成一条新的记录，使用最新的合同信息，先创建负数，再创建正数的新合同数据
+            #     invoice_data = self._invoice_data(invoice_line_id=invoice_line_id)
+            #     invoice_line_data = self._get_account_invoice_line_supplier_data(
+            #         invoice_line_id,
+            #         carrier_id,
+            #         contract_id
+            #     )
+            #     invoice_data.update({
+            #         'invoice_line_ids': invoice_line_data
+            #     })
+            # return False
+
     def write_back(self):
         ids = self.env.context.get('active_ids')
         line_ids = self.env['account.invoice.line'].browse(ids)
@@ -312,7 +303,11 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             if line_id.invoice_id.type == 'out_invoice':
                 tmp = self.write_back_customer_invoice(line_id)
             elif line_id.invoice_id.type == 'in_invoice':
-                tmp = self.write_back_supplier_invoice(line_id)
+                if line_id.purchase_line_id.batch_stock_picking_id:
+                    tmp = self.write_back_supplier_invoice(line_id)
+                else:
+                    # 保险
+                    self.write_back_insurance_invoice(line_id)
 
             if tmp:
                 create_invoice_values.append(tmp)

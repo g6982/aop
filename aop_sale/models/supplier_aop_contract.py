@@ -2,6 +2,7 @@
 
 from odoo import models, fields, api
 import logging
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -61,6 +62,62 @@ class SupplierAopContract(models.Model):
     #         return res
     #     for child_id in parent_location_id.child_ids:
     #         self.find_all_location(child_id, res)
+
+    def find_supplier_delivery_carrier_id(self, contract_ids, purchase_line_id):
+        latest_carrier_id = ''
+        for contract_id in contract_ids:
+            if latest_carrier_id:
+                continue
+            picking_id = purchase_line_id.batch_stock_picking_id
+            if not picking_id:
+                return False
+            # 获取需要过滤的产品
+            move_lines = picking_id.move_lines
+            move_line_ids = picking_id.move_line_ids
+
+            # 接车没有明细行
+            if not move_lines and picking_id.picking_incoming_number > 0:
+                product_id = False
+            else:
+                product_id = move_lines[0].product_id
+
+            from_location_id = picking_id.location_id
+            to_location_id = picking_id.location_dest_id
+
+            res = self.env['delivery.carrier'].search([
+                ('from_location_id', '=', from_location_id.id),
+                ('to_location_id', '=', to_location_id.id),
+                ('supplier_contract_id', '=', contract_id.id),
+                ('service_product_id', '=', purchase_line_id.product_id.id)
+            ])
+            if not res:
+                from_location_id = move_line_ids[0].location_id
+                to_location_id = move_line_ids[0].location_dest_id
+                res = self.env['delivery.carrier'].search([
+                    ('from_location_id', '=', from_location_id.id),
+                    ('to_location_id', '=', to_location_id.id),
+                    ('supplier_contract_id', '=', contract_id.id),
+                    ('service_product_id', '=', purchase_line_id.product_id.id)
+                ])
+
+            if not res:
+                continue
+
+            # 如果存在货物，就应该去过滤货物
+            product_res_ids = res.filtered(lambda x: x.product_id.id == product_id.id) if product_id else False
+            if product_res_ids:
+                res = product_res_ids
+            if not product_res_ids:
+                # 过滤出不包含货物的数据
+                no_product_res = res.filtered(lambda x: not x.product_id)
+                if no_product_res:
+                    res = no_product_res
+            # FIXME: 会出现多条么？
+            latest_carrier_id = res[0] if res else False
+
+        if not latest_carrier_id:
+            raise UserError('Can not find correct supplier contract !')
+        return latest_carrier_id
 
 
 class SupplierStockRuleLine(models.Model):
