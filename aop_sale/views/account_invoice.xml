@@ -432,7 +432,9 @@
                     <field name="pre_billing"/>
                 </field>
 
-
+                <field name="state" position="before">
+                    <field name="period_month"/>
+                </field>
             </field>
         </record>
 
@@ -506,6 +508,7 @@
                     <field name="price_subtotal" invisible="1" groups="account.group_show_line_subtotals_tax_excluded"/>
                     <field name="price_total" invisible="1" groups="account.group_show_line_subtotals_tax_included"/>
                     <field name="currency_id" invisible="1"/>
+                    <field name="period_month"/>
                     <field name="account_period_id"/>
                     <field name="supplier_invoice_state"/>
                     <field name="supplier_aop_contract_id"/>
