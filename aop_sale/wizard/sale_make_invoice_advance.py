@@ -466,11 +466,27 @@ class SaleAdvancePaymentInv(models.TransientModel):
         return res
 
     def _get_latest_carrier_id(self, contract_ids, order_line_id):
-        latest_carrier_id = False
+        latest_carrier_id = ''
+        color_contract_ids = ''
         for contract_id in contract_ids:
             if latest_carrier_id:
                 continue
             contract_line_ids = contract_id.mapped('delivery_carrier_ids')
+
+            product_contract_ids = contract_line_ids.filtered(lambda x: x.product_id.id == order_line_id.product_id.id)
+
+            if product_contract_ids:
+                color_contract_ids = product_contract_ids.filtered(lambda x: x.product_color == order_line_id.product_color)
+
+            # 如果有颜色
+            if color_contract_ids:
+                contract_line_ids = color_contract_ids
+
+            if not color_contract_ids and product_contract_ids:
+                contract_line_ids = product_contract_ids
+
+            if not product_contract_ids:
+                contract_line_ids = contract_line_ids
 
             from_location_id = self._transfer_district_to_location(order_line_id.from_location_id)
             to_location_id = self._transfer_district_to_location(order_line_id.to_location_id)
@@ -480,10 +496,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
                 location_state = from_location_id.id == line_id.from_location_id.id and \
                                  to_location_id.id == line_id.to_location_id.id and \
                                  order_line_id.route_id.id == line_id.route_id.id
-                product_state = order_line_id.product_id.id == line_id.product_id.id
-                product_exist = line_id.product_id
-
-                if location_state and (product_state if product_exist else not product_exist):
+                if location_state:
                     # 判断合同条款中是否存在"转到条款",如存在,获取"转到条款"
                     carrier_id = line_id if not line_id.goto_delivery_carrier_id else line_id.goto_delivery_carrier_id
                     latest_carrier_id = carrier_id
