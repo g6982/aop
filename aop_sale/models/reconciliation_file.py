@@ -95,7 +95,7 @@ class ReconciliationFile(models.Model):
             # FIXME: 是否需要过滤呢 ?
             # 如果已经选择过了，不允许再次筛选，直接过滤掉
             all_line_ids = self.env['reconciliation.file.line'].search([('invoice_line_id', '!=', False)])
-            all_invoice_ids = all_invoice_ids.mapped('invoice_line_id')
+            all_invoice_ids = all_line_ids.mapped('invoice_line_id')
             invoice_line_ids = list(set(invoice_line_ids) - set(all_invoice_ids))
 
             data = []
