@@ -12,11 +12,11 @@
                            options="{'no_quick_create': True, 'no_create_edit': True}"
                            widget="many2many_tags"/>
                     </group>
-                    <group>
-                        <group>
-                            <field name="user_type_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
-                        </group>
-                    </group>
+<!--                    <group>-->
+<!--                        <group>-->
+<!--                            <field name="user_type_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
                 </xpath>
             </field>
         </record>
