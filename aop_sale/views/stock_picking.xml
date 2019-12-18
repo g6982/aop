@@ -86,6 +86,9 @@
                     <field name="location_id"/>
                     <field name="route_id"/>
                 </xpath>
+                <xpath expr="//field[@name='batch_id']" position="after">
+                    <field name="sale_order_line_to_station_name"/>
+                </xpath>
 
             </field>
         </record>
