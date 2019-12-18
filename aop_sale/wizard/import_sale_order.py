@@ -334,7 +334,8 @@ class ImportSaleOrder(models.TransientModel):
             # 如果订单行已经存在该VIN，则不能导入
             res = self.env['sale.order.line'].search([
                 ('vin_code', '=', vin_code),
-                ('to_location_id', '=', to_location_id.id)
+                ('to_location_id', '=', to_location_id.id),
+                ('order_id.state', '!=', 'cancel')
             ])
 
             # 如果订单已经完成，则可以继续
