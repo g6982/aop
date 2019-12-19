@@ -4285,7 +4285,7 @@ msgstr "用户管理"
 #: model:ir.actions.act_window,name:aop_sale.action_res_users_type_view
 #: model:ir.ui.menu,name:aop_sale.res_users_type_id
 msgid "User type"
-msgstr ""
+msgstr "用户类型"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_res_users
