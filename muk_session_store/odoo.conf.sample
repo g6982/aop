@@ -1,0 +1,7 @@
+[options]
+...
+session_store_redis = True
+session_store_prefix = a0p
+session_store_host = 127.0.0.1
+session_store_port = 6379
+session_store_dbindex = 6
