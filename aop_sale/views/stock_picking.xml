@@ -114,5 +114,38 @@
             </field>
         </record>
 
+        <record id="view_stock_picking_pivot_view" model="ir.ui.view">
+            <field name="name">stock.picking.pivot</field>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <pivot string="Stock picking">
+                    <field name="scheduled_date" interval="day" type="row"/>
+                    <field name="sale_order_line_to_station_name" type="row"/>
+                    <field name="location_dest_id" type="row"/>
+                    <field name="product_id" type="row"/>
+                    <field name="location_id" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="stock.action_picking_tree_all" model="ir.actions.act_window">
+            <field name="name">Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban,form,calendar,pivot</field>
+            <field name="domain"></field>
+            <field name="context">{
+                    'contact_display': 'partner_address',
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Define a new transfer
+              </p>
+            </field>
+        </record>
+
     </data>
 </odoo>
