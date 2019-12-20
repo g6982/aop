@@ -43,7 +43,7 @@ class AccountTaxInvoiceWizard(models.TransientModel):
             invoice_line_ids = invoice_line_ids.filtered(lambda x: x.tax_invoice_amount != x.price_unit)
             res.update({
                 'invoice_line_ids': [(6, 0, invoice_line_ids.ids)],
-                'partner_id': partner_id[0].id if partner_id else invoice_line_ids.mapped('invoice_id').mapped('partner_id')[0].id
+                'partner_id': partner_id[0].id if partner_id else invoice_line_ids.mapped('invoice_id').mapped('partner_id')[0].id if invoice_line_ids.mapped('invoice_id').mapped('partner_id') else False
             })
         _logger.info({
             'res': res
