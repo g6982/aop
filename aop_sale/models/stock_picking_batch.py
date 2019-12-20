@@ -169,7 +169,8 @@ class StockPickingBatch(models.Model):
             'vin': picking_id.vin_id.name if picking_id.vin_id else picking_id.sale_order_line_id.vin.name if picking_id.sale_order_line_id else '',
             'picking_type_name': picking_type_name,
             'batch_id': self.id,
-            'scheduled_date': fields.Datetime.to_string(picking_id.scheduled_date)
+            'scheduled_date': fields.Datetime.to_string(picking_id.scheduled_date),
+            'must_be_load': picking_id.is_must_mount_car
         }
         return tmp
 
