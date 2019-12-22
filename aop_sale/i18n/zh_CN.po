@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0-20191118\n"
+"Project-Id-Version: Odoo Server 12.0-20191120\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-17 08:28+0000\n"
-"PO-Revision-Date: 2019-12-17 08:28+0000\n"
+"POT-Creation-Date: 2019-12-22 14:16+0000\n"
+"PO-Revision-Date: 2019-12-22 14:16+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -246,7 +246,7 @@ msgid "Allowed warehouse"
 msgstr "适用仓库"
 
 #. module: aop_sale
-#: code:addons/aop_sale/wizard/import_sale_order.py:347
+#: code:addons/aop_sale/wizard/import_sale_order.py:348
 #, python-format
 msgid "Already exist VIN: {}"
 msgstr "VIN码已存在: {}"
@@ -1765,7 +1765,7 @@ msgstr "导入临时订单"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_sale_order_line__file_planned_date
 msgid "Imported date"
-msgstr ""
+msgstr "导入时间"
 
 #. module: aop_sale
 #: selection:account.invoice,state:0
@@ -1819,6 +1819,12 @@ msgid "Insurance Type"
 msgstr "保险类型"
 
 #. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__insurance_aop_contract_id
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__insurance_aop_contract_id
+msgid "Insurance contract"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__insurance_cover
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_cover
 msgid "Insurance cover"
@@ -1859,7 +1865,7 @@ msgstr "库存路线"
 #: selection:account.invoice,state:0
 #: selection:account.tax.invoice,state:0
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:255
-#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:330
+#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:325
 #: model:ir.model,name:aop_sale.model_account_invoice
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_form
 #: model_terms:ir.ui.view,arch_db:aop_sale.invoice_tree
@@ -3084,6 +3090,7 @@ msgstr "批次号"
 #: model:ir.model,name:aop_sale.model_purchase_order
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__purchase_id
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__purchase_id
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__purchase_order_id
 #: model:ir.model.fields,field_description:aop_sale.field_purchase_order_invoice_wizard__purchase_order_ids
 msgid "Purchase Order"
 msgstr "采购订单"
@@ -3104,6 +3111,11 @@ msgstr "采购回填数据"
 #: model:ir.ui.menu,name:aop_sale.purchase_account_invoice_id
 msgid "Purchase invoice line"
 msgstr "付款结算清单行"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
+msgid "Purchase order"
+msgstr ""
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_purchase_invoice_wizard_form
@@ -3289,7 +3301,7 @@ msgstr "编号"
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__origin
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice_line__origin
 msgid "Reference of the document that produced this invoice."
-msgstr "产生此发票的参考单据."
+msgstr "产生此发票的参考文档."
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice__name
@@ -3444,6 +3456,7 @@ msgstr "规则明细"
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_sale_order
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__sale_order_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_location_to_route_location_wizard__sale_order_id
 msgid "Sale Order"
 msgstr "销售订单"
@@ -3462,6 +3475,11 @@ msgstr "销售订单行"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_order_line_tree_inherit_tree
 msgid "Sale line price"
 msgstr "订单价"
+
+#. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.mass_loss_order_form
+msgid "Sale order"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__sale_order_line_first_picking_done_date
@@ -3746,6 +3764,11 @@ msgid "Stock batch"
 msgstr "批量调度"
 
 #. module: aop_sale
+#: model_terms:ir.ui.view,arch_db:aop_sale.view_stock_picking_pivot_view
+msgid "Stock picking"
+msgstr ""
+
+#. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__line_price_subtotal
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__purchase_line_price
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__line_price_subtotal
@@ -3965,6 +3988,11 @@ msgid "The income or expense account related to the selected product."
 msgstr "被选定产品的相关收入科目或者费用科目."
 
 #. module: aop_sale
+#: sql_constraint:res.users.type:0
+msgid "The name must be unique"
+msgstr ""
+
+#. module: aop_sale
 #: sql_constraint:contract.version:0
 msgid "The name must be unique!"
 msgstr ""
@@ -4023,7 +4051,7 @@ msgstr "已经存在税务发票了，您必须使用相同的税务发票编号
 #. module: aop_sale
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:140
 #: code:addons/aop_sale/wizard/sale_make_invoice_advance.py:439
-#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:132
+#: code:addons/aop_sale/wizard/write_back_account_invoice_line.py:94
 #, python-format
 msgid "There is no income account defined for this product: \"%s\". You may have to install a chart of account from Accounting app, settings menu."
 msgstr ""
@@ -4183,6 +4211,7 @@ msgstr "触发其他规则"
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_aop_contract__insurance_type_id
 #: model:ir.model.fields,field_description:aop_sale.field_insurance_management__insurance_type_id
 #: model:ir.model.fields,field_description:aop_sale.field_package_reconciliation_wizard__package_type
+#: model:ir.model.fields,field_description:aop_sale.field_res_users__user_type_id
 #: model:ir.model.fields,field_description:aop_sale.field_stock_warehouse__type_id
 msgid "Type"
 msgstr "类型"
@@ -4285,7 +4314,7 @@ msgstr "用户管理"
 #: model:ir.actions.act_window,name:aop_sale.action_res_users_type_view
 #: model:ir.ui.menu,name:aop_sale.res_users_type_id
 msgid "User type"
-msgstr "用户类型"
+msgstr ""
 
 #. module: aop_sale
 #: model:ir.model,name:aop_sale.model_res_users
@@ -4419,8 +4448,10 @@ msgstr "审核人"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__customer_aop_contract_version
+#: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__insurance_aop_contract_version
 #: model:ir.model.fields,field_description:aop_sale.field_account_invoice_line__supplier_aop_contract_version
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__customer_aop_contract_version
+#: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__insurance_aop_contract_version
 #: model:ir.model.fields,field_description:aop_sale.field_account_tax_invoice_line__supplier_aop_contract_version
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__contract_version
 #: model:ir.model.fields,field_description:aop_sale.field_aop_contract__version_id
@@ -4621,13 +4652,13 @@ msgid "You must select more than one record."
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:279
+#: code:addons/aop_sale/models/stock_picking_batch.py:280
 #, python-format
 msgid "You must select same location !"
 msgstr "你必须选择相同的目的位置!"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:285
+#: code:addons/aop_sale/models/stock_picking_batch.py:286
 #, python-format
 msgid "You must select same to location !"
 msgstr "你必须选择相同的目的位置!"
@@ -5156,7 +5187,7 @@ msgid "picking"
 msgstr "任务"
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:288
+#: code:addons/aop_sale/models/stock_picking_batch.py:289
 #, python-format
 msgid "picking location_dest_id != loading plan to_location_id"
 msgstr "任务的目的位置和装车计划的到站位置不同!"
@@ -5396,7 +5427,7 @@ msgstr ""
 #. module: aop_sale
 #: model:ir.model.fields,help:aop_sale.field_account_tax_invoice__amount_by_group
 msgid "type: [(name, amount, base, formated amount, formated base)]"
-msgstr ""
+msgstr "类型: [(name, amount, base, formated amount, formated base)]"
 
 #. module: aop_sale
 #: model:res.groups,name:aop_sale.group_verify_account_invoice_button
@@ -5510,7 +5541,7 @@ msgid "本月"
 msgstr ""
 
 #. module: aop_sale
-#: code:addons/aop_sale/models/stock_picking_batch.py:309
+#: code:addons/aop_sale/models/stock_picking_batch.py:310
 #, python-format
 msgid "测试"
 msgstr "向导"
