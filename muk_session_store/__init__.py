@@ -21,6 +21,8 @@
 ###################################################################################
 
 from odoo.tools import config
+from . import tools
+
 
 def _patch_system():
     if 'muk_session_store' in config.get('server_wide_modules'):
