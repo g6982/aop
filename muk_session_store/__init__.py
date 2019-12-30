@@ -22,6 +22,7 @@
 
 from odoo.tools import config
 from . import tools
+from . import modules
 
 
 def _patch_system():

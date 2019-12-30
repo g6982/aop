@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
-from odoo.tools import (assertion_report, config, existing_tables,
-                        lazy_classproperty, lazy_property, table_exists,
-                        topological_sort, OrderedSet)
+from odoo.tools import lazy_property
 import logging
 import odoo
-from .redis_cache import RedisLRU
+from ..tools.redis_cache import RedisLRU
 import redis
 from odoo.modules.registry import Registry
 
