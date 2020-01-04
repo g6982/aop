@@ -1427,12 +1427,12 @@ msgstr "申报费用"
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__fill_service_product_id
 msgid "Fill Service Product"
-msgstr ""
+msgstr "填充服务产品"
 
 #. module: aop_sale
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_fill_service_product_wizard_form_view
 msgid "Fill service product"
-msgstr ""
+msgstr "填充服务产品"
 
 #. module: aop_sale
 #: model:ir.model.fields,field_description:aop_sale.field_handover_vin__finance_verify_user_id
