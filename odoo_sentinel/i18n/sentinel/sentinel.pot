@@ -1,0 +1,66 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the sentinel package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: sentinel 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-12-20 10:59+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../__init__.py:66
+#, python-brace-format
+msgid "Profile \"{options.profile}\" not found in file {options.config_file}!"
+msgstr ""
+
+#: ../__init__.py:106
+msgid ""
+"Autoconfiguration failed !\n"
+"Please enter terminal code"
+msgstr ""
+
+#: ../__init__.py:400
+msgid "No value available"
+msgstr ""
+
+#: ../__init__.py:454
+msgid ""
+"An error occured\n"
+"\n"
+"Please contact your administrator"
+msgstr ""
+
+#: ../__init__.py:507
+msgid "No scenario available !"
+msgstr ""
+
+#: ../__init__.py:510
+msgid "Scenarios"
+msgstr ""
+
+#: ../__init__.py:535
+msgid "Yes"
+msgstr ""
+
+#: ../__init__.py:538
+msgid "No"
+msgstr ""
+
+#: ../__init__.py:658
+#, python-format
+msgid "Selected : %s"
+msgstr ""
+
+#: ../__init__.py:842
+#, python-format
+msgid "Selected : %d"
+msgstr ""
