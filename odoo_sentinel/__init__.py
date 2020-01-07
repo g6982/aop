@@ -760,6 +760,13 @@ class Sentinel(object):
             if not quantity:
                 quantity = '0'
 
+    def vals_remove_key(self, vals):
+        keys = ['\n', 'KEY_BACKSPACE', 'KEY_DC', 'KEY_DOWN', 'KEY_RIGHT', 'KEY_MOUSE', 'KEY_UP', 'KEY_LEFT', 'KEY_RESIZE']
+        for key_id in keys:
+            if key_id in vals:
+                vals.remove(key_id)
+        return vals
+
     def _menu_choice(self, entries, title=None):
         """
         Allows the user to choose a value in a list
@@ -772,6 +779,8 @@ class Sentinel(object):
         elif isinstance(entries[0], (tuple, list)):
             keys, entries = list(zip(*entries))[:2]
 
+        # 输入的字符串
+        current_input_char = []
         # Highlighted entry
         highlighted = 0
         first_column = 0
@@ -794,18 +803,26 @@ class Sentinel(object):
 
             # Get the pushed key
             key = self.getkey()
+            current_input_char.append(str(key))
             digit_key = False
             if key == '\n':
-                # Notify.Notification.new('highlighted', str(highlighted)).show()
+
+                if current_input_char:
+                    current_input_char = self.vals_remove_key(current_input_char)
+                current_input_char = ''.join(str(x) for x in current_input_char)
+
+                if current_input_char in keys:
+                    highlighted = keys.index(current_input_char)
+                    Notify.Notification.new('highlighted', str(highlighted)).show()
                 # if highlighted in keys:
                 #     highlighted = keys.index(highlighted) + 1
-                # Notify.Notification.new('highlighted', str(highlighted)).show()
                 # Return key : Validate the choice
                 return keys[highlighted]
             elif key.isdigit():
                 # Digit : Add at end of index
                 highlighted = highlighted * 10 + int(key)
                 digit_key = True
+
             elif key == 'KEY_BACKSPACE' or key == 'KEY_DC':
                 # Backspace : Remove last digit from index
                 highlighted = int(math.floor(highlighted / 10))
