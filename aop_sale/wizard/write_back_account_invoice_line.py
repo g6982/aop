@@ -126,7 +126,8 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             'invoice_line_tax_ids': [(6, 0, line_id.invoice_line_tax_ids.ids)],
             'analytic_tag_ids': [(6, 0, line_id.analytic_tag_ids.ids)],
             'account_analytic_id': sale_order_id.analytic_account_id.id or False,
-            'tmp_estimate': line_id.tmp_estimate,
+            # 'tmp_estimate': line_id.tmp_estimate,
+            'tmp_estimate': 0.0,
             'customer_aop_contract_id': contract_id.id if contract_id else False,
             'supplier_aop_contract_id': False
         }
@@ -146,7 +147,8 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
             'invoice_line_tax_ids': [(6, 0, line_id.invoice_line_tax_ids.ids)],
             'analytic_tag_ids': [(6, 0, line_id.analytic_tag_ids.ids)],
             'account_analytic_id': sale_order_id.analytic_account_id.id or False,
-            'tmp_estimate': line_id.tmp_estimate,
+            # 'tmp_estimate': line_id.tmp_estimate,
+            'tmp_estimate': 0.0,
             'customer_aop_contract_id': contract_id.id if contract_id else False,
             'supplier_aop_contract_id': False
         }
