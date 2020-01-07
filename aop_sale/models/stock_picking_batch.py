@@ -445,11 +445,13 @@ class StockPickingBatch(models.Model):
         delivery_carrier_product_ids = delivery_carrier_id.mapped('product_id')
         delivery_carrier_non_product_ids = delivery_carrier_id.filtered(lambda x: not x.product_id)
 
+        delivery_carrier_non_product_id = delivery_carrier_non_product_ids[0] if delivery_carrier_non_product_ids else False
+
         # 如果存在货物才去匹配
         if delivery_carrier_product_ids and product_id:
             delivery_carrier_id = delivery_carrier_id.filtered(lambda x: x.product_id.id == product_id.id)
 
-        return delivery_carrier_id[0] if delivery_carrier_id else delivery_carrier_non_product_ids[0]
+        return delivery_carrier_id[0] if delivery_carrier_id else delivery_carrier_non_product_id
 
     def _match_company_id(self, partner_id):
         res = self.env['res.company'].sudo().search([('code', '=', partner_id.ref)])
@@ -496,6 +498,7 @@ class StockPickingBatch(models.Model):
         picking_type_ids = picking_ids.mapped('picking_type_id')
 
         carrier_ids = self.env['delivery.carrier'].search([
+            ('supplier_contract_id.active', '=', True),
             ('from_location_id', 'in', location_ids.ids),
             ('to_location_id', 'in', location_dest_ids.ids),
             ('picking_type_id', 'in', picking_type_ids.ids),
