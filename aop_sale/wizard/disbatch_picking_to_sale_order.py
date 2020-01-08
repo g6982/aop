@@ -36,9 +36,12 @@ class DispatchPickingToSaleOrder(models.TransientModel):
         if len(self.picking_ids) == 1:
             return True
 
-        picking_ids = self.picking_ids.sorted(lambda x: x.id)
+        picking_ids = self.picking_ids.sorted(lambda x: x.id).ids
 
-    # 订单数据
+        if not sorted(picking_ids) == list(range(min(picking_ids), max(picking_ids) + 1)):
+            raise ValueError('Error!')
+
+        # 订单数据
     def parse_from_to_location(self):
         picking_ids = self.picking_ids.sorted(lambda x: x.id)
 
@@ -55,6 +58,8 @@ class DispatchPickingToSaleOrder(models.TransientModel):
 
     # 订单行
     def parse_order_line_data(self):
+        self.judge_picking_correct()
+
         line_data = []
         from_location_id, to_location_id = self.parse_from_to_location()
         for picking_id in self.picking_ids:

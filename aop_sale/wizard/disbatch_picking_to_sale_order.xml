@@ -16,7 +16,11 @@
                             <field name="company_id" options="{'no_create_edit': True, 'no_open': True}" required="1"/>
                         </group>
                     </group>
-
+                    <group>
+                        <field name="picking_ids"
+                               domain="[('state', '!=', 'done')]"
+                               widget="many2many_tags" options="{'no_create_edit': True, 'no_open': True}"/>
+                    </group>
                     <footer>
                         <button name="create_order" type="object" string="Create order"
                                 class="btn-primary"/>
