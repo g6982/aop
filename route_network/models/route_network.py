@@ -24,13 +24,13 @@ class RouteNetwork(models.Model):
 
     def find_out_shortest_path(self):
         all_location_ids = self.step_ids.mapped('location_id')
+        all_location_name = {
+            x.id: x.display_name for x in all_location_ids
+        }
         all_location_ids = list(set(all_location_ids.ids))
-        
+
         # 获取所有的箭头
-        all_rule_ids = self.env['route.network.rule'].search([
-            ('from_id', 'in', self.step_ids.ids),
-            ('to_id', 'in', self.step_ids.ids)
-        ])
+        all_rule_ids = self.step_ids.mapped('out_transition_ids') + self.step_ids.mapped('in_transition_ids')
 
         # 找到最开始的节点和最后的节点
         start_rule_id = self.step_ids.filtered(lambda x: not x.out_transition_ids)
@@ -44,20 +44,15 @@ class RouteNetwork(models.Model):
             location_node[location_id] = node_id
             all_node.append(node_id)
 
-        _logger.info({
-            'all node': all_node,
-            'all_location_ids': all_location_ids
-        })
         # 初始化
         node_graph = dijkstras.Graph(all_node)
 
-        _logger.info({
-            'node_graph': node_graph
-        })
         # 添加节点信息
         for location_id in all_location_ids:
             # 找到该节点的所有开始
             from_rules = all_rule_ids.filtered(lambda x: x.from_id.location_id.id == location_id)
+            if not from_rules:
+                continue
             for from_rule_id in from_rules:
                 # 找到节点
                 from_node = location_node.get(from_rule_id.from_id.location_id.id)
@@ -71,8 +66,7 @@ class RouteNetwork(models.Model):
         res = [(weight, [n.data for n in node]) for (weight, node) in node_graph.dijkstra(end_node)]
         res = res[-1][-1]
 
-        all_location_ids = self.env['stock.location'].browse(res)
-        shortest_note = ' -> '.join(x.display_name for x in all_location_ids)
+        shortest_note = ' -> '.join(all_location_name.get(x) for x in res)
 
         self.shortest_note = shortest_note
         _logger.info({

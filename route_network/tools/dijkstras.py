@@ -151,7 +151,8 @@ class Graph:
 
     def connect(self, node1, node2, weight=1):
         self.connect_dir(node1, node2, weight)
-        self.connect_dir(node2, node1, weight)
+        # 单向连接
+        # self.connect_dir(node2, node1, weight)
 
     def connections(self, node):
         node = self.get_index_from_node(node)
