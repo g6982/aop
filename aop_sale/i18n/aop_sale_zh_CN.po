@@ -367,3 +367,17 @@ msgstr "合同ID"
 #: model_terms:ir.ui.view,arch_db:aop_sale.view_handover_vin_form
 msgid "Verify"
 msgstr "财务核销"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_dispatch_picking_to_sale_order__partner_id
+msgid "Customer"
+msgstr "收入结算单位"
+
+#. module: aop_sale
+#: model:ir.model.fields,field_description:aop_sale.field_change_stock_picking_wizard__picking_id
+#: model:ir.model.fields,field_description:aop_sale.field_dispatch_picking_to_sale_order__picking_ids
+#: model:ir.model.fields,field_description:aop_sale.field_fill_service_product_wizard_line__picking_id
+#: model:ir.model.fields,field_description:aop_sale.field_mass_loss_order__picking_id
+#: model:ir.model.fields,field_description:aop_sale.field_stock_picking_change_to_batch__picking_ids
+msgid "Picking"
+msgstr "任务"
