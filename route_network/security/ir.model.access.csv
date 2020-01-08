@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_route_network,access_route_network,model_route_network,base.group_user,1,1,1,1
+access_route_network_step,access_route_network_step,model_route_network_step,base.group_user,1,1,1,1
+access_route_network_rule,access_route_network_rule,model_route_network_rule,base.group_user,1,1,1,1
