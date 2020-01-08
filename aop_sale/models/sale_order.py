@@ -5,7 +5,8 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_compare
 from odoo.exceptions import UserError
 import time
 from datetime import datetime, timedelta
-
+import string
+import random
 _logger = logging.getLogger(__name__)
 
 
@@ -797,11 +798,99 @@ class SaleOrder(models.Model):
         })
         return order_value
 
+    @staticmethod
+    def get_26_vin():
+        random_vin_code = ''.join(random.sample(string.ascii_letters + string.digits, 17))
+        return 'NULLSTOCK' + random_vin_code
+
+    # 获取VIN码
+    def get_vin_id_in_stock(self, vin, product_id):
+        vin_obj = self.env['stock.production.lot']
+
+        vin_id = vin_obj.search([
+            ('name', '=', vin),
+            ('product_id', '=', product_id.id)
+        ])
+
+        if not vin_id:
+            vin_id = vin_obj.create({
+                'name': vin,
+                'product_id': product_id.id
+            })
+        return vin_id[0] if vin_id else False
+
+    # 入库： 虚拟的VIN
+    def income_stock_null_stock_vin(self):
+        picking_obj = self.env['stock.picking']
+        stock_move_obj = self.env['stock.move']
+        picking_data = []
+        for line_id in self:
+            from_partner_id = line_id.partner_id
+            # 来源地
+            from_location_id = from_partner_id.property_stock_supplier
+            picking_type_id = self.env['stock.warehouse'].sudo().browse(1).in_type_id
+
+            _logger.info({
+                'picking_type_id': picking_type_id
+            })
+            null_vin_ids = line_id.order_line.filtered(lambda x: not x.vin)
+            for order_line_id in null_vin_ids:
+                # 目的地
+                to_location_id = order_line_id.from_location_id.property_stock_customer
+                product_id = order_line_id.product_id
+                data = {
+                    'partner_id': from_partner_id.id,
+                    'location_id': from_location_id.id,
+                    'location_dest_id': to_location_id.id,
+                    'picking_type_id': picking_type_id.sudo().id,
+                    'picking_type_code': 'incoming',
+                    'date': fields.Datetime.now()
+                }
+                vin_code = self.get_26_vin()
+
+                vin_id = self.get_vin_id_in_stock(vin_code, product_id)
+                order_line_id.write({
+                    'vin_code': vin_code,
+                    'vin': vin_id.id
+                })
+                picking_id = picking_obj.sudo().create(data)
+                move_data = {
+                    'name': product_id.name + '/income' + str(time.time()),
+                    'product_id': product_id.id if product_id else False,
+                    'product_uom_qty': 1,
+                    'product_uom': product_id.uom_id.id if product_id else False,
+                    'location_id': from_location_id.id,
+                    'location_dest_id': to_location_id.id,
+                    'state': 'draft',
+                    'picking_id': picking_id.id,
+                    'picking_type_id': picking_type_id.sudo().id if picking_type_id else False,
+                    'service_product_id': picking_type_id.sudo().service_product_id.id if picking_type_id.sudo().service_product_id else False,
+                    'procure_method': 'make_to_stock',
+                    'picking_code': 'incoming',
+                    'vin_id': vin_id.id,
+                }
+                move_id = stock_move_obj.sudo().create(move_data)
+                _logger.info({
+                    'picking_id': picking_id,
+                    'move_id': move_id
+                })
+                move_id = move_id.filtered(lambda x: x.state not in ('done', 'cancel'))._action_confirm()
+                # move_id._action_assign()
+                #
+                # # 填充VIN
+                # picking_id.move_line_ids.lot_id = vin_id.id
+                # picking_id.move_line_ids.qty_done = 1
+                # picking_id.move_line_ids.lot_name = vin_id.name
+                #
+                # picking_id.button_validate()
+
     @api.multi
     def action_confirm(self):
         # 如果指定了，就需要去执行
         if any(self.mapped('delivery_company_id')):
-            return self.split_sale_order_to_delivery_company()
+            # 随机VIN 入库
+            self.income_stock_null_stock_vin()
+            # return self.split_sale_order_to_delivery_company()
 
         # # 先去填充一次VIN
         for order in self:
@@ -824,7 +913,7 @@ class SaleOrder(models.Model):
 
         # if not any([True if line.mapped('vin') else False for line in self.order_line]):
         #     raise UserError(_('You can not make order until the product have vin or stock.'))
-        res = super(SaleOrder, self).action_confirm()
+        res = super(SaleOrder, self.sudo()).action_confirm()
 
         # FIXME: 补丁
         self.picking_ids.filtered(
