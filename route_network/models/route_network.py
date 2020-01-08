@@ -58,8 +58,11 @@ class RouteNetwork(models.Model):
                 from_node = location_node.get(from_rule_id.from_id.location_id.id)
                 to_node = location_node.get(from_rule_id.to_id.location_id.id)
 
-                # 连接
-                node_graph.connect(from_node, to_node, from_rule_id.quantity_weight)
+                # 连接 有方向的连接
+                node_graph.directed_connect(from_node, to_node, from_rule_id.quantity_weight)
+
+                # 无方向的连接
+                # node_graph.connect(from_node, to_node, from_rule_id.quantity_weight)
 
         end_node = location_node.get(end_rule_id.location_id.id)
 

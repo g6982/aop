@@ -149,10 +149,15 @@ class Graph:
         # Note that the below doesn't protect from adding a connection twice
         self.adj_list[node1][1].append((node2, weight))
 
+    # 有向连接(方向)
+    # 单向连接
+    def directed_connect(self, node1, node2, weight=1):
+        self.connect_dir(node1, node2, weight)
+
+    # 无向连接(无方向)
     def connect(self, node1, node2, weight=1):
         self.connect_dir(node1, node2, weight)
-        # 单向连接
-        # self.connect_dir(node2, node1, weight)
+        self.connect_dir(node2, node1, weight)
 
     def connections(self, node):
         node = self.get_index_from_node(node)
