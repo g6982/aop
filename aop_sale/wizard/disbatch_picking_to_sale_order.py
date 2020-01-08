@@ -76,7 +76,8 @@ class DispatchPickingToSaleOrder(models.TransientModel):
                 'product_id': product_id.id,
                 'product_uom': product_id.uom_id.id,
                 'from_location_id': from_location_id.id if from_location_id else False,
-                'to_location_id': to_location_id.id if to_location_id else False
+                'to_location_id': to_location_id.id if to_location_id else False,
+                'vin_code': sale_order_line_id.vin_code,
             }
             line_data.append(
                 (0, 0, tmp)

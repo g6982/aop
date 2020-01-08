@@ -850,7 +850,7 @@ class SaleOrder(models.Model):
 
                 vin_id = self.get_vin_id_in_stock(vin_code, product_id)
                 order_line_id.write({
-                    'vin_code': vin_code,
+                    # 'vin_code': vin_code,
                     'vin': vin_id.id
                 })
                 picking_id = picking_obj.sudo().create(data)
