@@ -62,16 +62,16 @@ class DispatchPickingToSaleOrder(models.TransientModel):
 
         line_data = []
         from_location_id, to_location_id = self.parse_from_to_location()
-        for picking_id in self.picking_ids:
-            tmp = {
-                'product_id': picking_id.move_lines[0].product_id.id,
-                'product_uom': picking_id.move_lines[0].product_id.uom_id.id,
-                'from_location_id': from_location_id.id if from_location_id else False,
-                'to_location_id': to_location_id.id if to_location_id else False
-            }
-            line_data.append(
-                (0, 0, tmp)
-            )
+        product_id = self.picking_ids[0].move_lines[0].product_id
+        tmp = {
+            'product_id': product_id.id,
+            'product_uom': product_id.uom_id.id,
+            'from_location_id': from_location_id.id if from_location_id else False,
+            'to_location_id': to_location_id.id if to_location_id else False
+        }
+        line_data.append(
+            (0, 0, tmp)
+        )
         return line_data
 
     # 创建销售订单
