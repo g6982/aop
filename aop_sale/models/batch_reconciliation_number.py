@@ -28,5 +28,17 @@ class BatchReconciliationNumber(models.Model):
     def confirm_account_invoice(self):
         for line in self:
             ids = list(set(line.invoice_line_ids.mapped('invoice_id').ids))
-            self.env['account.invoice'].browse(ids).action_invoice_open()
+            account_invoice_ids = self.env['account.invoice'].browse(ids)
+            account_invoice_ids.action_invoice_open()
+
+            # 把对账数据的单车价格写入回款结算清单的确认价
+            for reconciliation_id in line.reconciliation_file_ids:
+                price_unit = reconciliation_id.price_unit
+                reconciliation_account_invoice_ids = reconciliation_id.re_line_ids.mapped('invoice_line_id')
+                ids = list(set(reconciliation_account_invoice_ids.ids))
+                account_invoice_line_ids = self.env['account.invoice.line'].browse(ids)
+                account_invoice_line_ids.write({
+                    'price_unit': price_unit
+                })
+
             line.state = 'done'
