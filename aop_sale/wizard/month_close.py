@@ -224,10 +224,30 @@ class MonthClose(models.TransientModel):
         if not picking_id:
             return 0
 
-        res = self.env['delivery.carrier'].search([
-            ('from_location_id', '=', picking_id.location_id.id),
-            ('to_location_id', '=', picking_id.location_dest_id.id),
-            ('supplier_contract_id.partner_id', '=', purchase_line_id.order_id.partner_id.id),
-            ('service_product_id', '=', purchase_line_id.product_id.id)
+        # res = self.env['delivery.carrier'].search([
+        #     ('from_location_id', '=', picking_id.location_id.id),
+        #     ('to_location_id', '=', picking_id.location_dest_id.id),
+        #     ('supplier_contract_id.partner_id', '=', purchase_line_id.order_id.partner_id.id),
+        #     ('service_product_id', '=', purchase_line_id.product_id.id)
+        # ])
+        # return res[0].product_standard_price if res else 0
+
+        contract_ids = self._get_supplier_aop_contract(purchase_line_id)
+        carrier_id = contract_ids.find_supplier_delivery_carrier_id(contract_ids, purchase_line_id)
+
+        return carrier_id.product_standard_price if carrier_id else 0
+
+    def _get_supplier_aop_contract(self, purchase_line_id):
+        '''
+        获取供应商合同
+        :param purchase_line_id: 采购订单行
+        :return: 获取到的供应商合同
+        '''
+        now_date = fields.Datetime.now()
+        res = self.env['supplier.aop.contract'].search([
+            ('contract_version', '!=', 0),
+            ('partner_id', '=', purchase_line_id.partner_id.id),
+            ('date_start', '<', now_date),
+            ('date_end', '>', now_date)
         ])
-        return res[0].product_standard_price if res else 0
+        return res
