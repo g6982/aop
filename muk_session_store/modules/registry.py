@@ -8,6 +8,7 @@ from ..tools.redis_cache import RedisLRU
 import redis
 from odoo.modules.registry import Registry
 
+REDIS_URL = 'redis://@localhost:6379/1'
 _logger = logging.getLogger(__name__)
 
 
@@ -15,7 +16,10 @@ _logger = logging.getLogger(__name__)
 #
 @lazy_property
 def cache(self):
-    r = redis.StrictRedis.from_url(odoo.tools.config['ormcache_redis_url'])
+    try:
+        r = redis.StrictRedis.from_url(odoo.tools.config['ormcache_redis_url'])
+    except Exception as e:
+        r = redis.StrictRedis.from_url(REDIS_URL)
     db_name = self.db_name
     return RedisLRU(r, db_name)
 
