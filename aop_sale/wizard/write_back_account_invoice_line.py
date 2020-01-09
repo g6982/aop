@@ -294,6 +294,9 @@ class WriteBackAccountInvoiceLine(models.TransientModel):
         ids = self.env.context.get('active_ids')
         line_ids = self.env['account.invoice.line'].browse(ids)
 
+        # 确认价大于0的才能红冲
+        line_ids = line_ids.filtered(lambda x: x.price_unit > 0)
+
         invoice_obj = self.env['account.invoice']
         create_invoice_ids = []
         create_invoice_values = []
