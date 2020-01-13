@@ -141,7 +141,7 @@ class ImportSaleOrder(models.TransientModel):
             if request and request.debug:
                 raise UserError(traceback.format_exc())
 
-            raise UserError(e.name)
+            raise UserError(e)
 
     # 订单主体的数据
     def _parse_order_data(self):
