@@ -92,6 +92,9 @@ class ReconciliationFile(models.Model):
             else:
                 invoice_line_ids = sale_order_line_ids.mapped('invoice_lines')
 
+            if invoice_line_ids:
+                invoice_line_ids = invoice_line_ids.filtered(lambda x: x.invoice_id.type == 'out_invoice')
+
             # FIXME: 是否需要过滤呢 ?
             # 如果已经选择过了，不允许再次筛选，直接过滤掉
             all_line_ids = self.env['reconciliation.file.line'].search([('invoice_line_id', '!=', False)])
