@@ -36,7 +36,7 @@ class BatchReconciliationNumber(models.Model):
                 price_unit = reconciliation_id.price_unit
                 reconciliation_account_invoice_ids = reconciliation_id.re_line_ids.mapped('invoice_line_id')
                 ids = list(set(reconciliation_account_invoice_ids.ids))
-                account_invoice_line_ids = self.env['account.invoice.line'].browse(ids)
+                account_invoice_line_ids = self.env['account.invoice.line'].browse(ids).filtered(lambda x: x.price_unit > 0)
                 account_invoice_line_ids.write({
                     'price_unit': price_unit
                 })
