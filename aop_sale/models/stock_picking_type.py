@@ -2,6 +2,9 @@
 
 from odoo import models, fields, api, _
 from odoo.osv import expression
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class StockPickingType(models.Model):
@@ -34,13 +37,19 @@ class StockPickingType(models.Model):
 
     @api.model
     def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
-        args = args or []
+        allow_warehouse_ids = self.env['stock.warehouse'].search([
+            '|',
+            ('company_id', '=', False),
+            ('company_id', '=', self.env.user.company_id.id)
+        ])
+        args = args or [('warehouse_id', 'in', allow_warehouse_ids.ids)]
         domain = []
         if name:
-            domain = ['|', '|',
+            domain = ['|',
                       ('name', operator, name),
-                      ('warehouse_id.name', operator, name),
-                      ('import_name', operator, name)
+                      ('import_name', operator, name),
                       ]
+
         picking_ids = self._search(expression.AND([domain, args]), limit=limit, access_rights_uid=name_get_uid)
+
         return self.browse(picking_ids).name_get()
