@@ -916,9 +916,9 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self.sudo()).action_confirm()
 
         # FIXME: 补丁
-        self.picking_ids.filtered(
-            lambda picking: picking.state == 'confirmed').action_assign() if self.picking_ids.filtered(
-            lambda picking: picking.state == 'confirmed') and not self.picking_ids.filtered(
+        self.sudo().picking_ids.filtered(
+            lambda picking: picking.state == 'confirmed').action_assign() if self.sudo().picking_ids.filtered(
+            lambda picking: picking.state == 'confirmed') and not self.sudo().picking_ids.filtered(
             lambda picking: picking.state == 'assigned') else False
 
         for order in self:
