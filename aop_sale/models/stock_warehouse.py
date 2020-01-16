@@ -34,3 +34,12 @@ class Warehouse(models.Model):
         })
         return res
 
+    @api.model
+    def create(self, vals):
+        if vals.get('company_id'):
+            vals['company_id'] = False
+
+        res = super(Warehouse, self).create(vals)
+
+        return res
+

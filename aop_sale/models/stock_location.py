@@ -10,3 +10,8 @@ class StockLocation(models.Model):
     _sql_constraints = [
         ('unique_complete_name', 'unique(complete_name)', 'the name must be unique!')
     ]
+
+    company_id = fields.Many2one(
+        'res.company', 'Company',
+        default=False, index=True,
+        help='Leave this field empty if this route is shared between all companies')
