@@ -35,6 +35,14 @@ class Warehouse(models.Model):
         return res
 
     @api.model
+    def _update_partner_data(self, partner_id, company_id):
+        # 默认不需要更新合作伙伴的客户位置和供应商位置为transit location,但保留原始功能能被调用
+        if self._context.get('need_update_partner_data', False):
+            return super(Warehouse, self)._update_partner_data(partner_id, company_id)
+
+        return
+
+    @api.model
     def create(self, vals):
         if vals.get('company_id'):
             vals['company_id'] = False
