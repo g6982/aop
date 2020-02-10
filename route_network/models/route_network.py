@@ -2,8 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, api, fields
+from odoo.exceptions import UserError
 from ..tools import dijkstras
 import logging
+import matplotlib.pyplot as plt
+import networkx as nx
 
 _logger = logging.getLogger(__name__)
 
@@ -22,7 +25,11 @@ class RouteNetwork(models.Model):
 
     shortest_note = fields.Text('Shortest')
 
+    network_image = fields.Binary('Network', attachment=True)
+
     def find_out_shortest_path(self):
+        if not self.step_ids:
+            raise UserError('Empty >> _ << ')
         all_location_ids = self.step_ids.mapped('location_id')
         all_location_name = {
             x.id: x.display_name for x in all_location_ids
@@ -76,8 +83,75 @@ class RouteNetwork(models.Model):
             'path': [(weight, [n.data for n in node]) for (weight, node) in node_graph.dijkstra(end_node)]
         })
 
+    def generate_all_supplier_contract_network(self):
+        """
+            根绝所有的供应商合同，生成一个大的网络
+        """
+        all_start_end_location = self.find_all_start_end_location()
 
-class RouteNetwork(models.Model):
+        self.create_all_location_steps(all_start_end_location)
+
+        self.generate_route_by_location(all_start_end_location)
+
+    # 生成点
+    def create_all_location_steps(self, all_start_end_location):
+        all_location_ids = []
+        for x in all_start_end_location:
+            all_location_ids += list(x)
+        all_location_ids = list(set(all_location_ids))
+        all_location_ids = self.env['stock.location'].browse(all_location_ids)
+
+        data = []
+        for x in all_location_ids:
+            data.append({
+                'name': x.display_name,
+                'location_id': x.id
+            })
+        all_ids = self.env['route.network.step'].create(data)
+        self.step_ids = [(6, 0, all_ids.ids)]
+
+    def generate_route_by_location(self, location_ids):
+        """
+            生成线段
+        :param location_ids: 所有开始和结束节点
+        :return:
+        """
+        all_steps = self.step_ids
+        data = []
+        for location_id in location_ids:
+            from_step = all_steps.filtered(lambda x: x.location_id.id == location_id[0])
+            to_step = all_steps.filtered(lambda x: x.location_id.id == location_id[1])
+
+            if not from_step or not to_step:
+                continue
+            data.append({
+                'from_id': from_step.id,
+                'to_id': to_step.id
+            })
+
+        # empty first
+        self.step_ids.mapped('out_transition_ids').unlink()
+        self.step_ids.mapped('in_transition_ids').unlink()
+
+        self.env['route.network.rule'].create(data)
+
+    def find_all_start_end_location(self):
+        """
+            查找所有的线段，去重
+        """
+        all_supplier_contract = self.env['supplier.aop.contract'].search([])
+        all_carrier_ids = all_supplier_contract.mapped('delivery_carrier_ids')
+
+        all_location_ids = [(x.from_location_id.id, x.to_location_id.id) for x in all_carrier_ids
+                            if x.from_location_id and x.to_location_id]
+
+        # 去重
+        all_start_end_location = set(all_location_ids)
+
+        return list(all_start_end_location)
+
+
+class RouteNetworkStep(models.Model):
     _name = 'route.network.step'
 
     network_id = fields.Many2one('route.network')
