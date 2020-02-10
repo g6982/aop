@@ -98,6 +98,8 @@ class RouteNetwork(models.Model):
         all_location_ids = []
         for x in all_start_end_location:
             all_location_ids += list(x)
+
+        # 所有位置
         all_location_ids = list(set(all_location_ids))
         all_location_ids = self.env['stock.location'].browse(all_location_ids)
 
@@ -107,7 +109,12 @@ class RouteNetwork(models.Model):
                 'name': x.display_name,
                 'location_id': x.id
             })
+
+        # delete first
+        self.step_ids.unlink()
+
         all_ids = self.env['route.network.step'].create(data)
+
         self.step_ids = [(6, 0, all_ids.ids)]
 
     def generate_route_by_location(self, location_ids):
@@ -124,6 +131,7 @@ class RouteNetwork(models.Model):
 
             if not from_step or not to_step:
                 continue
+
             data.append({
                 'from_id': from_step.id,
                 'to_id': to_step.id
@@ -133,7 +141,7 @@ class RouteNetwork(models.Model):
         self.step_ids.mapped('out_transition_ids').unlink()
         self.step_ids.mapped('in_transition_ids').unlink()
 
-        self.env['route.network.rule'].create(data)
+        res = self.env['route.network.rule'].create(data)
 
     def find_all_start_end_location(self):
         """
@@ -142,13 +150,16 @@ class RouteNetwork(models.Model):
         all_supplier_contract = self.env['supplier.aop.contract'].search([])
         all_carrier_ids = all_supplier_contract.mapped('delivery_carrier_ids')
 
-        all_location_ids = [(x.from_location_id.id, x.to_location_id.id) for x in all_carrier_ids
+        all_location_ids = [(x.from_location_id, x.to_location_id) for x in all_carrier_ids
                             if x.from_location_id and x.to_location_id]
 
         # 去重
-        all_start_end_location = set(all_location_ids)
+        all_location_ids = list(set(all_location_ids))
 
-        return list(all_start_end_location)
+        all_location_ids = [(x[0].id, x[1].id) for x in all_location_ids if
+                            not x[0].display_name.startswith('合作伙伴位置') and
+                            not x[1].display_name.startswith('合作伙伴位置')]
+        return all_location_ids
 
 
 class RouteNetworkStep(models.Model):
