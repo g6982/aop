@@ -374,6 +374,10 @@ class ScannerHardware(models.Model):
                     scenarios = self._scenario_list(
                         parent_id=scenario_ids.id)
                     scenarios = self.get_stock_picking(message)
+                    _logger.info({
+                        'get_stock_picking': scenarios,
+                        'message': message
+                    })
                     if scenarios:
                         menu_name = scenario_ids[0].name
                         _logger.info({
@@ -417,6 +421,7 @@ class ScannerHardware(models.Model):
         if not self.scenario_id:
             _logger.info('[%s] No running scenario' % self.code)
             scenarios = self._scenario_list(message)
+            print('scenarios', scenarios)
             return ('L', scenarios, 0)
 
         # Nothing matched, return an error
@@ -571,6 +576,7 @@ class ScannerHardware(models.Model):
                 if len(usage_type) != 1 and usage_type:
                     return ('M', ['Error'], 0)
                 if scenario_ids:
+                    print('scenario_ids name', scenario_ids.mapped('name'))
                     return ('L', scenario_ids.mapped('name'), 0)
 
             _logger.info({
