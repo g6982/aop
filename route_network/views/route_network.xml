@@ -9,6 +9,7 @@
                 <form>
                     <header>
                         <button string="Find out" name="find_out_shortest_path" type="object" class="oe_highlight"/>
+                        <button string="All" name="generate_all_supplier_contract_network" type="object" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <group>
@@ -23,7 +24,7 @@
                         <notebook>
                             <page string="Network">
                                 <field name="step_ids">
-                                    <tree>
+                                    <tree limit="400">
                                         <field name="name"/>
                                         <field name="location_id"/>
                                     </tree>
@@ -33,6 +34,10 @@
 
                         <group>
                             <field name="shortest_note"/>
+                        </group>
+
+                        <group>
+                            <field name="network_image"  widget="image"/>
                         </group>
                     </sheet>
                 </form>
