@@ -13,6 +13,7 @@ from odoo import _
 from odoo.tools.misc import ustr, html_escape
 from odoo.tools.safe_eval import safe_eval
 
+
 _logger = logging.getLogger('stock_scanner')
 
 _CURSES_COLORS = [
@@ -82,7 +83,7 @@ class ScannerHardware(models.Model):
     last_call_dt = fields.Datetime(
         string='Last call',
         help='Date and time of the last call to the system done by the '
-             'scanner.'
+        'scanner.'
     )
     scenario_id = fields.Many2one(
         comodel_name='scanner.scenario',
@@ -105,7 +106,7 @@ class ScannerHardware(models.Model):
         inverse_name='hardware_id', string='Steps History',
         readonly=True,
         help='History of all steps executed by this hardware'
-             ' during the current scenario.')
+        ' during the current scenario.')
     reference_document = fields.Integer(
         string='Reference',
         default=0,
@@ -296,28 +297,13 @@ class ScannerHardware(models.Model):
         """
         # Retrieve the terminal id
         terminal = self._get_terminal(terminal_number)
-        _logger.info({
-            'terminal': terminal,
-            'action': action
-        })
         if terminal.user_id.id:
             # only reset last call if user_id
             terminal.last_call_dt = fields.Datetime.now()
         # Change uid if defined on the stock scanner
         uid = terminal.user_id.id or self.env.uid
         return terminal.sudo(uid)._scanner_call(
-            action, message=message, transition_type=transition_type, by_input=by_input)
-
-    def get_stock_picking(self, name):
-        res = self.env['stock.picking.type'].sudo().search([
-            ('name', '=', name),
-            ('warehouse_id', '=', self.warehouse_id.id)
-        ])
-        picking_id = self.env['stock.picking'].sudo().search([
-            ('state', '=', 'assigned'),
-            ('picking_type_id', '=', res.id)
-        ])
-        return picking_id.mapped('vin_id').mapped('name')
+            action, message=message, transition_type=transition_type, by_input=False)
 
     def _scanner_call(self, action, message=False,
                       transition_type='keyboard', by_input=False):
@@ -341,9 +327,6 @@ class ScannerHardware(models.Model):
 
         # Execute the action
         elif action == 'action':
-            _logger.info({
-                'transition_type': transition_type
-            })
             # The terminal is attached to a scenario
             if self.scenario_id:
                 return self._scenario_save(
@@ -367,18 +350,11 @@ class ScannerHardware(models.Model):
                     ('warehouse_ids', '=', False),
                     ('warehouse_ids', 'in', [self.warehouse_id.id]),
                 ])
-                _logger.info({
-                    'scenario_ids': scenario_ids
-                })
                 if scenario_ids:
                     scenarios = self._scenario_list(
                         parent_id=scenario_ids.id)
-                    scenarios = self.get_stock_picking(message)
                     if scenarios:
                         menu_name = scenario_ids[0].name
-                        _logger.info({
-                            'scenarios': ['|%s' % menu_name] + scenarios
-                        })
                         return ('L', ['|%s' % menu_name] + scenarios, 0)
                 return self._scenario_save(message, transition_type, by_input=by_input)
 
@@ -521,7 +497,7 @@ class ScannerHardware(models.Model):
 
         if (transition_type == 'restart' or
             transition_type == 'back' and
-            terminal.scenario_id.id):
+                terminal.scenario_id.id):
             if terminal.step_id.no_back:
                 step_id = terminal.step_id.id
             else:
@@ -535,7 +511,7 @@ class ScannerHardware(models.Model):
 
                 # Prevent looping on the same step
                 if transition.to_id == terminal.step_id and \
-                    transition_type == 'back':
+                   transition_type == 'back':
                     # Remove the history line
                     last_call.unlink()
                     return self._do_scenario_save(
@@ -556,35 +532,6 @@ class ScannerHardware(models.Model):
                 ('warehouse_ids', 'in', terminal_warehouse_ids),
             ])
 
-            if not scenario_ids:
-
-                # 先选择仓库，再选择步骤
-                scenario_ids = scanner_scenario_obj.search([
-                    ('parent_id.name', '=', message),
-                    ('type', '=', 'menu'),
-                    '|',
-                    ('warehouse_ids', '=', False),
-                    ('warehouse_ids', 'in', terminal_warehouse_ids),
-                ])
-                usage_type = scenario_ids.mapped('usage_type')
-                usage_type = list(set(usage_type))
-                if len(usage_type) != 1 and usage_type:
-                    return ('M', ['Error'], 0)
-                if scenario_ids:
-                    return ('L', scenario_ids.mapped('name'), 0)
-
-            _logger.info({
-                'execute _do_scenario_save': message,
-                'terminal_warehouse_ids': terminal_warehouse_ids,
-                'scenario_ids': scenario_ids,
-                'domain': [
-                    ('name', '=', message),
-                    ('type', '=', 'scenario'),
-                    '|',
-                    ('warehouse_ids', '=', False),
-                    ('warehouse_ids', 'in', terminal_warehouse_ids),
-                ]
-            })
             # If at least one scenario was found, pick the start step of the
             # first
             if scenario_ids:
@@ -593,9 +540,7 @@ class ScannerHardware(models.Model):
                     ('scenario_id', '=', scenario_id),
                     ('step_start', '=', True),
                 ])
-                _logger.info({
-                    'step_ids': step_ids
-                })
+
                 # No start step found on the scenario, return an error
                 if not step_ids:
                     return self._send_error([
@@ -611,45 +556,6 @@ class ScannerHardware(models.Model):
                 })
 
             else:
-                scenario_ids = scanner_scenario_obj.search([
-                    ('parent_id.name', '=', message),
-                    ('type', '=', 'menu'),
-                    '|',
-                    ('warehouse_ids', '=', False),
-                    ('warehouse_ids', 'in', terminal_warehouse_ids),
-                ])
-                _logger.info({
-                    'scenario_ids': scenario_ids,
-                    'scenario_ids.name': scenario_ids.mapped('name')
-                })
-
-                res = False
-                if not scenario_ids:
-                    res = self.env['stock.picking'].sudo().search([
-                        ('vin_id.name', '=', message),
-                        ('state', '=', 'assigned')
-                    ])
-
-                # 如果是用户输入，则完成该任务
-                if by_input and res:
-                    res.button_validate()
-                    if res.state == 'done':
-                        return ('M', ['Success'], 0)
-                    else:
-                        return self._send_error([_('Error: {}'.format(message))])
-
-                scenarios = False
-                if res and message != 0:
-                    return (
-                    'T', ['VIN: {}'.format(message), 'from: {}'.format(res.location_id.display_name), 'to: {}'.format(
-                        res.location_dest_id.display_name
-                    )], 0)
-                if not res and message:
-                    scenarios = self._scenario_list(message)
-
-                if scenarios:
-                    return ('L', scenarios, 0)
-                return ('M', ['Nothing!'], 0)
                 return self._send_error([_('Scenario not found')])
 
         elif transition_type not in ('back', 'none', 'restart'):
@@ -735,10 +641,7 @@ class ScannerHardware(models.Model):
             'scenario': terminal.scenario_id,
             '_': _,
         }
-        _logger.info({
-            'step.python_code': step.python_code,
-            'exec(step.python_code, ld)': exec(step.python_code, ld),
-        })
+
         terminal.log('Executing step %d : %s' % (step_id, step.name))
         terminal.log('Message : %s' % repr(message))
         if tracer:
@@ -848,6 +751,7 @@ class ScannerHardware(models.Model):
             ('child_ids', '!=', False),
             ('step_ids', '!=', False)
         ])
+
         return scanner_scenario_ids.mapped('name')
 
     @api.multi

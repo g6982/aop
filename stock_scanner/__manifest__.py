@@ -19,7 +19,7 @@
         'stock',
     ],
     'data': [
-        'security/stock_scanner_security.xml',
+        # 'security/stock_scanner_security.xml',
         'security/ir.model.access.csv',
         'data/stock_scanner.xml',
         'data/ir_cron.xml',
