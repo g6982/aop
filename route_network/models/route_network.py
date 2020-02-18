@@ -83,11 +83,21 @@ class RouteNetwork(models.Model):
             'path': [(weight, [n.data for n in node]) for (weight, node) in node_graph.dijkstra(end_node)]
         })
 
+    def generate_all_customer_contract_network(self):
+        """
+            根据所有的客户合同，生成一个大的网络
+        """
+        all_start_end_location = self.find_all_start_end_location(model_name='customer.aop.contract')
+
+        self.create_all_location_steps(all_start_end_location)
+
+        self.generate_route_by_location(all_start_end_location)
+
     def generate_all_supplier_contract_network(self):
         """
-            根绝所有的供应商合同，生成一个大的网络
+            根据所有的供应商合同，生成一个大的网络
         """
-        all_start_end_location = self.find_all_start_end_location()
+        all_start_end_location = self.find_all_start_end_location(model_name='supplier.aop.contract')
 
         self.create_all_location_steps(all_start_end_location)
 
@@ -143,11 +153,11 @@ class RouteNetwork(models.Model):
 
         res = self.env['route.network.rule'].create(data)
 
-    def find_all_start_end_location(self):
+    def find_all_start_end_location(self, model_name=False):
         """
             查找所有的线段，去重
         """
-        all_supplier_contract = self.env['supplier.aop.contract'].search([])
+        all_supplier_contract = self.env[model_name].search([])
         all_carrier_ids = all_supplier_contract.mapped('delivery_carrier_ids')
 
         all_location_ids = [(x.from_location_id, x.to_location_id) for x in all_carrier_ids

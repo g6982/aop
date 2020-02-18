@@ -3,6 +3,7 @@ import math
 from odoo.tools import graph
 
 
+# FIX BUG
 def process_order(self):
     """Finds actual-order of the nodes with respect to maximum number of nodes in a rank in component
     """

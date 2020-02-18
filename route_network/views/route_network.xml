@@ -9,7 +9,8 @@
                 <form>
                     <header>
                         <button string="Find out" name="find_out_shortest_path" type="object" class="oe_highlight"/>
-                        <button string="All" name="generate_all_supplier_contract_network" type="object" class="oe_highlight"/>
+                        <button string="All(Supplier)" name="generate_all_supplier_contract_network" type="object" class="oe_highlight"/>
+                        <button string="All(Customer)" name="generate_all_customer_contract_network" type="object" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <group>
