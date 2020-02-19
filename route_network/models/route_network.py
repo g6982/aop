@@ -7,6 +7,7 @@ from ..tools import dijkstras
 import logging
 import matplotlib.pyplot as plt
 import networkx as nx
+import traceback
 
 _logger = logging.getLogger(__name__)
 
@@ -25,7 +26,47 @@ class RouteNetwork(models.Model):
 
     shortest_note = fields.Text('Shortest')
 
+    start_location_id = fields.Many2one('stock.location', 'Start')
+    end_location_id = fields.Many2one('stock.location', 'End')
+
     network_image = fields.Binary('Network', attachment=True)
+
+    def find_out_shortest_path_with_networkx(self):
+        # 初始化
+        network_x_g = nx.DiGraph()
+
+        if not self.step_ids:
+            raise UserError('Empty >> _ << ')
+
+        # 获取所有的箭头
+        all_rule_ids = self.step_ids.mapped('out_transition_ids') + self.step_ids.mapped('in_transition_ids')
+
+        all_rule_ids = [(x.from_id, x.to_id, x.quantity_weight) for x in all_rule_ids]
+
+        # 去重
+        all_rule_ids = list(set(all_rule_ids))
+
+        # 所有节点的信息，包括权重
+        tmp_node = [(x[0].display_name, x[1].display_name, x[2]) for x in all_rule_ids]
+
+        tmp_node = list(set(tmp_node))
+
+        network_x_g.add_weighted_edges_from(tmp_node)
+
+        source_id = self.start_location_id.display_name
+        target_id = self.end_location_id.display_name
+
+        shortest_path = nx.shortest_path(network_x_g, source=source_id, target=target_id)
+        # shortest_path = nx.shortest_path_length(network_x_g, source=source_id, target=target_id)
+        # shortest_path = nx.shortest_path_length(network_x_g)
+
+        _logger.info({
+            'shortest_path': shortest_path,
+            'source_id': source_id,
+            'target_id': target_id,
+        })
+        shortest_note = ' -> '.join(x for x in shortest_path)
+        self.shortest_note = shortest_note
 
     def find_out_shortest_path(self):
         if not self.step_ids:
@@ -98,16 +139,18 @@ class RouteNetwork(models.Model):
             根据所有的供应商合同，生成一个大的网络
         """
         all_start_end_location = self.find_all_start_end_location(model_name='supplier.aop.contract')
+        # all_start_end_location = self.find_all_start_end_location_with_weight(model_name='supplier.aop.contract')
 
         self.create_all_location_steps(all_start_end_location)
 
         self.generate_route_by_location(all_start_end_location)
+        # self.generate_route_by_location_with_weight(all_start_end_location)
 
     # 生成点
     def create_all_location_steps(self, all_start_end_location):
         all_location_ids = []
         for x in all_start_end_location:
-            all_location_ids += list(x)
+            all_location_ids += list(x)[:2]
 
         # 所有位置
         all_location_ids = list(set(all_location_ids))
@@ -127,6 +170,33 @@ class RouteNetwork(models.Model):
 
         self.step_ids = [(6, 0, all_ids.ids)]
 
+    def generate_route_by_location_with_weight(self, location_ids):
+        """
+            生成线段
+            :param location_ids: 所有开始和结束节点
+            :return:
+        """
+        all_steps = self.step_ids
+        data = []
+        for location_id in location_ids:
+            from_step = all_steps.filtered(lambda x: x.location_id.id == location_id[0])
+            to_step = all_steps.filtered(lambda x: x.location_id.id == location_id[1])
+
+            if not from_step or not to_step:
+                continue
+
+            data.append({
+                'from_id': from_step.id,
+                'to_id': to_step.id,
+                'carrier_id': location_id[2]
+            })
+        print('data', data)
+        # empty first
+        self.step_ids.mapped('out_transition_ids').unlink()
+        self.step_ids.mapped('in_transition_ids').unlink()
+
+        res = self.env['route.network.rule'].create(data)
+
     def generate_route_by_location(self, location_ids):
         """
             生成线段
@@ -144,7 +214,7 @@ class RouteNetwork(models.Model):
 
             data.append({
                 'from_id': from_step.id,
-                'to_id': to_step.id
+                'to_id': to_step.id,
             })
 
         # empty first
@@ -152,6 +222,26 @@ class RouteNetwork(models.Model):
         self.step_ids.mapped('in_transition_ids').unlink()
 
         res = self.env['route.network.rule'].create(data)
+
+    def find_all_start_end_location_with_weight(self, model_name=False):
+        all_supplier_contract = self.env[model_name].search([])
+        all_carrier_ids = all_supplier_contract.mapped('delivery_carrier_ids')
+
+        if model_name == 'supplier.aop.contract':
+            all_location_ids = [
+                (x.from_location_id, x.to_location_id, x.product_standard_price) for x in all_carrier_ids
+                if x.from_location_id and x.to_location_id]
+        elif model_name == 'customer.aop.contract':
+            all_location_ids = [(x.from_location_id, x.to_location_id, x.fixed_price) for x in all_carrier_ids
+                                if x.from_location_id and x.to_location_id]
+
+        # 去重
+        all_location_ids = list(set(all_location_ids))
+
+        all_location_ids = [(x[0].id, x[1].id, x[2]) for x in all_location_ids if
+                            not x[0].display_name.startswith('合作伙伴位置') and
+                            not x[1].display_name.startswith('合作伙伴位置')]
+        return all_location_ids
 
     def find_all_start_end_location(self, model_name=False):
         """
@@ -169,6 +259,7 @@ class RouteNetwork(models.Model):
         all_location_ids = [(x[0].id, x[1].id) for x in all_location_ids if
                             not x[0].display_name.startswith('合作伙伴位置') and
                             not x[1].display_name.startswith('合作伙伴位置')]
+
         return all_location_ids
 
 
@@ -206,7 +297,8 @@ class RouteNetworkRule(models.Model):
     from_id = fields.Many2one('route.network.step')
     to_id = fields.Many2one('route.network.step')
 
-    quantity_weight = fields.Integer('Weight')
+    quantity_weight = fields.Float('Weight')
+    carrier_id = fields.Many2one('delivery.carrier', 'Carrier')
 
     @api.multi
     @api.depends('from_id', 'to_id')

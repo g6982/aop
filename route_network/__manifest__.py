@@ -5,7 +5,7 @@
     'summary': 'Route network',
     'description': """Route network""",
     'author': '1di0t',
-    "depends": ['base', 'stock'],
+    "depends": ['base', 'stock', 'delivery'],
     'data': [
         'security/ir.model.access.csv',
         'views/route_network.xml'

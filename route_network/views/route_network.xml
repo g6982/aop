@@ -9,6 +9,7 @@
                 <form>
                     <header>
                         <button string="Find out" name="find_out_shortest_path" type="object" class="oe_highlight"/>
+                        <button string="Find by networkx" name="find_out_shortest_path_with_networkx" type="object" class="oe_highlight"/>
                         <button string="All(Supplier)" name="generate_all_supplier_contract_network" type="object" class="oe_highlight"/>
                         <button string="All(Customer)" name="generate_all_customer_contract_network" type="object" class="oe_highlight"/>
                     </header>
@@ -20,6 +21,14 @@
                             <group>
                                 <field name="partner_id" options="{'no_quick_create': True, 'no_create_edit': True}"
                                        required="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="start_location_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                            </group>
+                            <group>
+                                <field name="end_location_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                             </group>
                         </group>
                         <notebook>
