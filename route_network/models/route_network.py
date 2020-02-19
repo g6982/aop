@@ -8,6 +8,7 @@ import logging
 import matplotlib.pyplot as plt
 import networkx as nx
 import traceback
+import random
 
 _logger = logging.getLogger(__name__)
 
@@ -144,6 +145,13 @@ class RouteNetwork(models.Model):
         all_start_end_location = self.find_all_start_end_location(model_name='supplier.aop.contract')
         # all_start_end_location = self.find_all_start_end_location_with_weight(model_name='supplier.aop.contract')
 
+        _logger.info({
+            'all_start_end_location': all_start_end_location
+        })
+        all_start_end_location = [x[:2] for x in all_start_end_location]
+        _logger.info({
+            'all_start_end_location': all_start_end_location
+        })
         self.create_all_location_steps(all_start_end_location)
 
         self.generate_route_by_location(all_start_end_location)
@@ -155,9 +163,6 @@ class RouteNetwork(models.Model):
         for x in all_start_end_location:
             all_location_ids += list(x)[:2]
 
-        _logger.info({
-            'all_location_ids': all_location_ids
-        })
         # 所有位置
         all_location_ids = list(set(all_location_ids))
         all_location_ids = self.env['stock.location'].browse(all_location_ids)
@@ -220,6 +225,7 @@ class RouteNetwork(models.Model):
             data.append({
                 'from_id': from_step.id,
                 'to_id': to_step.id,
+                # 'quantity_weight': random.randint(1, 100) * random.random()
             })
 
         # empty first
@@ -240,15 +246,15 @@ class RouteNetwork(models.Model):
             all_location_ids = [(x.from_location_id, x.to_location_id, x.fixed_price) for x in all_carrier_ids
                                 if x.from_location_id and x.to_location_id]
 
+        # all_location_ids = [(x.from_location_id, x.to_location_id) for x in all_carrier_ids
+        #                     if x.from_location_id and x.to_location_id]
+
         # 去重
         all_location_ids = list(set(all_location_ids))
 
         all_location_ids = [(x[0].id, x[1].id, round(float(x[2]) * 1000, -1) / 1000) for x in all_location_ids if
                             not x[0].display_name.startswith('合作伙伴位置') and
                             not x[1].display_name.startswith('合作伙伴位置')]
-        _logger.info({
-            'all_location_ids': all_location_ids
-        })
         return all_location_ids
 
     def find_all_start_end_location(self, model_name=False):
