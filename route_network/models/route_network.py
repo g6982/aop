@@ -188,9 +188,8 @@ class RouteNetwork(models.Model):
             data.append({
                 'from_id': from_step.id,
                 'to_id': to_step.id,
-                'carrier_id': location_id[2]
+                'quantity_weight': location_id[2]
             })
-        print('data', data)
         # empty first
         self.step_ids.mapped('out_transition_ids').unlink()
         self.step_ids.mapped('in_transition_ids').unlink()
@@ -298,7 +297,6 @@ class RouteNetworkRule(models.Model):
     to_id = fields.Many2one('route.network.step')
 
     quantity_weight = fields.Float('Weight')
-    carrier_id = fields.Many2one('delivery.carrier', 'Carrier')
 
     @api.multi
     @api.depends('from_id', 'to_id')
