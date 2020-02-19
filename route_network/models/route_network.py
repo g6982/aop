@@ -32,41 +32,44 @@ class RouteNetwork(models.Model):
     network_image = fields.Binary('Network', attachment=True)
 
     def find_out_shortest_path_with_networkx(self):
-        # 初始化
-        network_x_g = nx.DiGraph()
+        try:
+            # 初始化
+            network_x_g = nx.DiGraph()
 
-        if not self.step_ids:
-            raise UserError('Empty >> _ << ')
+            if not self.step_ids:
+                raise UserError('Empty >> _ << ')
 
-        # 获取所有的箭头
-        all_rule_ids = self.step_ids.mapped('out_transition_ids') + self.step_ids.mapped('in_transition_ids')
+            # 获取所有的箭头
+            all_rule_ids = self.step_ids.mapped('out_transition_ids') + self.step_ids.mapped('in_transition_ids')
 
-        all_rule_ids = [(x.from_id, x.to_id, x.quantity_weight) for x in all_rule_ids]
+            all_rule_ids = [(x.from_id, x.to_id, x.quantity_weight) for x in all_rule_ids]
 
-        # 去重
-        all_rule_ids = list(set(all_rule_ids))
+            # 去重
+            all_rule_ids = list(set(all_rule_ids))
 
-        # 所有节点的信息，包括权重
-        tmp_node = [(x[0].display_name, x[1].display_name, x[2]) for x in all_rule_ids]
+            # 所有节点的信息，包括权重
+            tmp_node = [(x[0].display_name, x[1].display_name, x[2]) for x in all_rule_ids]
 
-        tmp_node = list(set(tmp_node))
+            tmp_node = list(set(tmp_node))
 
-        network_x_g.add_weighted_edges_from(tmp_node)
+            network_x_g.add_weighted_edges_from(tmp_node)
 
-        source_id = self.start_location_id.display_name
-        target_id = self.end_location_id.display_name
+            source_id = self.start_location_id.display_name
+            target_id = self.end_location_id.display_name
 
-        shortest_path = nx.shortest_path(network_x_g, source=source_id, target=target_id)
-        # shortest_path = nx.shortest_path_length(network_x_g, source=source_id, target=target_id)
-        # shortest_path = nx.shortest_path_length(network_x_g)
+            shortest_path = nx.shortest_path(network_x_g, source=source_id, target=target_id)
+            # shortest_path = nx.shortest_path_length(network_x_g, source=source_id, target=target_id)
+            # shortest_path = nx.shortest_path_length(network_x_g)
 
-        _logger.info({
-            'shortest_path': shortest_path,
-            'source_id': source_id,
-            'target_id': target_id,
-        })
-        shortest_note = ' -> '.join(x for x in shortest_path)
-        self.shortest_note = shortest_note
+            _logger.info({
+                'shortest_path': shortest_path,
+                'source_id': source_id,
+                'target_id': target_id,
+            })
+            shortest_note = ' -> '.join(x for x in shortest_path)
+            self.shortest_note = shortest_note
+        except Exception as e:
+            raise UserError(e)
 
     def find_out_shortest_path(self):
         if not self.step_ids:
@@ -152,6 +155,9 @@ class RouteNetwork(models.Model):
         for x in all_start_end_location:
             all_location_ids += list(x)[:2]
 
+        _logger.info({
+            'all_location_ids': all_location_ids
+        })
         # 所有位置
         all_location_ids = list(set(all_location_ids))
         all_location_ids = self.env['stock.location'].browse(all_location_ids)
@@ -237,9 +243,12 @@ class RouteNetwork(models.Model):
         # 去重
         all_location_ids = list(set(all_location_ids))
 
-        all_location_ids = [(x[0].id, x[1].id, x[2]) for x in all_location_ids if
+        all_location_ids = [(x[0].id, x[1].id, round(float(x[2]) * 1000, -1) / 1000) for x in all_location_ids if
                             not x[0].display_name.startswith('合作伙伴位置') and
                             not x[1].display_name.startswith('合作伙伴位置')]
+        _logger.info({
+            'all_location_ids': all_location_ids
+        })
         return all_location_ids
 
     def find_all_start_end_location(self, model_name=False):
