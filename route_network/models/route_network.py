@@ -33,6 +33,17 @@ class RouteNetwork(models.Model):
     network_image = fields.Binary('Network', attachment=True)
 
     def find_out_shortest_path_with_networkx(self):
+        """
+        dijkstra_path_length
+            Returns the shortest weighted path length in G from source to target.
+        dijkstra_path
+            Returns the shortest weighted path from source to target in G.
+        all_simple_paths
+            Generate all simple paths in the graph G from source to target.
+        shortest_path
+            Compute shortest paths in the graph.
+        :return:
+        """
         try:
             # 初始化
             network_x_g = nx.DiGraph()
@@ -58,17 +69,23 @@ class RouteNetwork(models.Model):
             source_id = self.start_location_id.display_name
             target_id = self.end_location_id.display_name
 
-            shortest_path = nx.shortest_path(network_x_g, source=source_id, target=target_id)
+            # shortest_path = nx.shortest_path(network_x_g, source=source_id, target=target_id)
+            shortest_path = nx.all_simple_paths(network_x_g, source=source_id, target=target_id)
+
+            # # Returns the shortest weighted path length in G from source to target.
+            # shortest_path = nx.dijkstra_path_length(network_x_g, source=source_id, target=target_id)
+
             # shortest_path = nx.shortest_path_length(network_x_g, source=source_id, target=target_id)
             # shortest_path = nx.shortest_path_length(network_x_g)
 
             _logger.info({
-                'shortest_path': shortest_path,
+                # 'shortest_path': list(shortest_path),
                 'source_id': source_id,
                 'target_id': target_id,
             })
-            shortest_note = ' -> '.join(x for x in shortest_path)
-            self.shortest_note = shortest_note
+            # shortest_note = ' -> '.join(x for x in shortest_path)
+            # self.shortest_note = shortest_note
+            self.shortest_note = list(shortest_path)
         except Exception as e:
             raise UserError(e)
 
@@ -145,13 +162,8 @@ class RouteNetwork(models.Model):
         all_start_end_location = self.find_all_start_end_location(model_name='supplier.aop.contract')
         # all_start_end_location = self.find_all_start_end_location_with_weight(model_name='supplier.aop.contract')
 
-        _logger.info({
-            'all_start_end_location': all_start_end_location
-        })
         all_start_end_location = [x[:2] for x in all_start_end_location]
-        _logger.info({
-            'all_start_end_location': all_start_end_location
-        })
+
         self.create_all_location_steps(all_start_end_location)
 
         self.generate_route_by_location(all_start_end_location)
@@ -313,9 +325,20 @@ class RouteNetworkRule(models.Model):
 
     quantity_weight = fields.Float('Weight')
 
+    list_ids = fields.One2many('route.network.rule.list', 'rule_id', string='Rule list')
+
     @api.multi
     @api.depends('from_id', 'to_id')
     def _compute_name(self):
         for line_id in self:
             if line_id.from_id and line_id.to_id:
                 line_id.name = line_id.from_id.name + ' -> ' + line_id.to_id.name
+
+
+class RouteNetworkRuleList(models.Model):
+    _name = 'route.network.rule.list'
+    _description = 'Rule list'
+
+    rule_id = fields.Many2one('route.network.rule', string='Rule')
+    partner_id = fields.Many2one('res.partner', 'Supplier')
+    quantity_weight = fields.Float('Weight')
