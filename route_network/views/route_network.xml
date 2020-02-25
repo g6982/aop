@@ -31,6 +31,12 @@
                                 <field name="end_location_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
                             </group>
                         </group>
+
+                        <group>
+                            <group>
+                                <field name="path_id" options="{'no_quick_create': True, 'no_create_edit': True}"/>
+                            </group>
+                        </group>
                         <notebook>
                             <page string="Network">
                                 <field name="step_ids">
@@ -42,9 +48,9 @@
                             </page>
                         </notebook>
 
-                        <group>
-                            <field name="shortest_note"/>
-                        </group>
+<!--                        <group>-->
+<!--                            <field name="shortest_note"/>-->
+<!--                        </group>-->
 
                         <group>
                             <field name="network_image"  widget="image"/>
@@ -78,6 +84,15 @@
                             </group>
                         </group>
 
+                        <notebook>
+                            <page string="Rule list">
+                                <field name="list_ids">
+                                    <field name="carrier_id"/>
+                                    <field name="quantity_weight"/>
+                                </field>
+                            </page>
+                        </notebook>
+
                     </sheet>
                 </form>
             </field>
@@ -98,6 +113,25 @@
                                        required="1"/>
                             </group>
                         </group>
+
+                        <notebook>
+                            <page string="Step out">
+                                <field name="out_transition_ids">
+                                    <field name="name"/>
+                                    <field name="from_id"/>
+                                    <field name="to_id"/>
+                                    <field name="quantity_weight"/>
+                                </field>
+                            </page>
+                            <page string="Step in">
+                                <field name="in_transition_ids">
+                                    <field name="name"/>
+                                    <field name="to_id"/>
+                                    <field name="from_id"/>
+                                    <field name="quantity_weight"/>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
