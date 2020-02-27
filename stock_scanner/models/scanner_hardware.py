@@ -353,6 +353,11 @@ class ScannerHardware(models.Model):
                 if scenario_ids:
                     scenarios = self._scenario_list(
                         parent_id=scenario_ids.id)
+                    scenarios = self.get_stock_picking(message)
+                    _logger.info({
+                        'get_stock_picking': scenarios,
+                        'message': message
+                    })
                     if scenarios:
                         menu_name = scenario_ids[0].name
                         return ('L', ['|%s' % menu_name] + scenarios, 0)
@@ -393,6 +398,7 @@ class ScannerHardware(models.Model):
         if not self.scenario_id:
             _logger.info('[%s] No running scenario' % self.code)
             scenarios = self._scenario_list(message)
+            print('scenarios', scenarios)
             return ('L', scenarios, 0)
 
         # Nothing matched, return an error
@@ -532,6 +538,36 @@ class ScannerHardware(models.Model):
                 ('warehouse_ids', 'in', terminal_warehouse_ids),
             ])
 
+            if not scenario_ids:
+
+                # 先选择仓库，再选择步骤
+                scenario_ids = scanner_scenario_obj.search([
+                    ('parent_id.name', '=', message),
+                    ('type', '=', 'menu'),
+                    '|',
+                    ('warehouse_ids', '=', False),
+                    ('warehouse_ids', 'in', terminal_warehouse_ids),
+                ])
+                usage_type = scenario_ids.mapped('usage_type')
+                usage_type = list(set(usage_type))
+                if len(usage_type) != 1 and usage_type:
+                    return ('M', ['Error'], 0)
+                if scenario_ids:
+                    print('scenario_ids name', scenario_ids.mapped('name'))
+                    return ('L', scenario_ids.mapped('name'), 0)
+
+            _logger.info({
+                'execute _do_scenario_save': message,
+                'terminal_warehouse_ids': terminal_warehouse_ids,
+                'scenario_ids': scenario_ids,
+                'domain': [
+                    ('name', '=', message),
+                    ('type', '=', 'scenario'),
+                    '|',
+                    ('warehouse_ids', '=', False),
+                    ('warehouse_ids', 'in', terminal_warehouse_ids),
+                ]
+            })
             # If at least one scenario was found, pick the start step of the
             # first
             if scenario_ids:
