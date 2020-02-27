@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: sentinel 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-20 10:59+0100\n"
+"POT-Creation-Date: 2020-02-27 12:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,45 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../__init__.py:66
-#, python-brace-format
-msgid "Profile \"{options.profile}\" not found in file {options.config_file}!"
-msgstr ""
-
-#: ../__init__.py:106
+#: ../__init__.py:132
 msgid ""
 "Autoconfiguration failed !\n"
 "Please enter terminal code"
 msgstr ""
 
-#: ../__init__.py:400
+#: ../__init__.py:503
 msgid "No value available"
 msgstr ""
 
-#: ../__init__.py:454
+#: ../__init__.py:557
 msgid ""
 "An error occured\n"
 "\n"
 "Please contact your administrator"
 msgstr ""
 
-#: ../__init__.py:507
+#: ../__init__.py:610
 msgid "No scenario available !"
 msgstr ""
 
-#: ../__init__.py:510
+#: ../__init__.py:613
 msgid "Scenarios"
 msgstr ""
 
-#: ../__init__.py:535
+#: ../__init__.py:638
 msgid "Yes"
 msgstr ""
 
-#: ../__init__.py:538
+#: ../__init__.py:641
 msgid "No"
 msgstr ""
 
-#: ../__init__.py:658
+#: ../__init__.py:765
 #, python-format
 msgid "Selected : %s"
 msgstr ""
 
-#: ../__init__.py:842
+#: ../__init__.py:975
 #, python-format
-msgid "Selected : %d"
+msgid "Selected : %d %s"
 msgstr ""

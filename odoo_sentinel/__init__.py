@@ -637,11 +637,9 @@ class Sentinel(object):
             yes_padding = int(math.floor(self.window_width / 2))
             yes_text = _('Yes').center(yes_padding)
             no_start = yes_padding
-            no_padding = self.window_width - no_start - 1
+            # no_padding = self.window_width - no_start - 1
+            no_padding = self.window_width - no_start - 2
             no_text = _('No').center(no_padding)
-
-            # Todo: poedit翻译No的值为否时，程序运行总是报错，不知道什么原因
-            # no_text = u'\u5426'.center(no_padding)
 
             if confirm:
                 # Yes selected
