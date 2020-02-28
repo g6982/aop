@@ -27,6 +27,10 @@ I18N_DEFAULT = 'en_US'
 
 NULL_CHAR = '\0'
 
+import gi
+
+gi.require_version('Notify', '0.7')
+
 from gi.repository import Notify
 Notify.init("App Name")
 
@@ -273,8 +277,25 @@ class Sentinel(object):
         if bgcolor:
             self.screen.bkgd(0, color)
 
+
+
+
+
         # Display the text
         if not scroll:
+            # log_contents = """
+            #         # y : %s
+            #         # x : %s
+            #         # text : %s
+            #         # encoding : %s
+            #         # color : %s
+            #         """
+            # log_contents = log_contents % (
+            #     y, x, text, encoding, color)
+            #
+            # # Writes traceback in log file
+            # with open(self.log_file, 'a') as log_file:
+            #     log_file.write(log_contents)
             self.screen.addstr(y, x, text.encode(encoding), color)
         else:
             # Wrap the text to avoid splitting words
@@ -356,6 +377,26 @@ class Sentinel(object):
         while True:
             try:
                 try:
+
+                    # Generates log contents
+                    log_contents = """%s
+                    # %s
+                    # Hardware code : %s
+                    # ''Current scenario : %s (%s)
+                    # Current values :
+                    #\tcode : %s
+                    #\tresult : %s
+                    #\tvalue : %s
+                    """
+                    log_contents = log_contents % (
+                        '#' * 79, datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                        self.hardware_code, str(self.scenario_id),
+                        self.scenario_name, code, repr(result), repr(value))
+
+                    # Writes traceback in log file
+                    # with open(self.log_file, 'a') as log_file:
+                    #     log_file.write(log_contents)
+
                     # No active scenario, select one
                     if not self.scenario_id:
                         (code, result, value) = self._select_scenario()
@@ -585,7 +626,7 @@ class Sentinel(object):
         """
         Allows the user to select quantity
         """
-        confirm = False
+        confirm = True
 
         while True:
             # Clear the screen
@@ -596,7 +637,8 @@ class Sentinel(object):
             yes_padding = int(math.floor(self.window_width / 2))
             yes_text = _('Yes').center(yes_padding)
             no_start = yes_padding
-            no_padding = self.window_width - no_start - 1
+            # no_padding = self.window_width - no_start - 1
+            no_padding = self.window_width - no_start - 2
             no_text = _('No').center(no_padding)
 
             if confirm:
@@ -925,6 +967,9 @@ class Sentinel(object):
         word_index = word_index.split(':')[-1]
         word_index.replace(' ', '')
         # Diplays number of the selected entry
+        # self._display(_('Selected : %d %s') % (highlighted, word_index), y=self.window_height-1,
+        #               color='info', modifier=curses.A_BOLD)
+
         self._display(_('Selected : %d %s') % (highlighted, word_index), y=self.window_height-1,
                       color='info', modifier=curses.A_BOLD)
 
