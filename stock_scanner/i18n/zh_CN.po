@@ -166,7 +166,7 @@ msgstr ""
 #: code:addons/stock_scanner/data/scenarios/Logout/stock_scanner.scanner_scenario_logout_step_confirmed.py:13
 #, python-format
 msgid "Bye !"
-msgstr ""
+msgstr "再见 !"
 
 #. module: stock_scanner
 #: model_terms:ir.ui.view,arch_db:stock_scanner.view_scanner_scenario_search
@@ -338,7 +338,7 @@ msgstr ""
 #: code:addons/stock_scanner/data/scenarios/Logout/stock_scanner.scanner_scenario_logout_step_confirm.py:11
 #, python-format
 msgid "Do you really want to logout?"
-msgstr ""
+msgstr "你真的想注销吗?"
 
 #. module: stock_scanner
 #: model:ir.model.fields,help:stock_scanner.field_scanner_hardware__log_enabled
@@ -547,13 +547,13 @@ msgstr ""
 #. module: stock_scanner
 #: model:scanner.scenario,name:stock_scanner.scanner_scenario_login
 msgid "Login"
-msgstr ""
+msgstr "登录"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Login/stock_scanner.scanner_scenario_login_step_login.py:10
 #, python-format
 msgid "Login ?"
-msgstr ""
+msgstr "登录名 ?"
 
 #. module: stock_scanner
 #: model:ir.model.fields,field_description:stock_scanner.field_res_config_settings__is_login_enabled
@@ -563,13 +563,13 @@ msgstr ""
 #. module: stock_scanner
 #: model:scanner.scenario,name:stock_scanner.scanner_scenario_logout
 msgid "Logout"
-msgstr ""
+msgstr "注销"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Logout/stock_scanner.scanner_scenario_logout_step_cancelled.py:10
 #, python-format
 msgid "Logout cancelled"
-msgstr ""
+msgstr "注销已取消"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Sentinel/scanner_scenario_step_sentinel_list_scrolling.py:11
@@ -692,7 +692,7 @@ msgstr ""
 #: code:addons/stock_scanner/data/scenarios/Login/stock_scanner.scanner_scenario_login_step_pwd.py:13
 #, python-format
 msgid "Pwd ?"
-msgstr ""
+msgstr "密码 ?"
 
 #. module: stock_scanner
 #: model:ir.model.fields,field_description:stock_scanner.field_scanner_scenario_step__python_code
@@ -1175,7 +1175,7 @@ msgstr ""
 #: code:addons/stock_scanner/data/scenarios/Login/stock_scanner.scanner_scenario_login_step_error.py:10
 #, python-format
 msgid "Wrong login/password"
-msgstr ""
+msgstr "错误的登录名/密码"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/models/scanner_hardware.py:27
@@ -1187,19 +1187,19 @@ msgstr ""
 #: code:addons/stock_scanner/data/scenarios/Logout/stock_scanner.scanner_scenario_logout_step_cancelled.py:11
 #, python-format
 msgid "You are authenticated as %s !"
-msgstr ""
+msgstr "已授权给 %s !"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Login/stock_scanner.scanner_scenario_login_step_done.py:12
 #, python-format
 msgid "You are now authenticated as %s !"
-msgstr ""
+msgstr "已授权给 %s !"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/data/scenarios/Logout/stock_scanner.scanner_scenario_logout_step_confirmed.py:12
 #, python-format
 msgid "You are now logged out"
-msgstr ""
+msgstr "你现在已经注销了"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_text_input.py:14
@@ -1249,7 +1249,7 @@ msgstr ""
 #: code:addons/stock_scanner/data/scenarios/Login/stock_scanner.scanner_scenario_login_step_pwd.py:12
 #, python-format
 msgid "| Login %s"
-msgstr ""
+msgstr "| 登录名 %s"
 
 #. module: stock_scanner
 #: code:addons/stock_scanner/demo/Tutorial/Step_types/scanner_scenario_step_step_types_confirm.py:10
