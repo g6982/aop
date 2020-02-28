@@ -33,6 +33,78 @@ class RouteNetwork(models.Model):
     network_image = fields.Binary('Network', attachment=True)
 
     path_id = fields.Many2one('route.network.shortest.path', 'Path')
+    route_id = fields.Many2one('stock.location.route', 'Route')
+
+    def parse_from_to_location(self):
+        location_ids = self.path_id.location_ids.mapped('location_id')
+        pair_location_ids = []
+        for index_l, value in enumerate(location_ids):
+            if index_l + 1 >= len(location_ids):
+                continue
+            pair_location_ids.append(
+                (location_ids[index_l], location_ids[index_l + 1])
+            )
+        return pair_location_ids
+
+    def parse_location_route_value(self, location_ids):
+        values = []
+        index_location = True
+        for location_id in location_ids:
+            from_id = location_id[0]
+            to_id = location_id[1]
+
+            from_step_id = self.step_ids.filtered(lambda x: x.location_id.id == from_id.id)
+            to_step_id = self.step_ids.filtered(lambda x: x.location_id.id == to_id.id)
+
+            rule_id = self.env['route.network.rule'].search([
+                ('from_id', 'in', from_step_id.ids),
+                ('to_id', 'in', to_step_id.ids),
+            ])
+            if not rule_id:
+                raise UserError('Error!')
+
+            # 使用供应商合同条款(carrier_id)里面的picking_type_id
+            # rule_id.list_ids[0].carrier_id.picking_type_id.id
+            tmp = {
+                'action': 'pull',
+                'name': from_id.display_name + ' -> ' + to_id.display_name,
+                'location_src_id': from_id.id,
+                'location_id': to_id.id,
+                'picking_type_id': rule_id.list_ids[0].carrier_id.picking_type_id.id
+            }
+            if index_location:
+                tmp.update({
+                    'procure_method': 'make_to_stock'
+                })
+                index_location = False
+            else:
+                tmp.update({
+                    'procure_method': 'make_to_order'
+                })
+            values.append((0, 0, tmp))
+        return values
+
+    @api.multi
+    def generate_stock_location_route_line(self):
+        self.ensure_one()
+        if self.path_id:
+            location_ids = self.parse_from_to_location()
+
+            line_values = self.parse_location_route_value(location_ids)
+
+            start_location_id = self.path_id.location_ids[0].location_id
+            end_location_id = self.path_id.location_ids[-1].location_id
+
+            route_value = {
+                'name': start_location_id.display_name + ' -> ' + end_location_id.display_name,
+                'sale_selectable': True,
+                'rule_ids': line_values
+            }
+            _logger.info({
+                'route_value': route_value
+            })
+            res = self.env['stock.location.route'].create(route_value)
+            self.route_id = res.id
 
     def find_out_all_simple_path_by_networkx(self, network_x_g, all_rule_ids):
         tmp_node = [(x[0].id, x[1].id, x[2]) for x in all_rule_ids]
@@ -193,6 +265,8 @@ class RouteNetwork(models.Model):
         """
         all_start_end_location = self.find_all_start_end_location(model_name='customer.aop.contract')
 
+        # 获取所有开始，结束位置，以及条款
+        all_start_end_location = self.find_out_all_start_end_location_by_weight(model_name='customer.aop.contract')
         self.create_all_location_steps(all_start_end_location)
 
         self.generate_route_by_location(all_start_end_location)
@@ -378,6 +452,7 @@ class RouteNetwork(models.Model):
         all_location_ids = [(x[0], x[1], x[2]) for x in all_location_ids if
                             not x[0].display_name.startswith('合作伙伴位置') and
                             not x[1].display_name.startswith('合作伙伴位置')]
+
 
         all_location_ids = list(set(all_location_ids))
 

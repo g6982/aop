@@ -8,7 +8,8 @@
     "depends": ['base', 'stock'],
     'data': [
         'security/ir.model.access.csv',
-        'views/route_network.xml'
+        'views/route_network.xml',
+        'views/shortest_list_view.xml'
     ],
     'qweb': [
     ],
