@@ -7,7 +7,7 @@ from odoo import models, api, fields
 class RouteNetworkShortestPath(models.Model):
     _name = 'route.network.shortest.path'
 
-    name = fields.Char('Location name')
+    name = fields.Char('Path name')
     location_ids = fields.One2many('route.network.shortest.path.location', 'path_id', string='Path detail')
 
 
