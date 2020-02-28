@@ -11,6 +11,8 @@
                         <button string="Find out" name="find_out_shortest_path" type="object" class="oe_highlight"/>
                         <button string="Find by networkx" name="find_out_shortest_path_with_networkx" type="object"
                                 class="oe_highlight"/>
+                        <button string="Generate route" name="generate_stock_location_route_line" type="object"
+                                class="oe_highlight"/>
                         <button string="All(Supplier)" name="generate_all_supplier_contract_network" type="object"
                                 class="oe_highlight"/>
                         <button string="All(Customer)" name="generate_all_customer_contract_network" type="object"
