@@ -42,6 +42,7 @@
         'demo/Tutorial/Tutorial.scenario',
         'demo/Tutorial/Step_types/Step_types.scenario',
         'demo/Tutorial/Sentinel/Sentinel.scenario',
+        'demo/HongHe/honghe.scenario',
         'tests/data/Test.scenario',
     ],
     'images': [
