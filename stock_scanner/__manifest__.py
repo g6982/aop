@@ -26,6 +26,7 @@
         'data/scenarios/Login/Login.scenario',
         'data/scenarios/Logout/Logout.scenario',
         'data/scenarios/Stock/Stock.scenario',
+        'data/scenarios/Aop/aop.scenario',
         'wizard/res_config_settings.xml',
         'views/menu.xml',
         'views/scanner_scenario.xml',
