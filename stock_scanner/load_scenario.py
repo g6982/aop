@@ -105,7 +105,7 @@ def import_scenario(env, module, xml_file, mode, directory, filename):
     if scenario_values.get('company_id'):
         scenario_values['company_id'] = company_obj.search([
             ('name', '=', scenario_values['company_id']),
-        ]).id or False
+        ]).id or company_obj.browse(scenario_values['company_id']).id or False
         if not scenario_values['company_id']:
             raise ValueError(
                 'Company not found: %s' % scenario_values['company_id'])
