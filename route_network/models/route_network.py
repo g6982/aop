@@ -481,7 +481,7 @@ class RouteNetwork(models.Model):
 
     # 重定向到 maps
     def show_route_network_maps(self):
-        url = 'http://127.0.0.1:8889'
+        url = 'http://47.103.54.14/:8889'
         return {
             'type': 'ir.actions.act_url',
             'url': url
