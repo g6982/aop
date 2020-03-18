@@ -479,6 +479,14 @@ class RouteNetwork(models.Model):
 
         return all_location_ids
 
+    # 重定向到 maps
+    def show_route_network_maps(self):
+        url = 'http://127.0.0.1:8889'
+        return {
+            'type': 'ir.actions.act_url',
+            'url': url
+        }
+
 
 class RouteNetworkStep(models.Model):
     _name = 'route.network.step'

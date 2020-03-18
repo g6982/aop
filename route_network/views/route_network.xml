@@ -17,6 +17,8 @@
                                 class="oe_highlight"/>
                         <button string="All(Customer)" name="generate_all_customer_contract_network" type="object"
                                 class="oe_highlight"/>
+                        <button string="Show Maps" name="show_route_network_maps" type="object"
+                                class="oe_highlight"/>
                     </header>
                     <sheet>
                         <group>
@@ -66,9 +68,9 @@
                         <!--                            <field name="shortest_note"/>-->
                         <!--                        </group>-->
 
-                        <group>
-                            <field name="network_image" widget="image"/>
-                        </group>
+<!--                        <group>-->
+<!--                            <field name="network_image" widget="image"/>-->
+<!--                        </group>-->
                     </sheet>
                 </form>
             </field>
