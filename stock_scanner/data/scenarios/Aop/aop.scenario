@@ -10,7 +10,7 @@
 
 </notes>
   <model_id>scanner.hardware</model_id>
-  <company_id>重庆中集汽车物流股份公司</company_id>
+  <company_id>My Company</company_id>
   <group_ids>stock.group_stock_user</group_ids>
   <Step id="scanner_scenario_step_仓库_仓库列表" name="仓库列表" no_back="False" step_back="True" step_start="True" step_stop="False"/>
   <Step id="scanner_scenario_step_仓库_入库_vin码扫描" name="入库:VIN码扫描" no_back="False" step_back="False" step_start="False" step_stop="False"/>
