@@ -17,8 +17,10 @@ lst = []
 if user._is_admin():
     lst = env['stock.warehouse'].search([])
 else:
-    if user.allow_base_warehouse_ids:
+    if user.allow_base_warehouse_ids if hasattr(user, 'allow_base_warehouse_ids') else False:
         lst = env['stock.warehouse'].sudo().search([('id', 'in', user.allow_base_warehouse_ids.mapped('warehouse_ids').ids)])
+    else:
+        lst = env['stock.warehouse'].sudo().search([])
 
 act = 'L'
 
