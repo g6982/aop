@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_route_network_form_inherit">
+            <field name="name">route.network.form</field>
+            <field name="model">route.network</field>
+            <field name="inherit_id" ref="route_network.view_route_network_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//page" position="after">
+                        <page string="Maps">
+                            <div id="maps_div" class="maps_div">
+                                <input name="map_id" id="map_id" type="button" value="Show maps"/>
+                                <div id="geo_map_id"/>
+                                <script type="text/javascript" scr="static/js/echarts.min.js"/>
+                                <script type="text/javascript" scr="static/js/jquery-3.4.1.min.js"/>
+                                <script type="text/javascript">
+                                    $('#map_id').on('click', function(){
+                                        console.log('hello world')
+                                    })
+                                </script>
+                            </div>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>

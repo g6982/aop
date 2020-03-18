@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="show_route_network_maps" name="show_route_network_maps" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+<!--                <script type="text/javascript" src="/route_network_maps/static/js/china.js"/>-->
+<!--                <script type="text/javascript" src="/route_network_maps/static/js/jquery-3.4.1.min.js"/>-->
+                <script type="text/javascript" src="/route_network_maps/static/js/route_network_maps.js"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>
