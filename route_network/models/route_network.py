@@ -590,6 +590,6 @@ class RouteNetworkRuleList(models.Model):
     _description = 'Rule list'
 
     rule_id = fields.Many2one('route.network.rule', string='Rule', ondelete='cascade', index=True)
-    carrier_id = fields.Many2one('delivery.carrier', 'Carrier')
+    # carrier_id = fields.Many2one('delivery.carrier', 'Carrier')
     delivery_id = fields.Many2one('route.network.delivery', 'Delivery')
     quantity_weight = fields.Float('Weight')
