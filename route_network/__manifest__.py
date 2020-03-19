@@ -9,7 +9,9 @@
     'data': [
         'security/ir.model.access.csv',
         'views/route_network.xml',
-        'views/shortest_list_view.xml'
+        'views/route_network_vendor.xml',
+        'views/shortest_list_view.xml',
+        'data/route_network.xml'
     ],
     'qweb': [
     ],
