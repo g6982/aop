@@ -27,9 +27,26 @@ class DeliveryCarrier(models.Model):
             'warning_message': False
         }
 
+    # TODO: 调用网络里面的计算方法，获取价格参数，计算价格
     def get_price_from_netwrok_by_location(self, from_location_id, to_location_id):
         if not from_location_id or not to_location_id:
             return 0.0
         else:
-            return 99.9
+            route_network_obj = self.env['route.network']
+            network_ids = route_network_obj.sudo().search([])
 
+            return_values = []
+            for network_id in network_ids:
+                network_id.generate_all_delivery_network()
+                network_id.find_out_shortest_path_with_networkx(from_location_id=from_location_id,
+                                                                to_location_id=to_location_id)
+
+                shortest_weight = network_id.shortest_weight
+
+                if shortest_weight > 0:
+                    return_values.append(shortest_weight)
+
+            if return_values:
+                return sorted(return_values)[0]
+            else:
+                return 0.0
