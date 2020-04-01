@@ -309,9 +309,13 @@ class RouteNetwork(models.Model):
         # 获取所有开始，结束位置，以及条款
         all_start_end_warehouse = self.find_out_all_start_end_warehouse_from_delivery(model_name='route.network.vendor')
 
+        if not all_start_end_warehouse:
+            return False
         self.create_all_warehouse_steps(all_start_end_warehouse)
 
         self.generate_route_by_warehouse(all_start_end_warehouse)
+
+        return True
 
     # 生成点
     def create_all_warehouse_steps(self, all_start_end_warehouse):
@@ -491,24 +495,6 @@ class RouteNetwork(models.Model):
 
         return res
 
-    # 没有就创建
-    def check_create_vendor_network(self):
-        vendor_ids = self.env['route.network.vendor'].sudo().search([])
-        route_network_obj_sudo = self.env['route.network'].sudo()
-        route_network_obj = self.env['route.network']
-        for vendor_id in vendor_ids:
-            network_id = route_network_obj.search([
-                ('partner_id', '=', vendor_id.partner_id.id)
-            ])
-            if not network_id:
-                network_id = route_network_obj_sudo.create({
-                    'name': vendor_id.partner_id.name,
-                    'partner_id': vendor_id.partner_id.id
-                })
-                _logger.info({
-                    'create network_id': network_id
-                })
-
     # 查找所有的位置 - 运力
     def find_out_all_start_end_warehouse_from_delivery(self, model_name=False):
         """
@@ -518,13 +504,11 @@ class RouteNetwork(models.Model):
         all_vendor_id = self.env[model_name].sudo().search([
             ('partner_id', '=', self.partner_id.id)
         ])
+        _logger.info({
+            'all_vendor_id': all_vendor_id
+        })
         if not all_vendor_id:
-            self.check_create_vendor_network()
-            all_vendor_id = self.env[model_name].sudo().search([
-                ('partner_id', '=', self.partner_id.id)
-            ])
-        if not all_vendor_id:
-            raise UserError('Not found!')
+            return False
 
         all_delivery_ids = all_vendor_id.mapped('line_ids')
 
