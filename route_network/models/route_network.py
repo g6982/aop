@@ -491,6 +491,24 @@ class RouteNetwork(models.Model):
 
         return res
 
+    # 没有就创建
+    def check_create_vendor_network(self):
+        vendor_ids = self.env['route.network.vendor'].sudo().search([])
+        route_network_obj_sudo = self.env['route.network'].sudo()
+        route_network_obj = self.env['route.network']
+        for vendor_id in vendor_ids:
+            network_id = route_network_obj.search([
+                ('partner_id', '=', vendor_id.partner_id.id)
+            ])
+            if not network_id:
+                network_id = route_network_obj_sudo.create({
+                    'name': vendor_id.partner_id.name,
+                    'partner_id': vendor_id.partner_id.id
+                })
+                _logger.info({
+                    'create network_id': network_id
+                })
+
     # 查找所有的位置 - 运力
     def find_out_all_start_end_warehouse_from_delivery(self, model_name=False):
         """
@@ -500,6 +518,11 @@ class RouteNetwork(models.Model):
         all_vendor_id = self.env[model_name].sudo().search([
             ('partner_id', '=', self.partner_id.id)
         ])
+        if not all_vendor_id:
+            self.check_create_vendor_network()
+            all_vendor_id = self.env[model_name].sudo().search([
+                ('partner_id', '=', self.partner_id.id)
+            ])
         if not all_vendor_id:
             raise UserError('Not found!')
 
