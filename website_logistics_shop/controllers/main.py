@@ -275,8 +275,10 @@ class LogisticsShop(WebsiteSaleDeliveryNetwork):
 
             _logger.info({
                 'from_location_name': from_location_name,
-                'to_location_name': to_location_name
+                'to_location_name': to_location_name,
+                'carrier_id': carrier_id
             })
+            
             from_warehouse_id, to_warehouse_id = self.find_correct_belong_position(
                 from_location_name,
                 to_location_name
